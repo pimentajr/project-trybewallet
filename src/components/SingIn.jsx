@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import { newUser } from '../actions';
 
 class SingIn extends Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class SingIn extends Component {
       password: '',
     };
     this.handleInput = this.handleInput.bind(this);
-    // this.YourComponent = this.YourComponent.bind(this);
+    this.logIn = this.logIn.bind(this);
     this.disabled = this.disabled.bind(this);
   }
 
@@ -27,10 +29,13 @@ class SingIn extends Component {
     return (emailFormat.test(email) && password.length >= minLength);
   }
 
-  // YourComponent() {
-  //   const history = useHistory();
-  //   history.push('/carteira');
-  // }
+  logIn(e) {
+    const { email } = this.state;
+    e.preventDefault();
+    const { user } = this.props;
+    user(email);
+    return <Redirect to="/carteira" />;
+  }
 
   render() {
     const { email, password } = this.state;
@@ -54,9 +59,9 @@ class SingIn extends Component {
           onChange={ (e) => this.handleInput(e) }
         />
         <button
-          type="submit"
+          type="button"
           disabled={ !this.disabled() }
-          // onClick={ () => this.YourComponent() }
+          onClick={ (e) => this.logIn(e) }
         >
           Entrar
         </button>
@@ -65,4 +70,7 @@ class SingIn extends Component {
   }
 }
 
-export default SingIn;
+const mapDispatchToProps = (dispatch) => ({
+  user: (state) => dispatch(newUser(state)) });
+
+export default connect(null, mapDispatchToProps)(SingIn);
