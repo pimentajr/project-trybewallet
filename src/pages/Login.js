@@ -16,7 +16,10 @@ class Login extends React.Component {
           placeholder="Campo de senha"
         />
 
-        <input type="button" value="Entrar"/>
+        <input
+          type="button"
+          value="Entrar"
+        />
       </div>);
   }
 }
