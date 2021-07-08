@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import emailAssignment from '../actions';
 
 class WalletHeader extends React.Component {
   render() {

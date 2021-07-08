@@ -1,7 +1,7 @@
 import { SET_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'alguem@alguem.com',
 };
 
 function user(state = INITIAL_STATE, { type, payload }) {

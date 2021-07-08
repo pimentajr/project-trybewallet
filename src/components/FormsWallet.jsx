@@ -1,11 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import emailAssignment from '../actions';
+import { fetchCoinsAPI } from '../actions';
 
 class FormsWallet extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchCoinsAPI());
+  }
+
   render() {
-    const { email } = this.props;
+    const { coinsData } = this.props;
+    let siglas = [];
+ 
+    if (coinsData !== undefined) {
+      delete coinsData['USDT'];
+      siglas = Object.keys(coinsData);
+    }
 
     return (
       <form>
@@ -13,7 +23,14 @@ class FormsWallet extends React.Component {
           Valor: <input type="text" />
         </label>
         <label>
-          Moeda: <select></select>
+          Moeda:{' '}
+          <select>
+            {siglas.map((sigla, index) => (
+              <option key={index} value={sigla}>
+                {sigla}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Método de Pagamento:{' '}
@@ -41,8 +58,8 @@ class FormsWallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user: { email } }) => ({
-  email,
+const mapStateToProps = ({ wallet: { coinsData } }) => ({
+  coinsData,
 });
 
 export default connect(mapStateToProps)(FormsWallet);

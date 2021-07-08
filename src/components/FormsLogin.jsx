@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import emailAssignment from '../actions';
+import { emailAssignment } from '../actions';
 
 class FormsLogin extends React.Component {
   constructor() {
