@@ -3,6 +3,7 @@ import getCoinsAPI from '../services/apiCoins';
 export const SET_EMAIL = 'SET_EMAIL';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
+export const ADD_EXPENSE = 'ADD__EXPENSE';
 
 export const emailAssignment = (payload) => ({
   type: SET_EMAIL,
@@ -25,3 +26,8 @@ export function fetchCoinsAPI() {
     ({ message }) => dispatch(requestApiError(message)),
   );
 }
+
+export const addExpense = (payload) => ({
+  type: ADD_EXPENSE,
+  payload,
+});

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCoinsAPI, addExpense } from '../actions';
 
-class FormsWallet extends React.Component {
+class WalletTable extends React.Component {
   constructor() {
     super();
 
@@ -86,14 +86,5 @@ const mapStateToProps = ({ wallet: { coinsData } }) => ({
   coinsData,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    setExpense: (data,fetch) => {
-      fetch();
-      dispatch(addExpense(data));
-    },
-    fetchAPI: () => dispatch(fetchCoinsAPI()),
-  })
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormsWallet);
+export default connect(mapStateToProps)(WalletTable);
