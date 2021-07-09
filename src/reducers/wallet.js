@@ -25,7 +25,11 @@ function wallet(state = INITIAL_STATE, { type, payload }) {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: state.id, ...payload, exchangeRates: state.coinsData },
+        {
+          id: state.id,
+          ...payload,
+          exchangeRates: state.coinsData,
+        },
       ],
       id: state.id + 1,
       total: state.total

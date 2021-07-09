@@ -14,76 +14,65 @@ class WalletTable extends React.Component {
       tag:'alimentacao',
     }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.convertedValue = this.convertedValue.bind(this);
   }
 
-  componentDidMount() {
-    const { fetchAPI } = this.props;
-    fetchAPI();
+  convertedValue(value, ask) {
+    const result = (value * ask).toFixed(2)
+    return result;
   }
 
-  handleChange({ target }) {
-    const { name } = target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-
-    this.setState({
-      [name]: value,
-    });
-  }
   render() {
-    const { coinsData, setExpense } = this.props;
-    let siglas = [];
- 
-    if (coinsData !== undefined) {
-      delete coinsData['USDT'];
-      siglas = Object.keys(coinsData);
-    }
+    const { expenses = [] } = this.props;
 
     return (
-      <form>
-        <label>
-          Valor: <input type="text" name="value" onChange={this.handleChange} />
-        </label>
-        <label>
-          Moeda:{' '}
-          <select name="currency" onChange={this.handleChange}>
-            {siglas.map((sigla, index) => (
-              <option key={index} value={sigla}>
-                {sigla}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Método de Pagamento:{' '}
-          <select name="method" onChange={this.handleChange}>
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label>
-          Tag:{' '}
-          <select name="tag" onChange={this.handleChange}>
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
-        <label>
-          Descrição: <input type="text" name="description" onChange={this.handleChange} />
-        </label>
-
-        <button type="button" onClick={ () => setExpense(this.state, this.props.fetchAPI)}>Adicionar despesa</button>
-      </form>
+      <table>
+        <thead>
+          <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+        {
+          expenses.map(({
+            description,
+            tag,
+            method,
+            value,
+            currency,
+            exchangeRates,
+          },index) => (
+            <tr key={index}>
+              <td>{description}</td>
+              <td>{tag}</td>
+              <td>{method}</td>
+              <td>{value}</td>
+              <td>{exchangeRates[currency].name}</td>
+              <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
+              <td>{this.convertedValue(value, exchangeRates[currency].ask)}</td>
+              <td>Real</td>
+              <td>Editar/Excluir</td>
+            </tr>
+          ))
+        }
+        </tbody>
+        
+        {/* <button type="button" onClick={ () => setExpense(this.state, this.props.fetchAPI)}>Adicionar despesa</button> */}
+      </table>
     );
   }
 }
 
-const mapStateToProps = ({ wallet: { coinsData } }) => ({
-  coinsData,
+const mapStateToProps = ({ wallet: { expenses } }) => ({
+  expenses,
 });
 
 
