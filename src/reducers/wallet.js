@@ -1,4 +1,9 @@
-import { REQUEST_API_SUCCESS, REQUEST_API_ERROR, ADD_EXPENSE } from '../actions';
+import {
+  REQUEST_API_SUCCESS,
+  REQUEST_API_ERROR,
+  ADD_EXPENSE,
+  DELETE_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   coinsData: undefined,
@@ -20,7 +25,10 @@ function wallet(state = INITIAL_STATE, { type, payload }) {
       ...state,
       error: payload,
     };
-  case ADD_EXPENSE:
+  case ADD_EXPENSE: {
+    const totalAdd = parseFloat((state.total
+    + parseFloat(payload.value)
+    * state.coinsData[payload.currency].ask).toFixed(2));
     return {
       ...state,
       expenses: [
@@ -32,10 +40,20 @@ function wallet(state = INITIAL_STATE, { type, payload }) {
         },
       ],
       id: state.id + 1,
-      total: state.total
-      + parseFloat(payload.value)
-      * state.coinsData[payload.currency].ask,
+      total: totalAdd,
     };
+  }
+  case DELETE_EXPENSE: {
+    const updatedExpenses = state.expenses.filter((expense) => (
+      expense.id !== payload.id
+    ));
+
+    return {
+      ...state,
+      expenses: updatedExpenses,
+      total: payload.totValue,
+    };
+  }
   default:
     return state;
   }

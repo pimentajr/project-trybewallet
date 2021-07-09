@@ -1,29 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCoinsAPI, addExpense } from '../actions';
+import { deleteExpense } from '../actions';
 
 class WalletTable extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      value: 0,
-      description:'',
-      currency:'USD',
-      method:'dinheiro',
-      tag:'alimentacao',
-    }
-
     this.convertedValue = this.convertedValue.bind(this);
+    this.totalValue = this.totalValue.bind(this);
   }
 
   convertedValue(value, ask) {
-    const result = (value * ask).toFixed(2)
+    const result = (value * ask).toFixed(2);
+
+    return result;
+  }
+
+  totalValue() {
+    const { expenses } = this.props;
+    let result = 0;
+    
+    expenses.forEach(({ exchangeRates, currency, value }) => {
+      result += exchangeRates[currency].ask * value; 
+    });
+    
     return result;
   }
 
   render() {
-    const { expenses = [] } = this.props;
+    const { expenses = [], delExpense } = this.props;
 
     return (
       <table>
@@ -43,29 +48,32 @@ class WalletTable extends React.Component {
         <tbody>
         {
           expenses.map(({
+            id,
             description,
             tag,
             method,
             value,
             currency,
             exchangeRates,
-          },index) => (
-            <tr key={index}>
+          }) => {
+            const convValue = this.convertedValue(value, exchangeRates[currency].ask);
+            const totValue  = parseFloat(this.totalValue().toFixed(2));
+
+            return(
+            <tr key={id}>
               <td>{description}</td>
               <td>{tag}</td>
               <td>{method}</td>
               <td>{value}</td>
               <td>{exchangeRates[currency].name}</td>
               <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
-              <td>{this.convertedValue(value, exchangeRates[currency].ask)}</td>
+              <td>{convValue}</td>
               <td>Real</td>
-              <td>Editar/Excluir</td>
+              <td>Editar/<button data-testid="delete-btn" type="button" onClick={ () => delExpense({id, totValue})}>Excluir</button></td>
             </tr>
-          ))
+          )})
         }
         </tbody>
-        
-        {/* <button type="button" onClick={ () => setExpense(this.state, this.props.fetchAPI)}>Adicionar despesa</button> */}
       </table>
     );
   }
@@ -75,5 +83,10 @@ const mapStateToProps = ({ wallet: { expenses } }) => ({
   expenses,
 });
 
+const mapDispatchToProps = (dispatch) => {
+  return({
+    delExpense: (data) => dispatch(deleteExpense(data)),
+  });
+}
 
-export default connect(mapStateToProps)(WalletTable);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
