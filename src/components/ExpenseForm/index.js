@@ -109,21 +109,18 @@ class ExpenseForm extends React.Component {
           id="value"
           label="Valor"
           type="number"
-          name="value"
           value={ value }
           onChange={ this.handleChange }
         />
         <LabelledInput
           id="description"
           label="Descrição"
-          name="description"
           value={ description }
           onChange={ this.handleChange }
         />
         <LabelledSelect
           id="currency"
           label="Moeda"
-          name="currency"
           options={ currencyOptions }
           value={ currency }
           onChange={ this.handleChange }
@@ -131,7 +128,6 @@ class ExpenseForm extends React.Component {
         <LabelledSelect
           id="method"
           label="Método de pagamento"
-          name="method"
           options={ paymentOptions }
           value={ method }
           onChange={ this.handleChange }
@@ -139,7 +135,6 @@ class ExpenseForm extends React.Component {
         <LabelledSelect
           id="tag"
           label="Tag"
-          name="tag"
           options={ tagOptions }
           value={ tag }
           onChange={ this.handleChange }

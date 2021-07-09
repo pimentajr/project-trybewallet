@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 export default class Select extends React.Component {
   render() {
     const { onChange, options, ...attributes } = this.props;
+    const { id } = attributes;
 
     return (
-      <select onChange={ ({ target }) => onChange(target) } { ...attributes }>
+      <select name={ id } onChange={ ({ target }) => onChange(target) } { ...attributes }>
         {
           options.map((option, index) => (
             <option key={ index } value={ option.value }>{ option.label }</option>
