@@ -9,6 +9,7 @@ class SingIn extends Component {
     this.state = {
       email: '',
       password: '',
+      shouldRedirect: null,
     };
     this.handleInput = this.handleInput.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -34,11 +35,14 @@ class SingIn extends Component {
     e.preventDefault();
     const { user } = this.props;
     user(email);
-    return <Redirect to="/carteira" />;
+    this.setState({ shouldRedirect: true });
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, shouldRedirect } = this.state;
+    if (shouldRedirect) {
+      return <Redirect to="/carteira" />;
+    }
     return (
       <div>
         <input
