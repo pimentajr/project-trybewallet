@@ -2,8 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ExpenseForm from '../components/ExpenseForm';
+import { getCurrencies } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { carregarMoedas } = this.props;
+    carregarMoedas();
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -19,10 +25,8 @@ class Wallet extends React.Component {
             <option value="valor1">BRL</option>
           </select>
         </header>
-        <div>
-          <div className="money-icon-container" />
-          <ExpenseForm />
-        </div>
+        <div className="money-icon-container" />
+        <ExpenseForm />
       </div>
     );
   }
@@ -32,8 +36,13 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  carregarMoedas: () => dispatch(getCurrencies()),
+});
+
 Wallet.propTypes = {
   email: PropTypes.string,
+  carregando: PropTypes.bool,
 }.isRequired;
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
