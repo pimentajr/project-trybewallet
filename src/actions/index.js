@@ -2,6 +2,7 @@ export const REQUEST_VALUES = 'REQUEST_VALUES';
 export const RECEIVE_VALUES = 'RECEIVE_VALUES';
 export const INPUT_USER = 'INPUT_USER';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export function userAction(email) {
   return ({
@@ -35,4 +36,11 @@ export function fetchValues() {
       .then((response) => response.json())
       .then((obj) => dispatch(receiveValues(obj)));
   };
+}
+
+export function deleteExpensesAction(id) {
+  return ({
+    type: DELETE_EXPENSES,
+    id,
+  });
 }

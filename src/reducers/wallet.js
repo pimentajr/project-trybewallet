@@ -1,4 +1,5 @@
-import { REQUEST_VALUES, RECEIVE_VALUES, ADD_EXPENSES } from '../actions/index';
+import { REQUEST_VALUES, RECEIVE_VALUES, ADD_EXPENSES,
+  DELETE_EXPENSES } from '../actions/index';
 
 const INITIAL_STATE = {
   id: 0,
@@ -29,6 +30,11 @@ export default function reducerUser(state = INITIAL_STATE, action) {
           ...action.payload,
           exchangeRates: state.currencies,
         }],
+    });
+  case DELETE_EXPENSES:
+    return ({
+      ...state,
+      expenses: [...state.expenses.filter((e) => e.id !== action.id)],
     });
   default:
     return state;
