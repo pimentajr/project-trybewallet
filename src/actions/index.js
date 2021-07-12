@@ -1,16 +1,19 @@
 export const STORE_EMAIL = 'STORE_EMAIL';
-export const REQUESTED_DATA = 'REQUESTING_DATA';
 export const RECEIVED_DATA = 'RECEIVED_DATA';
 
 export const addEmail = (email) => ({ type: STORE_EMAIL, email });
-export const requestCurrencyData = () => ({ type: REQUESTED_DATA });
-export const getCurrencyData = (currency) => ({ type: RECEIVED_DATA, currency });
+export const getCurrencyData = (currencies) => ({ type: RECEIVED_DATA, currencies });
+// export const exchangeRate = (exchangeRate) => ({type: GET_EXCHANGE_RATE, exchangeRate })
 
-export function getCurrency() {
-  return (dispatch) => {
-    dispatch(requestCurrencyData());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((r) => r.json())
-      .then((json) => dispatch(getCurrencyData(json)));
-  };
-}
+export const fetchCurrencies = () => (
+  async (dispatch) => {
+    try {
+      const fetchResponse = await fetch('https://economia.awesomeapi.com.br/json/all');
+      // const currencies = await fetchResponse.json();
+      const { currencies } = await fetchResponse.json();
+      return dispatch(getCurrencyData(currencies));
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);

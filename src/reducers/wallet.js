@@ -1,23 +1,38 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUESTED_DATA, RECEIVED_DATA } from '../actions/index';
+import { RECEIVED_DATA } from '../actions/index';
 
 const WALLET_INITIAL_STATE = {
-  isLoading: false,
   currencies: [],
-  expenses: [],
+  // expenses: [
+  //   {
+  //     id: 0,
+  //     expense: '',
+  //     description: '',
+  //     currency: '',
+  //     exchangeRate: 0,
+  //     paymentMethod: '',
+  //     tag: '',
+  //   },
+  // ],
 };
 
 export default function wallet(state = WALLET_INITIAL_STATE, action) {
   switch (action.type) {
-  case REQUESTED_DATA:
-    return {
-      isLoading: true,
-    };
   case RECEIVED_DATA:
     return {
-      isLoading: false,
-      currencies: [...state, Object.keys(action.currency)],
+      ...state,
+      currencies: action.currencies,
     };
+  // case RECEIVED_EXPENSE:
+  //   return {
+  //     ...state,
+  //     id: state + 1,
+  //     expense: action.expense,
+  //     description: description.description,
+  //     currency: action.currency,
+  //     paymentMethod: action.paymentMethod,
+  //     tag: action.tag,
+  //   };
   default:
     return state;
   }

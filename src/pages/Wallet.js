@@ -1,20 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { updateCurrency } from '../reducers/wallet';
+import { fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currencies: [BRL],
+    };
+
+    this.getCurrencies = this.getCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCurrencies();
+  }
+
+  async getCurrencies() {
+    // const { fetchCurrencies } = this.props;
+    try {
+      await fetchCurrencies();
+      const { currencies } = this.props;
+      this.setState({ currencies });
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
   render() {
-    const { email, currency } = this.props;
+    const { email } = this.props;
+    const { currencies } = this.state;
     return (
       <div>
-        <header>
-          <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">0</p>
-          <select data-testid="header-currency-field">
-            <option>BRL</option>
-          </select>
-        </header>
+        <p data-testid="email-field">{ email }</p>
+        <p data-testid="total-field">0</p>
+        <select data-testid="header-currency-field">
+          <option>BRL</option>
+        </select>
         <form>
           <label htmlFor="expenseInput">
             Valor
@@ -27,9 +51,7 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              { Object.keys(currency)
-                .filter((c) => c !== 'USDT')
-                .map((crncy, index) => <option key={ index }>{crncy}</option>) }
+              { currencies.map((crncy, index) => <option key={ index }>{crncy}</option>) }
             </select>
           </label>
           <label htmlFor="payment-method">
@@ -57,7 +79,8 @@ class Wallet extends React.Component {
 }
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
+  currencies: PropTypes.objectOf().isRequired,
+  // fetchCurrencies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -65,4 +88,8 @@ const mapStateToProps = (state) => ({
   currency: state.wallet.currency,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
