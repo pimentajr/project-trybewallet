@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 class SelectedTypeCoin extends Component {
   render() {
     const { arrayCurrencies } = this.props;
+    const { currency, funcHandleState } = this.props.myValue;
     return (
       <label htmlFor="moeda">
         Moeda
-        <select id="moeda">
+        <select id="moeda" value={ currency } name="currency" onChange={ funcHandleState }>
           { arrayCurrencies.map((res, index) => (
             <option key={ index }>{res}</option>)) }
         </select>

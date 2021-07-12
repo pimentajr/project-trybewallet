@@ -39,3 +39,7 @@
     transform: rotate(360deg);
   }
 }
+
+.expense-table {
+  border: 1px solid black;
+}

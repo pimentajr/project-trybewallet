@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 
 class ExpenseDescription extends Component {
   render() {
+    const { description, funcHandleState } = this.props.myValue;
     return (
       <label htmlFor="description">
         Descrição
-        <input type="text" id="description" />
+        <input
+          name="description"
+          type="text"
+          id="description"
+          value={ description }
+          onChange={ funcHandleState }
+        />
       </label>
     );
   }
 }
 
-export default ExpenseDescription
+export default ExpenseDescription;
