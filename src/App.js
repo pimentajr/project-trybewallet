@@ -6,15 +6,13 @@ import Wallet from './pages/Wallet';
 
 function App() {
   return (
-    <Switch>
-      {/* (
-      <div>
-        Hello, TrybeWallet!
-      </div>
-      ) */}
-      <Route exact path="/" component={ Login } />
-      <Route path="/carteira" render={ (props) => <Wallet { ...props } /> } />
-    </Switch>
+    <div className="divApp">
+      <h1>Hello, TrybeWallet!</h1>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/carteira" render={ (props) => <Wallet { ...props } /> } />
+      </Switch>
+    </div>
   );
 }
 
