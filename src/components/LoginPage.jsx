@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as EmailValidator from 'email-validator';
+import PropTypes from 'prop-types';
 import * as userAction from '../actions';
 
 class LoginPage extends Component {
@@ -8,7 +10,7 @@ class LoginPage extends Component {
     super();
 
     this.handleChange = this.handleChange.bind(this);
-    this.addTaskOnStore = this.addTaskOnStore.bind(this);
+    this.addTaskOnStoreAndRedirect = this.addTaskOnStoreAndRedirect.bind(this);
 
     this.state = {
       email: '',
@@ -36,11 +38,15 @@ class LoginPage extends Component {
     this.validateCredentials();
   }
 
-  addTaskOnStore() {
+  addTaskOnStoreAndRedirect() {
     const { email } = this.state;
     const { addEmail } = this.props;
 
     addEmail(email);
+
+    const { history } = this.props;
+
+    history.push('/carteira');
   }
 
   render() {
@@ -74,7 +80,7 @@ class LoginPage extends Component {
         <button
           disabled={ btnDisabled }
           type="button"
-          onClick={ this.addTaskOnStore }
+          onClick={ this.addTaskOnStoreAndRedirect }
         >
           Entrar
         </button>
@@ -88,3 +94,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(LoginPage);
+
+LoginPage.propTypes = {
+  addEmail: PropTypes.func.isRequired,
+  history: {
+    push: PropTypes.func,
+  }.isRequired,
+};

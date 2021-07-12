@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
-  user: '',
+  user: {
+    email: '',
+  },
 };
 
 const user = (state = INITIAL_STATE, action) => {
@@ -7,7 +9,7 @@ const user = (state = INITIAL_STATE, action) => {
   case 'SAVE_EMAIL':
     return {
       ...state,
-      user: action.payload,
+      email: action.payload,
     };
   default:
     return state;
