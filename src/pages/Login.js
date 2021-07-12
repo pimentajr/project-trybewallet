@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sendLogin } from '../actions';
@@ -88,5 +89,9 @@ class Login extends React.Component {
 const mapDispatchToprops = (dispatch) => ({
   sendAndEnter: (payload) => dispatch(sendLogin(payload)),
 });
+
+Login.propTypes = {
+  sendAndEnter: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToprops)(Login);

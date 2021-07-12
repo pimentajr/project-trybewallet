@@ -58,23 +58,36 @@
 }
 
 .walletHeader h3 {
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 .walletHeaderRight {
+  position: relative;
   display: flex;
+  flex-direction: row;
+  min-width: auto;
   justify-content: space-between;
-  margin-right: 20px;
+  /* padding: 30px; */
+  /* margin-right: 20px; */
+  background-color: blue;
+  color:cornsilk;
+
 }
 
-.email {
+.walletHeaderRight span {
+  /* display: inline-block; */
+  color: aquamarine;
+  padding: 30px;
+}
+
+/* .email {
   position:relative;
   margin-right: 20px;
-}
+} */
 
-.wallet h3 {
+/* .wallet h3 {
   display: inline;
-}
+} */
 
 @media ( prefers-reduced-motion : no-preference ) {
 

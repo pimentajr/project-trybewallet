@@ -12,13 +12,13 @@ class Wallet extends React.Component {
         <div className="walletHeader">
           <h3>TrybeWallet</h3>
           <div className="walletHeaderRight">
-            <p className="email" data-testid="email-field">
+            <span className="email" data-testid="email-field">
               { getLogin }
-            </p>
-            <p className="total" data-testid="total-field">
+            </span>
+            <span className="total" data-testid="total-field">
               Total:
               { TOTAL_INIT_VALUE }
-            </p>
+            </span>
             <span data-testid="header-currency-field">
               { CAMBIO_INIT_VALUE }
             </span>
