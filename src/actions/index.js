@@ -14,6 +14,11 @@ export const setArrayExpenses = (payload) => ({
   payload,
 });
 
+export const removeArrayExpenses = (payload) => ({
+  type: 'REMOVE_EXPENSES',
+  payload,
+});
+
 export const fetchCurrencie = () => async (dispath) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const object = await response.json();
