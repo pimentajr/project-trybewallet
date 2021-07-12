@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { sendLogin } from '../actions';
 
 const emailRegexp = new RegExp('\\S+@\\S+\\.\\S+');
 
@@ -14,6 +17,7 @@ class Login extends React.Component {
 
     this.validaLogin = this.validaLogin.bind(this);
     this.handle = this.handle.bind(this);
+    // this.sendAndEnter = this.sendAndEnter.bind(this);
   }
 
   handle({ target }) {
@@ -37,6 +41,7 @@ class Login extends React.Component {
 
   render() {
     const { email, status, pwLength } = this.state;
+    const { sendAndEnter } = this.props;
 
     return (
       <div className="Login">
@@ -64,17 +69,24 @@ class Login extends React.Component {
           onChange={ this.handle }
         />
         <br />
-        <button
-          className="loginButton"
-          type="button"
-          disabled={ status }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            className="loginButton"
+            type="button"
+            disabled={ status }
+            onClick={ () => sendAndEnter(email) }
+          >
+            Entrar
+          </button>
+        </Link>
 
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToprops = (dispatch) => ({
+  sendAndEnter: (payload) => dispatch(sendLogin(payload)),
+});
+
+export default connect(null, mapDispatchToprops)(Login);

@@ -6,11 +6,11 @@
   justify-content: center;
 }
 
-.divApp h1{
+/* .divApp h1{
   position: relative;
   text-align: center;
   font-size: 70px;
-}
+} */
 
 .Login {
   display: flex;
