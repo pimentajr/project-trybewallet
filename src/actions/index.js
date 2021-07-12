@@ -16,7 +16,7 @@ const getCurrenciesError = (error) => ({ type: GET_CURRENCIES_ERROR, payload: er
 export function fetchApiCurrencies() {
   return (dispatch) => {
     dispatch(getCurrencies());
-    return fetch('https://dog.ceo/api/breeds/image/random')
+    return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((r) => r.json()
         .then(
           (json) => dispatch(getCurrenciesSucess(json)),
