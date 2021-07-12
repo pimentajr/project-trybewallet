@@ -1,0 +1,14 @@
+.wallet__header {
+  display: flex;
+  background-color: salmon;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.wallet__header h2 {
+  margin-right: auto;
+}
+
+.wallet__header span:first-of-type {
+  margin-right: 10px;
+}

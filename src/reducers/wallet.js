@@ -1,12 +1,15 @@
 const DEFAULT_STATE = {
-  currencies: {},
+  currencies: [],
   expenses: [],
 };
 
 const walletReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-  case 1:
-    return 1;
+  case 'STORE_CURRENCIES':
+    return {
+      ...state,
+      currencies:
+        Object.values(action.currencies).filter(({ codein }) => codein !== 'BRLT') };
   default:
     return state;
   }
