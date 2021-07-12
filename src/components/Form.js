@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-export const Form = () => {
+export const Form = (props) => {
+  const { wallet } = props;
+  const { currencies } = wallet;
+
   return (
     <form className="Form" action="#">
       <label htmlFor="form-value">
@@ -16,11 +19,10 @@ export const Form = () => {
 
       <label htmlFor="form-currency">
         Moeda:
-        <select id="form-currency" name="Moeda">
-            <option>BRL</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
+        <select id="form-currency" name="Moeda" >
+          {currencies.map((currency) => (
+            <option key={ currency }>{ currency }</option>
+          ))}
         </select>
       </label>
 
@@ -48,9 +50,7 @@ export const Form = () => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = {
   

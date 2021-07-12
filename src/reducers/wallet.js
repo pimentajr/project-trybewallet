@@ -12,21 +12,23 @@ export default function walletReducer(state = INITIAL_STATE, action) {
     case Types.REQUEST:
       return {
         ...state,
-        isLoading: true
-      }
+        isLoading: true,
+      };
     case Types.GET_DATA:
+      const allCurrencies = Object.keys(action.payload);
+      const filteredCurrencies = allCurrencies.filter((currency) => currency !== 'USDT');
       return {
         ...state,
         isLoading: false,
-        
-      }
+        currencies: [...filteredCurrencies],
+      };
     case Types.REQUEST_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.error
-      }
+        error: action.payload,
+      };
     default:
       return state;
-  }
-}
+  };
+};

@@ -1,16 +1,16 @@
 import * as Types from './actionTypes';
 import { currencyAPI } from '../api/currencyAPI';
 
-export const requestAPI = () => ({ type: Types.REQUEST_API });
+export const requestAPI = () => ({ type: Types.REQUEST });
 
 export const getData = (data) => ({
   type: Types.GET_DATA,
-  data: data
+  payload: data,
  });
 
 export const requestError = (error) => ({
   type: Types.REQUEST_ERROR,
-  error: error,
+  payload: error,
 });
 
 export const fetchAPI = () => async (dispatch) => {
