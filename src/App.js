@@ -6,11 +6,11 @@ import Wallet from './pages/Wallet';
 function App() {
   return (
     <Switch>
-      (
+      {/* (
       <div>
         Hello, TrybeWallet!
       </div>
-      )
+      ) */}
       <Route exact path="/" component={ Login } />
       <Route path="/carteira" render={ (props) => <Wallet { ...props } /> } />
     </Switch>
