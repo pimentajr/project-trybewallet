@@ -1,5 +1,6 @@
 // Coloque aqui suas actions
 export const ADD_EMAIL = 'ADD_EMAIL';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
@@ -8,6 +9,11 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const addEmail = (email) => ({
   type: ADD_EMAIL,
   email,
+});
+
+export const removeExpense = (expense) => ({
+  type: REMOVE_EXPENSE,
+  expense,
 });
 
 export const addExpense = (expense, json) => ({
