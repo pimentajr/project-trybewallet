@@ -8,7 +8,7 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
-      currencies: [BRL],
+      currencies: ['BRL', 'USD'],
     };
 
     this.getCurrencies = this.getCurrencies.bind(this);
@@ -19,11 +19,11 @@ class Wallet extends React.Component {
   }
 
   async getCurrencies() {
-    // const { fetchCurrencies } = this.props;
+    const { fetchCurrency } = this.props;
     try {
-      await fetchCurrencies();
-      const { currencies } = this.props;
-      this.setState({ currencies });
+      await fetchCurrency();
+      const { currency } = this.props;
+      this.setState({ currencies: currency });
     } catch (error) {
       return console.log(error);
     }
@@ -79,17 +79,17 @@ class Wallet extends React.Component {
 }
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.objectOf().isRequired,
-  // fetchCurrencies: PropTypes.func.isRequired,
+  currency: PropTypes.objectOf().isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  currency: state.wallet.currency,
+  currency: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrencies: () => dispatch(fetchCurrencies()),
+  fetchCurrency: () => dispatch(fetchCurrencies()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

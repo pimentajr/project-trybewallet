@@ -21,7 +21,7 @@ export default function wallet(state = WALLET_INITIAL_STATE, action) {
   case RECEIVED_DATA:
     return {
       ...state,
-      currencies: action.currencies,
+      currencies: Object.keys(action.currencies).filter((c) => c !== 'USDT'),
     };
   // case RECEIVED_EXPENSE:
   //   return {
