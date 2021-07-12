@@ -2,23 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeArrayExpenses } from '../actions';
+import CompTbHead from './CompTbHead';
 
 const HeaderDesc = (props) => {
   const { expenses, removeItem } = props;
   return (
     <table>
       <thead>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
+        <CompTbHead />
       </thead>
       <tbody>
         { expenses.map(
@@ -41,6 +32,13 @@ const HeaderDesc = (props) => {
                   onClick={ () => removeItem(id) }
                 >
                   Deletar
+                </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick="teste"
+                >
+                  Editar
                 </button>
               </td>
             </tr>
