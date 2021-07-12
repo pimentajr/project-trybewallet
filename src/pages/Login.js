@@ -1,28 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { sendInfo } from '../actions';
+import LoginForm from '../components/LoginForm';
 
 export default function Login() {
+  const [login, setLogin] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleChange = (element) => {
+    const { target } = element;
+    const { name, value } = target;
+    setLogin({ ...login, [name]: value });
+  };
+
+  const handleSubmit = (element) => {
+    element.preventDefault();
+    dispatch(sendInfo(login));
+    history.push('/carteira');
+  };
+
+  const handleDisabled = () => {
+    const emailValidation = new RegExp(
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/,
+    );
+    const passwordValidation = 6;
+    if (emailValidation.test(login.email)
+     && login.password.length >= passwordValidation) {
+      return false;
+    }
+    return true;
+  };
   return (
-    <div>
-      <h1>Login</h1>
-      <form>
-        <label htmlFor="email">
-          <input
-            placeholder="Email"
-            name="email"
-            type="email"
-            data-testid="email-input"
-          />
-        </label>
-        <label htmlFor="password">
-          <input
-            placeholder="Senha"
-            name="password"
-            type="password"
-            data-testid="password-input"
-          />
-        </label>
-        <button type="button">Entrar</button>
-      </form>
-    </div>
+    <LoginForm
+      handleSubmit={ handleSubmit }
+      handleChange={ handleChange }
+      handleDisabled={ handleDisabled }
+    />
+
   );
 }
