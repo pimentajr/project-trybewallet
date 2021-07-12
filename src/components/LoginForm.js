@@ -1,6 +1,10 @@
 import React from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { saveEmail } from '../actions';
 
-// http://jsfiddle.net/ghvj4gy9/
+// Regex http://jsfiddle.net/ghvj4gy9/
 const username = '^(([^<>()[\\]\\.,;:\\s@"]+(\\.[^<>()[\\]\\.,;:\\s@"]+)*)|(".+"))';
 const domainName = '@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}';
 const domain = '\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$';
@@ -15,9 +19,12 @@ class LoginForm extends React.Component {
       email: '',
       password: '',
       btnDisabled: false,
+      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.condition = this.condition.bind(this);
+    this.openButton = this.openButton.bind(this);
   }
 
   handleChange({ value, name }) {
@@ -34,10 +41,23 @@ class LoginForm extends React.Component {
     return EMAIL_REGEX.test(email) && password.length >= passLength;
   }
 
+  condition() {
+    /* e.preventDefault(); */
+    const { email } = this.state;
+    const { emailInput } = this.props;
+    this.setState({ redirect: true });
+    emailInput(email);
+  }
+
   render() {
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to="/carteira" />;
+    }
     const { email, password, btnDisabled } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.condition }>
         <label htmlFor="email-input">
           Insira seu email:
           <input
@@ -63,13 +83,21 @@ class LoginForm extends React.Component {
           />
         </label>
 
-        <button type="button" disabled={ !btnDisabled }>Entrar</button>
+        <button type="submit" disabled={ !btnDisabled }>Entrar</button>
 
       </form>
     );
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  emailInput: (payload) => dispatch(saveEmail(payload)),
+});
 
-// Luiz Wendel me ajudou muito no requisito 2 e 3
+LoginForm.propTypes = {
+  emailInput: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(LoginForm);
+
+// Luiz Wendel me ajudou muito no requisito 2
