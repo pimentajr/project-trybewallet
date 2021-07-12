@@ -3,6 +3,62 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.formComponents = this.formComponents.bind(this);
+  }
+
+  formComponents() {
+    return (
+      <form className="form">
+        <label htmlFor="valor">
+          Valor:&nbsp;
+          <input
+            type="text"
+            id="valor"
+          />
+        </label>
+        <label htmlFor="Moeda">
+          Moeda:&nbsp;
+          <select
+            id="Moeda"
+          >
+            <option>Vazio</option>
+          </select>
+        </label>
+        <label htmlFor="Método de pagamento">
+          Método de pagamento:&nbsp;
+          <select
+            id="Método de pagamento"
+          >
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="Tag">
+          Tag:&nbsp;
+          <select
+            id="Tag"
+          >
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+        <label htmlFor="Descrição">
+          Descrição:&nbsp;
+          <input
+            type="text"
+            id="Descrição"
+          />
+        </label>
+      </form>
+    );
+  }
+
   render() {
     const { getLogin } = this.props;
     const TOTAL_INIT_VALUE = 0; // remover depois
@@ -16,7 +72,7 @@ class Wallet extends React.Component {
               { getLogin }
             </span>
             <span className="total" data-testid="total-field">
-              Total:
+              Total: &nbsp;
               { TOTAL_INIT_VALUE }
             </span>
             <span data-testid="header-currency-field">
@@ -24,6 +80,7 @@ class Wallet extends React.Component {
             </span>
           </div>
         </div>
+        {this.formComponents()}
       </div>
     );
   }

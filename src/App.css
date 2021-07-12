@@ -69,15 +69,15 @@
   justify-content: space-between;
   /* padding: 30px; */
   /* margin-right: 20px; */
-  background-color: blue;
+  /* background-color: blue; */
   color:cornsilk;
 
 }
 
 .walletHeaderRight span {
   /* display: inline-block; */
-  color: aquamarine;
-  padding: 30px;
+  color: black;
+  padding: 20px 30px;
 }
 
 /* .email {
@@ -88,6 +88,20 @@
 /* .wallet h3 {
   display: inline;
 } */
+
+.form {
+  position: relative;
+  display: flex;
+  min-width: auto;
+  justify-content: space-between;
+  background-color: black;
+}
+
+.form label {
+  color: antiquewhite;
+  padding: 20px 30px;
+  font-weight: bold;
+}
 
 @media ( prefers-reduced-motion : no-preference ) {
 
