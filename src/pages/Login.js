@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setForm } from '../actions';
-import Form from './Form';
+import Form from '../components/Form';
 
 function Login() {
   const dispatch = useDispatch();
