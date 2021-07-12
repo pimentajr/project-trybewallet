@@ -49,6 +49,33 @@
   pointer-events: none;
 }
 
+.walletHeader {
+  position: relative;
+  display: flex;
+  min-width: auto;
+  justify-content: space-between;
+  background-color: aquamarine;
+}
+
+.walletHeader h3 {
+  margin-left: 20px;
+}
+
+.walletHeaderRight {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.email {
+  position:relative;
+  margin-right: 20px;
+}
+
+.wallet h3 {
+  display: inline;
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
@@ -59,6 +86,7 @@
 .App-header {
   align-items: center;
   background-color: #282c34;
+  justify-content: space-between;
   color: white;
   display: flex;
   flex-direction: column;
