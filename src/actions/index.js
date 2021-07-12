@@ -1,1 +1,8 @@
-// Coloque aqui suas actions
+export const USER_EMAIL = 'USER_EMAIL';
+
+export default function userEmail(payload) {
+  return {
+    type: USER_EMAIL,
+    payload,
+  };
+}

@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import userEmail from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,8 +34,10 @@ class Login extends React.Component {
     this.enableButton();
   }
 
-  hadleClickButton(event) {
-    event.preventDefault();
+  hadleClickButton() {
+    const { email, isDisabled } = this.state;
+    const { emailDispatch } = this.props;
+    if (isDisabled) emailDispatch(email);
   }
 
   render() {
@@ -56,16 +62,26 @@ class Login extends React.Component {
             onChange={ this.hadleChange }
           />
         </label>
-        <button
-          type="submit"
-          disabled={ !isDisabled }
-          onSubmit={ this.hadleClickButton }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !isDisabled }
+            onClick={ this.hadleClickButton }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  emailDispatch: (email) => dispatch(userEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  emailDispatch: PropTypes.func.isRequired,
+};
