@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { fetchCoin, addExpensesAction } from '../actions';
 import * as currencyActions from '../actions';
+import TableWallet from './TableWallet';
 
 class WalletComponent extends Component {
   constructor(props) {
@@ -42,15 +42,15 @@ class WalletComponent extends Component {
     return (
       <div>
         <form>
-          <label htmlFor="va">
+          <label htmlFor="value">
             Valor
-            <input type="text" name="value" id="va" onChange={ this.handleChange } />
+            <input type="text" name="value" id="value" onChange={ this.handleChange } />
           </label>
           <label htmlFor="Moeda">
             Moeda
             <select id="Moeda" name="currency" onChange={ this.handleChange }>
               { Object.values(acronymCurrency).filter((item) => item.codein !== 'BRLT')
-                .map((e, index) => <option key={ index }>{e.code}</option>) }
+                .map((item2, index) => <option key={ index }>{item2.code}</option>) }
             </select>
           </label>
           <label htmlFor="metodo-pagamento">
@@ -82,6 +82,7 @@ class WalletComponent extends Component {
           </label>
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
+        <TableWallet />
       </div>
     );
   }
