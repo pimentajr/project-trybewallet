@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as EmailValidator from 'email-validator';
 import * as userAction from '../actions';
 
 class LoginPage extends Component {
@@ -11,13 +12,28 @@ class LoginPage extends Component {
 
     this.state = {
       email: '',
+      password: 0,
+      btnDisabled: true,
     };
+  }
+
+  validateCredentials() {
+    const { email, password } = this.state;
+
+    const re = /^.{5,}$/;
+    if (EmailValidator.validate(email) && re.test(String(password))) {
+      this.setState({ btnDisabled: false });
+    } else {
+      this.setState({ btnDisabled: true });
+    }
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
+
+    this.validateCredentials();
   }
 
   addTaskOnStore() {
@@ -28,6 +44,7 @@ class LoginPage extends Component {
   }
 
   render() {
+    const { btnDisabled } = this.state;
     return (
       <div>
         <form>
@@ -48,11 +65,14 @@ class LoginPage extends Component {
               data-testid="password-input"
               type="password"
               placeholder="Digite sua senha..."
+              name="password"
               id="input-password"
+              onChange={ this.handleChange }
             />
           </label>
         </form>
         <button
+          disabled={ btnDisabled }
           type="button"
           onClick={ this.addTaskOnStore }
         >
