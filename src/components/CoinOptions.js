@@ -6,10 +6,10 @@ export default function CoinOptions() {
   return (
     <>
       { coins.map((coin, index) => {
-        if (coin.codein !== 'BRLT') {
+        if (coin !== 'USDT') {
           return (
             <option key={ index }>
-              { coin.code }
+              { coin }
             </option>
           );
         }
