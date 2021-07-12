@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addAssignement } from '../actions';
+import { setUser } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -58,20 +58,19 @@ class Login extends React.Component {
 
   renderSubmitButton() {
     const { email, password } = this.state;
+    const { setUserAction } = this.props;
     return (
-      <div>
-        <Link
-          to="/carteira"
-          onClick={ (e) => {
-            if (!email && !password) {
-              e.preventDefault();
-            }
-            this.setState(email);
-          } }
-        >
-          Entrar
-        </Link>
-      </div>
+      <Link
+        to="/carteira"
+        onClick={ (e) => {
+          if (!email && !password) {
+            e.preventDefault();
+          }
+          setUserAction(email);
+        } }
+      >
+        Entrar
+      </Link>
     );
   }
 
@@ -88,4 +87,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUserAction: (state) => dispatch(setUser(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
