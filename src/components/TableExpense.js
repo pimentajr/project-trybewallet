@@ -1,11 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import deleteExpenseAction from '../actions/deleteExpenseAction';
 
 class TableExpense extends React.Component {
+  renderExpenses() {
+    const { expenses, deleteExpense } = this.props;
+    return (
+      <tbody>
+        { expenses.map((expense, key) => (
+          <tr key={ key }>
+            <td>{ expense.description }</td>
+            <td>{ expense.tag }</td>
+            <td>{ expense.method }</td>
+            <td>{ expense.value }</td>
+            <td>{ (expense.exchangeRates[expense.currency].name).split('/', 1) }</td>
+            <td>
+              {
+                parseFloat(expense.exchangeRates[expense.currency].ask)
+                  .toFixed(2)
+              }
+            </td>
+            <td>
+              {
+                (expense
+                  .exchangeRates[expense.currency]
+                  .ask * parseFloat(expense.value))
+                  .toFixed(2)
+              }
+            </td>
+            <td>Real</td>
+            <td>
+              <button
+                type="button"
+                data-testid="delete-btn"
+                onClick={ () => deleteExpense(expense) }
+              >
+                Excluir
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  }
+
   render() {
-    const { expenses } = this.props;
-    console.log(expenses);
     return (
       <table>
         <thead>
@@ -21,32 +61,7 @@ class TableExpense extends React.Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>
-          { expenses.map((expense, key) => (
-            <tr key={ key }>
-              <td>{ expense.description }</td>
-              <td>{ expense.tag }</td>
-              <td>{ expense.method }</td>
-              <td>{ expense.value }</td>
-              <td>{ (expense.exchangeRates[expense.currency].name).split('/', 1) }</td>
-              <td>
-                {
-                  parseFloat(expense.exchangeRates[expense.currency].ask)
-                    .toFixed(2)
-                }
-              </td>
-              <td>
-                {
-                  (expense
-                    .exchangeRates[expense.currency]
-                    .ask * parseFloat(expense.value))
-                    .toFixed(2)
-                }
-              </td>
-              <td>Real</td>
-            </tr>
-          ))}
-        </tbody>
+        { this.renderExpenses() }
       </table>
     );
   }
@@ -54,6 +69,10 @@ class TableExpense extends React.Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (expense) => dispatch(deleteExpenseAction(expense)),
 });
 
 TableExpense.propTypes = {
@@ -68,6 +87,7 @@ TableExpense.propTypes = {
     method: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
   })).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(TableExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(TableExpense);
