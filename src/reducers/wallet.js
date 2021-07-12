@@ -32,6 +32,7 @@ function coinsReducer(state = INITIAL_STATE, action) {
     };
   case SAVE_EXPENSES:
     return {
+      ...state,
       expenses: [...state.expenses, action.expenses],
       isLoading: false,
     };

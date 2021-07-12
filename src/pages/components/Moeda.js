@@ -48,3 +48,4 @@ Moeda.propTypes = {
 export default connect(mapStateToProps, mapDispatchToProps)(Moeda);
 
 // Tive ajuda do parceiro Arthur Hermann
+// Também me ajudou o parceiro Guilherme Pereira

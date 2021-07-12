@@ -13,6 +13,7 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: '',
       description: '',
       currency: '',
@@ -27,14 +28,30 @@ class Wallet extends React.Component {
 
   readInput(event) {
     const { value, name } = event.target;
+    const { data } = this.props;
     this.setState({
       [name]: value,
+      exchangeRates: data[0], // [0] porque é um array de objetos
     });
   }
 
+  calulator() {
+    const { expenses } = this.props;
+    console.log(expenses);
+    const total = expenses.reduce((acumulator, { exchangeRates, currency, value }) => (
+      acumulator + (Number(exchangeRates[currency].ask) * Number(value))
+    ), 0);
+    console.log(total);
+    return total.toFixed(2);
+  }
+
   sendData() {
-    const { saveExpenses } = this.props;
-    return saveExpenses(this.state);
+    const { saveExpenses, fetchCoins } = this.props;
+    fetchCoins(); // segunda requisição para pegar valores mais atuais
+    this.setState((oldState) => ({
+      id: oldState.id + 1 }
+    ));
+    saveExpenses(this.state);
   }
 
   render() {
@@ -47,7 +64,7 @@ class Wallet extends React.Component {
             { email }
           </h3>
           <h2 data-testid="total-field">
-            0
+            { this.calulator() }
           </h2>
           <h2 data-testid="header-currency-field">
             BRL
@@ -83,10 +100,13 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  data: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (e) => dispatch(actions.saveExpenses(e)),
+  fetchCoins: (e) => dispatch(actions.fetchCoins(e)),
 });
 
 Wallet.propTypes = {
