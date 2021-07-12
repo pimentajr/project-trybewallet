@@ -1,1 +1,14 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária
+const Initial_State = {
+  nicolas: 'vrauuu',
+};
+
+function loginReducer(state = Initial_State, action) {
+  switch (action.type) {
+  case 'LOGIN':
+    return action.value;
+  default:
+    return state;
+  }
+}
+
+export default loginReducer;
