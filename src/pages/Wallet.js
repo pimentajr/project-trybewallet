@@ -7,35 +7,35 @@ class Wallet extends Component {
     return (
       <form>
         <label htmlFor="value">
-          Value:
+          Valor:
           <input type="text" name="value" />
         </label>
-        <label htmlFor="currency">
-          Currency:
+        <label htmlFor="coin">
+          Moeda:
           <select name="coin" id="coin">
-            Vazio
+            vazio
           </select>
         </label>
         <label htmlFor="payment-method">
-          Payement method:
+          Método de Pagamento:
           <select name="payment" id="payment-method">
-            <option value="dinheiro">Cash</option>
-            <option value="credito">Credit Card</option>
-            <option value="debito">Debit Card</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="debito">Cartão de Débito</option>
+            <option value="credito">Cartão de Crédito</option>
           </select>
         </label>
         <label htmlFor="category">
           Tag
           <select name="category" id="category">
-            <option value="lazer">Vacations</option>
-            <option value="trabalho">Work</option>
-            <option value="Alimentacao">Food</option>
-            <option value="saude">Health</option>
-            <option value="transporte">Transport</option>
+            <option value="lazer">Lazer</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="alimentacao">Alimentação</option>
+            <option value="saude">Saúde</option>
+            <option value="transporte">Transporte</option>
           </select>
         </label>
         <label htmlFor="description">
-          Description:
+          Descrição:
           <input type="text" name="description" />
         </label>
       </form>
