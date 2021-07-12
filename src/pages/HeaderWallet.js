@@ -8,13 +8,11 @@ class HeaderWallet extends React.Component {
     // Referencia: https://github.com/tryber/sd-011-project-trybewallet/pull/73/files
     // do Cesar Bhering
     const total = expenses.length > 0
-      ? expenses
-        .reduce(
-          (acc, curr) => (acc + curr.value * curr.exchangeRates[curr.currency].ask),
-          0,
-        )
-        .toFixed(2)
-      : 0;
+      ? expenses.reduce((acc, curr) => {
+        console.log(curr.exchangeRates[curr.currency].ask);
+        return (acc + curr.value * curr.exchangeRates[curr.currency].ask);
+      }, 0) : 0;
+
     return (
       <header>
         <h3 data-testid="email-field">

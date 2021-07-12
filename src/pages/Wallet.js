@@ -9,25 +9,38 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.AddExpense = this.AddExpense.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    const { FetchApi } = this.props;
+    const { FetchApi, expenses } = this.props;
     FetchApi();
+    document.getElementById('description').value = expenses.description;
+    document.getElementById('currency').value = expenses.currency;
+    document.getElementById('method').value = expenses.method;
+    document.getElementById('tag').value = expenses.tag;
+    // document.getElementById('totalValue').value = parseFloat(objToChange.value);
   }
 
-  async AddExpense() {
-    const { DispatchExp, expenses, currencyApi } = this.props;
-    const { form } = document.forms;
-    await DispatchExp([{
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  AddExpense() {
+    const { DispatchExp, expenses, FetchApi, currencyApi } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    DispatchExp([{
       id: expenses.length,
-      value: form.Valor.value,
-      description: form.Description.value,
-      currency: form.Coin.value,
-      method: form.Method.value,
-      tag: form.Category.value,
+      value,
+      description,
+      currency,
+      method,
+      tag,
       exchangeRates: currencyApi,
     }]);
+    FetchApi();
   }
 
   render() {
@@ -36,17 +49,17 @@ class Wallet extends React.Component {
       <>
         <HeaderWallet />
         <form id="form">
-          <label htmlFor="Valor">
+          <label htmlFor="value">
             Valor
-            <input type="number" name="input-valor" id="Valor" />
+            <input type="number" name="value" id="value" onChange={ this.handleChange } />
           </label>
-          <label htmlFor="Description">
+          <label htmlFor="description">
             Descrição
-            <input name="input-descricao" id="Description" />
+            <input name="description" id="description" onChange={ this.handleChange } />
           </label>
-          <label htmlFor="Coin">
+          <label htmlFor="currency">
             Moeda
-            <select id="Coin">
+            <select id="currency" name="currency" onChange={ this.handleChange }>
               {
                 Object.keys(currencyApi).map((coin, index) => (
                   coin !== 'USDT' ? <option key={ index } value={ coin }>{coin}</option>
@@ -55,22 +68,22 @@ class Wallet extends React.Component {
               }
             </select>
           </label>
-          <label htmlFor="Method">
+          <label htmlFor="method">
             Método de pagamento
-            <select id="Method">
-              <option valor="monney">Dinheiro</option>
-              <option valor="credit">Cartão de crédito</option>
-              <option valor="debit">Cartão de débito</option>
+            <select id="method" name="method" onChange={ this.handleChange }>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="Category">
+          <label htmlFor="tag">
             Tag
-            <select id="Category">
-              <option valor="alimentation">Alimentação</option>
-              <option valor="fun">Lazer</option>
-              <option valor="work">Trabalho</option>
-              <option valor="transport">Transporte</option>
-              <option valor="health">Saúde</option>
+            <select id="tag" name="tag" onChange={ this.handleChange }>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
             </select>
           </label>
           <ButtonAddExpense onClick={ this.AddExpense } />
