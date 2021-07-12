@@ -91,4 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
   setUserAction: (state) => dispatch(setUser(state)),
 });
 
+Login.propTypes = {
+  setUserAction: PropTypes.func.isRequired,
+};
+
 export default connect(null, mapDispatchToProps)(Login);
