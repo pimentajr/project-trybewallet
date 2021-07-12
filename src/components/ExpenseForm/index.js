@@ -3,42 +3,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LabelledInput from '../LabelledInput';
 import LabelledSelect from '../LabelledSelect';
-import { fetchCurrencies } from '../../actions';
+import { fetchCurrencies, fetchCurrenciesList, updateExpense } from '../../actions';
 import { cloneObject } from '../../helpers/utils';
 
-const paymentOptions = [
-  { label: 'Dinheiro', value: 'Dinheiro' },
-  { label: 'Cartão de crédito', value: 'Cartão de crédito' },
-  { label: 'Cartão de débito', value: 'Cartão de débito' },
-];
+const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
-const tagOptions = [
-  { label: 'Alimentação', value: 'Alimentação' },
-  { label: 'Lazer', value: 'Lazer' },
-  { label: 'Trabalho', value: 'Trabalho' },
-  { label: 'Transporte', value: 'Transporte' },
-  { label: 'Saúde', value: 'Saúde' },
-];
-
-const baseURL = 'https://economia.awesomeapi.com.br/json/all';
-
-const currencyCodes = [
-  'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
-  'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
-];
+const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 const initialState = {
   value: 0,
   description: '',
   currency: '',
-  method: paymentOptions[0].value,
-  tag: tagOptions[0].value,
-  currencyOptions: [],
+  method: paymentOptions[0],
+  tag: tagOptions[0],
+  isEditing: false,
 };
 
 class ExpenseForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = { ...initialState };
 
@@ -47,7 +30,88 @@ class ExpenseForm extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchCurrencies();
+    const { setCurrenciesList } = this.props;
+
+    setCurrenciesList();
+  }
+
+  componentDidUpdate() {
+    const { editingExpense } = this.props;
+    const { currency, isEditing } = this.state;
+
+    if (Object.keys(editingExpense).length > 0 && !isEditing) {
+      this.setUpdatingValues(editingExpense);
+    }
+
+    if (currency === '') this.setInitialCurrency();
+  }
+
+  setInitialCurrency() {
+    const { currencies } = this.props;
+
+    this.setState({
+      currency: currencies[0],
+    });
+  }
+
+  setUpdatingValues({ value, description, currency, method, tag }) {
+    this.setState({
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      isEditing: true,
+    });
+  }
+
+  getInputs() {
+    const { currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+
+    return (
+      <>
+        <LabelledInput
+          id="value"
+          label="Valor"
+          type="number"
+          value={ value }
+          onChange={ this.handleChange }
+          data-testid="value-input"
+        />
+        <LabelledInput
+          id="description"
+          label="Descrição"
+          value={ description }
+          onChange={ this.handleChange }
+          data-testid="description-input"
+        />
+        <LabelledSelect
+          id="currency"
+          label="Moeda"
+          options={ currencies }
+          value={ currency }
+          onChange={ this.handleChange }
+          data-testid="currency-input"
+        />
+        <LabelledSelect
+          id="method"
+          label="Método de pagamento"
+          options={ paymentOptions }
+          value={ method }
+          onChange={ this.handleChange }
+          data-testid="method-input"
+        />
+        <LabelledSelect
+          id="tag"
+          label="Tag"
+          options={ tagOptions }
+          value={ tag }
+          onChange={ this.handleChange }
+          data-testid="tag-input"
+        />
+      </>
+    );
   }
 
   handleChange({ name, value }) {
@@ -56,100 +120,54 @@ class ExpenseForm extends React.Component {
     });
   }
 
-  async fetchCurrencies() {
-    const response = await fetch(baseURL);
-    const data = await response.json();
-    const currencies = Object.entries(data);
-
-    const filteredCurrencies = currencies.reduce(
-      (filtered, [key, value]) => {
-        if (currencyCodes.includes(key)) {
-          filtered.push({
-            label: value.code,
-            value: value.code,
-          });
-        }
-
-        return filtered;
-      },
-      [],
-    );
+  resetState() {
+    const { currencies } = this.props;
 
     this.setState({
-      currency: filteredCurrencies[0].value,
-      currencyOptions: filteredCurrencies,
-    });
-  }
-
-  resetState() {
-    this.setState(({ currencyOptions }) => ({
       ...initialState,
-      currency: currencyOptions[0].value,
-      currencyOptions,
-    }));
+      currency: currencies[0],
+    });
   }
 
   handleSubmit() {
     const stateClone = cloneObject(this.state);
-    const { newExpense } = this.props;
+    const { isEditing } = this.state;
+    const { newExpense, editingExpense, editExpense, setEditingExpense } = this.props;
 
-    delete stateClone.currencyOptions;
+    delete stateClone.isEditing;
 
-    newExpense(stateClone);
+    if (isEditing) editExpense({ ...editingExpense, ...stateClone });
+    else newExpense(stateClone);
 
     this.resetState();
+    setEditingExpense({});
   }
 
   render() {
-    const { value, description, currency, method, tag, currencyOptions } = this.state;
+    const { isEditing } = this.state;
 
     return (
       <form>
-        <LabelledInput
-          id="value"
-          label="Valor"
-          type="number"
-          value={ value }
-          onChange={ this.handleChange }
-        />
-        <LabelledInput
-          id="description"
-          label="Descrição"
-          value={ description }
-          onChange={ this.handleChange }
-        />
-        <LabelledSelect
-          id="currency"
-          label="Moeda"
-          options={ currencyOptions }
-          value={ currency }
-          onChange={ this.handleChange }
-        />
-        <LabelledSelect
-          id="method"
-          label="Método de pagamento"
-          options={ paymentOptions }
-          value={ method }
-          onChange={ this.handleChange }
-        />
-        <LabelledSelect
-          id="tag"
-          label="Tag"
-          options={ tagOptions }
-          value={ tag }
-          onChange={ this.handleChange }
-        />
-        <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
+        { this.getInputs() }
+        <button type="button" onClick={ this.handleSubmit }>
+          {isEditing ? 'Editar despesa' : 'Adicionar despesa' }
+        </button>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  newExpense: (payload) => dispatch(fetchCurrencies(payload)),
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseForm);
+const mapDispatchToProps = (dispatch) => ({
+  newExpense: (payload) => dispatch(fetchCurrencies(payload)),
+  editExpense: (expense) => dispatch(updateExpense(expense)),
+  setCurrenciesList: () => dispatch(fetchCurrenciesList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 
 ExpenseForm.propTypes = {
   newExpense: PropTypes.func,

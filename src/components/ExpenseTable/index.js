@@ -15,7 +15,7 @@ class ExpenseTable extends React.Component {
   }
 
   generateTableBody() {
-    const { expenses, deleteExpense } = this.props;
+    const { expenses, deleteExpense, setEditingExpense } = this.props;
 
     return expenses.map((expense, index) => (
       <tr key={ index }>
@@ -24,12 +24,19 @@ class ExpenseTable extends React.Component {
         <td>{expense.method}</td>
         <td>{roundCurrency(expense.value)}</td>
         <td>{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
-        <td>{roundCurrency(expense.exchangeRates[expense.currency].ask)}</td>
+        <td>{roundCurrency(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
         <td>
           { roundCurrency(expense.value * expense.exchangeRates[expense.currency].ask) }
         </td>
         <td>Real</td>
         <td>
+          <button
+            type="button"
+            onClick={ () => setEditingExpense(expense) }
+            data-testid="edit-btn"
+          >
+            Editar
+          </button>
           <button
             type="button"
             onClick={ () => deleteExpense(expense.id) }

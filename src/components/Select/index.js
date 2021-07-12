@@ -10,7 +10,7 @@ export default class Select extends React.Component {
       <select name={ id } onChange={ ({ target }) => onChange(target) } { ...attributes }>
         {
           options.map((option, index) => (
-            <option key={ index } value={ option.value }>{ option.label }</option>
+            <option key={ index } value={ option }>{ option }</option>
           ))
         }
       </select>

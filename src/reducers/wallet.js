@@ -1,8 +1,12 @@
-import { ADD_EXPENSE, REMOVE_EXPENSE } from '../actions';
+import { ADD_CURRENCIES, ADD_EXPENSE, REMOVE_EXPENSE, UPDATE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   expenses: [],
+  currencies: [],
 };
+
+const updatedExpenses = (expenses, updatedExpense) => expenses
+  .map((expense) => (expense.id !== updatedExpense.id ? expense : updatedExpense));
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -23,6 +27,16 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: state.expenses.filter(({ id }) => action.id !== id),
+    };
+  case UPDATE_EXPENSE:
+    return {
+      ...state,
+      expenses: updatedExpenses(state.expenses, action.payload.expense),
+    };
+  case ADD_CURRENCIES:
+    return {
+      ...state,
+      currencies: action.payload.currencies,
     };
   default:
     return state;
