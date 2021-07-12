@@ -5,14 +5,15 @@ import Valor from './Valor';
 import { fetchExpense } from '../actions';
 
 class Form extends Component {
-  constructor(props) {
-    super(props);
+  constructor({ sendExp }) {
+    super({ sendExp });
     this.state = {
       value: 0,
-      moeda: '',
-      tag: '',
+      moeda: 'USD',
+      tag: 'Alimentação',
       descricao: '',
-      pay: '',
+      pay: 'Dinheiro',
+      id: sendExp.length || 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -24,8 +25,16 @@ class Form extends Component {
   }
 
   handleClick() {
-    const { sendExpense } = this.props;
+    const { sendExpense, sendExp } = this.props;
     sendExpense(this.state);
+    this.setState({
+      value: 0,
+      moeda: 'USD',
+      tag: 'Alimentação',
+      descricao: '',
+      pay: 'Dinheiro',
+      id: sendExp.length + 1,
+    });
   }
 
   render() {

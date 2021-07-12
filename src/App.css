@@ -1,3 +1,22 @@
+body {
+  display: flex;
+
+}
 .table {
-  display: grid;
+  display: grid table-column;
+  border: 2px black solid;
+  flex-basis: 100%;
+  box-shadow: 2px 3px 3px black;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+}
+
+.table-header {
+  background: gray;
+  
+}
+
+.header-total {
+ text-align: left;
 }

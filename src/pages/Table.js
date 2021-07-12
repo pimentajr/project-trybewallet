@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 class Table extends Component {
   render() {
-    const { getCoin } = this.props;
+    const { sendExp } = this.props;
     return (
       <div>
         <table className="table">
-          <thead>
-            <tr>
+          <thead className="table-header">
+            <tr className="menu">
               <th>Descrição</th>
               <th>Tag</th>
               <th>Método de Pagamento</th>
@@ -22,11 +22,20 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {getCoin.map((product) => (
+            { sendExp.map((product) => (
               <tr key={ product.id }>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.stock}</td>
+                <td>{ product.descricao }</td>
+                <td>{ product.tag }</td>
+                <td>{ product.pay }</td>
+                <td>{ product.value }</td>
+                <td>{ product.exchangeRates[product.moeda].name }</td>
+                <td>{ Number(product.exchangeRates[product.moeda].ask).toFixed(2) }</td>
+                <td>
+                  { Number(product.exchangeRates[product.moeda].ask * product.value)
+                    .toFixed(2) }
+                </td>
+                <td>Real</td>
+                <td>button</td>
               </tr>
             ))}
           </tbody>
@@ -37,11 +46,11 @@ class Table extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  getCoin: state.wallet.currencies,
+  sendExp: state.wallet.expenses,
 });
 
 Table.propTypes = ({
-  getCoin: PropTypes.arrayOf(PropTypes.string),
+  sendExp: PropTypes.arrayOf(PropTypes.object),
 }).isRequired;
 
 export default connect(mapStateToProps, null)(Table);

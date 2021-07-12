@@ -15,7 +15,7 @@ function wallet(state = INITIAL_STATE, action) {
   case SEND_EXPENSE:
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, action.payload],
     };
   default:
     return state;
