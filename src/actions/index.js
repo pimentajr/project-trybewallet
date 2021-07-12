@@ -13,13 +13,25 @@ const getCurrenciesSucess = (payload) => ({ type: GET_CURRENCIES_SUCCESS, payloa
 
 const getCurrenciesError = (error) => ({ type: GET_CURRENCIES_ERROR, payload: error });
 
-export const fetchApiCurrencies = async (dispatch) => {
-  dispatch(getCurrencies());
-  try {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const results = await response.json();
-    dispatch(getCurrenciesSucess(results));
-  } catch (error) {
-    dispatch(getCurrenciesError(error));
-  }
-}; // Se houver sucesso faça dispatch no results, se houver erro faça dispatch no erro.
+export function fetchApiCurrencies() {
+  return (dispatch) => {
+    dispatch(getCurrencies());
+    return fetch('https://dog.ceo/api/breeds/image/random')
+      .then((r) => r.json()
+        .then(
+          (json) => dispatch(getCurrenciesSucess(json)),
+          (error) => dispatch(getCurrenciesError(error)),
+        ));
+  };
+}
+
+// export const fetchApiCurrencies = async (dispatch) => {
+//   dispatch(getCurrencies());
+//   try {
+//     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+//     const results = await response.json();
+//     dispatch(getCurrenciesSucess(results));
+//   } catch (error) {
+//     dispatch(getCurrenciesError(error));
+//   }
+// }; // Se houver sucesso faça dispatch no results, se houver erro faça dispatch no erro.

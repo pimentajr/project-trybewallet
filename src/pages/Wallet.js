@@ -2,49 +2,46 @@ import React from 'react';
 import '../styles/Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCurrencies } from '../actions';
+import { fetchApiCurrencies } from '../actions';
 
 class Wallet extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     currency: ''
-  //   }
-  // }
+  constructor() {
+    super();
+    this.state = {
+    };
 
-  // createMethods() {
-  //   const { array } = this.props;
-  //   return (
-  //     <label htmlFor="currency-select">
-  //       Moeda
-  //       <select
-  //         name="currency"
-  //         id="currency-select"
-  //         onChange={ (event) => this.handleChange(event) }
-  //       >
-  //         {array.map((currency, index) => (
-  //           <option key={ index }>{currency}</option>
-  //         ))}
-  //       </select>
-  //     </label>
-  //   );
-  // }
+    this.handleChange = this.handleChange.bind(this);
+    this.renderCoinCurrencies = this.renderCoinCurrencies.bind(this);
+  }
 
-  // componentDidMount() {
-  //   this.createMethods();
-  // }
-
-  // getCoins() {
-  //   const { array } = this.props;
-  //   this.getCoins();
-  //   console.log(array);
-  // }
+  componentDidMount() {
+    const { fetchAPI } = this.props;
+    fetchAPI();
+  }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     }, () => this.LoginVerification());
+  }
+
+  renderCoinCurrencies() {
+    const { currencies } = this.props;
+    return (
+      <label htmlFor="moeda">
+        Moeda
+        <select
+          name="moeda"
+          id="moeda"
+          onChange={ () => this.handleChange() }
+        >
+          {currencies.map((currency, index) => (
+            <option key={ index }>{currency}</option>
+          ))}
+        </select>
+      </label>
+    );
   }
 
   render() {
@@ -68,10 +65,7 @@ class Wallet extends React.Component {
             <textarea id="expenses-description" />
           </label>
 
-          <label htmlFor="moeda">
-            Moeda:
-            {/* <select id="moeda" onChange={ this.handleChange }>{}</select> */}
-          </label>
+          {this.renderCoinCurrencies()}
 
           <label htmlFor="payment-method-input">
             Método de pagamento:
@@ -110,7 +104,7 @@ const mapStateToProps = (state) => ({
 // Função responsável por pegar a action e colocar dentro de uma prop para o componente.
 // Para que dessa prop o dispatch possa ser acionado.
 const mapDispatchToProps = (dispatch) => ({
-  array: (array) => dispatch(getCurrencies(array)),
+  fetchAPI: () => dispatch(fetchApiCurrencies()),
 });
 
 Wallet.propTypes = {
@@ -119,4 +113,4 @@ Wallet.propTypes = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
-// TODO Ja configurei as actions e reducers, falta mexer no wallet.js.
+// TODO Ja configurei as actions e reducers, falta fazer o MAP no wallet.js.
