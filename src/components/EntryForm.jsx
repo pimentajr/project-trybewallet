@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 class EntryForm extends Component {
   render() {
     const { currencies } = this.props;
-
     return (
       <form>
         <label htmlFor="value">
           Valor:
           <input name="value" type="number" />
         </label>
-
         <label htmlFor="currency">
           Moeda:
           <select name="currency">
@@ -27,7 +25,6 @@ class EntryForm extends Component {
             }
           </select>
         </label>
-
         <label htmlFor="paymentMethod">
           Método de pagamento:
           <select name="paymentMethod">
@@ -36,7 +33,6 @@ class EntryForm extends Component {
             <option value="debitCard">Cartão de débito</option>
           </select>
         </label>
-
         <label htmlFor="tag">
           Tag:
           <select name="tag">
@@ -46,6 +42,10 @@ class EntryForm extends Component {
             <option value="transport">Transporte</option>
             <option value="health">Saúde</option>
           </select>
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <input type="text" name="description" />
         </label>
       </form>
     );
