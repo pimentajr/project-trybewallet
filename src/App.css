@@ -3,7 +3,6 @@ body {
 }
 
 .table {
-  display: grid table-column;
   border: 2px black solid;
   box-shadow: 2px 3px 3px black;
   flex-basis: 100%;
