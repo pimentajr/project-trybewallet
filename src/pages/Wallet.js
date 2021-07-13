@@ -15,7 +15,7 @@ class Wallet extends React.Component {
   async handleClick() {
     // get form details
     const { addExpense, getCurrencies, currencies, expenses } = this.props;
-    const formElement = documents.forms['newExpense-form'];
+    const formElement = document.forms['newExpense-form'];
     await getCurrencies();
 
     addExpense({

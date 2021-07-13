@@ -31,23 +31,25 @@ class Login extends React.Component {
     return (
       <div>
         <form id="login-form" onChange={ this.btnState }>
-          <label htmlFor="login-email">
+          <label htmlFor="email">
             Login
             <input
               name="email"
               type="email"
               data-testid="email-input"
               className="login-email"
+              id="email"
               required
               onChange={ (e) => this.setState({ email: e.target.value }) }
             />
           </label>
-          <label htmlFor="login-pass">
+          <label htmlFor="pass">
             Senha
             <input
               type="password"
               data-testid="password-input"
               className="login-pass"
+              id="pass"
               pattern=".{6,}" // Input Pattern: https://www.w3schools.com/tags/att_input_pattern.asp
               required
             />
