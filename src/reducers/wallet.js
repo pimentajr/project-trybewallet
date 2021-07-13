@@ -27,6 +27,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REMOVE_EXPENSE:
     return {
       ...state,
+      expenses: state.expenses.filter((item, index) => index !== action.payload),
     };
   case SUBMIT_CURRENCIES:
     return {

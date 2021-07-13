@@ -62,7 +62,7 @@ class Table extends Component {
               <td>Real</td>
               <td>
                 <Editbutton />
-                <Removebutton />
+                <Removebutton index={ index } />
               </td>
             </tr>
           ))}
