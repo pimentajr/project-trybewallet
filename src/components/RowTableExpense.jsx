@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpenseWallet } from '../actions';
+import { deleteExpenseWallet, openEditExpense } from '../actions';
+// import { openEditExpense } from '../actions';
 
 class RowTableExpense extends Component {
   constructor() {
@@ -33,8 +34,6 @@ class RowTableExpense extends Component {
 
   extractExchangeObject() {
     const { expense: { exchangeRates, currency } } = this.props;
-    console.log(exchangeRates);
-    console.log(currency);
     const exchangeObject = Object.entries(exchangeRates).filter(
       (item) => item[1].code === currency,
     );
@@ -45,6 +44,7 @@ class RowTableExpense extends Component {
   exctractExchangeName(exchangeObject) {
     const exchangeName = exchangeObject[0][1].name;
     const exchangeUsed = exchangeName.split('/');
+    console.log(exchangeUsed[0]);
     return exchangeUsed;
   }
 
@@ -61,30 +61,33 @@ class RowTableExpense extends Component {
   }
 
   render() {
-    const { expense: { description, tag, method, value, id } } = this.props;
+    const { expense: { description, tag, method, value, id }, editExpense } = this.props;
     const { exchangeUsed, exchangeValue } = this.state;
     return (
       <tr className="table-row">
-        <td id={ description }>{ description }</td>
-        <td id={ tag }>{ tag }</td>
-        <td id={ method }>{ method }</td>
+        <td name={ description } id={ description }>{ description }</td>
+        <td name={ tag } id={ tag }>{ tag }</td>
+        <td name={ method } id={ method }>{ method }</td>
         <td
           id={ value }
+          name={ value }
         >
           { value }
         </td>
-        <td id={ exchangeUsed }>{ exchangeUsed }</td>
+        <td name={ exchangeUsed } id={ exchangeUsed }>{ exchangeUsed }</td>
         <td
+          name={ parseFloat((exchangeValue * 100) / 100).toFixed(2) }
           id={ parseFloat((exchangeValue * 100) / 100).toFixed(2) }
         >
           { parseFloat((exchangeValue * 100) / 100).toFixed(2) }
         </td>
         <td
+          name={ parseFloat((value * exchangeValue * 100) / 100).toFixed(2) }
           id={ parseFloat((value * exchangeValue * 100) / 100).toFixed(2) }
         >
           { parseFloat((value * exchangeValue * 100) / 100).toFixed(2) }
         </td>
-        <td id="Real">Real</td>
+        <td name="Real" id="Real">Real</td>
         <td>
           <button
             type="button"
@@ -93,6 +96,13 @@ class RowTableExpense extends Component {
           >
             Excluir
           </button>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => editExpense(id) }
+          >
+            Alterar despesa
+          </button>
         </td>
       </tr>
     );
@@ -100,6 +110,7 @@ class RowTableExpense extends Component {
 }
 
 RowTableExpense.propTypes = {
+  editExpense: PropTypes.func.isRequired,
   expense: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,
@@ -145,6 +156,7 @@ const mapStateToProps = (state) => ({ expenses: state.wallet.expenses });
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (updatedExpenses) => dispatch(deleteExpenseWallet(updatedExpenses)),
+  editExpense: (id) => dispatch(openEditExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RowTableExpense);

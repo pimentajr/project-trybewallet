@@ -10,22 +10,26 @@ class TableExpenses extends Component {
     return (
       <div>
         <table className="table-section">
-          <tr className="table-header">
-            <th id="Descrição">Descrição</th>
-            <th id="Tag">Tag</th>
-            <th id="Método de pagamento">Método de pagamento</th>
-            <th id="Valor">Valor</th>
-            <th id="Moeda">Moeda</th>
-            <th id="Câmbio utilizado">Câmbio utilizado</th>
-            <th id="Valor convertido">Valor convertido</th>
-            <th id="Moeda de conversão">Moeda de conversão</th>
-            <th id="Editar/Excluir">Editar/Excluir</th>
-          </tr>
-          { expenses.map((expense) => (
-            <RowTableExpense
-              key={ expense.id }
-              expense={ expense }
-            />))}
+          <thead>
+            <tr className="table-header">
+              <th id="Descrição">Descrição</th>
+              <th id="Tag">Tag</th>
+              <th id="Método de pagamento">Método de pagamento</th>
+              <th id="Valor">Valor</th>
+              <th id="Moeda">Moeda</th>
+              <th id="Câmbio utilizado">Câmbio utilizado</th>
+              <th id="Valor convertido">Valor convertido</th>
+              <th id="Moeda de conversão">Moeda de conversão</th>
+              <th id="Editar/Excluir">Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((expense) => (
+              <RowTableExpense
+                key={ expense.id }
+                expense={ expense }
+              />))}
+          </tbody>
         </table>
       </div>
     );

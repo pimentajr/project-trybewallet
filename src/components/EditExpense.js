@@ -1,37 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import getCurrency from '../services/serviceAPI';
 import Method from './Method';
 import Tag from './Tag';
-import { saveCurrencyes, fetchExchangesRatesApi } from '../actions';
-import '../styles/EnterExpense.css';
+import { saveEditedExpense } from '../actions';
+import '../styles/EditExpense.css';
 
-class EnterExpense extends Component {
+class EditExpense extends Component {
   constructor() {
     super();
     this.state = {
+      id: '',
       value: '',
       description: '',
       currency: '',
       method: '',
       tag: '',
+      exchangeRates: [],
     };
-    this.getCurrencys = this.getCurrencys.bind(this);
-    this.optionsCurrency = this.optionsCurrency.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.createObjectExpense = this.createObjectExpense.bind(this);
-    this.saveExpenseWallet = this.saveExpenseWallet.bind(this);
+    this.getExpenseFromStore = this.getExpenseFromStore.bind(this);
+    this.optionsCurrency = this.optionsCurrency.bind(this);
+    this.saveEditedExpensesWallet = this.saveEditedExpensesWallet.bind(this);
   }
 
   componentDidMount() {
-    getCurrency().then((result) => this.getCurrencys(result));
+    this.getExpenseFromStore();
   }
 
-  getCurrencys(currents) {
-    const { saveApiCurrencyes } = this.props;
-    const listCurrents = Object.keys(currents).filter((current) => current !== 'USDT');
-    saveApiCurrencyes(listCurrents);
+  getExpenseFromStore() {
+    const { wallet: { idEdit, expenses } } = this.props;
+    const expenseFiltered = expenses.filter((expense) => expense.id === idEdit);
+    console.log(expenseFiltered[0].id);
+    this.setState({
+      id: expenseFiltered[0].id,
+      value: expenseFiltered[0].value,
+      description: expenseFiltered[0].description,
+      currency: expenseFiltered[0].currency,
+      method: expenseFiltered[0].method,
+      tag: expenseFiltered[0].tag,
+      exchangeRates: expenseFiltered[0].exchangeRates,
+    });
+  }
+
+  createObjectExpense() {
+    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
+    const objectExpense = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    };
+    return objectExpense;
   }
 
   optionsCurrency() {
@@ -46,6 +69,15 @@ class EnterExpense extends Component {
     ));
   }
 
+  saveEditedExpensesWallet() {
+    const { id } = this.state;
+    const { wallet: { expenses }, saveEditedExpenses } = this.props;
+    const filteredExpenses = expenses.filter((expense) => expense.id !== id);
+    const editedExpense = this.createObjectExpense();
+    const editedExpensesWallet = [...filteredExpenses, editedExpense];
+    saveEditedExpenses(editedExpensesWallet);
+  }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -53,39 +85,10 @@ class EnterExpense extends Component {
     });
   }
 
-  createObjectExpense() {
-    const { wallet } = this.props;
-    const { value, description, currency, method, tag } = this.state;
-    const id = wallet.expenses.length;
-    const objectExpense = {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates: {},
-    };
-    return objectExpense;
-  }
-
-  saveExpenseWallet() {
-    const { saveExpense } = this.props;
-    const actualExpense = this.createObjectExpense();
-    saveExpense(actualExpense);
-    this.setState({
-      value: '',
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
-    });
-  }
-
   render() {
     const { value, description, currency, method, tag } = this.state;
     return (
-      <form className="form-input-expense">
+      <form className="form-edit-expense">
         <label htmlFor="valor">
           Valor:
           <input
@@ -93,6 +96,7 @@ class EnterExpense extends Component {
             id="valor"
             name="value"
             min="0"
+            data-testid="value-input"
             onChange={ (e) => this.handleChange(e) }
             value={ value }
           />
@@ -103,6 +107,7 @@ class EnterExpense extends Component {
             id="descrição"
             type="text"
             name="description"
+            data-testid="description-input"
             onChange={ (e) => this.handleChange(e) }
             value={ description }
           />
@@ -112,6 +117,7 @@ class EnterExpense extends Component {
           <select
             id="moeda"
             name="currency"
+            data-testid="currency-input"
             onChange={ (e) => this.handleChange(e) }
             value={ currency }
           >
@@ -122,9 +128,9 @@ class EnterExpense extends Component {
         <Tag value={ tag } handleChange={ this.handleChange } />
         <button
           type="button"
-          onClick={ () => this.saveExpenseWallet() }
+          onClick={ () => this.saveEditedExpensesWallet() }
         >
-          Adicionar despesa
+          Editar despesa
         </button>
       </form>
     );
@@ -134,21 +140,19 @@ class EnterExpense extends Component {
 const mapStateToProps = (state) => ({ wallet: state.wallet });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveExpense: (expense) => dispatch(fetchExchangesRatesApi(expense)),
-  saveApiCurrencyes: (currencies) => dispatch(saveCurrencyes(currencies)),
+  saveEditedExpenses: (expense) => dispatch(saveEditedExpense(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnterExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpense);
 
-EnterExpense.propTypes = {
-  saveExpense: PropTypes.func.isRequired,
-  saveApiCurrencyes: PropTypes.func.isRequired,
+EditExpense.propTypes = {
+  saveEditedExpenses: PropTypes.func.isRequired,
   wallet: PropTypes.arrayOf(
     PropTypes.string,
     PropTypes.number,
   ),
 };
 
-EnterExpense.defaultProps = {
+EditExpense.defaultProps = {
   wallet: [],
 };

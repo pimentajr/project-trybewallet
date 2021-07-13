@@ -11,6 +11,7 @@ export default class Tag extends Component {
           <select
             id="tag"
             name="tag"
+            data-testid="tag-input"
             onChange={ (e) => handleChange(e) }
             value={ value }
           >
