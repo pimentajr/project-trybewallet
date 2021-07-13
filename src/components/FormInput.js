@@ -162,8 +162,6 @@ FormInput.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ).isRequired,
-  toCurrency: PropTypes.number.isRequired,
-  fromCurrencies: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormInput);
