@@ -1,5 +1,4 @@
 // Coloque aqui suas actions
-
 export const REQUEST_VALUES = 'REQUEST_VALUES';
 export const RECEIVE_VALUES = 'RECEIVE_VALUES';
 export const INPUT_USER = 'INPUT_USER';
