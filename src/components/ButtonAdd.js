@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setArrayExpenses, fetchCurrencie, editArrayExpenses, sendId } from '../actions';
+import { setArrayExpenses, fetchCurrencie, editArrayExpenses } from '../actions';
 
 class ButtonAdd extends Component {
   constructor() {
@@ -32,20 +32,13 @@ class ButtonAdd extends Component {
     newCurrencie(newvalue);
   }
 
-  async editExpenses() {
-    const { editCurrencie, propsForm, func, exchangeRates } = this.props;
-    const { id, value, tag, currency, method, description } = propsForm;
+  editExpenses() {
+    const { editCurrencie, propsForm, func } = this.props;
     const newvalue = {
-      id,
-      value,
-      tag,
-      currency,
-      method,
-      description,
-      exchangeRates,
+      ...propsForm,
     };
-    func();
     editCurrencie(newvalue);
+    func();
   }
 
   render() {
@@ -66,7 +59,6 @@ const mapStatetoProps = (state) => ({
 const mapDispatchProps = (dispach) => ({
   newCurrencie: (value) => dispach(setArrayExpenses(value)),
   editCurrencie: (value) => dispach(editArrayExpenses(value)),
-  editClose: (value) => dispach(sendId(value)),
   getCurrency: () => dispach(fetchCurrencie()),
 });
 
@@ -79,7 +71,6 @@ ButtonAdd.propTypes = {
   idd: PropTypes.number.isRequired,
   expensesItems: PropTypes.objectOf().isRequired,
   editCurrencie: PropTypes.func.isRequired,
-  exchangeRates: PropTypes.objectOf().isRequired,
   propsForm: PropTypes.shape({
     id: PropTypes.number,
     value: PropTypes.string,

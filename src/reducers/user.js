@@ -1,5 +1,4 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-
 const USER_STATE = {
   email: '',
   id: undefined,
