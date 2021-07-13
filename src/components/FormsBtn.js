@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,6 +21,9 @@ class FormsBtn extends Component {
     if (value.value === '') {
       // eslint-disable-next-line no-alert
       return window.alert('você precisa adicionar um valor');
+    } if (isNaN(value.value)) {
+      // eslint-disable-next-line no-alert
+      return window.alert('você precisa adicionar um valor numérico');
     }
     sendInfos({
       tag: 'Alimentação',
@@ -34,6 +38,20 @@ class FormsBtn extends Component {
   }
 
   render() {
+    const { editForm, concludeClick = {} } = this.props;
+    if (editForm === true) {
+      return (
+
+        <button
+          className="send-btn"
+          type="button"
+          onClick={ concludeClick }
+        >
+          Editar despesa
+        </button>
+      );
+    }
+
     return (
 
       <button
@@ -54,6 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToPros = (state) => ({
   getExpenses: state.wallet.expenses,
+  editForm: state.wallet.editForm,
 });
 
 export default connect(mapStateToPros, mapDispatchToProps)(FormsBtn);
@@ -63,9 +82,12 @@ FormsBtn.propTypes = {
   sendInfos: PropTypes.func.isRequired,
   getExpenses: PropTypes.arrayOf(PropTypes.object),
   initialState: PropTypes.func.isRequired,
+  editForm: PropTypes.bool.isRequired,
+  concludeClick: PropTypes.shape(PropTypes.object).isRequired,
 };
 
 FormsBtn.defaultProps = {
   toma: {},
   getExpenses: {},
+
 };

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormsBtn from './FormsBtn';
+import EditDispense from './EditDispense';
+import Tag from './Tag';
 
 class Fomrs extends Component {
   constructor(props) {
@@ -26,6 +28,8 @@ class Fomrs extends Component {
   }
 
   render() {
+    const { editForm } = this.props;
+    if (editForm === true) return <EditDispense />;
     const { currency = [] } = this.props;
     return (
       <form className="forms" id="forms">
@@ -48,7 +52,7 @@ class Fomrs extends Component {
             {
               currency
                 .map((item, index) => (
-                  <option key={ index } value={ item.code }>{item.code}</option>))
+                  <option key={ index } value={ item }>{item}</option>))
             }
           </select>
         </label>
@@ -60,16 +64,7 @@ class Fomrs extends Component {
             <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="tag">
-          Tag:
-          <select onChange={ this.up } id="tag" name="tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
+        <Tag up={ this.up } />
         <FormsBtn toma={ this.state } initialState={ this.initialState } />
       </form>
     );
@@ -77,11 +72,13 @@ class Fomrs extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currency: state.wallet.currencyList,
+  currency: state.wallet.currencies,
+  editForm: state.wallet.editForm,
 });
 
 export default connect(mapStateToProps)(Fomrs);
 
 Fomrs.propTypes = {
   currency: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editForm: PropTypes.bool.isRequired,
 };

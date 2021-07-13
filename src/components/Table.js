@@ -1,18 +1,26 @@
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
-import { IoMdTrash } from 'react-icons/io';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { eraseDispense } from '../actions';
+import { eraseDispense, AllowEditFormAction, editDispenseAction } from '../actions';
+import TableBody from './TableBody';
 
 class Table extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickRemove = this.handleClickRemove.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
-  handleClick(index) {
+  handleClickRemove(index) {
     const { deletDispense } = this.props;
     deletDispense(index);
+  }
+
+  handleClickEdit(index) {
+    const { editFormsTrue, infos, objectToEdit } = this.props;
+    objectToEdit(infos[index]);
+    editFormsTrue(true);
   }
 
   render() {
@@ -35,27 +43,13 @@ class Table extends Component {
         <tbody>
           {
             infos.map((item, index) => (
-              <tr key={ index }>
-                <td>{item.description}</td>
-                <td>{item.tag}</td>
-                <td>{item.method}</td>
-                <td>{item.value}</td>
-                <td>{item.exchangeRates[item.currency].name.split('/')[0]}</td>
-                <td>{Number(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
-                <td>
-                  {(item.value * item.exchangeRates[item.currency].ask).toFixed(2)}
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    data-testid="delete-btn"
-                    onClick={ () => this.handleClick(index) }
-                    type="button"
-                  >
-                    <IoMdTrash size="25px" />
-                  </button>
-                </td>
-              </tr>
+              <TableBody
+                key={ index }
+                index={ index }
+                item={ item }
+                handleClickRemove={ this.handleClickRemove }
+                handleClickEdit={ () => this.handleClickEdit(index) }
+              />
             ))
           }
         </tbody>
@@ -66,10 +60,13 @@ class Table extends Component {
 
 const mapStateToProps = (state) => ({
   infos: state.wallet.expenses,
+  editableObject: state.wallet.editableObject,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   deletDispense: (index) => dispatch(eraseDispense(index)),
+  editFormsTrue: (boolean) => dispatch(AllowEditFormAction(boolean)),
+  objectToEdit: (obj) => dispatch(editDispenseAction(obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
@@ -77,4 +74,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 Table.propTypes = {
   infos: PropTypes.arrayOf(PropTypes.object).isRequired,
   deletDispense: PropTypes.func.isRequired,
+  editFormsTrue: PropTypes.func.isRequired,
+  objectToEdit: PropTypes.func.isRequired,
 };

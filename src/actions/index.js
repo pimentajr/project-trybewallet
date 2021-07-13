@@ -5,6 +5,10 @@ const GET_CURRENCY_WALLET_ACTION = 'GET_CURRENCY_WALLET_ACTION';
 const GET_CURRENCY_WALLET_ACTION_ERROR = 'GET_CURRENCY_WALLET_ACTION_ERROR';
 const SEND_INFOS_TO_EXPENSES_ACTION = 'SEND_INFOS_TO_EXPENSES_ACTION';
 const ERASE_DISPENSE_ACTION = 'ERASE_DISPENSE_ACTION';
+const EDIT_DISPENSE_ACTION = 'EDIT_DISPENSE_ACTION';
+const ALLOW_EDIT_FORM_ACTION = 'ALLOW_EDIT_FORM_ACTION';
+const RESET_EDITABLE_OBJ_ACTION = 'RESET_EDITABLE_OBJ_ACTION';
+const SEND_EDITATED_OBJECT_ACTION = 'SEND_EDITATED_OBJECT_ACTION';
 
 function loginEnterClickAction(payload) {
   return {
@@ -41,6 +45,34 @@ function eraseDispense(index) {
   };
 }
 
+function editDispenseAction(editableObject) {
+  return {
+    type: EDIT_DISPENSE_ACTION,
+    editableObject,
+  };
+}
+
+function AllowEditFormAction(trueOrFalse) {
+  return {
+    type: ALLOW_EDIT_FORM_ACTION,
+    trueOrFalse,
+  };
+}
+
+function ResetEditableObjectAction() {
+  return {
+    type: RESET_EDITABLE_OBJ_ACTION,
+  };
+}
+
+function SendEditatedObjectAction(index, payload) {
+  return {
+    type: SEND_EDITATED_OBJECT_ACTION,
+    index,
+    payload,
+  };
+}
+
 function getCurrencyThunk() {
   return (dispatch) => (
     fetchApi()
@@ -64,4 +96,13 @@ export {
   SEND_INFOS_TO_EXPENSES_ACTION,
   ERASE_DISPENSE_ACTION,
   eraseDispense,
+  EDIT_DISPENSE_ACTION,
+  editDispenseAction,
+  ALLOW_EDIT_FORM_ACTION,
+  AllowEditFormAction,
+  ResetEditableObjectAction,
+  RESET_EDITABLE_OBJ_ACTION,
+  SEND_EDITATED_OBJECT_ACTION,
+  SendEditatedObjectAction,
+
 };
