@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getDataAPI from '../services/fetchAPI';
-import { walletAction, sendData } from '../actions';
+import { walletAction } from '../actions';
 import Header from '../components/Header';
 import FormWallet from '../components/FormWallet';
 import ExpenseTable from '../components/ExpenseTable';
@@ -31,7 +31,6 @@ class Wallet extends Component {
 }
 const mapDispathToProps = (dispatch) => ({
   dataMoedas: (arrayMoedas) => dispatch(walletAction(arrayMoedas)),
-  sendExpenseData: (dataExpense) => dispatch(sendData(dataExpense)),
 });
 
 Wallet.propTypes = {

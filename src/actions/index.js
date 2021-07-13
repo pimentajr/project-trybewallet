@@ -2,7 +2,6 @@ import getDataAPI from '../services/fetchAPI';
 
 export const SET_LOGIN_EMAIL = 'SET_LOGIN_EMAIL';
 export const SET_WALLET = 'SET_WALLET';
-export const SEND_DATA_EXPENSE = 'SEND_DATA_EXPENSE';
 export const SEND_INFO_EXPENSE = 'SEND_INFO_EXPENSE';
 
 export const loginEmail = (payload) => ({
@@ -12,11 +11,6 @@ export const loginEmail = (payload) => ({
 
 export const walletAction = (payload) => ({
   type: SET_WALLET,
-  payload,
-});
-
-export const sendData = (payload) => ({
-  type: SEND_DATA_EXPENSE,
   payload,
 });
 
