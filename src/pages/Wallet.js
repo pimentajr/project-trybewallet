@@ -9,7 +9,7 @@ import Customize from './Customize';
 class Wallet extends React.Component {
   render() {
     // render forms
-    const { email, expenses } = this.props;
+    const { email, expenses, editMenu } = this.props;
 
     // reduce all values to a total value
     const total = expenses.length > 0
@@ -20,20 +20,20 @@ class Wallet extends React.Component {
     // render forms
     return (
       <div>
-        <div>
+        <header>
           <p data-testid="total-field">
             Despesa Total: R$
             {total}
             <div data-testid="header-currency-field"> BRL </div>
           </p>
           <p data-testid="email-field">{email}</p>
-        </div>
-        <div>
+        </header>
+        <main>
           {expenses.length > 0 ? (<Count />) : (
             <h3>Nenhuma Despesa Cadastrada</h3>
           )}
-        </div>
-        <div>{editMenu ? <Customize /> : <Forms />}</div>
+        </main>
+        <footer>{editMenu ? <Customize /> : <Forms />}</footer>
       </div>
     );
   }
@@ -59,5 +59,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 // props validation
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  editMenu: PropTypes.bool.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
