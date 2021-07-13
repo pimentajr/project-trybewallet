@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import 'bulma/css/bulma.min.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
