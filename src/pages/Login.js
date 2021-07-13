@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { userLoginAction } from '../actions';
 
+import './Login.css';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class Login extends React.Component {
   }
 
   validateEmail(string) {
-    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const regex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
     if (string.match(regex)) {
       return true;
     }
@@ -43,7 +45,8 @@ class Login extends React.Component {
     return string.trim().length >= minLength;
   }
 
-  handleLogin() {
+  handleLogin(e) {
+    e.preventDefault();
     const { userLogin } = this.props;
     const { email } = this.state;
     userLogin(email);
@@ -58,33 +61,42 @@ class Login extends React.Component {
     }
 
     return (
-      <form>
-        <input
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          data-testid="email-input"
-          required
-          onChange={ this.handleEmailChange }
-          value={ email }
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Senha"
-          data-testid="password-input"
-          onChange={ this.handlePasswordChange }
-          value={ password }
-          required
-        />
-        <button
-          type="button"
-          disabled={ !isEmailValid || !isPasswordValid }
-          onClick={ this.handleLogin }
-        >
-          Entrar
-        </button>
-      </form>
+      <div className="login-container">
+        <h1>TrybeWallet</h1>
+        <form onSubmit={ this.handleLogin } className="login-form" autoComplete="off">
+          <input
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            data-testid="email-input"
+            required
+            onChange={ this.handleEmailChange }
+            value={ email }
+          />
+          <p className="login-validation-error">
+            { (!isEmailValid && email.length > 0) && 'Digite um email válido'}
+          </p>
+          <input
+            type="password"
+            name="password"
+            placeholder="Senha"
+            data-testid="password-input"
+            onChange={ this.handlePasswordChange }
+            value={ password }
+            required
+          />
+          <p className="login-validation-error">
+            { (!isPasswordValid && password.length > 0)
+            && 'Sua senha deve conter no mínimo 6 dígitos'}
+          </p>
+          <button
+            type="submit"
+            disabled={ !isEmailValid || !isPasswordValid }
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     );
   }
 }
