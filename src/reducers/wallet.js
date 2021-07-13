@@ -18,10 +18,9 @@ function wallet(state = INITIAL_STATE, action) {
       currencies: parseFloat(action.payload),
     };
   case ACTION_EXPENSES:
-    console.log('action_expe', state.expenses);
     return {
       ...state,
-      expenses: [...state.expenses, action.payload],
+      expenses: [...state.expenses, { id: state.expenses.length, ...action.payload }],
     };
   case ACTION_DELETING:
     return {

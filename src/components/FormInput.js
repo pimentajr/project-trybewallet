@@ -12,7 +12,6 @@ class FormInput extends Component {
       arrayMethod: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       arrayTag: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
       objExpenses: {},
-      count: 0,
     };
 
     this.inputValue = this.inputValue.bind(this);
@@ -32,38 +31,28 @@ class FormInput extends Component {
 
   handleChange(event) {
     const { name, value } = event.target;
-    const { arrayApi, objExpenses, count } = this.state;
+    const { arrayApi, objExpenses } = this.state;
     this.setState({
       objExpenses: {
         ...objExpenses,
-        id: count,
         [name]: value,
         exchangeRates: arrayApi,
       },
     });
   }
 
-  updateId(i) {
-    this.setState({
-      count: i += 1,
-    });
-  }
-
   sumCurrency(e) {
     const { fromCurrencies, toCurrency } = this.props;
-    const magicN = 10;
     const magicN2 = -2;
-    const n = parseFloat(fromCurrencies, magicN) + e;
+    const n = parseFloat(fromCurrencies) + e;
     toCurrency((Math.round((n * 100), magicN2) / 100));
   }
 
   submit(event) {
     event.preventDefault();
-    const { objExpenses, count } = this.state;
-    this.updateId(count);
+    const { objExpenses } = this.state;
     const { toExpenses } = this.props;
-    const magicN = 10;
-    const valueN = parseFloat(objExpenses.value, magicN);
+    const valueN = parseFloat(objExpenses.value);
     this.sumCurrency(valueN);
     toExpenses(objExpenses);
   }

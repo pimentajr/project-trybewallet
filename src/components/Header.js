@@ -6,21 +6,26 @@ import { walletCurrencies } from '../actions';
 class Header extends Component {
   constructor() {
     super();
-    this.state = {
-      accuValue: 0,
-    };
 
     this.firstValuation = this.firstValuation.bind(this);
+    this.summering = this.summering.bind(this);
+  }
+
+  summering() {
+    const { fromWallet, toCurrency } = this.props;
+    console.log(fromWallet);
+    const total = fromWallet.reduce((acc, exp) => (
+      acc + exp.value * exp.exchangeRates[exp.currency].ask), 0);
+    toCurrency(total);
   }
 
   firstValuation() {
-    const { fromCurrencies, toCurrency } = this.props;
-    const { accuValue } = this.state;
+    const { fromCurrencies } = this.props;
+    this.summering();
     if (fromCurrencies.length === 0) {
-      toCurrency(accuValue);
       return 0;
     }
-    return (parseFloat(fromCurrencies));
+    return (parseFloat(fromCurrencies)).toFixed(2);
   }
 
   render() {
@@ -30,11 +35,10 @@ class Header extends Component {
         <div>Header</div>
         <div className="headerSec">
           <div data-testid="email-field">{ user }</div>
-          <p data-testid="total-field" className="headerSec">
-            Despesas totais:
+          <div data-testid="total-field">
             { this.firstValuation() }
-            <div data-testid="header-currency-field">BRL</div>
-          </p>
+          </div>
+          <p data-testid="header-currency-field">BRL</p>
         </div>
       </div>
     );
@@ -44,6 +48,7 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   user: state.user.email,
   fromCurrencies: state.wallet.currencies,
+  fromWallet: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -56,6 +61,7 @@ Header.propTypes = {
     PropTypes.number,
   ).isRequired,
   toCurrency: PropTypes.number.isRequired,
+  fromWallet: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
