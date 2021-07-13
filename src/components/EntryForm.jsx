@@ -7,11 +7,11 @@ class EntryForm extends Component {
     return (
       <form>
         <label htmlFor="value">
-          Valor:
+          Valor
           <input name="value" type="number" />
         </label>
         <label htmlFor="currency">
-          Moeda:
+          Moeda
           <select name="currency">
             {
               currencies.map((currency, index) => (
@@ -26,7 +26,7 @@ class EntryForm extends Component {
           </select>
         </label>
         <label htmlFor="paymentMethod">
-          Método de pagamento:
+          Método de pagamento
           <select name="paymentMethod">
             <option value="money">Dinheiro</option>
             <option value="creditCard">Cartão de crédito</option>
@@ -34,7 +34,7 @@ class EntryForm extends Component {
           </select>
         </label>
         <label htmlFor="tag">
-          Tag:
+          Tag
           <select name="tag">
             <option value="food">Alimentação</option>
             <option value="leisure">Lazer</option>
@@ -44,9 +44,10 @@ class EntryForm extends Component {
           </select>
         </label>
         <label htmlFor="description">
-          Descrição:
+          Descrição
           <input type="text" name="description" />
         </label>
+        <input type="submit" value="Adicionar despesa" />
       </form>
     );
   }
