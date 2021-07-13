@@ -25,8 +25,18 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { login } = this.props;
+    const { login, expenses } = this.props;
     const { initialValue } = this.state;
+    let result = initialValue;
+
+    if (expenses.length > 0) {
+      result = expenses.reduce((acc, current) => {
+        const moedaSelecionada = current.currency;
+        const cotacao = current.exchangeRates[moedaSelecionada];
+        console.log(cotacao.ask);
+        return acc + Number(current.value) * Number(cotacao.ask);
+      }, 0);
+    }
 
     return (
       <main>
@@ -34,7 +44,7 @@ class Wallet extends React.Component {
           <span data-testid="email-field">{ login }</span>
           <div>
             Despesa total: R$
-            <span data-testid="total-field">{ initialValue }</span>
+            <span data-testid="total-field">{ result }</span>
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </header>
@@ -46,6 +56,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   login: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -54,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = ({
   login: PropTypes.string,
+  expenses: PropTypes.arrayOf(PropTypes.object),
   propFetch: PropTypes.func,
 }).isRequired;
 

@@ -1,4 +1,4 @@
-import { GET_CURRENCY } from '../actions/index';
+import { ADD_EXPENSE, GET_CURRENCY } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -8,9 +8,11 @@ const INITIAL_STATE = {
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case GET_CURRENCY:
+    return { ...state, currencies: action.payload };
+  case ADD_EXPENSE:
     return {
       ...state,
-      currencies: action.payload,
+      expenses: [...state.expenses, { ...action.payload, id: state.expenses.length }],
     };
   default:
     return state;
