@@ -7,7 +7,6 @@ import {
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  isLoading: false,
 };
 
 function wallet(state = INITIAL_STATE, action = {}) {
@@ -15,18 +14,16 @@ function wallet(state = INITIAL_STATE, action = {}) {
   case REQUEST_API:
     return {
       ...state,
-      isLoading: true,
     };
   case REQUEST_API_SUCESS:
     return {
       ...state,
       currencies: action.payload,
-      isLoading: false,
     };
   case REQUEST_API_ERROR:
     return {
       ...state,
-      isLoading: false,
+      currencies: Error,
     };
   default:
     return state;

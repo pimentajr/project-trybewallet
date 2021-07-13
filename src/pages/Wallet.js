@@ -6,6 +6,7 @@ import ExpenseAmount from '../components/ExpenseAmount';
 import PaymentDescription from '../components/PaymentDescription';
 import PaymentMethod from '../components/PaymentMethod';
 import SelectedCurrency from '../components/SelectedCurrency';
+import AddExpenses from '../components/AddExpenses';
 
 function Wallet() {
   return (
@@ -18,6 +19,9 @@ function Wallet() {
         <PaymentMethod />
         <Category />
       </form>
+      <section>
+        <AddExpenses />
+      </section>
     </div>
   );
 }

@@ -4,20 +4,38 @@ import PropTypes from 'prop-types';
 import { fetchApi } from '../actions/index';
 
 class SelectedCurrency extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currency: '',
+    };
+    this.handleTest = this.handleTest.bind(this);
+  }
+
   componentDidMount() {
     const { coinType } = this.props;
     coinType();
   }
 
+  handleTest(e) {
+    this.setState({
+      currency: e.target.value,
+    });
+  }
+
   render() {
     const { coinTypetest } = this.props;
+    const { currency } = this.state;
     const test = Object.keys(coinTypetest).filter((value) => value !== 'USDT');
     return (
       <label htmlFor="options">
         Moeda:
-        <select id="options">
+        <select
+          id="options"
+          value={ currency }
+          onClick={ this.handleTest }
+        >
           {
-            // onChange= {(e) => onChangeSelect(e.target.value)} -> usar no select talvez
             test.map((type, index) => <option key={ index }>{ type }</option>)
           }
         </select>
