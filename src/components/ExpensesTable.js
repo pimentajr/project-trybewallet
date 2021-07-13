@@ -1,26 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
+import Thead from './Thead';
 
 class ExpensesTable extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, toDelete } = this.props;
 
     return (
       <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
+        <Thead />
         <tbody>
           {expenses.map((item, id) => (
             <tr key={ id }>
@@ -41,7 +31,11 @@ class ExpensesTable extends React.Component {
                 <button type="button">
                   Editar
                 </button>
-                <button type="button">
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => toDelete(id) }
+                >
                   Excluir
                 </button>
               </td>
@@ -56,10 +50,15 @@ class ExpensesTable extends React.Component {
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(Object).isRequired,
+  toDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesTable);
+const mapDispatchToProps = (dispatch) => ({
+  toDelete: (id) => dispatch(deleteExpense(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

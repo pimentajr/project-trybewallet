@@ -20,3 +20,8 @@ export const sendWalletInfo = (state) => ({
   type: 'SEND_INFO',
   state,
 });
+
+export const deleteExpense = (payload) => ({
+  type: 'DELETE_EXPENSE',
+  payload,
+});
