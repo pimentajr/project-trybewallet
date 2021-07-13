@@ -5,6 +5,9 @@ import InputText from './InputText';
 import SelectField from './SelectField';
 import { addExpense, getCurrenciesThunk } from '../actions';
 
+const optionPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const optionTag = ['Alimentação', 'Lazer', 'Saúde', 'Trabalho', 'Transporte'];
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +16,8 @@ class Form extends React.Component {
       value: '0',
       description: '',
       currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      method: optionPayment[0],
+      tag: optionTag[0],
     };
     this.handleChange = this.handleChange.bind(this);
     this.renderInput = this.renderInput.bind(this);
@@ -73,9 +76,6 @@ class Form extends React.Component {
     const { currencies } = this.props;
     const currenciesKeys = Object.keys(currencies);
     const currenciesFiltered = currenciesKeys.filter((coin) => coin !== 'USDT');
-    const optionPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const optionTag = ['Alimentação', 'Lazer', 'Saúde', 'Trabalho', 'Transporte'];
-
     return (
       <form className="form-wallet">
         {this.renderInput(value, 'Valor', 'value', 'number')}

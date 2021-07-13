@@ -16,6 +16,7 @@ class Header extends React.Component {
     const { currency } = this.state;
     let { total } = this.state;
     if (expenses.length > 0) {
+      // Ivaldo me ajudou nessa lógica
       total = expenses.reduce((acc, curr) => {
         const parse = Number(curr.exchangeRates[curr.currency].ask);
         acc += Number(parse) + Number(curr.value);
