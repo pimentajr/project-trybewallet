@@ -9,8 +9,11 @@ class Header extends Component {
       const value = curr.exchangeRates[curr.currency].ask * curr.value;
       acc += value;
       return acc;
-    }, 0);
+    }, 0).toFixed(2);
   }
+  // https://www.blogson.com.br/formatar-moeda-dinheiro-com-javascript-do-jeito-facil/
+  // .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  // .toLocaleString('pt-BR')
 
   render() {
     const { userEmail } = this.props;
