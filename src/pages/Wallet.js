@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpensesForm from '../components/ExpensesForm';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   // String(walletExpenses.reduce((acc, cur) => acc + Number(cur.value), 0).toFixed(2),)
@@ -30,6 +31,7 @@ class Wallet extends React.Component {
         </p>
         <span data-testid="header-currency-field"> BRL</span>
         <ExpensesForm />
+        {walletExpenses.length > 0 ? <Table /> : null}
       </>
     );
   }
