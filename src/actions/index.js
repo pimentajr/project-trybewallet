@@ -3,6 +3,7 @@ export const VALID_EMAIL = 'VALID_EMAIL';
 export const REQUEST_MOEDAS = 'REQUEST_MOEDAS';
 export const RECEIVE_MOEDAS = 'RECEIVE_MOEDAS';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const userEmail = (email) => ({
   type: VALID_EMAIL,
@@ -21,6 +22,11 @@ export const receiveMoedas = (moedas) => ({
 export const failedRequest = (error) => ({
   type: FAILED_REQUEST,
   error,
+});
+
+export const addExpense = (expenses) => ({
+  type: ADD_EXPENSE,
+  expenses,
 });
 
 export const getMoedasThunk = () => async (dispatch) => {
