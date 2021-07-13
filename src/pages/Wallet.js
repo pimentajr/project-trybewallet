@@ -1,24 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurr } from '../actions';
+import { fetchCurr, saveExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valor: '',
-      descricao: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.getConvertValue = this.getConvertValue.bind(this);
   }
 
   componentDidMount() {
     const { getDataCurr } = this.props;
     getDataCurr();
+  }
+
+  getConvertValue() {
+    const { expenses } = this.props;
+    let total = 0;
+    expenses.forEach((item) => {
+      total += (parseInt(item.value, 10) * item.exchangeRates[item.currency]
+        .ask);
+    });
+    return total.toFixed(2);
   }
 
   handleChange({ target }) {
@@ -29,15 +40,15 @@ class Wallet extends React.Component {
   }
 
   renderValor() {
-    const { valor } = this.state;
+    const { value } = this.state;
     return (
       <label htmlFor="value">
         Valor
         <input
-          type="number"
+          type="text"
           name="value"
           id="value"
-          value={ valor }
+          value={ value }
           onChange={ this.handleChange }
         />
       </label>
@@ -45,7 +56,7 @@ class Wallet extends React.Component {
   }
 
   renderDescricao() {
-    const { descricao } = this.state;
+    const { description } = this.state;
     return (
       <label htmlFor="description">
         Descrição
@@ -53,7 +64,7 @@ class Wallet extends React.Component {
           type="text"
           name="description"
           id="description"
-          value={ descricao }
+          value={ description }
           onChange={ this.handleChange }
         />
       </label>
@@ -61,7 +72,7 @@ class Wallet extends React.Component {
   }
 
   renderMoeda() {
-    const { moeda } = this.state;
+    const { currency } = this.state;
     const { currencies } = this.props;
     return (
       <label htmlFor="currency">
@@ -71,7 +82,7 @@ class Wallet extends React.Component {
           type="text"
           name="currency"
           id="currency"
-          value={ moeda }
+          value={ currency }
           onChange={ this.handleChange }
         >
           {currencies.map((item) => (
@@ -84,16 +95,16 @@ class Wallet extends React.Component {
   }
 
   renderPagamento() {
-    const { pagamento } = this.state;
+    const { method } = this.state;
     return (
-      <label htmlFor="payment">
+      <label htmlFor="method">
         Método de pagamento
         <select
           role="combobox"
           type="text"
-          name="payment"
-          id="payment"
-          value={ pagamento }
+          name="method"
+          id="method"
+          value={ method }
           onChange={ this.handleChange }
         >
           <option>Dinheiro</option>
@@ -127,13 +138,24 @@ class Wallet extends React.Component {
     );
   }
 
+  renderButton() {
+    const { saveData } = this.props;
+    return (
+      <button
+        type="button"
+        onClick={ () => saveData(this.state) }
+      >
+        Adicionar despesa
+      </button>);
+  }
+
   render() {
     const { email } = this.props;
     return (
       <div>
         <header>
           <h2 data-testid="email-field">{ email }</h2>
-          <span data-testid="total-field">0</span>
+          <span data-testid="total-field">{ this.getConvertValue() }</span>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form type="submit">
@@ -142,7 +164,7 @@ class Wallet extends React.Component {
           {this.renderMoeda()}
           {this.renderPagamento()}
           {this.renderTag()}
-
+          {this.renderButton()}
         </form>
       </div>
     );
@@ -151,10 +173,12 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getDataCurr: () => dispatch(fetchCurr()),
+  saveData: (state) => dispatch(saveExpense(state)),
 });
 
 Wallet.propTypes = {
@@ -162,4 +186,3 @@ Wallet.propTypes = {
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-// terminar o wallet falta usar o componentDiiMount e passar os dados para dentro do render
