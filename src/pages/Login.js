@@ -38,6 +38,24 @@ class Login extends React.Component {
     }
   }
 
+  renderEmailInput() {
+    const { email } = this.state;
+    return (
+      <label
+        htmlFor="input-email"
+      >
+        Email:
+        <input
+          type="email"
+          name="email"
+          data-testid="email-input"
+          value={ email }
+          onChange={ this.handleChange }
+        />
+      </label>
+    );
+  }
+
   render() {
     const { emailInput } = this.props;
     const { email, password, disabledButton } = this.state;
@@ -47,18 +65,8 @@ class Login extends React.Component {
           TrybeWallet
           <span role="img" aria-label="Money">💸</span>
         </h1>
-        <label
-          htmlFor="input-email"
-        >
-          Email:
-          <input
-            type="email"
-            name="email"
-            data-testid="email-input"
-            value={ email }
-            onChange={ this.handleChange }
-          />
-        </label>
+
+        {this.renderEmailInput()}
 
         <label
           htmlFor="input-password"
@@ -77,6 +85,7 @@ class Login extends React.Component {
           to="/carteira"
         >
           <button
+            className="login-button"
             type="submit"
             disabled={ disabledButton }
             onClick={ () => emailInput(email) }

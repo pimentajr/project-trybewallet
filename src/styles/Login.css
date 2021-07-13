@@ -1,4 +1,5 @@
 body {
+  background-color: lightsteelblue;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -9,4 +10,15 @@ body {
   display: flex;
   font-family: Impact, sans-serif;
   justify-content: center;
+}
+
+.login-button {
+  background-color: rgb(3, 139, 3);
+  border-radius: 10px;
+  color: white;
+  width: 70px;
+}
+
+form {
+  background-color: rgba(83, 20, 20, 0.164);
 }

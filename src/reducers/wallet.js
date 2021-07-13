@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { GET_CURRENCIES_SUCCESS,
   GET_CURRENCIES_ERROR,
+  GET_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -20,9 +21,14 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       error: action.payload,
     };
+  case GET_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   default:
     return state;
   }
-} // Filter responsável por analisar as keys do Objeto recebido pelo fetch, e filtrar apenas as que nao são USDT.
+}
 
 export default wallet;
