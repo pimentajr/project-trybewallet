@@ -2,11 +2,19 @@
 export const REQUEST_VALUES = 'REQUEST_VALUES';
 export const RECEIVE_VALUES = 'RECEIVE_VALUES';
 export const INPUT_USER = 'INPUT_USER';
+export const NEW_EXPENSES = 'NEW_EXPENSES';
 
 export function userAction(email) {
   return ({
     type: INPUT_USER,
     email,
+  });
+}
+export function newExpensesAction(payload, id) {
+  return ({
+    type: NEW_EXPENSES,
+    id,
+    payload,
   });
 }
 
