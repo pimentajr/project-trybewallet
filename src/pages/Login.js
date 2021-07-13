@@ -20,6 +20,7 @@ class Login extends React.Component {
             data-testid="password-input"
             type="password"
             name="password"
+            minLength="6"
             placeholder="Digite sua senha"
           />
         </label>
