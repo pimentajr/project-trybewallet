@@ -1,7 +1,7 @@
 body {
   display: flex;
-
 }
+
 .table {
   display: grid table-column;
   border: 2px black solid;
@@ -14,9 +14,8 @@ body {
 
 .table-header {
   background: gray;
-  
 }
 
 .header-total {
- text-align: left;
+  text-align: left;
 }
