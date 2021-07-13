@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPI } from '../actions/walletActionsAPI';
+import { getExpenses } from '../actions/walletActions';
 import Forms from './Forms';
 
 class Wallet extends React.Component {
@@ -11,7 +12,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { getEmail } = this.props;
+    const { getEmail, getExpenses1 } = this.props;
+    const total = getExpenses1.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number(exchangeRates[currency].ask * value))), 0);
     return (
       <div>
         TrybeWallet
@@ -19,7 +22,7 @@ class Wallet extends React.Component {
           <div>
             { getEmail }
           </div>
-          <div data-testid="total-field">Despesa Total R$: 0 </div>
+          <div data-testid="total-field">{`Despesa TotalR$: ${total || 0}`}</div>
           <div data-testid="header-currency-field">Câmbio: BRL </div>
         </header>
         <Forms />
@@ -30,15 +33,19 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   getEmail: state.user.email,
+  getExpenses1: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   currencies: () => dispatch(fetchAPI()),
+  expenses: (expense) => dispatch(getExpenses(expense)),
+  // fazer o dispatch do botao para salvar no array,
 });
 
 Wallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
   currencies: PropTypes.func.isRequired,
+  getExpenses1: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

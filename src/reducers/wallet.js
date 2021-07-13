@@ -4,6 +4,7 @@ import {
   REQUEST_CURRENCIES_API_SUCCESS,
 }
   from '../actions/walletActionsAPI';
+import { SEND_EXPENSES } from '../actions/walletActions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -18,11 +19,17 @@ function wallet(state = INITIAL_STATE, action) {
     };
   case REQUEST_CURRENCIES_API_SUCCESS:
     return {
+      ...state,
       currencies: [...state.currencies,
         ...action.payload.filter((data1) => data1 !== 'USDT')],
     };
+  case SEND_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   default:
-    return state;
+    return { ...state };
   }
 }
 export default wallet;
