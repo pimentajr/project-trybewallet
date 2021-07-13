@@ -7,7 +7,7 @@ class Header extends React.Component {
       <div className="wallet-header">
         <div>
           <p data-testid="email-field">
-            {  }
+            { }
           </p>
         </div>
         <div>
