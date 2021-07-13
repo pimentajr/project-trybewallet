@@ -6,12 +6,12 @@ import WalletForm from '../components/WalletForm';
 class Wallet extends React.Component {
   render() {
     const { email, expenses } = this.props;
+    console.log(expenses);
     const totalRates = expenses.length === 0 ? 0
       : expenses.reduce((acumulator, expense) => {
         const { value, currency, exchangeRates } = expense;
         return acumulator + parseFloat(value) * exchangeRates[currency].ask;
       }, 0);
-    console.log(totalRates);
     return (
       <div>
         <header>

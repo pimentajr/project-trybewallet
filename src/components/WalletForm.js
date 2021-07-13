@@ -11,7 +11,7 @@ class WalletForm extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      paymentForm: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.inputHandle = this.inputHandle.bind(this);
@@ -65,20 +65,20 @@ class WalletForm extends Component {
         </label>
         <label htmlFor="payment">
           Método de pagamento:
-          <select id="payment" name="paymentForm" onChange={ this.inputHandle }>
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+          <select id="payment" name="method" onChange={ this.inputHandle }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
           <select id="tag" name="tag" onChange={ this.inputHandle }>
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="Alimentacao">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
         <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
