@@ -6,6 +6,7 @@ import { SUBMIT_EXPENSES } from '../actions/submitExpenses';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  idNextExpense: 0,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -15,7 +16,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       currencies: state.currencies,
       expenses: [...state.expenses, {
-        id: (state.expenses.length !== 0 ? state.expenses.length : 0),
+        id: state.idNextExpense,
         value: action.state.value,
         description: action.state.description,
         currency: action.state.currency,
@@ -23,6 +24,7 @@ const wallet = (state = INITIAL_STATE, action) => {
         tag: action.state.tag,
         exchangeRates: action.exchange,
       }],
+      idNextExpense: state.idNextExpense + 1,
     };
   case REMOVE_EXPENSE:
     return {
