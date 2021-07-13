@@ -8,6 +8,7 @@ export default class Pagamento extends Component {
       <label htmlFor="method">
         Método de pagamento:
         <select
+          data-testid="method-input"
           id="method"
           name="method"
           onChange={ handleInput }

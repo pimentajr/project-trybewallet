@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
+// import { deleteExpense, editExpense } from '../actions';
 
 class TableRow extends Component {
-  constructor(props) {
-    super(props);
-    this.removeGasto = this.removeGasto.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.removeGasto = this.removeGasto.bind(this);
+  //   // this.editaGasto = this.editaGasto.bind(this);
+  // }
 
-  removeGasto() {
-    const { removeExpense, expense: { id } } = this.props;
-    // const { id } = this.state;
-    console.log(id);
-    removeExpense(id);
-  }
+  // removeGasto() {
+  //   const { removeExpense, expense: { id } } = this.props;
+  //   removeExpense(id);
+  // }
+
+  // editaGasto() {
+  //   const { editingExpense, expense } = this.props;
+  //   editingExpense(expense);
+  // }
 
   render() {
     const { expense: {
@@ -24,7 +28,7 @@ class TableRow extends Component {
       value,
       currency,
       exchangeRates,
-    } } = this.props;
+    }, removeGasto, editaGasto, index } = this.props;
     return (
       <tr>
         <td>{description}</td>
@@ -37,7 +41,14 @@ class TableRow extends Component {
         <td>Real</td>
         <button
           type="button"
-          onClick={ this.removeGasto }
+          onClick={ () => editaGasto(index) }
+          data-testid="edit-btn"
+        >
+          Editar
+        </button>
+        <button
+          type="button"
+          onClick={ () => removeGasto(index) }
           data-testid="delete-btn"
         >
           X
@@ -63,8 +74,4 @@ TableRow.propTypes = {
   removeExpense: PropTypes.func.isRequired,
 };
 
-const MapDispatchToProps = (dispatch) => ({
-  removeExpense: (id) => dispatch(deleteExpense(id)),
-});
-
-export default connect(null, MapDispatchToProps)(TableRow);
+export default connect(null, null)(TableRow);

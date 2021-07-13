@@ -7,7 +7,7 @@ export default class Tag extends Component {
     return (
       <label htmlFor="tag">
         Tag:
-        <select name="tag" id="tag" onChange={ handleInput } value={ tag }>
+        <select data-testid="tag-input" name="tag" id="tag" onChange={ handleInput } value={ tag }>
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>

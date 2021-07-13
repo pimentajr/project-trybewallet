@@ -8,6 +8,7 @@ export default class Moeda extends Component {
       <label htmlFor="currency">
         Moeda:
         <select
+          data-testid="currency-input"
           id="currency"
           name="currency"
           onChange={ handleInput }

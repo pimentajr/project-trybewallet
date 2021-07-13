@@ -8,6 +8,7 @@ export default class Valor extends Component {
       <label htmlFor="value">
         Valor:
         <input
+          data-testid="value-input"
           type="text"
           name="value"
           id="value"
