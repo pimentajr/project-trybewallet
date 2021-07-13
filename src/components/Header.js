@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
@@ -6,7 +7,7 @@ class Header extends React.Component {
       <div className="wallet-header">
         <div>
           <p data-testid="email-field">
-            {}
+            {  }
           </p>
         </div>
         <div>
@@ -24,4 +25,8 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  username: state.user.username,
+});
+
+export default connect(mapStateToProps)(Header);
