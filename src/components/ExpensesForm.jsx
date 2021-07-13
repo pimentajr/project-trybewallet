@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import store from '../store';
-// import { userEmail } from '../actions';
+import { connect } from 'react-redux';
+// import store from '../store';
 
-export default class ExpensesForm extends Component {
+const DEFAULT_STATE = {
+  id: 0,
+  value: '',
+  description: '',
+  coin: 'USD',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
+};
+
+class ExpensesForm extends Component {
   constructor() {
     super();
-    this.state = {
-      id: 0,
-      expensesValue: '',
-      description: '',
-      currency: 'USD',
-      paymentMethod: 'Dinheiro',
-      tag: 'Alimentação',
-    };
-
+    this.state = DEFAULT_STATE;
     this.handleChange = this.handleChange.bind(this);
+    this.addExpense = this.addExpense.bind(this);
   }
 
   handleChange(e) {
@@ -22,37 +24,41 @@ export default class ExpensesForm extends Component {
     this.setState(() => ({ [id]: value }));
   }
 
-  render() {
-    const { wallet } = store.getState();
-    const { currencies } = wallet;
+  addExpense() {
+    this.setState(() => DEFAULT_STATE);
+  }
 
-    const filteredCurrencies = currencies.map((currency, key) => {
-      const { code } = currency;
-      return <option key={ key } value={ code }>{ code }</option>;
-    });
+  mountForms() {
+    const { wallet } = this.props;
+    const { currencies } = wallet;
+    const { value, description, coin, method, tag } = this.state;
+    const filteredCoins = currencies
+      .map((coins, key) => <option key={ key } value={ coins }>{ coins }</option>);
 
     return (
       <form className="wallet__form" action="#">
         <label htmlFor="value">
           <strong>Valor</strong>
-          <input id="value" type="text" onChange={ this.handleChange } />
+          <input value={ value } id="value" type="text" onChange={ this.handleChange } />
         </label>
         <label htmlFor="description">
           <strong>Descrição</strong>
-          <input id="description" type="text" onChange={ this.handleChange } />
+          <input
+            value={ description }
+            id="description"
+            type="text"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="currency">
+        <label htmlFor="coin">
           <strong>Moeda</strong>
-          <select
-            id="currency"
-            onClick={ this.handleChange }
-          >
-            { filteredCurrencies }
+          <select id="coin" value={ coin } onClick={ this.handleChange }>
+            { filteredCoins }
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="method">
           <strong>Método de pagamento</strong>
-          <select id="paymentMethod" onChange={ this.handleChange }>
+          <select id="method" value={ method } onChange={ this.handleChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -60,16 +66,24 @@ export default class ExpensesForm extends Component {
         </label>
         <label htmlFor="tag">
           <strong>Tag</strong>
-          <select id="tag" onClick={ this.handleChange }>
-            <option value="food">Alimentação</option>
-            <option value="freetime">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+          <select id="tag" value={ tag } onChange={ this.handleChange }>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="button">Adicionar despesa</button>
+        <button onClick={ this.addExpense } type="button">Adicionar despesa</button>
       </form>
     );
   }
+
+  render() {
+    return this.mountForms();
+  }
 }
+
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(ExpensesForm);

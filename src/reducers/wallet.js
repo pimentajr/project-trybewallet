@@ -1,5 +1,5 @@
 import {
-  // FETCH_CURRENCIES,
+  FETCH_CURRENCIES,
   FETCH_CURRENCIES_SUCCEEDED,
   FETCH_CURRENCIES_FAILED,
   WALLET_ADDED_EXPENSE,
@@ -13,15 +13,18 @@ const DEFAULT_STATE = {
 
 const walletReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-  // case FETCH_CURRENCIES:
-  //   return { ...state };
+  case FETCH_CURRENCIES:
+    return { ...state, loading: true };
   case FETCH_CURRENCIES_SUCCEEDED:
     return {
       ...state,
-      currencies:
-        Object.values(action.currencies).filter(({ codein }) => codein !== 'BRLT') };
+      currencies: Object.keys(action.currencies).filter((coin) => coin !== 'USDT'),
+    };
   case FETCH_CURRENCIES_FAILED:
-    return { ...state, error: action.err };
+    return {
+      ...state,
+      error: action.err,
+    };
   case WALLET_ADDED_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.expense] };
   case WALLET_REMOVED_EXPENSE:
