@@ -1,5 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { RECEIVED_DATA, ADD_EXPENSE, ADD_EXCHANGERATES } from '../actions/index';
+import {
+  RECEIVED_DATA, ADD_EXPENSE, ADD_EXCHANGERATES, DELETE_EXPENSE } from '../actions/index';
 
 const WALLET_INITIAL_STATE = {
   rawData: {},
@@ -24,6 +25,10 @@ export default function wallet(state = WALLET_INITIAL_STATE, action) {
   case ADD_EXCHANGERATES:
     return {
       ...state, rawData: action.payload,
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state, expenses: state.expenses.filter((ex, index) => index !== action.payload),
     };
   default:
     return state;
