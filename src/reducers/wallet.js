@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { GET_COINS, SPEND_INFO } from '../actions';
+import { GET_COINS, SPEND_INFO, DELETE_SPEND } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -19,6 +19,12 @@ export default function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.state],
+    };
+  }
+  if (action.type === DELETE_SPEND) {
+    return {
+      ...state,
+      expenses: state.expenses.filter((_, index) => index !== action.payload),
     };
   }
   return state;

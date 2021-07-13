@@ -2,6 +2,7 @@
 export const USER_EMAIL = 'USER_EMAIL';
 export const GET_COINS = 'GET_COINS';
 export const SPEND_INFO = 'SPEND_INFO';
+export const DELETE_SPEND = 'DELETE_SPEND';
 
 export const setEmailStore = (email) => ({
   type: USER_EMAIL,
@@ -16,6 +17,11 @@ export const requestCoinsApi = (payload) => ({
 export const spendInformation = (state) => ({
   type: SPEND_INFO,
   state,
+});
+
+export const actionDelete = (payload) => ({
+  type: DELETE_SPEND,
+  payload,
 });
 
 export function isFetching() {

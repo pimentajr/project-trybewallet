@@ -1,9 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionDelete } from '../actions';
 import TableRow from './TableRow';
 
 export default function ExpenseTable() {
   const expenses = useSelector((state) => state.wallet.expenses);
+  const dispatch = useDispatch();
+  const deleteSpend = (param) => dispatch(actionDelete(param));
   return (
     <table>
       <TableRow />
@@ -28,6 +31,15 @@ export default function ExpenseTable() {
                 }
               </td>
               <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => deleteSpend(index) }
+                >
+                  Deletar
+                </button>
+              </td>
             </tr>
           ))
         }
