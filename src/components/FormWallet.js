@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MetodoPagamento from './MetodoPagamento';
 
-function FormWallet({ currencies, handleChange, inputFormW }) {
+function FormWallet({ currencies, handleChange, inputFormW, handleSubmit }) {
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <label htmlFor="valor">
         Valor
         <input
@@ -25,10 +25,10 @@ function FormWallet({ currencies, handleChange, inputFormW }) {
           name="desc"
         />
       </label>
-      <label htmlFor="input-select-coin">
+      <label htmlFor="currency">
         Moeda
         <select
-          id="input-select-coin"
+          id="currency"
           name="currency"
           onChange={ handleChange }
           value={ inputFormW.currency }
@@ -39,14 +39,16 @@ function FormWallet({ currencies, handleChange, inputFormW }) {
         </select>
       </label>
       <MetodoPagamento handleChange={ handleChange } inputFormW={ inputFormW } />
+      <button type="submit">Adicionar despesa</button>
     </form>
   );
 }
 
 FormWallet.propTypes = {
-  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  inputFormW: PropTypes.objectOf(PropTypes.any).isRequired,
   handleChange: PropTypes.func.isRequired,
-  inputFormW: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default FormWallet;

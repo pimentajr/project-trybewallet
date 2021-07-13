@@ -1,12 +1,18 @@
 import axios from 'axios';
 
 export const SET_FORM = 'SET_FORM';
+export const SUBMIT_EXPENSES = 'SUBMIT_EXPENSES';
 export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 const URL = 'https://economia.awesomeapi.com.br/json/all';
 
 export const setForm = (inputForm) => ({
   type: SET_FORM,
   payload: inputForm,
+});
+
+export const submitExpenses = (payload) => ({
+  type: SUBMIT_EXPENSES,
+  payload,
 });
 
 const fetchCurrencies = (payload) => ({

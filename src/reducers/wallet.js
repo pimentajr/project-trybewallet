@@ -1,4 +1,4 @@
-import { FETCH_CURRENCIES } from '../actions';
+import { FETCH_CURRENCIES, SUBMIT_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -11,6 +11,11 @@ const wallet = (state = INITIAL_STATE, { type, payload }) => {
     return {
       ...state,
       currencies: payload,
+    };
+  case SUBMIT_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, payload],
     };
   default:
     return state;

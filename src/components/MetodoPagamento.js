@@ -33,5 +33,5 @@ export default function MetodoPagamento({ handleChange, inputFormW }) {
 
 MetodoPagamento.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  inputFormW: PropTypes.arrayOf(PropTypes.object).isRequired,
+  inputFormW: PropTypes.objectOf(PropTypes.any).isRequired,
 };
