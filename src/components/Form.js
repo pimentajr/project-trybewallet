@@ -5,16 +5,15 @@ class Form extends Component {
     super();
     this.state = {
       currencies: [],
-      id: '0',
-      value: '',
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      // id: '0',
+      // value: '',
+      // description: '',
+      // currency: '',
+      // method: '',
+      // tag: '',
     };
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   componentDidMount() {
