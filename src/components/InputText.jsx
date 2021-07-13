@@ -13,7 +13,6 @@ class InputText extends React.Component {
       <div>
         <label className="form-wallet-label" htmlFor={ name }>
           { name }
-          :
           <input
             className="form-wallet-input-field"
             type="text"

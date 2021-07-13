@@ -13,7 +13,7 @@ class Form extends React.Component {
     this.state = {
       Valor: '',
       Descrição: '',
-      Currency: '',
+      Moeda: '',
       Payment: optionPayment[0],
       Tag: optionTag[0],
     };
@@ -48,7 +48,7 @@ class Form extends React.Component {
   }
 
   renderForm() {
-    const { Valor, Descrição, Payment, Tag, Currency } = this.state;
+    const { Valor, Descrição, Payment, Tag, Moeda } = this.state;
     const { currencies } = this.props;
     const currenciesKeys = Object.keys(currencies);
     const currenciesFiltered = currenciesKeys.filter((currency) => currency !== 'USDT');
@@ -56,8 +56,8 @@ class Form extends React.Component {
       <form className="form-wallet">
         {this.renderInput(Valor, 'Valor')}
         {this.renderInput(Descrição, 'Descrição')}
-        {this.renderSelect(Currency, 'Moeda', 'Currency', currenciesFiltered)}
-        {this.renderSelect(Payment, 'Método de Pagamento', 'Payment', optionPayment)}
+        {this.renderSelect(Moeda, 'Moeda', 'Moeda', currenciesFiltered)}
+        {this.renderSelect(Payment, 'Método de pagamento', 'Payment', optionPayment)}
         {this.renderSelect(Tag, 'Tag', 'Tag', optionTag)}
       </form>
     );

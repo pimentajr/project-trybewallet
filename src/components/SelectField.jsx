@@ -7,7 +7,7 @@ class SelectField extends React.Component {
     return (
       <div>
         <label htmlFor={ name }>
-          Método de pagamento
+          { name }
           <select
             className="form-wallet-input-field"
             name={ nameState }
