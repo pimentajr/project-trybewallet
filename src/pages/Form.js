@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Valor from './Valor';
 import { fetchExpense } from '../actions';
+import Description from './Description';
 
 class Form extends Component {
   constructor({ sendExp }) {
     super({ sendExp });
     this.state = {
       value: 0,
-      moeda: 'USD',
+      currency: 'USD',
       tag: 'Alimentação',
-      descricao: '',
-      pay: 'Dinheiro',
+      description: '',
+      method: 'Dinheiro',
       id: sendExp.length || 0,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -29,55 +30,55 @@ class Form extends Component {
     sendExpense(this.state);
     this.setState({
       value: 0,
-      moeda: 'USD',
+      currency: 'USD',
       tag: 'Alimentação',
-      descricao: '',
-      pay: 'Dinheiro',
+      description: '',
+      method: 'Dinheiro',
       id: sendExp.length + 1,
     });
   }
 
   render() {
     const { getCoin } = this.props;
-    const { moeda, pay, tag, value, descricao } = this.state;
+    const { currency, method, tag, value, description } = this.state;
     return (
       <form>
         <Valor value={ value } handleChange={ this.handleChange } />
         <label htmlFor="moeda">
           Moeda:
-          <select name="moeda" value={ moeda } id="moeda" onChange={ this.handleChange }>
+          <select
+            name="currency"
+            value={ currency }
+            id="moeda"
+            onChange={ this.handleChange }
+          >
             {getCoin.map((money, index) => <option key={ index }>{ money }</option>)}
           </select>
         </label>
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento:
-          <select name="pay" id="pay" value={ pay } onChange={ this.handleChange }>
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
+          <select
+            name="method"
+            value={ method }
+            id="method"
+            onChange={ this.handleChange }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
-          <select name="tag" id="tag" onChange={ this.handleChange } value={ tag }>
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
+          <select name="tag" id="tag" value={ tag } onChange={ this.handleChange }>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <label htmlFor="descricao">
-          Descrição:
-          <input
-            id="descricao"
-            type="text"
-            name="descricao"
-            value={ descricao }
-            placeholder="Digite a descrição do produto"
-            onChange={ this.handleChange }
-          />
-        </label>
+        <Description value={ description } handleChange={ this.handleChange } />
         <button
           type="button"
           onClick={ this.handleClick }

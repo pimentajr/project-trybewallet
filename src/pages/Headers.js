@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 class Headers extends React.Component {
   render() {
     const { login, sendExp } = this.props;
-    const totalPrice = sendExp.reduce((acc, { exchangeRates, value, moeda }) => (
-      acc + (Number(exchangeRates[moeda].ask * value))), 0);
+    const totalPrice = sendExp.reduce((acc, { exchangeRates, value, currency }) => (
+      acc + (Number(exchangeRates[currency].ask * value))), 0);
 
     return (
       <header>

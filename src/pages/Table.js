@@ -12,26 +12,29 @@ class Table extends Component {
             <tr className="menu">
               <th>Descrição</th>
               <th>Tag</th>
-              <th>Método de Pagamento</th>
+              <th>Método de pagamento</th>
               <th>Valor</th>
               <th>Moeda</th>
-              <th>Câmbio Utilizado</th>
-              <th>Valor Convertido</th>
-              <th>Moeda de Conversão</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
               <th>Editar/Excluir</th>
             </tr>
           </thead>
           <tbody>
             { sendExp.map((product) => (
               <tr key={ product.id }>
-                <td>{ product.descricao }</td>
+                <td>{ product.description }</td>
                 <td>{ product.tag }</td>
-                <td>{ product.pay }</td>
+                <td>{ product.method }</td>
                 <td>{ product.value }</td>
-                <td>{ product.exchangeRates[product.moeda].name }</td>
-                <td>{ Number(product.exchangeRates[product.moeda].ask).toFixed(2) }</td>
+                <td>{ product.exchangeRates[product.currency].name }</td>
                 <td>
-                  { Number(product.exchangeRates[product.moeda].ask * product.value)
+                  { Number(product.exchangeRates[product.currency].ask)
+                    .toFixed(2) }
+                </td>
+                <td>
+                  { Number(product.exchangeRates[product.currency].ask * product.value)
                     .toFixed(2) }
                 </td>
                 <td>Real</td>
