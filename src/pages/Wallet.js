@@ -107,10 +107,10 @@ const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchApiCurrencies()),
 });
 
-Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
+Wallet.propTypes = ({
+  email: PropTypes.string,
+  currencies: PropTypes.shape({ Object }),
+  fetchAPI: PropTypes.func,
+}).isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-
-// TODO Ja configurei as actions e reducers, falta fazer o MAP no wallet.js.
