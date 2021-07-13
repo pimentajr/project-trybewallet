@@ -1,48 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import FormWallet from '../components/FormWallet';
-import NavWallet from '../components/NavWallet';
-import { getCurrencies, submitExpenses } from '../actions';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Header from '../components/Header';
+import FormsInput from '../components/FormsInput';
+import FormsSelect from '../components/FormsSelect';
+import fetchCoins from '../actions/addCurrencies';
+import fetchPrices from '../actions/addExpenses';
+import Table from '../components/Table';
 
-function Wallet() {
-  const { currencies, expenses } = useSelector((state) => state.wallet);
-  const dispatch = useDispatch();
-  const [inputFormW, setInputFormW] = useState({
-    valor: 0,
-    desc: '',
-    currency: 'USD',
-    payment: 'dinheiro',
-    tag: 'alimentacao',
-  });
+class Wallet extends React.Component {
+  constructor() {
+    super();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('click');
-    dispatch(submitExpenses({ ...inputFormW, id: expenses.length }));
-  };
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
 
-  const handleChange = ({ target }) => {
-    const { value, name } = target;
-    setInputFormW({
-      ...inputFormW,
-      [name]: value,
-    });
-  };
+    this.handleChanges = this.handleChanges.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  useEffect(() => {
-    dispatch(getCurrencies());
-  }, [dispatch]);
-  return (
-    <div>
-      <NavWallet />
-      <FormWallet
-        handleChange={ handleChange }
-        inputFormW={ inputFormW }
-        currencies={ currencies }
-        handleSubmit={ handleSubmit }
-      />
-    </div>
-  );
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
+  }
+
+  handleChanges({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { expenses, fetchExpenses } = this.props;
+    const id = expenses.length;
+    const newState = { ...this.state, id };
+    fetchExpenses(newState);
+  }
+
+  render() {
+    const { currencies } = this.props;
+    return (
+      <>
+        <Header />
+        <FormsInput onChange={ this.handleChanges } />
+        <FormsSelect
+          onChange={ this.handleChanges }
+          currencies={ currencies }
+          onClick={ this.handleClick }
+        />
+        <Table />
+      </>
+    );
+  }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  emailGot: state.user.email,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+  exchangeRates: state.wallet.exchangeRates,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchCoins()),
+  fetchExpenses: (expense) => dispatch(fetchPrices(expense)),
+});
+
+Wallet.propTypes = {
+  fetchCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchExpenses: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

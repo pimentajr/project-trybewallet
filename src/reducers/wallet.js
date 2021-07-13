@@ -1,25 +1,30 @@
-import { FETCH_CURRENCIES, SUBMIT_EXPENSES } from '../actions';
+import { LOADING, SUCCESS, FAIL, ADD_EXPENSE, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  loading: false,
+  error: '',
 };
 
-const wallet = (state = INITIAL_STATE, { type, payload }) => {
-  switch (type) {
-  case FETCH_CURRENCIES:
+const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case LOADING:
+    return { ...state, loading: !state.loading };
+  case FAIL:
+    return { ...state, error: action.payload };
+  case SUCCESS:
+    return { ...state, currencies: action.payload };
+  case ADD_EXPENSE:
+    return { ...state, expenses: [...state.expenses, action.payload] };
+  case DELETE_EXPENSE:
     return {
       ...state,
-      currencies: payload,
-    };
-  case SUBMIT_EXPENSES:
-    return {
-      ...state,
-      expenses: [...state.expenses, payload],
+      expenses: [...state.expenses.filter((element) => element !== action.payload)],
     };
   default:
     return state;
   }
 };
 
-export default wallet;
+export default reducer;

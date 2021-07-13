@@ -1,40 +1,89 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { setForm } from '../actions';
-import Form from '../components/Form';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { setEmail } from '../actions';
 
-function Login() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [inputForm, setInputForm] = useState({
-    email: '',
-    password: '',
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(setForm(inputForm.email));
-    setInputForm({ email: '', password: '' });
-    history.push({
-      pathname: '/carteira',
-    });
-  };
-  const handleChange = ({ target: { value, name } }) => {
-    setInputForm({
-      ...inputForm,
+class Login extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: '',
+      senha: '',
+      button: true,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({
       [name]: value,
+    }, () => {
+      const { email, senha } = this.state;
+      const sizePass = 6;
+      if (/^[\w0-9.]+@\w+\.com$/.test(email) && senha.length >= sizePass) {
+        this.setState({ button: false });
+      } else {
+        this.setState({ button: true });
+      }
     });
-    const form = document.querySelector('.login-form');
-    const buttonSubmit = document.querySelector('.submit-button');
-    buttonSubmit.disabled = !form.checkValidity();
-  };
-  return (
-    <Form
-      handleChange={ handleChange }
-      handleSubmit={ handleSubmit }
-      inputForm={ inputForm }
-    />
-  );
+  }
+
+  handleClick() {
+    const { btnClicked } = this.props;
+    const { email } = this.state;
+    btnClicked(email);
+  }
+
+  render() {
+    const { button } = this.state;
+    return (
+      <form>
+        <h1>Login</h1>
+        <label htmlFor="input-email">
+          Email:
+          <input
+            data-testid="email-input"
+            type="text"
+            name="email"
+            id="input-email"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Senha:
+          <input
+            data-testid="password-input"
+            type="password"
+            name="senha"
+            id="input-password"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ button }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
+    );
+  }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  btnClicked: (payloadAction) => dispatch(setEmail(payloadAction)),
+});
+
+Login.propTypes = {
+  btnClicked: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

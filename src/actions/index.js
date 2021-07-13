@@ -1,34 +1,14 @@
-import axios from 'axios';
+// Coloque aqui suas actions
+export const SET_EMAIL = 'SET_EMAIL';
+export const LOADING = 'LOADING';
+export const SUCCESS = 'SUCCESS';
+export const FAIL = 'FAIL';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
-export const SET_FORM = 'SET_FORM';
-export const SUBMIT_EXPENSES = 'SUBMIT_EXPENSES';
-export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
-const URL = 'https://economia.awesomeapi.com.br/json/all';
-
-export const setForm = (inputForm) => ({
-  type: SET_FORM,
-  payload: inputForm,
-});
-
-export const submitExpenses = (payload) => ({
-  type: SUBMIT_EXPENSES,
-  payload,
-});
-
-const fetchCurrencies = (payload) => ({
-  type: FETCH_CURRENCIES,
-  payload,
-});
-
-export function getCurrencies() {
-  return (dispatch) => {
-    axios.get(URL)
-      .then((response) => {
-        const { data } = response;
-        delete data.USDT;
-        console.log(data);
-        dispatch(fetchCurrencies(data));
-      })
-      .catch((err) => console.log(err));
+export function setEmail(payload) {
+  return {
+    type: SET_EMAIL,
+    payload,
   };
 }
