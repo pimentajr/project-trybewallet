@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setCoins, addExpenses } from '../actions';
 import ExtendsForms from './ExtendsForms';
-import TableExpenses from './TableExpenses';
 
 class Form extends Component {
   constructor(props) {
@@ -42,7 +41,6 @@ class Form extends Component {
       tag,
       expenseRates: currencies,
     });
-    return <TableExpenses />;
   }
 
   render() {

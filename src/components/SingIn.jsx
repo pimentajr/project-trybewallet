@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import { newUser } from '../actions';
 
@@ -78,3 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
   user: (state) => dispatch(newUser(state)) });
 
 export default connect(null, mapDispatchToProps)(SingIn);
+
+SingIn.propTypes = {
+  user: PropTypes.func,
+}.isRequered;
