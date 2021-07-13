@@ -23,37 +23,33 @@ class Login extends React.Component {
   renderEmailInput() {
     const { email } = this.state;
     return (
-      <div>
-        <label htmlFor="email-input">
-          <input
-            type="email"
-            name="email"
-            data-testid="email-input"
-            placeholder="Email"
-            value={ email }
-            onChange={ (e) => this.handleChange(e.target) }
-          />
-        </label>
-      </div>
+      <label htmlFor="email-input">
+        <input
+          type="email"
+          name="email"
+          data-testid="email-input"
+          placeholder="Email"
+          value={ email }
+          onChange={ (e) => this.handleChange(e.target) }
+        />
+      </label>
     );
   }
 
   renderPasswordInput() {
     const { password } = this.state;
     return (
-      <div>
-        <label htmlFor="password-input">
-          <input
-            type="password"
-            name="password"
-            data-testid="password-input"
-            placeholder="Senha"
-            minLength="6"
-            value={ password }
-            onChange={ (e) => this.handleChange(e.target) }
-          />
-        </label>
-      </div>
+      <label htmlFor="password-input">
+        <input
+          type="password"
+          name="password"
+          data-testid="password-input"
+          placeholder="Senha"
+          minLength="6"
+          value={ password }
+          onChange={ (e) => this.handleChange(e.target) }
+        />
+      </label>
     );
   }
 
@@ -63,6 +59,7 @@ class Login extends React.Component {
     return (
       <Link
         to="/carteira"
+        className="button"
         onClick={ (e) => {
           if (!email && !password) {
             e.preventDefault();
@@ -77,12 +74,13 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <form>
+      <div className="loginContainer">
+        <h3>TrybeWallet</h3>
+        <div className="inputForm">
           {this.renderEmailInput()}
           {this.renderPasswordInput()}
-          {this.renderSubmitButton()}
-        </form>
+        </div>
+        {this.renderSubmitButton()}
       </div>
     );
   }
