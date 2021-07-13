@@ -14,8 +14,8 @@ class App extends React.Component {
       <Provider store={ store }>
         <BrowserRouter>
           <div>Hello, TrybeWallet!</div>
-          <Route path="/" component={ Login } />
-          <Route path="/wallet" component={ Wallet } />
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/carteira" component={ Wallet } />
         </BrowserRouter>
       </Provider>
     );
