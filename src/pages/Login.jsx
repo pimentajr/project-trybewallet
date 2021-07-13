@@ -20,11 +20,10 @@ class Login extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email } = this.state;
-    const { history } = this.props;
-    const { setUserAction } = this.props;
+    const { setUserAction, history } = this.props;
     setUserAction(email);
 
-    history.push('/');
+    history.push('/carteira');
   }
 
   handleInputChange({ target: { name, value } }) {
