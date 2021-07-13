@@ -7,6 +7,7 @@ export const SET_PASSWORD = 'SET_PASSWORD';
 export const GET_COTATION = 'GET_COTATION';
 export const GET_COTATION_SUCCESS = 'GET_COTATION_SUCCESS';
 export const GET_COTATION_FAILED = 'GET_COTATION_FAILED';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const setUsername = (payload) => ({
   type: SET_USERNAME,
@@ -29,6 +30,12 @@ export const getCotationSuccess = (payload) => ({
 
 export const getCotationFailed = (payload) => ({
   type: GET_COTATION_FAILED,
+  payload,
+});
+
+export const addExpenseAction = (payload, id) => ({
+  type: ADD_EXPENSE,
+  id,
   payload,
 });
 
