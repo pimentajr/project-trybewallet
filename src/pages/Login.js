@@ -61,7 +61,13 @@ class Login extends React.Component {
             placeholder="Digite sua Senha"
           />
         </label>
-        <button type="button" disabled={ !isFormValid } onClick={ this.onSubmit }>Entrar</button>
+        <button
+          type="button"
+          disabled={ !isFormValid }
+          onClick={ this.onSubmit }
+        >
+          Entrar
+        </button>
       </div>
     );
   }
