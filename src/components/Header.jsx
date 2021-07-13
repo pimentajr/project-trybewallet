@@ -13,7 +13,7 @@ class Header extends React.Component {
 
   render() {
     const { email, expenses } = this.props;
-    const { total, currency } = this.state;
+    const { currency } = this.state;
     const totalValue = expenses.reduce(
       (acc, curr) => parseFloat(acc) + parseFloat(curr.value), 0,
     );
