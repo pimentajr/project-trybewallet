@@ -6,7 +6,8 @@ function App() {
   return (
     <Switch>
       <Route path="/" exact component={ Login } />
-    </Switch>);
+    </Switch>
+  );
 }
 
 export default App;
