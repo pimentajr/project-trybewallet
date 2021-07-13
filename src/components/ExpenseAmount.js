@@ -5,7 +5,6 @@ class ExpenseAmount extends Component {
   render() {
     const { myValue } = this.props;
     const { value, funcHandleState } = myValue;
-    if (value) console.log(typeof(value));
     return (
       <label htmlFor="value">
         Valor
@@ -21,8 +20,8 @@ class ExpenseAmount extends Component {
   }
 }
 
-ExpenseAmount.propType = {
-  myValue: PropTypes.objectOf(PropTypes.string).isRequired,
+ExpenseAmount.propTypes = {
+  myValue: PropTypes.shape.isRequired,
   value: PropTypes.string.isRequired,
   funcHandleState: PropTypes.func.isRequired,
 };

@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 
 class SelectedTypeCoin extends Component {
   render() {
-    const { arrayCurrencies } = this.props;
-    const { currency, funcHandleState } = this.props.myValue;
+    const { arrayCurrencies, myValue } = this.props;
+    const { currency, funcHandleState } = myValue;
     return (
       <label htmlFor="moeda">
         Moeda
-        <select id="moeda" value={ currency } name="currency" onChange={ funcHandleState }>
+        <select
+          id="moeda"
+          value={ currency }
+          name="currency"
+          onChange={ funcHandleState }
+        >
           { arrayCurrencies.map((res, index) => (
             <option key={ index }>{res}</option>)) }
         </select>
@@ -23,6 +28,7 @@ const mapStateToProps = (state) => ({
 });
 
 SelectedTypeCoin.propTypes = {
+  myValue: PropTypes.shape.isRequired,
   arrayCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ExpenseDescription extends Component {
   render() {
-    const { description, funcHandleState } = this.props.myValue;
+    const { myValue } = this.props;
+    const { description, funcHandleState } = myValue;
     return (
       <label htmlFor="description">
         Descrição
@@ -17,5 +19,11 @@ class ExpenseDescription extends Component {
     );
   }
 }
+
+ExpenseDescription.propTypes = {
+  myValue: PropTypes.shape.isRequired,
+  description: PropTypes.string.isRequired,
+  funcHandleState: PropTypes.func.isRequired,
+};
 
 export default ExpenseDescription;

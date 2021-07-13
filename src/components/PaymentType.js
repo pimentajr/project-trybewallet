@@ -24,11 +24,9 @@ class PaymentType extends Component {
 }
 
 PaymentType.propTypes = {
-  funcHandleState: PropTypes.func,
-};
-
-PaymentType.defaultProps = {
-  funcHandleState: () => {},
+  myValue: PropTypes.shape.isRequired,
+  method: PropTypes.string.isRequired,
+  funcHandleState: PropTypes.func.isRequired,
 };
 
 export default PaymentType;
