@@ -1,8 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { userLogin } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -22,6 +26,7 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const length = 6;
+    const { userData } = this.props;
 
     const emailRegex = () => {
       const emailValid = /\S+@\S+\.\S+/;
@@ -53,16 +58,29 @@ class Login extends React.Component {
           onChange={ this.handleChange }
 
         />
-        <button
-          type="button"
-          disabled={ !(emailRegex() && passwordValid) }
+        <Link
+          onClick={ () => (userData(email)) }
+          to="/carteira"
         >
-          Entrar
-        </button>
+          <button
+            type="button"
+            disabled={ !(emailRegex() && passwordValid) }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
 
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userData: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  userData: (email) => dispatch(userLogin(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
