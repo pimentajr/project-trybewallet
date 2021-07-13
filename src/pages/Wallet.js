@@ -5,56 +5,104 @@ import PropTypes from 'prop-types';
 class Wallet extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      currencies: [],
+    };
+
+    this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.formComponents = this.formComponents.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchCurrencies();
+  }
+
+  fetchCurrencies() {
+    fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json())
+      .then((res) => Object.keys(res).filter((key) => key !== 'USDT'))
+      .then((res) => this.setState({ currencies: res }));
+  }
+
+  formComponentValor() {
+    return (
+      <label htmlFor="valor">
+        Valor:&nbsp;
+        <input
+          type="text"
+          id="valor"
+        />
+      </label>
+    );
+  }
+
+  formComponentMoeda(currencies) {
+    return (
+      <label htmlFor="Moeda">
+        Moeda:&nbsp;
+        <select
+          id="Moeda"
+        >
+          {currencies.map((opt, i) => <option key={ i }>{opt}</option>) }
+        </select>
+      </label>
+    );
+  }
+
+  formComponentMetodoPagamento() {
+    return (
+      <label htmlFor="Método de pagamento">
+        Método de pagamento:&nbsp;
+        <select
+          id="Método de pagamento"
+        >
+          <option>Dinheiro</option>
+          <option>Cartão de crédito</option>
+          <option>Cartão de débito</option>
+        </select>
+      </label>
+    );
+  }
+
+  formComponentTag() {
+    return (
+      <label htmlFor="Tag">
+        Tag:&nbsp;
+        <select
+          id="Tag"
+        >
+          <option>Alimentação</option>
+          <option>Lazer</option>
+          <option>Trabalho</option>
+          <option>Transporte</option>
+          <option>Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
+  formComponentDescricao() {
+    return (
+      <label htmlFor="Descrição">
+        Descrição:&nbsp;
+        <input
+          type="text"
+          id="Descrição"
+        />
+      </label>
+    );
+  }
+
   formComponents() {
+    const { currencies } = this.state;
+
     return (
       <form className="form">
-        <label htmlFor="valor">
-          Valor:&nbsp;
-          <input
-            type="text"
-            id="valor"
-          />
-        </label>
-        <label htmlFor="Moeda">
-          Moeda:&nbsp;
-          <select
-            id="Moeda"
-          >
-            <option>Vazio</option>
-          </select>
-        </label>
-        <label htmlFor="Método de pagamento">
-          Método de pagamento:&nbsp;
-          <select
-            id="Método de pagamento"
-          >
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="Tag">
-          Tag:&nbsp;
-          <select
-            id="Tag"
-          >
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
-        <label htmlFor="Descrição">
-          Descrição:&nbsp;
-          <input
-            type="text"
-            id="Descrição"
-          />
-        </label>
+        {this.formComponentValor()}
+        {this.formComponentMoeda(currencies)}
+        {this.formComponentMetodoPagamento()}
+        {this.formComponentTag()}
+        {this.formComponentDescricao()}
       </form>
     );
   }
