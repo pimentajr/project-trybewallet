@@ -9,10 +9,6 @@ export function userAction(email) {
     email,
   });
 }
-export const sendEmail = (email) => ({
-  type: 'SEND_EMAIL',
-  email,
-});
 
 const requestValues = () => ({
   type: REQUEST_VALUES,

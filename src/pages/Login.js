@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sendEmail } from '../actions/index';
+import { userAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -81,7 +81,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSendEmail: (email) => dispatch(sendEmail(email)),
+  dispatchSendEmail: (email) => dispatch(userAction(email)),
 });
 
 Login.propTypes = {
