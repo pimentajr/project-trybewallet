@@ -8,6 +8,10 @@ const INITIAL_STATE = {
 
 export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case 'RECEIVE_CURRENCIES':
+    return { ...state, currencies: action.currencies };
+  case 'REQUEST_CURRENCIES':
+    return { ...state }; // Por que preciso desse evento?
   default:
     return state;
   }

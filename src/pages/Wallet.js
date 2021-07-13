@@ -1,43 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
+
+// Solução baseada em: https://github.com/reduxjs/react-redux/issues/255#issuecomment-259512261
+
+const requestCurrencies = () => ({
+  type: 'REQUEST_CURRENCIES',
+});
+
+const receiveCurrencies = (currencies) => ({
+  type: 'RECEIVE_CURRENCIES',
+  currencies,
+});
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currencyStateList: {},
-    };
-
     this.renderSelectTag = this.renderSelectTag.bind(this);
-    this.getAPI = this.getAPI.bind(this);
-    this.changedCurrencyAPIList = this.changedCurrencyAPIList.bind(this);
   }
 
-  async componentDidMount() {
-    this.changedCurrencyAPIList();
-  }
-
-  async getAPI() {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const acurrencyList = response.json();
-    return acurrencyList;
-  }
-
-  // async getAPI() {
-  //   axios
-  //     .get('https://economia.awesomeapi.com.br/json/all')
-  //     .then((response) => {
-  //       const currencyList = await response.data;
-  //       return currencyList;
-  //     });
-  // }
-
-  changedCurrencyAPIList() {
-    const stateList = this.getAPI();
-    this.setState({ currencyStateList: stateList });
-    console.log('changedCurrencyAPIList', stateList);
+  componentDidMount() {
+    const { requestCurrienciesProps, dispatcher } = this.props;
+    dispatcher(requestCurrienciesProps());
   }
 
   renderSelectTag() {
@@ -56,9 +40,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
-    const { currencyStateList } = this.state;
-    console.log('depois do render', currencyStateList);
+    const { email, currencies } = this.props;
+    console.log(currencies);
     return (
       <div>
         <header>
@@ -78,11 +61,14 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select role="combobox" id="currency">
-              {!currencyStateList && Object.values(currencyStateList).map((currency) => (
-                <option value={ currency.code } key={ currency.code }>
-                  {currency.code}
-                </option>
-              ))}
+              {currencies
+                && Object.values(currencies)
+                  .filter((currency) => currency.codein !== 'BRLT')
+                  .map((currency) => (
+                    <option value={ currency.code } key={ currency.code }>
+                      {currency.code}
+                    </option>
+                  ))}
             </select>
           </label>
           <label htmlFor="payment-method">
@@ -102,10 +88,30 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currencies: state.wallet.currencies,
+});
+
+function requestCurrenciesAndDispatchReceiveCurrencies() {
+  return (myDispatcher) => {
+    // Não entendi a necessidade disso!
+    myDispatcher(requestCurrencies());
+
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((currencies) => myDispatcher(receiveCurrencies(currencies)));
+  };
+}
+
+const mapDispatchToProps = (dispatcher) => ({
+  requestCurrienciesProps: requestCurrenciesAndDispatchReceiveCurrencies,
+  dispatcher,
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.string).isRequired,
+  requestCurrienciesProps: PropTypes.func.isRequired,
+  dispatcher: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
