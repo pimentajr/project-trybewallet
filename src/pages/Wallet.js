@@ -71,8 +71,8 @@ class Wallet extends Component {
           Método de Pagamento:
           <select value={ method } id="method" onChange={ this.change }>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Débito">Cartão de débito</option>
-            <option value="Cartão de Crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
           </select>
         </label>
         <label htmlFor="tag">
