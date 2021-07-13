@@ -1,8 +1,9 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// // import PropTypes from 'prop-types';
-// import { setEmail } from '../actions/index';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setEmail } from '../actions';
+// import * as user from '../reducers/user';
 
 class Login extends React.Component {
   constructor() {
@@ -14,13 +15,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.isDisable = this.isDisable.bind(this);
-  }
-
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    }, () => this.isDisable());
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   validadeEmail(email) {
@@ -43,41 +38,62 @@ class Login extends React.Component {
     }
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => this.isDisable());
+  }
+
+  submitLogin(event) {
+    event.preventDefault();
+    const { setEmailAction } = this.props;
+    const { email } = this.state;
+    setEmailAction(email);
+  }
+
   render() {
     const { email, password } = this.state;
     return (
       <div>
-        <label htmlFor="email-id">
-          Email:
-          <input
-            value={ email }
-            id="email-id"
-            name="email"
-            type="email"
-            data-testid="email-input"
-            className="email"
-            placeholder="Digite seu email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="password-id">
-          Password:
-          <input
-            id="password-id"
-            name="password"
-            type="password"
-            data-testid="password-input"
-            className="password"
-            value={ password }
-            placeholder="Digite sua senha"
-            onChange={ this.handleChange }
-          />
-        </label>
-        {/* <Link to="/carteira"> */}
-        <button type="submit" className="btn-login" disabled>
-          Entrar
-        </button>
-        {/* </Link> */}
+        <form>
+          <label htmlFor="email-id">
+            Email:
+            <input
+              value={ email }
+              id="email-id"
+              name="email"
+              type="email"
+              data-testid="email-input"
+              className="email"
+              placeholder="Digite seu email"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password-id">
+            Password:
+            <input
+              id="password-id"
+              name="password"
+              type="password"
+              data-testid="password-input"
+              className="password"
+              value={ password }
+              placeholder="Digite sua senha"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <Link to="/carteira">
+            <button
+              type="submit"
+              className="btn-login"
+              onSubmit={ (e) => this.submitLogin(e) }
+              disabled
+            >
+              Entrar
+            </button>
+          </Link>
+        </form>
       </div>
     );
   }
@@ -87,10 +103,15 @@ class Login extends React.Component {
 //   username: state.user.email,
 // });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setEmailAction: (payload) => dispatch(setEmail(payload)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  setEmailAction: (payload) => dispatch(setEmail(payload)),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
 
-export default Login;
+Login.propTypes = {
+  setEmailAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
