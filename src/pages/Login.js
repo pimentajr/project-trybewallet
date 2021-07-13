@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setEmail } from '../actions';
@@ -14,7 +13,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.isDisable = this.isDisable.bind(this);
+    this.handleBtn = this.handleBtn.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
   }
 
@@ -28,28 +27,28 @@ class Login extends React.Component {
     return (password.length >= minOfCaracteres);
   }
 
-  isDisable() {
+  // Função criada com a ajuda do mestre @Frank Rocha
+  handleBtn() {
     const { email, password } = this.state;
-    const btnLogin = document.querySelectorAll('.btn-login')[0];
     if (this.validadeEmail(email) && this.validadePassword(password)) {
-      btnLogin.disabled = false;
-    } else {
-      btnLogin.disabled = true;
+      return false;
     }
+    return true;
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    }, () => this.isDisable());
+    });
   }
 
   submitLogin(event) {
     event.preventDefault();
-    const { setEmailAction } = this.props;
+    const { setEmailAction, history } = this.props;
     const { email } = this.state;
     setEmailAction(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -83,25 +82,19 @@ class Login extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <Link to="/carteira">
-            <button
-              type="submit"
-              className="btn-login"
-              onSubmit={ (e) => this.submitLogin(e) }
-              disabled
-            >
-              Entrar
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="btn-login"
+            onClick={ (e) => this.submitLogin(e) }
+            disabled={ this.handleBtn() }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
   }
 }
-
-// const mapStateToProps = (state) => ({
-//   username: state.user.email,
-// });
 
 const mapDispatchToProps = (dispatch) => ({
   setEmailAction: (payload) => dispatch(setEmail(payload)),
