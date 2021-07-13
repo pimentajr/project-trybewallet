@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+/* import { useSelector, useDispatch } from 'react-redux'; */
 import HeaderWallet from '../components/HeaderWallet';
 import ExpenseFormWallet from '../components/ExpenseFormWallet';
 
-export default class Wallet extends Component {
-  render() {
-    return (
-      <section>
-        <HeaderWallet />
-        <ExpenseFormWallet />
-      </section>
-    );
-  }
+export default function Wallet() {
+  return (
+    <section>
+      <HeaderWallet />
+      <ExpenseFormWallet />
+    </section>
+
+  );
 }
