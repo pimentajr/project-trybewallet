@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { setCoins, addExpenses } from '../actions';
+import ExtendsForms from './ExtendsForms';
 import TableExpenses from './TableExpenses';
 
 class Form extends Component {
@@ -29,7 +31,7 @@ class Form extends Component {
 
   btnAddExpenses(e) {
     e.preventDefault();
-    const { expenses, expense, expenseRates, currencies } = this.props;
+    const { expenses, expense, currencies } = this.props;
     const { value, description, method, currency, tag } = this.state;
     expenses({
       id: expense.length,
@@ -44,7 +46,7 @@ class Form extends Component {
   }
 
   render() {
-    const { value, description, method, currency, tag } = this.state;
+    const { value, description, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <form>
@@ -70,43 +72,15 @@ class Form extends Component {
             onChange={ (e) => this.handleInput(e) }
           />
         </label>
-        <label htmlFor="moedaSelect">
-          Moeda:
-          <select
-            id="moedaSelect"
-            type="number"
-            name="moeda"
-            value={ currency }
-            onChange={ (e) => this.handleInput(e) }
-          >
-          {Object.keys(currencies).filter(e => e !== 'USDT').map((e, index )=> <option key={index}>{e}</option>)}
-          </select>
-        </label>
-        <label htmlFor="modePayment">
-          Método de pagamento:
-          <select
-            type="number"
-            id="modePayment"
-            name="method"
-            value={ method }
-            onChange={ (e) => this.handleInput(e) }
-          >
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select type="number" id="tag" name="tag" value={ tag } onChange={ (e) => this.handleInput(e) }>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
+        <ExtendsForms
+          handleInput={ this.handleInput }
+          method={ method }
+          currencies={ currencies }
+          tag={ tag }
+        />
+
         <button
+          type="button"
           onClick={ (e) => this.btnAddExpenses(e) }
         >
           Adicionar despesa
@@ -125,5 +99,13 @@ const mapDispatchToProps = (dispatch) => ({
   moeda: (state) => dispatch(setCoins(state)),
   expenses: (state) => dispatch(addExpenses(state)),
 });
+
+Form.propTypes = {
+  value: 0,
+  description: PropTypes.string,
+  currency: PropTypes.object,
+  method: PropTypes.string,
+  tag: PropTypes.string,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

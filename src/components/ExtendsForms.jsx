@@ -1,43 +1,26 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+const optionsTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class ExtendsForms extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currency: '',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
-    this.handleInput = this.handleInput.bind(this);
-    this.btnAddExpenses = this.btnAddExpenses.bind(this);
-  }
-
-  componentDidMount() {
-    const { moeda } = this.props;
-    moeda();
-  }
-
-  handleInput({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
-
   render() {
-    const { method, currency, tag } = this.state;
+    const { method, currencies, tag, handleInput } = this.props;
     return (
-      <div>
-        <label
-          htmlFor="moedaSelect"
-        >
+      <>
+        <label htmlFor="moedaSelect">
           Moeda:
           <select
             id="moedaSelect"
             type="number"
             name="moeda"
-            value={ currency }
-            onChange={ (e) => this.handleInput(e) }
-          />
+            value={ currencies }
+            onChange={ handleInput }
+          >
+            {Object.keys(currencies)
+              .filter((e) => e !== 'USDT')
+              .map((option, index) => <option key={ index }>{option}</option>)}
+          </select>
         </label>
         <label htmlFor="modePayment">
           Método de pagamento:
@@ -46,7 +29,7 @@ class ExtendsForms extends Component {
             id="modePayment"
             name="method"
             value={ method }
-            onChange={ (e) => this.handleInput(e) }
+            onChange={ handleInput }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -60,25 +43,22 @@ class ExtendsForms extends Component {
             id="tag"
             name="tag"
             value={ tag }
-            onChange={ (e) => this.handleInput(e) }
+            onChange={ handleInput }
           >
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+            { optionsTag.map((optionTag, index) => (
+              <option value={ optionTag } key={ index }>{optionTag}</option>
+            ))}
           </select>
         </label>
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  payload: state.wallet.payload,
-});
+export default ExtendsForms;
 
-const mapDispatchToProps = (dispatch) => ({
-  moeda: (state) => dispatch(setCoins(state)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ExtendsForms);
+ExtendsForms.propTypes = {
+  currency: PropTypes.object,
+  method: PropTypes.string,
+  tag: PropTypes.string,
+}.isRequired;
