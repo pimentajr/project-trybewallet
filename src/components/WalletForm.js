@@ -34,6 +34,7 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select
+            className="form-input"
             data-testid="currency-input"
             id="moeda"
             name="currency"
@@ -45,6 +46,7 @@ class WalletForm extends Component {
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
           <select
+            className="form-input"
             data-testid="method-input"
             name="method"
             onChange={ this.handleChange }
@@ -56,6 +58,7 @@ class WalletForm extends Component {
         <label htmlFor="categoria">
           Tag:
           <select
+            className="form-input"
             data-testid="tag-input"
             id="categoria"
             name="tag"
@@ -73,14 +76,14 @@ class WalletForm extends Component {
     const { state } = this;
     if (!enableEditButton) {
       return (
-        <button type="button" onClick={ () => addNewExpense(state) }>
+        <button className="form-btn" type="button" onClick={ () => addNewExpense(state) }>
           Adicionar despesa
         </button>
       );
     }
     if (enableEditButton) {
       return (
-        <button type="button" onClick={ () => addNewExpense(state) }>
+        <button className="form-btn" type="button" onClick={ () => addNewExpense(state) }>
           Editar despesa
         </button>
       );
@@ -93,6 +96,7 @@ class WalletForm extends Component {
         <label htmlFor="valor">
           Valor:
           <input
+            className="form-input"
             data-testid="value-input"
             name="value"
             type="number"
@@ -103,6 +107,7 @@ class WalletForm extends Component {
         <label htmlFor="descricao">
           Descrição:
           <input
+            className="form-input"
             data-testid="description-input"
             name="description"
             type="text"
