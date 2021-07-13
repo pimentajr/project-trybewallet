@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchApi } from '../actions/index';
+import { getState } from '../actions/getState';
 
 class SelectedCurrency extends Component {
   constructor(props) {
@@ -18,9 +19,12 @@ class SelectedCurrency extends Component {
   }
 
   handleTest(e) {
+    const { getStateAction } = this.props;
     this.setState({
       currency: e.target.value,
     });
+    const { currency } = this.state;
+    getStateAction(currency, 1);
   }
 
   render() {
@@ -46,6 +50,7 @@ class SelectedCurrency extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   coinType: () => dispatch(fetchApi()),
+  getStateAction: (payload, test) => dispatch(getState(payload, test)),
 });
 
 const mapStateToProps = (state) => ({

@@ -3,6 +3,7 @@ import {
   REQUEST_API_SUCESS,
   REQUEST_API_ERROR,
 } from '../actions/index';
+import { GET_STATE } from '../actions/getState';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -24,6 +25,11 @@ function wallet(state = INITIAL_STATE, action = {}) {
     return {
       ...state,
       currencies: Error,
+    };
+  case GET_STATE:
+    return {
+      ...state,
+      ...state.expenses.splice(action.test, 0, action.payload),
     };
   default:
     return state;

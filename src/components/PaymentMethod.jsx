@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchApi } from '../actions/index';
+import { getState } from '../actions/getState';
 
 class PaymentMethod extends Component {
   constructor(props) {
@@ -10,9 +14,12 @@ class PaymentMethod extends Component {
   }
 
   handleTest(e) {
+    const { getStateAction } = this.props;
     this.setState({
       method: e.target.value,
     });
+    const { method } = this.state;
+    getStateAction(method, 0);
   }
 
   render() {
@@ -24,7 +31,7 @@ class PaymentMethod extends Component {
           <select
             id="PaymentMethod"
             value={ method }
-            onClick={ this.handleTest }
+            onChange={ this.handleTest }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="crédito">Cartão de crédito</option>
@@ -36,4 +43,13 @@ class PaymentMethod extends Component {
   }
 }
 
-export default PaymentMethod;
+const mapDispatchToProps = (dispatch) => ({
+  coinType: () => dispatch(fetchApi()),
+  getStateAction: (payload, test) => dispatch(getState(payload, test)),
+});
+
+export default connect(null, mapDispatchToProps)(PaymentMethod);
+
+PaymentMethod.propTypes = {
+  getStateAction: PropTypes.array,
+}.isRequired;
