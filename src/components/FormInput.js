@@ -42,10 +42,9 @@ class FormInput extends Component {
   }
 
   sumCurrency(e) {
-    const { fromCurrencies, toCurrency, fromWallet } = this.props;
+    const { fromCurrencies, toCurrency } = this.props;
     const magicN2 = -2;
     const n = parseFloat(fromCurrencies) + e;
-    console.log(fromWallet);
     toCurrency((Math.round((n * 100), magicN2) / 100));
   }
 
