@@ -3,14 +3,13 @@ import {
   REQUEST_API,
   REQUEST_ERROR,
   REQUEST_SUCCESS,
+  ADD_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    isLoading: true,
-  },
+  currencies: '',
+  expenses: [],
+  isLoading: true,
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -18,9 +17,13 @@ function wallet(state = INITIAL_STATE, action) {
   case REQUEST_API:
     return { ...state, isLoading: true };
   case REQUEST_SUCCESS:
-    return { ...state, isLoading: false, payload: action.payload };
+    return { ...state, isLoading: false, currencies: action.payload };
   case REQUEST_ERROR:
     return { ...state, isLoading: false };
+  case ADD_EXPENSES:
+    return { ...state,
+      expenses: [...state.expenses, action.expenses],
+    };
   default:
     return state;
   }

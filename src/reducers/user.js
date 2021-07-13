@@ -2,9 +2,7 @@
 import { NEW_USER } from '../actions/index';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function user(state = INITIAL_STATE, action) {
