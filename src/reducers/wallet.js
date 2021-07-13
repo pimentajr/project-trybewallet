@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   ADD_EXPENSE,
+  UPDATE_EXPENSE,
   EDIT_EXPENSE,
   DELETE_EXPENSE,
   SUCESS_REQUEST,
@@ -31,6 +32,10 @@ function wallet(state = INITIAL_STATE, { type, expense, currencies, error, id })
   switch (type) {
   case ADD_EXPENSE: {
     const expenses = [...state.expenses, expense];
+    return { ...state, expenses, spends: getSpends(expenses), editExp: {} }; }
+  case UPDATE_EXPENSE: {
+    const expenses = [...state.expenses];
+    expenses[expense.id] = expense;
     return { ...state, expenses, spends: getSpends(expenses), editExp: {} }; }
   case EDIT_EXPENSE: {
     const editExp = getExpense(id, state.expenses);
