@@ -81,7 +81,7 @@ class Form extends React.Component {
         {this.renderInput(value, 'Valor', 'value', 'number')}
         {this.renderInput(description, 'Descrição', 'description', 'text')}
         {this.renderSelect(currency, 'Moeda', 'currency', currenciesFiltered)}
-        {this.renderSelect(method, 'Método de Pagamento', 'method', optionPayment)}
+        {this.renderSelect(method, 'Método de pagamento', 'method', optionPayment)}
         {this.renderSelect(tag, 'Tag', 'tag', optionTag)}
         <button
           className="form-wallet-button-add-expense"
