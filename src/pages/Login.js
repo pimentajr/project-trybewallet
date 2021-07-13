@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as userActions from '../actions/user';
+// import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -9,15 +13,11 @@ class Login extends React.Component {
       emailIsvalid: false,
       passwordIsValid: false,
     };
-    this.changeDisable = this.changeDisable.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
-  }
-
-  changeDisable() {
-    document.getElementById('btn-validate').disabled = false;
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   handleEmail(event) {
@@ -43,7 +43,7 @@ class Login extends React.Component {
 
   validateEmail() {
     const { email } = this.state;
-    const regexEmail = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+    const regexEmail = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
     const result = regexEmail.test(email);
     if (result) {
       this.setState({ emailIsvalid: true });
@@ -55,8 +55,16 @@ class Login extends React.Component {
   validateForm() {
     const { emailIsvalid, passwordIsValid } = this.state;
     if (emailIsvalid && passwordIsValid) {
-      this.changeDisable();
+      return false;
     }
+    return true;
+  }
+
+  submitLogin(event) {
+    const { email } = this.state;
+    event.preventDefault();
+    const { login } = this.props;
+    login(email);
   }
 
   render() {
@@ -86,15 +94,25 @@ class Login extends React.Component {
               onChange={ this.handlePassword }
             />
           </label>
-          <button id="btn-validate" type="button" disabled>Entrar</button>
-          <button type="button" onClick={ this.changeDisable }>teste</button>
+          <button
+            id="btn-validate"
+            type="button"
+            disabled={ this.validateForm() }
+            onClick={ this.submitLogin }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (credentials) => dispatch(userActions.login(credentials)),
+});
 
-// /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2.8})(\.[a-z]{2.8})?$/
-// /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.
+Login.propTypes = {
+  login: PropTypes.func,
+}.isrequired;
+export default connect(null, mapDispatchToProps)(Login);

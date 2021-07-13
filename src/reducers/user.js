@@ -4,7 +4,12 @@ const INITIAL_STATE = {
 };
 
 function user(state = INITIAL_STATE, action) {
-  return state;
+  switch (action.type) {
+  case 'LOGIN':
+    return { email: action.payload };
+  default:
+    return state;
+  }
 }
 
 export default user;

@@ -5,7 +5,14 @@ const INITIAL_STATE = {
 };
 
 function wallet(state = INITIAL_STATE, action) {
-  return state;
+  switch (action.type) {
+  case 'SAVE_CURRENCES':
+    return state;
+  case 'SAVE_EXPENCES':
+    return state;
+  default:
+    return state;
+  }
 }
 
 export default wallet;
