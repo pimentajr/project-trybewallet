@@ -26,6 +26,7 @@ class FormWallet extends Component {
   }
 
   render() {
+    const { moedas } = this.state;
     return (
       <form>
         <label htmlFor="Valor">
@@ -45,7 +46,9 @@ class FormWallet extends Component {
         <label htmlFor="Moeda">
           Moeda
           <select id="Moeda">
-            <option>0</option>
+            {Object.keys(moedas).map((coin, index) => (
+              <option key={ index } value={ coin }>{coin}</option>
+            ))}
           </select>
         </label>
         <label htmlFor="Método de pagamento">
