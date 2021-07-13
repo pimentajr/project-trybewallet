@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrency } from '../actions/index';
+import { fetchCurrency } from '../actions/Wallet';
 
 class Wallet extends React.Component {
   constructor() {
@@ -35,7 +35,6 @@ class Wallet extends React.Component {
     delete unities.USDT;
     this.setState(() => ({
       unities,
-
     }));
   }
 
@@ -57,13 +56,11 @@ class Wallet extends React.Component {
 
   totalPrice() {
     const { expenses } = this.props;
-    return expenses.length > 0
-      ? expenses.reduce((total, expense) => {
-        const exchange = expense.exchangeRates[expense.currency].ask;
-        const mutply = (parseFloat(expense.value) * parseFloat(exchange));
-        return total + mutply;
-      }, 0).toFixed(2)
-      : 0;
+    return expenses.reduce((total, expense) => {
+      const exchange = expense.exchangeRates[expense.currency].ask;
+      const converted = (parseFloat(expense.value) * parseFloat(exchange));
+      return total + converted;
+    }, 0).toFixed(2);
   }
 
   createMethods(array) {
@@ -75,45 +72,44 @@ class Wallet extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { email } = this.props;
-    const totalSpend = 0;
     const { unities } = this.state;
     const unitiesKey = Object.keys(unities);
     return (
       <div>
-        <h1>TrybeWallet</h1>
         <header>
-          <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{`Despesa total: ${totalSpend}`}</p>
-          <p data-testid="header-currency-field">BRL</p>
+          <span data-testid="email-field">{ email }</span>
+          <span data-testid="total-field">
+            { this.totalPrice() }
+          </span>
+          <span data-testid="header-currency-field">BRL</span>
         </header>
         <form>
-          <label htmlFor="value">
+          <label htmlFor="Value">
             Valor:
-            { this.renderGenInput('number', 'value', 'inp-val') }
+            { this.renderGenInput('number', 'value', 'Value') }
           </label>
-          <label htmlFor="description">
+          <label htmlFor="Description">
             Descrição:
-            { this.renderGenInput('text', 'description', 'inp-desc') }
+            { this.renderGenInput('text', 'description', 'Description') }
           </label>
           <label htmlFor="unity">
             Moeda:
-            <select name="unity" id="unity" aria-label="Moeda:">
+            <select name="currency" id="unity" onChange={ this.changeState }>
               {this.createMethods(unitiesKey)}
             </select>
           </label>
-          <label htmlFor="tagSelect">
+          <label htmlFor="method">
             Método de pagamento:
-            <select name="method" id="tagSelect">
+            <select name="method" id="method" onChange={ this.changeState }>
               {this.createMethods(methods)}
             </select>
           </label>
-          <label htmlFor="tags">
+          <label htmlFor="tag">
             Tag:
-            <select name="tag" id="tags">
+            <select name="tag" id="tag" onChange={ this.changeState }>
               {this.createMethods(tags)}
             </select>
           </label>
@@ -121,7 +117,8 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-      </div>);
+      </div>
+    );
   }
 }
 
