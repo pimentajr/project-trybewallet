@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import * as userActions from '../actions/user';
-// import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -65,6 +65,9 @@ class Login extends React.Component {
     event.preventDefault();
     const { login } = this.props;
     login(email);
+    return (
+      <Redirect exact path="/carteira" Component="Wallet" />
+    );
   }
 
   render() {
