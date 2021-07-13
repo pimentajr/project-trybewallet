@@ -1,1 +1,15 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+const INITIAL_STATE = {
+  currencies: [],
+  expenses: [],
+};
+
+function user(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case 'action':
+    return { ...state };
+  default:
+    return state;
+  }
+}
+
+export default user;
