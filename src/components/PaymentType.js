@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class PaymentType extends Component {
   render() {
-    const { method, funcHandleState } = this.props.myValue;
+    const { myValue } = this.props;
+    const { method, funcHandleState } = myValue;
     return (
       <label htmlFor="payment-mode">
         Método de pagamento
         <select
           id="payment-mode"
           name="method"
-          value={ method }
           onChange={ funcHandleState }
+          value={ method }
         >
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
   }
 }
+
+PaymentType.propTypes = {
+  funcHandleState: PropTypes.func,
+};
+
+PaymentType.defaultProps = {
+  funcHandleState: () => {},
+};
 
 export default PaymentType;

@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ExpenseAmount from './ExpenseAmount';
 import ExpenseDescription from './ExpenseDescription';
 import SelectedTypeCoin from './SelectedTypeCoin';
 import PaymentType from './PaymentType';
 import CategoryTagExpense from './CategoryTagExpense';
 import ButtonAddExpense from './ButtonAddExpense';
-import { connect } from 'react-redux';
-import { fetchExpense } from '../actions'
+import { fetchExpense } from '../actions';
 
 class FormWallet extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       value: 0,
-      description: '',
       currency: 'USD',
-      method: 'Dinheiro',
       tag: 'Alimentação',
+      description: '',
+      method: 'Dinheiro',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.submitButtonId = this.submitButtonId.bind(this);
+  }
+
+  submitButtonId() {
+    const { expenses, fetchApiExpense } = this.props;
+    let id = 0;
+    if (expenses.length > 0) {
+      id = expenses[expenses.length - 1].id + 1;
+    }
+
+    fetchApiExpense({ ...this.state, id });
   }
 
   handleChange({ target }) {
@@ -34,7 +46,8 @@ class FormWallet extends Component {
       description,
       currency,
       method,
-      tag } = this.state;
+      tag,
+      id } = this.state;
     const funcHandleState = this.handleChange;
     const infos = {
       value,
@@ -42,9 +55,10 @@ class FormWallet extends Component {
       currency,
       method,
       tag,
+      id,
       funcHandleState,
     };
-    const { exec } = this.props;
+    const { fetchApiExpense } = this.props;
     return (
       <form>
         <ExpenseAmount myValue={ infos } />
@@ -52,14 +66,26 @@ class FormWallet extends Component {
         <SelectedTypeCoin myValue={ infos } />
         <PaymentType myValue={ infos } />
         <CategoryTagExpense myValue={ infos } />
-        <ButtonAddExpense dataExpense={ this.state } sendFunc={ exec } />
+        <ButtonAddExpense
+          fetchApiExpense={ fetchApiExpense }
+          submitButtonId={ this.submitButtonId }
+        />
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  exec: (obj) => dispatch(fetchExpense(obj)),
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
 });
 
-export default connect(null, mapDispatchToProps)(FormWallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchApiExpense: (obj) => dispatch(fetchExpense(obj)),
+});
+
+FormWallet.propTypes = {
+  fetchApiExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);

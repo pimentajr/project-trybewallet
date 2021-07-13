@@ -1,6 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { SEND_DATA_EXPENSE, SET_WALLET, SEND_INFO_EXPENSE } from '../actions';
+import {
+  SEND_DATA_EXPENSE,
+  SET_WALLET,
+  SEND_INFO_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],

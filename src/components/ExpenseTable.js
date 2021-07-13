@@ -1,32 +1,80 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class ExpenseTable extends Component {
+  renderThead() {
+    return (
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+      </thead>
+    );
+  }
+
+  renderTbody() {
+    const { expenses } = this.props;
+    return (
+      <tbody>
+        {expenses.map((res) => (
+          <tr key={ res.id }>
+            <td>{res.description}</td>
+            <td>{res.tag}</td>
+            <td>{res.method}</td>
+            <td>{res.value }</td>
+            <td>{res.exchangeRates[res.currency].name.split('/')[0]}</td>
+            <td>
+              { Number(res.exchangeRates[res.currency].ask).toFixed(2)}
+            </td>
+            <td>
+              { Number(res.value * res.exchangeRates[res.currency].ask).toFixed(2)}
+            </td>
+            <td>Real</td>
+            <td>
+              <button
+                type="button"
+                data-testid="edit-btn"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                data-testid="delete-btn"
+              >
+                Excluir
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  }
+
   render() {
     return (
-      <div>
-        <table className="expense-table">
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-          <tbody>
-            <tr>
-              <td>Murilo</td>
-              <td>Liceni</td>
-              <td>Karol</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table className="expense-table">
+        { this.renderThead() }
+        { this.renderTbody() }
+      </table>
     );
   }
 }
 
-export default ExpenseTable;
+ExpenseTable.propTypes = {
+  expenses: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps)(ExpenseTable);

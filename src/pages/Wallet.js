@@ -5,7 +5,6 @@ import getDataAPI from '../services/fetchAPI';
 import { walletAction, sendData } from '../actions';
 import Header from '../components/Header';
 import FormWallet from '../components/FormWallet';
-import ButtonAddExpense from '../components/ButtonAddExpense';
 import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends Component {

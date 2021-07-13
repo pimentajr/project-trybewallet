@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ExpenseAmount extends Component {
   render() {
-    const { value, funcHandleState } = this.props.myValue;
+    const { myValue } = this.props;
+    const { value, funcHandleState } = myValue;
+    if (value) console.log(typeof(value));
     return (
       <label htmlFor="value">
         Valor
@@ -17,5 +20,11 @@ class ExpenseAmount extends Component {
     );
   }
 }
+
+ExpenseAmount.propType = {
+  myValue: PropTypes.objectOf(PropTypes.string).isRequired,
+  value: PropTypes.string.isRequired,
+  funcHandleState: PropTypes.func.isRequired,
+};
 
 export default ExpenseAmount;
