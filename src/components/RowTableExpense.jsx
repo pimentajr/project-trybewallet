@@ -22,10 +22,18 @@ class RowTableExpense extends Component {
     this.updateState();
   }
 
+  componentDidUpdate(prevProps) {
+    const { expense } = this.props;
+    if (prevProps.expense !== expense) {
+      this.updateState();
+    }
+  }
+
   updateState() {
     const exchangeObject = this.extractExchangeObject();
     const exchangeName = this.exctractExchangeName(exchangeObject);
     const exchangeValue = this.extractExchangeValue(exchangeObject);
+    console.log(exchangeObject);
     this.setState({
       exchangeUsed: exchangeName[0],
       exchangeValue,

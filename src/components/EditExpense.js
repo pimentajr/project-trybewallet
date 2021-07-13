@@ -75,7 +75,8 @@ class EditExpense extends Component {
     const filteredExpenses = expenses.filter((expense) => expense.id !== id);
     const editedExpense = this.createObjectExpense();
     const editedExpensesWallet = [...filteredExpenses, editedExpense];
-    saveEditedExpenses(editedExpensesWallet);
+    const sortEditedExpensesWallet = editedExpensesWallet.sort((a, b) => a.id - b.id);
+    saveEditedExpenses(sortEditedExpensesWallet);
   }
 
   handleChange({ target }) {
@@ -112,10 +113,10 @@ class EditExpense extends Component {
             value={ description }
           />
         </label>
-        <label htmlFor="moeda">
+        <label htmlFor="currency">
           Moeda:
           <select
-            id="moeda"
+            id="currency"
             name="currency"
             data-testid="currency-input"
             onChange={ (e) => this.handleChange(e) }
