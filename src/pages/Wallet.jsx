@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 import ExpenseForm from './components/ExpenseForm';
 
 class Wallet extends React.Component {
-
   sumExpenses() {
     const { userExpenses } = this.props;
 
     let sum = 0;
     if (userExpenses) {
       userExpenses.forEach((item) => {
-        const currency = item.currency;
+        const { currency } = item;
         const amount = item.exchangeRates[currency].ask;
 
         sum += Math.round((parseInt(item.value, 10) * amount) * 100) / 100;
@@ -23,7 +22,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail, userExpenses } = this.props;
+    const { userEmail } = this.props;
 
     return (
       <div>
@@ -63,4 +62,13 @@ export default connect(mapStateToProps)(Wallet);
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  userExpenses: {
+    id: PropTypes.number,
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    target: PropTypes.string,
+    exchangeRates: PropTypes.object,
+  }.isRequired,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as userAction from '../../actions';
 
 class ExpenseForm extends React.Component {
@@ -168,3 +169,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
+
+ExpenseForm.propTypes = {
+  saveExpense: PropTypes.func.isRequired,
+  userExpenses: {
+    id: PropTypes.number,
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    target: PropTypes.string,
+    exchangeRates: PropTypes.object,
+  }.isRequired,
+};
