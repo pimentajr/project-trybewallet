@@ -1,5 +1,5 @@
 import {
-  FETCH_CURRENCIES,
+  // FETCH_CURRENCIES,
   FETCH_CURRENCIES_SUCCEEDED,
   FETCH_CURRENCIES_FAILED,
   WALLET_ADDED_EXPENSE,
@@ -13,8 +13,8 @@ const DEFAULT_STATE = {
 
 const walletReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-  case FETCH_CURRENCIES:
-    return { ...state };
+  // case FETCH_CURRENCIES:
+  //   return { ...state };
   case FETCH_CURRENCIES_SUCCEEDED:
     return {
       ...state,

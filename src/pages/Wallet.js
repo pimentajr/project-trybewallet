@@ -1,12 +1,9 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import ExpensesForm from '../components/ExpensesForm';
 import ExpensesTable from '../components/ExpensesTable';
-// import store from '../store';
-import fetchAPI from '../services/api';
+import { fetchAPI } from '../actions';
+import store from '../store';
 import './Wallet.css';
 
 // const inlineCSS = {
@@ -28,20 +25,13 @@ import './Wallet.css';
 // };
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.fetchCurrencies = this.fetchCurrencies.bind(this);
-  }
+  // constructor() {
+  //   super();
+  // }
 
   componentDidMount() {
-    this.fetchCurrencies();
-  }
-
-  fetchCurrencies() {
-    const { storeCurrencies } = this.props;
-    fetchAPI().then((currencies) => {
-      storeCurrencies(currencies);
-    });
+    const { dispatch } = store;
+    dispatch(fetchAPI());
   }
 
   render() {
@@ -67,12 +57,12 @@ class Wallet extends React.Component {
 }
 
 // ajustar import
-const mapDispatchToProps = (dispatch) => ({
-  storeCurrencies: (currencies) => dispatch({ type: 'STORE_CURRENCIES', currencies }),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   fetchCurrencies: () => dispatch(fetchAPI()),
+// });
 
-Wallet.propTypes = {
-  storeCurrencies: PropTypes.func.isRequired,
-};
+// Wallet.propTypes = {
+//   fetchCurrencies: PropTypes.func.isRequired,
+// };
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default Wallet;
