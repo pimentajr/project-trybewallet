@@ -1,6 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrentType } from '../actions';
+import CurrentType from './CurrentType';
 
 class Expenses extends React.Component {
+  componentDidMount() {
+    const { fetchCurrent } = this.props;
+    fetchCurrent();
+  }
+
   render() {
     return (
       <form>
@@ -15,9 +24,7 @@ class Expenses extends React.Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            <option>
-              1
-            </option>
+            <CurrentType />
           </select>
         </label>
         <label htmlFor="método de pagamento">
@@ -43,4 +50,12 @@ class Expenses extends React.Component {
   }
 }
 
-export default Expenses;
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrent: () => dispatch(fetchCurrentType()),
+});
+
+Expenses.propTypes = {
+  fetchCurrent: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Expenses);

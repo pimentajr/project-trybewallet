@@ -13,6 +13,12 @@ export const walletCurrent = (payload) => ({
   payload,
 });
 
+export function fetchCurrentType() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((currencies) => dispatch(walletCurrent(currencies)));
+}
+
 export const walletExpenses = (payload) => ({
   type: ACTION_EXPENSES,
   payload,
