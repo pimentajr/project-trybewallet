@@ -1,23 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCoins } from '../actions';
+
+import InitialCoins from '../components/InitialCoins';
 
 class Form extends React.Component {
+  componentDidMount() {
+    const { sendCoins } = this.props;
+    return sendCoins();
+  }
+
   render() {
     return (
       <form>
         <label htmlFor="value-input">
           Valor
-          <input type="text" id="value-input" />
+          <input type="text" name="value" id="value-input" />
         </label>
-
         <label htmlFor="description-input">
           Descrição
-          <input type="text" id="description-input" />
+          <input type="text" name="description" id="description-input" />
         </label>
-
         <label htmlFor="coin-input">
           Moeda
           <select id="coin-input">
-            <option>vazio</option>
+            <InitialCoins />
           </select>
         </label>
 
@@ -45,4 +53,12 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  sendCoins: () => dispatch(fetchCoins()),
+});
+
+Form.propTypes = ({
+  askCoin: PropTypes.arrayOf,
+}).isRequired;
+
+export default connect(null, mapDispatchToProps)(Form);

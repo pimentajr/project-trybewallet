@@ -1,18 +1,26 @@
-import { SPENDING } from '../actions';
+import {
+  REQUEST_COINS,
+  REQUEST_COINS_SUCCESS,
+} from '../actions';
 
 const INITIAL_STATE = {
-  spendList: 0,
+  currencies: [],
 };
 
-const spendingReduce = (state = INITIAL_STATE, action) => {
+function getTheCoins(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case SPENDING:
+  case REQUEST_COINS:
     return {
-      spendList: action.value,
+      ...state,
+    };
+  case REQUEST_COINS_SUCCESS:
+    return {
+      ...state,
+      currencies: action.coins,
     };
   default:
     return state;
   }
-};
+}
 
-export default spendingReduce;
+export default getTheCoins;

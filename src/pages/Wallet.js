@@ -10,6 +10,7 @@ class Wallet extends React.Component {
     return (
       <div>
         TrybeWallet
+        <div>{ this.fetchCoins }</div>
         <header>
           <div data-testid="email-field">
             { getUser }
@@ -21,7 +22,11 @@ class Wallet extends React.Component {
             BRL
           </div>
         </header>
-        <Form />
+        <div>
+          <section>
+            <Form />
+          </section>
+        </div>
       </div>
     );
   }
