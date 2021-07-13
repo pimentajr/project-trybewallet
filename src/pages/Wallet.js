@@ -8,6 +8,7 @@ import Moeda from './components/Moeda';
 import Pagamento from './components/Pagamento';
 import Tag from './components/Tag';
 import * as actions from '../actions';
+import Table from './components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -56,6 +57,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email } = this.props;
+    const { currency } = this.state;
     return (
       <section>
         <header>
@@ -89,10 +91,13 @@ class Wallet extends React.Component {
           <button
             type="button"
             onClick={ this.sendData }
+            disabled={ !currency }
           >
             Adicionar despesa
           </button>
         </form>
+        <br />
+        <Table />
       </section>
     );
   }
@@ -106,7 +111,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (e) => dispatch(actions.saveExpenses(e)),
-  fetchCoins: (e) => dispatch(actions.fetchCoins(e)),
+  fetchCoins: () => dispatch(actions.fetchCoins()),
 });
 
 Wallet.propTypes = {

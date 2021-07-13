@@ -5,6 +5,7 @@ export const REQUEST_COINS_SUCCESS = 'REQUEST_COINS_SUCCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
 export const SAVE_LOGIN = 'SAVE_LOGIN';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const saveLogin = (email) => ({
   type: SAVE_LOGIN,
@@ -37,3 +38,10 @@ export const saveExpenses = (expenses) => ({
   type: SAVE_EXPENSES,
   expenses,
 });
+
+export function delExpenses(expenses) {
+  return {
+    type: DELETE_EXPENSES,
+    expenses,
+  };
+}

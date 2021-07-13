@@ -4,6 +4,7 @@ import {
   REQUEST_COINS_ERROR,
   REQUEST_COINS_SUCCESS,
   SAVE_EXPENSES,
+  DELETE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -34,6 +35,12 @@ function coinsReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.expenses],
+      isLoading: false,
+    };
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.expenses),
       isLoading: false,
     };
   default:

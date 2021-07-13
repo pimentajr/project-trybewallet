@@ -36,7 +36,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCoins: (e) => dispatch(actions.fetchCoins(e)),
+  fetchCoins: () => dispatch(actions.fetchCoins()),
 });
 
 Moeda.propTypes = {
