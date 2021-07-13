@@ -4,11 +4,11 @@
 }
 
 .header-container {
+  align-items: baseline;
   border: 1px solid black;
   display: flex;
   justify-content: flex-end;
   padding: 5px;
-  align-items: baseline;
 }
 
 .email {
@@ -24,12 +24,12 @@
 }
 
 .fieldset-container {
+  align-items: baseline;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
   justify-content: center;
 }
 
-#add-button {
+.add-button {
   margin: 10px auto;
 }

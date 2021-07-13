@@ -1,7 +1,6 @@
-thead,
-tfoot {
+thead , tfoot {
     background-color: #3f87a6;
-    color: #fff;
+    color: white;
 }
 
 tbody {
@@ -10,7 +9,7 @@ tbody {
 
 table {
   border: 2px solid black;
-  letter-spacing: 1px;
   font-family: sans-serif;
+  letter-spacing: 1px;
   margin: auto;
 }

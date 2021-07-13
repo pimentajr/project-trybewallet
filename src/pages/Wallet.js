@@ -192,7 +192,7 @@ class Wallet extends React.Component {
             {this.renderTag()}
           </fieldset>
         </form>
-        <button id="add-button" type="button" onClick={ () => this.fetchCurrency() }>
+        <button className="add-button" type="button" onClick={ () => this.fetchCurrency() }>
           Adicionar despesa
         </button>
         <Table expenses={ expenses } />
