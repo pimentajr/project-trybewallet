@@ -1,75 +1,62 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { saveExpenseAction } from '../actions';
 
-import { submitExpenseAction } from '../actions';
-
-class NewExpenseForm extends Component {
+class EditExpenseForm extends Component {
   constructor(props) {
     super(props);
+    const { expenses, editingExpenseId } = this.props;
+    const {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    } = expenses.find((expense) => expense.id === editingExpenseId);
     this.state = {
-      currencyOptions: [],
-      newExpense: {
-        value: '0',
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
+      expense: {
+        id,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates,
       },
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  componentDidMount() {
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json())
-      .then((data) => {
-        const currencyCodes = Object.values(data).map(({ code }) => code);
-        this.setState({ currencyOptions: [...new Set(currencyCodes)] });
-      });
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.renderValueInput = this.renderValueInput.bind(this);
+    this.renderDescriptionInput = this.renderDescriptionInput.bind(this);
+    this.renderTagInput = this.renderTagInput.bind(this);
+    this.renderPaymentMethodInput = this.renderPaymentMethodInput.bind(this);
+    this.renderCurrencyInput = this.renderCurrencyInput.bind(this);
+    this.handleSaveExpense = this.handleSaveExpense.bind(this);
   }
 
   handleInputChange({ target }) {
     const { name, value } = target;
-    this.setState(({ newExpense }) => ({ newExpense: { ...newExpense, [name]: value } }));
+    this.setState(({ expense }) => ({ expense: { ...expense, [name]: value } }));
   }
 
-  async handleSubmit() {
-    const { newExpense } = this.state;
-    const { expenses, submitNewExpense } = this.props;
-
-    const apiResponse = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const exchangeRates = await apiResponse.json();
-
-    const expense = {
-      id: expenses.length,
-      ...newExpense,
-      exchangeRates,
-    };
-
-    submitNewExpense(expense);
-
-    this.setState({
-      newExpense: {
-        value: '0',
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-      },
-    });
+  handleSaveExpense() {
+    const { saveExpense } = this.props;
+    const { expense } = this.state;
+    saveExpense({ ...expense });
   }
 
   renderValueInput() {
-    const { newExpense: { value } } = this.state;
+    const { expense: { value } } = this.state;
     return (
       <label htmlFor="value-input">
         Valor
         <input
           type="number"
           name="value"
-          id="value-input"
+          data-testid="value-input"
           value={ value }
           onChange={ this.handleInputChange }
         />
@@ -77,12 +64,12 @@ class NewExpenseForm extends Component {
   }
 
   renderDescriptionInput() {
-    const { newExpense: { description } } = this.state;
+    const { expense: { description } } = this.state;
     return (
       <label htmlFor="description-input">
         Descrição
         <textarea
-          id="description-input"
+          data-testid="description-input"
           name="description"
           value={ description }
           onChange={ this.handleInputChange }
@@ -92,18 +79,19 @@ class NewExpenseForm extends Component {
   }
 
   renderCurrencyInput() {
-    const { currencyOptions, newExpense: { currency } } = this.state;
+    const { expense: { currency, exchangeRates } } = this.state;
     return (
-      <label htmlFor="currency-input">
+      <label htmlFor="currency">
         Moeda
         <select
-          id="currency-input"
+          id="currency"
+          data-testid="currency-input"
           name="currency"
           value={ currency }
           onChange={ this.handleInputChange }
         >
           {
-            currencyOptions.map((currencyCode) => (
+            Object.keys(exchangeRates).map((currencyCode) => (
               <option key={ currencyCode } value={ currencyCode }>{currencyCode}</option>
             ))
           }
@@ -113,12 +101,13 @@ class NewExpenseForm extends Component {
   }
 
   renderPaymentMethodInput() {
-    const { newExpense: { method } } = this.state;
+    const { expense: { method } } = this.state;
     return (
       <label htmlFor="método de pagamento">
         Método de pagamento
         <select
           id="método de pagamento"
+          data-testid="method-input"
           name="method"
           value={ method }
           onChange={ this.handleInputChange }
@@ -132,12 +121,13 @@ class NewExpenseForm extends Component {
   }
 
   renderTagInput() {
-    const { newExpense: { tag } } = this.state;
+    const { expense: { tag } } = this.state;
     return (
       <label htmlFor="tag">
         Tag
         <select
           id="tag"
+          data-testid="tag-input"
           name="tag"
           value={ tag }
           onChange={ this.handleInputChange }
@@ -155,30 +145,37 @@ class NewExpenseForm extends Component {
   render() {
     return (
       <form>
+        <p>Editando...</p>
         {this.renderValueInput()}
         {this.renderDescriptionInput()}
         {this.renderCurrencyInput()}
         {this.renderPaymentMethodInput()}
         {this.renderTagInput()}
-        <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
+        <button type="button" onClick={ this.handleSaveExpense }>Editar despesa</button>
       </form>
     );
   }
 }
 
-NewExpenseForm.propTypes = {
-  submitNewExpense: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })).isRequired,
-};
-
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  editingExpenseId: state.wallet.editingExpenseId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitNewExpense: (payload) => dispatch(submitExpenseAction(payload)),
+  saveExpense: (expense) => dispatch(saveExpenseAction(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewExpenseForm);
+EditExpenseForm.propTypes = {
+  saveExpense: PropTypes.func.isRequired,
+  editingExpenseId: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpenseForm);
