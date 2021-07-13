@@ -15,6 +15,8 @@ class Wallet extends React.Component {
   render() {
     const { userEmail, expenses } = this.props;
     const radix = 10;
+    // const exchangeToExpense = expenses.map((expense) => expense.exchangeRates[expense.currency].ask)
+
     return (
       <>
         <header className="wallet-header">

@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import WalletFetchedCurrencies from './WalletFetchedCurrencies';
 import PaymentMethods from './PaymentMethods';
 import TagCategories from './TagCategories';
-import { updateCurrencyToNewExpense } from '../actions/wallet';
+import { editExpense, fetchCurrencies, addExpense } from '../actions/wallet';
 import './WalletForm.css';
 
 class WalletForm extends Component {
-  constructor() {
-    super();
-    // this.state = {
-    //   id: 0,
-    //   value: 0,
-    //   description: '',
-    //   currency: 'USD',
-    //   method: 'Dinheiro',
-    //   tag: 'Alimentação',
-    // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddBtn = this.handleAddBtn.bind(this);
   }
 
   handleChange({ target }) {
@@ -26,6 +27,16 @@ class WalletForm extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleAddBtn() {
+    const { fetchCurrenciesAPI, addNewExpense, currentRates } = this.props;
+    const { state } = this;
+    fetchCurrenciesAPI();
+    addNewExpense({ ...state, exchangeRates: currentRates });
+    this.setState((previousState) => ({
+      id: previousState.id + 1,
+    }));
   }
 
   renderSelectInputs() {
@@ -72,18 +83,23 @@ class WalletForm extends Component {
   }
 
   renderButtons() {
-    const { addNewExpense, enableEditButton } = this.props;
+    const { enableEditButton, editCurrentExpense } = this.props;
     const { state } = this;
     if (!enableEditButton) {
       return (
-        <button className="form-btn" type="button" onClick={ () => addNewExpense(state) }>
+        <button className="form-btn" type="button" onClick={ this.handleAddBtn }>
           Adicionar despesa
         </button>
       );
     }
+
     if (enableEditButton) {
       return (
-        <button className="form-btn" type="button" onClick={ () => addNewExpense(state) }>
+        <button
+          className="form-btn"
+          type="button"
+          onClick={ () => editCurrentExpense(state) }
+        >
           Editar despesa
         </button>
       );
@@ -124,10 +140,15 @@ class WalletForm extends Component {
 
 const mapStateToProps = (state) => ({
   enableEditButton: state.wallet.enableEdit,
+  currentRates: state.wallet.currentRates,
+  editExpense: state.wallet.expenseToEdit,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewExpense: (state) => dispatch(updateCurrencyToNewExpense(state)),
+  addNewExpense: (state) => dispatch(addExpense(state)),
+  editCurrentExpense: (state) => dispatch(editExpense(state)),
+  fetchCurrenciesAPI: () => dispatch(fetchCurrencies()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

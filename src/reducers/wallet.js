@@ -3,13 +3,16 @@ import {
   REQUEST_SUCCESS,
   ADD_EXPENSE,
   DELETE_EXPENSE,
+  EDIT_EXPENSE_BTN,
   EDIT_EXPENSE,
 } from '../actions/wallet';
 
 const INITIAL_STATE = {
   currencies: [],
+  currentRates: {},
   expenses: [],
   enableEdit: false,
+  expenseToEdit: {},
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -22,20 +25,12 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currencies: Object.keys(action.currencies),
+      currentRates: action.currencies,
     };
   case ADD_EXPENSE: {
-    const newExpense = {
-      id: state.expenses.length,
-      value: action.state.value,
-      description: action.state.description,
-      currency: action.state.currency,
-      method: action.state.method,
-      tag: action.state.tag,
-      exchangeRates: action.updateCurrencies.currencies,
-    };
     return {
       ...state,
-      expenses: [...state.expenses, newExpense],
+      expenses: [...state.expenses, action.state],
     };
   }
   case DELETE_EXPENSE:
@@ -43,10 +38,26 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id),
     };
-  case EDIT_EXPENSE:
+  case EDIT_EXPENSE_BTN:
     return {
       ...state,
       enableEdit: true,
+      expenseToEdit: state.expenses.find((expense) => expense.id === action.payload),
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === state.expenseToEdit.id) {
+          return {
+            ...action.payload,
+            exchangeRates: expense.exchangeRates,
+            id: state.expenseToEdit.id,
+          };
+        }
+        return expense;
+      }),
+      enableEdit: false,
     };
   default:
     return state;
