@@ -2,6 +2,7 @@ export const SET_USER = 'SET_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 export const GET_CURRENCY_FAILED = 'GET_CURRENCY_FAILED';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -19,6 +20,11 @@ export const getCurrencySuccess = (payload) => ({
 
 export const getCurrencyFailed = (payload) => ({
   type: GET_CURRENCY_FAILED,
+  payload,
+});
+
+export const addExpense = (payload) => ({
+  type: ADD_EXPENSE,
   payload,
 });
 

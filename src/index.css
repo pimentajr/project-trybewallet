@@ -111,15 +111,34 @@
 }
 
 .form-wallet-label {
+  font-size: 0.9rem;
   font-weight: 400;
 }
 
 .form-wallet-input-field {
   background: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   outline: none;
   margin: 10px 10px;
   padding: 5px;
   border: 1px solid #ff0084;
   font-weight: 300;
+}
+
+.form-wallet-button-add-expense {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px;
+  background-color: #ff0084;
+  color: #33001b;
+}
+
+.form-wallet-button-add-expense:hover {
+  color: white;
+}
+
+.button-login:disabled {
+  cursor: auto;
+  background-color: #ddd;
 }

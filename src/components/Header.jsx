@@ -12,8 +12,12 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     const { total, currency } = this.state;
+    const totalValue = expenses.reduce(
+      (acc, curr) => parseFloat(acc) + parseFloat(curr.value), 0,
+    );
+
     return (
       <div className="header">
         <h1>TrybeWallet</h1>
@@ -24,7 +28,7 @@ class Header extends React.Component {
           <div className="user-info-container">
             <p>
               Dispesa Total:
-              <span data-testid="total-field">{total}</span>
+              <span data-testid="total-field">{totalValue}</span>
               <span data-testid="header-currency-field">{currency}</span>
             </p>
           </div>
@@ -36,10 +40,12 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
