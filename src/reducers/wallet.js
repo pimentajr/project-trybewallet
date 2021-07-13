@@ -24,13 +24,11 @@ function functionWallet(state = WALLET_STATE, action) {
       expenses: [...state.expenses.filter((e) => e.id !== action.payload)],
     };
   case 'EDIT_EXPENSES':
-    console.log(action.payload.id);
-    console.log(action.payload);
     return {
       ...state,
       expenses: [...state.expenses.filter((e) => e.id !== action.payload.id),
         action.payload,
-      ],
+      ].sort((a, b) => a.id - b.id),
     };
     //  .sort((a, b) => a.id - b.id),
   default:
