@@ -41,19 +41,10 @@ class FormInput extends Component {
     });
   }
 
-  sumCurrency(e) {
-    const { fromCurrencies, toCurrency } = this.props;
-    const magicN2 = -2;
-    const n = parseFloat(fromCurrencies) + e;
-    toCurrency((Math.round((n * 100), magicN2) / 100));
-  }
-
   submit(event) {
     event.preventDefault();
     const { objExpenses } = this.state;
     const { toExpenses } = this.props;
-    const valueN = parseFloat(objExpenses.value);
-    this.sumCurrency(valueN);
     toExpenses(objExpenses);
   }
 

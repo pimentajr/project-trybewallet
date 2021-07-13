@@ -84,6 +84,13 @@ describe('8.2 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gas
     const descriptionInput = await screen.findByRole('textbox', {
       name: /descrição/i,
     });
+    
+    userEvent.type(valueInput, '10');
+    userEvent.selectOptions(currencyInput, 'USD');
+    userEvent.selectOptions(methodInput, 'Cartão de crédito');
+    userEvent.selectOptions(tagInput, 'Lazer');
+    userEvent.type(descriptionInput, 'Dez dólares');
+    userEvent.click(addButton);
 
     userEvent.type(valueInput, '20');
     userEvent.selectOptions(currencyInput, 'EUR');

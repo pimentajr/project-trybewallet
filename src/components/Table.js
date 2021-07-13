@@ -45,7 +45,7 @@ class Table extends Component {
               <td>
                 {value}
               </td>
-              <td>{na.split('/', 1)[0]}</td>
+              <td>{(na.split('/', 1)[0]).toUpperCase()}</td>
               <td>{caConv}</td>
               <td>{(Math.round((co * 100), magicN) / 100)}</td>
               <td>Real</td>

@@ -17,6 +17,7 @@ class Header extends Component {
     const total = fromWallet.reduce((acc, exp) => (
       acc + exp.value * exp.exchangeRates[exp.currency].ask), 0);
     toCurrency(total);
+    // reference: Ana Clara Kyotoku
   }
 
   firstValuation() {
