@@ -1,79 +1,83 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+// // import PropTypes from 'prop-types';
 // import { setEmail } from '../actions/index';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: '',
       password: '',
     };
 
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.isDisable = this.isDisable.bind(this);
   }
 
-  // isDisable() {
-  //   const parseEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-  //   const textEmail = document.getElementsByClassName('email');
-  //   const textPassword = document.getElementsByClassName('password');
-  //   const minOfCaracteres = 6;
-  //   if (textEmail.value !== parseEmail && textPassword.value.length >= minOfCaracteres) {
-  //     return true;
-  //   } return false;
-  // }
-
-  handleChangeEmail({ target }) {
+  handleChange({ target }) {
+    const { name, value } = target;
     this.setState({
-      email: target.value,
-    });
+      [name]: value,
+    }, () => this.isDisable());
   }
 
-  handleChangePassword({ target }) {
-    this.setState({
-      password: target.value,
-    });
+  validadeEmail(email) {
+    const parseEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; // regex para validar email. url: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
+    return parseEmail.test(email); // RegExp.prototype.test() -> O método test() executa uma busca por uma correspondência entre  uma expressão regular e uma string. Retorna true ou false. url: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
   }
 
-  // inicia disable true, se email === verificado regex e password.lenght
-  // for maior que 6, --> [disable = false]
+  validadePassword(password) {
+    const minOfCaracteres = 6;
+    return (password.length >= minOfCaracteres);
+  }
+
+  isDisable() {
+    const { email, password } = this.state;
+    const btnLogin = document.querySelectorAll('.btn-login')[0];
+    if (this.validadeEmail(email) && this.validadePassword(password)) {
+      btnLogin.disabled = false;
+    } else {
+      btnLogin.disabled = true;
+    }
+  }
 
   render() {
     const { email, password } = this.state;
     return (
       <div>
-        <label htmlFor="email-input">
+        <label htmlFor="email-id">
           Email:
           <input
             value={ email }
-            id="email-input"
+            id="email-id"
+            name="email"
             type="email"
             data-testid="email-input"
             className="email"
             placeholder="Digite seu email"
-            onChange={ this.handleChangeEmail }
+            onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="password-input">
+        <label htmlFor="password-id">
           Password:
           <input
-            id="password-input"
+            id="password-id"
+            name="password"
             type="password"
             data-testid="password-input"
             className="password"
             value={ password }
             placeholder="Digite sua senha"
-            onChange={ this.handleChangePassword }
+            onChange={ this.handleChange }
           />
         </label>
-        <Link to="/carteira">
-          <button type="submit" disabled>
-            Entrar
-          </button>
-        </Link>
+        {/* <Link to="/carteira"> */}
+        <button type="submit" className="btn-login" disabled>
+          Entrar
+        </button>
+        {/* </Link> */}
       </div>
     );
   }
