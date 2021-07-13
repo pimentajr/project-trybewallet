@@ -28,7 +28,7 @@ function functionWallet(state = WALLET_STATE, action) {
       ...state,
       expenses: [...state.expenses.filter((e) => e.id !== action.payload.id),
         action.payload,
-      ],
+      ].sort((a, b) => a.id - b.id),
     };
   default:
     return state;
