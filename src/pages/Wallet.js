@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrencies, addExpenses, fetchExchangeRates } from '../actions';
+import Table from './Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -44,12 +45,12 @@ class Wallet extends React.Component {
     const { fetchExchangeRate } = this.props;
     await fetchExchangeRate();
     const { newExpenses, expenses, rawData } = this.props;
+    // linha de código inspirado no código escrito por José Henrique Margraf Melo: https://github.com/tryber/sd-011-project-trybewallet/pull/28/files
     const lastExpense = expenses[expenses.length - 1];
-    await this.setState({
+    this.setState({
       id: lastExpense ? lastExpense.id + 1 : 0,
       exchangeRates: rawData,
-    });
-    newExpenses(this.state);
+    }, () => { newExpenses(this.state); });
   }
 
   renderValue() {
@@ -164,6 +165,7 @@ class Wallet extends React.Component {
           { this.renderTag() }
 
           <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
+          <Table />
         </form>
       </div>
     );
