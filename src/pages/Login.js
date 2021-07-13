@@ -74,11 +74,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   fazerLogin: PropTypes.func,
-};
-
-Login.defaultProps = {
-  fazerLogin: '',
-};
+}.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
   fazerLogin: (email) => dispatch(emailLogin(email)),

@@ -7,12 +7,10 @@ import './App.css';
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route path="/carteira" component={ Wallet } />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/carteira" component={ Wallet } />
+      </Switch>
     );
   }
 }

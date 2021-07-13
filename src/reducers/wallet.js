@@ -1,21 +1,25 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_API, REQUEST_API_SUCCESS } from '../actions';
+import { REQUEST_API, REQUEST_API_SUCCESS, SAVE_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    isLoading: false,
-  },
+  currencies: [],
+  expenses: [],
+  isLoading: false,
+  id: 0,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_API:
-    return { ...state, isLoading: true };
+    return ({ ...state, isLoading: true });
 
   case REQUEST_API_SUCCESS:
-    return { ...state, currencies: action.data, isLoading: false };
+    return ({ ...state, currencies: action.data, isLoading: false });
+
+  case SAVE_EXPENSES:
+    return ({ ...state,
+      id: state.id + 1,
+      expenses: [...state.expenses, action.expense] });
 
   default:
     return state;

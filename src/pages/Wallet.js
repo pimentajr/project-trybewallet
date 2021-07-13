@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import ExpenseForm from './ExpenseForm';
+import ExpenseTable from './ExpenseTable';
 import { fetchApi } from '../actions';
 
 class Wallet extends React.Component {
@@ -14,9 +15,9 @@ class Wallet extends React.Component {
   render() {
     return (
       <>
-        alo
         <Header />
         <ExpenseForm />
+        <ExpenseTable />
       </>
     );
   }
