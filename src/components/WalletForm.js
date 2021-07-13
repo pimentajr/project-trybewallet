@@ -156,4 +156,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
 WalletForm.propTypes = {
   addNewExpense: PropTypes.func.isRequired,
   enableEditButton: PropTypes.func.isRequired,
+  fetchCurrenciesAPI: PropTypes.func.isRequired,
+  currentRates: PropTypes.objectOf().isRequired,
+  editCurrentExpense: PropTypes.func.isRequired,
+
 };
