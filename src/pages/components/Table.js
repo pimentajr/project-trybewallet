@@ -23,6 +23,7 @@ class Table extends Component {
     return (
       <table>
         <tr className="">
+          <th>ID</th>
           <th>Descrição</th>
           <th>Tag</th>
           <th>Método de pagamento</th>
@@ -31,10 +32,11 @@ class Table extends Component {
           <th>Câmbio utilizado</th>
           <th>Valor convertido</th>
           <th>Moeda de conversão</th>
-          <th>Excluir</th>
+          <th>Editar/Excluir</th>
         </tr>
         {expenses.map((item) => (
           <tr key={ item.id } className="">
+            <td key={ item.id }>{ item.id }</td>
             <td key={ item.id }>{ item.description }</td>
             <td key={ item.id }>{ item.tag }</td>
             <td key={ item.id }>{ item.method }</td>
