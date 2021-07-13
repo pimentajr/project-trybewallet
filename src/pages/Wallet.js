@@ -8,6 +8,7 @@ class Wallet extends React.Component {
 
     this.state = {
       currencies: [],
+      total: 0,
       valor: 0,
       moeda: '',
       pagamento: '',
@@ -18,6 +19,8 @@ class Wallet extends React.Component {
 
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.formComponents = this.formComponents.bind(this);
+    // this.handleClickForm = this.handleClickForm.bind(this);
+    // this.updateStateTotal = this.updateStateTotal.bind(this);
     this.handle = this.handle.bind(this);
   }
 
@@ -25,13 +28,18 @@ class Wallet extends React.Component {
     this.fetchCurrencies();
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   handle({ target }) {
     this.setState({ [target.name]: target.value });
   }
+
+  // updateStateLocal_Total() {
+  // Pegar (por "mapStateToprops") o valor de VALUE em cada Objeto do Array e fazer a lógica de soma para atualizar "estado local" e rendereizer o elemento (que já tá controlado)
+  // Ou crie um nova chave (total: 0) logo no global e faz o elemento controlado direto.
+  // Para essa segunda, podemos usar o mesmo reducer "wallet" e acrescentar um campo "total". Mas poderia criar outro reducer.
+  // }
+
+  // handleClickForm() {
+  // }
 
   fetchCurrencies() {
     fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json())
@@ -46,6 +54,7 @@ class Wallet extends React.Component {
         <input
           type="text"
           id="valor"
+          className="valor"
           name="valor"
           value={ valor }
           onChange={ this.handle }
@@ -134,15 +143,18 @@ class Wallet extends React.Component {
         {this.formComponentMetodoPagamento(pagamento)}
         {this.formComponentTag(tag)}
         {this.formComponentDescricao(descricao)}
-        <button className="btnAddDesp" type="button">Adicionar despesa</button>
+        <button className="btnAddDesp" type="button" onClick={ this.handleClickForm }>
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 
   render() {
     const { getLogin } = this.props;
-    const TOTAL_INIT_VALUE = 0; // remover depois
-    const CAMBIO_INIT_VALUE = 'BRL'; // remover depois
+    const { total } = this.state;
+    const TOTAL_INIT_VALUE = total; // verificar depois isso
+    const CAMBIO_INIT_VALUE = 'BRL'; // NÃO REMOVA
     return (
       <div>
         <div className="walletHeader">
