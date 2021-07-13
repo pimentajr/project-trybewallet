@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -21,9 +20,6 @@ class FormsBtn extends Component {
     if (value.value === '') {
       // eslint-disable-next-line no-alert
       return window.alert('você precisa adicionar um valor');
-    } if (isNaN(value.value)) {
-      // eslint-disable-next-line no-alert
-      return window.alert('você precisa adicionar um valor numérico');
     }
     sendInfos({
       tag: 'Alimentação',

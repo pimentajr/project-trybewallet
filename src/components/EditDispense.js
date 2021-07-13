@@ -67,7 +67,7 @@ class EditDispense extends Component {
     const { value, tag, method, currency: coin } = this.state;
     const { currency } = this.props;
     return (
-      <form className="forms" id="forms-edit">
+      <form className="forms-edit">
         <label htmlFor="value">
           Valor:
           <input
