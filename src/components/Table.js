@@ -72,15 +72,8 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-
-// });
-
-// ExpensesForm.propTypes = {
-//   APICurrency: PropTypes.func.isRequired,
-//   add: PropTypes.func.isRequired,
-//   walletExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
-// };
+Table.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps)(Table);
