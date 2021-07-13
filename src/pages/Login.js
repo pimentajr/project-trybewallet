@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sendLogin } from '../actions';
+import { sendLogin } from '../actions/index';
 
 const emailRegexp = new RegExp('\\S+@\\S+\\.\\S+');
 

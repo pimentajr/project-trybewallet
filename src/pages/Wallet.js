@@ -1,20 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { requestCurrenciesGoodForm } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      currencies: [],
-      total: 0,
       valor: 0,
       moeda: '',
       pagamento: '',
       tag: '',
       descricao: '',
-
     };
 
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
@@ -33,7 +31,7 @@ class Wallet extends React.Component {
   }
 
   // updateStateLocal_Total() {
-  // Pegar (por "mapStateToprops") o valor de VALUE em cada Objeto do Array e fazer a lógica de soma para atualizar "estado local" e rendereizer o elemento (que já tá controlado)
+  // Pegar (por "mapStateToprops") o valor de VALUE em cada Objeto do Array e fazer a lógica de soma para atualizar "estado local" e renderizer o elemento (que já tá controlado)
   // Ou crie um nova chave (total: 0) logo no global e faz o elemento controlado direto.
   // Para essa segunda, podemos usar o mesmo reducer "wallet" e acrescentar um campo "total". Mas poderia criar outro reducer.
   // }
@@ -42,9 +40,10 @@ class Wallet extends React.Component {
   // }
 
   fetchCurrencies() {
+    const { sendCurrenciesGoodForm } = this.props;
     fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json())
       .then((res) => Object.keys(res).filter((key) => key !== 'USDT'))
-      .then((res) => this.setState({ currencies: res }));
+      .then((res) => sendCurrenciesGoodForm(res));
   }
 
   formComponentValor(valor) {
@@ -132,14 +131,16 @@ class Wallet extends React.Component {
     );
   }
 
-  formComponents() {
-    const { currencies } = this.state;
+  formComponents(getCurrenciesGoodForm) {
+    // const { currencies } = this.state;
     const { valor, moeda, pagamento, tag, descricao } = this.state;
+    // const { getCurrenciesGoodForm } = this.props;
 
     return (
       <form className="form">
         {this.formComponentValor(valor)}
-        {this.formComponentMoeda(currencies, moeda)}
+        {/* {this.formComponentMoeda(currencies, moeda)} */}
+        {this.formComponentMoeda(getCurrenciesGoodForm, moeda)}
         {this.formComponentMetodoPagamento(pagamento)}
         {this.formComponentTag(tag)}
         {this.formComponentDescricao(descricao)}
@@ -151,10 +152,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { getLogin } = this.props;
-    const { total } = this.state;
-    const TOTAL_INIT_VALUE = total; // verificar depois isso
-    const CAMBIO_INIT_VALUE = 'BRL'; // NÃO REMOVA
+    const { getLogin, getCurrenciesGoodForm, getTotalExpenses } = this.props;
+    const CAMBIO_INIT_VALUE = 'BRL';
     return (
       <div>
         <div className="walletHeader">
@@ -165,14 +164,14 @@ class Wallet extends React.Component {
             </span>
             <span className="total" data-testid="total-field">
               Total: &nbsp;
-              { TOTAL_INIT_VALUE }
+              { getTotalExpenses }
             </span>
             <span data-testid="header-currency-field">
               { CAMBIO_INIT_VALUE }
             </span>
           </div>
         </div>
-        {this.formComponents()}
+        {this.formComponents(getCurrenciesGoodForm)}
       </div>
     );
   }
@@ -180,10 +179,23 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   getLogin: state.user.email,
+  getCurrenciesGoodForm: state.wallet.currencies,
+  getTotalExpenses: state.wallet.total,
 });
+
+const mapDispatchToprops = (dispatch) => ({
+  sendCurrenciesGoodForm: (payload) => dispatch(requestCurrenciesGoodForm(payload)),
+});
+
+Wallet.defaultProps = {
+  getTotalExpenses: 0,
+};
 
 Wallet.propTypes = {
   getLogin: PropTypes.string.isRequired,
+  // getTotalExpenses: PropTypes.number.isRequired,
+  sendCurrenciesGoodForm: PropTypes.func.isRequired,
+  getCurrenciesGoodForm: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToprops)(Wallet);
