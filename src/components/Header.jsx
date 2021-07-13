@@ -7,21 +7,25 @@ export default class Header extends Component {
     const { email } = user;
     const { expenses } = wallet;
 
+    const expensesTotal = expenses
+      .reduce((accumulator, { value, currency, exchangeRates }) => {
+        accumulator += value * exchangeRates[currency].ask;
+        return accumulator;
+      }, 0).toFixed(2);
+
     return (
       <header className="wallet__header">
         <h2>TrybeWallet</h2>
         <span data-testid="email-field">
-          <strong>Email:</strong>
+          <strong>Email: </strong>
           { email }
         </span>
         <span data-testid="total-field">
-          <strong>Total:</strong>
-          {
-            expenses.reduce(() => 0, 0)
-          }
+          <strong>Total: R$ </strong>
+          { expensesTotal }
         </span>
         <span data-testid="header-currency-field">
-          <strong>Moeda:</strong>
+          <strong>Moeda: </strong>
           BRL
         </span>
       </header>
