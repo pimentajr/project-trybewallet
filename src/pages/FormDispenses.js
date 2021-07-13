@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import requestAPI from '../services/requestAPI';
+import { fetchAPI } from '../actions';
 
 class FormDispenses extends Component {
+  constructor(props) {
+    super(props);
+    this.valuesAPI = this.valuesAPI.bind(this);
+  }
+
+  componentDidMount() {
+    const { loadingValues } = this.props;
+    return loadingValues();
+  }
+
+  valuesAPI() {
+    const { currencies } = this.props;
+    console.log(currencies);
+
+    return (
+      currencies.map((currencie) => (
+        <option key={ currencie } value={ currencie }>{currencie}</option>
+      ))
+    );
+  }
+
   render() {
+    console.log(requestAPI());
     return (
       <div>
         <form>
@@ -16,7 +42,7 @@ class FormDispenses extends Component {
           <label htmlFor="value-coins">
             Moeda
             <select id="value-coins">
-              <option value="none">BRL</option>
+              {this.valuesAPI()}
             </select>
           </label>
           <label htmlFor="payment-method">
@@ -42,4 +68,17 @@ class FormDispenses extends Component {
   }
 }
 
-export default FormDispenses;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadingValues: () => dispatch(fetchAPI()),
+});
+
+FormDispenses.propTypes = {
+  currencies: PropTypes.arrayOf,
+  loadingValues: PropTypes.func,
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormDispenses);
