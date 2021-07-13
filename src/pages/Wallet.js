@@ -8,14 +8,29 @@ class Wallet extends React.Component {
 
     this.state = {
       currencies: [],
+      valor: 0,
+      moeda: '',
+      pagamento: '',
+      tag: '',
+      descricao: '',
+
     };
 
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.formComponents = this.formComponents.bind(this);
+    this.handle = this.handle.bind(this);
   }
 
   componentDidMount() {
     this.fetchCurrencies();
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
+  handle({ target }) {
+    this.setState({ [target.name]: target.value });
   }
 
   fetchCurrencies() {
@@ -24,24 +39,30 @@ class Wallet extends React.Component {
       .then((res) => this.setState({ currencies: res }));
   }
 
-  formComponentValor() {
+  formComponentValor(valor) {
     return (
       <label htmlFor="valor">
         Valor:&nbsp;
         <input
           type="text"
           id="valor"
+          name="valor"
+          value={ valor }
+          onChange={ this.handle }
         />
       </label>
     );
   }
 
-  formComponentMoeda(currencies) {
+  formComponentMoeda(currencies, moeda) {
     return (
       <label htmlFor="Moeda">
         Moeda:&nbsp;
         <select
           id="Moeda"
+          name="moeda"
+          value={ moeda }
+          onChange={ this.handle }
         >
           {currencies.map((opt, i) => <option key={ i }>{opt}</option>) }
         </select>
@@ -49,12 +70,15 @@ class Wallet extends React.Component {
     );
   }
 
-  formComponentMetodoPagamento() {
+  formComponentMetodoPagamento(pagamento) {
     return (
       <label htmlFor="Método de pagamento">
         Método de pagamento:&nbsp;
         <select
           id="Método de pagamento"
+          name="pagamento"
+          value={ pagamento }
+          onChange={ this.handle }
         >
           <option>Dinheiro</option>
           <option>Cartão de crédito</option>
@@ -64,12 +88,15 @@ class Wallet extends React.Component {
     );
   }
 
-  formComponentTag() {
+  formComponentTag(tag) {
     return (
       <label htmlFor="Tag">
         Tag:&nbsp;
         <select
           id="Tag"
+          name="tag"
+          value={ tag }
+          onChange={ this.handle }
         >
           <option>Alimentação</option>
           <option>Lazer</option>
@@ -81,13 +108,16 @@ class Wallet extends React.Component {
     );
   }
 
-  formComponentDescricao() {
+  formComponentDescricao(descricao) {
     return (
       <label htmlFor="Descrição">
         Descrição:&nbsp;
         <input
           type="text"
           id="Descrição"
+          name="descricao"
+          value={ descricao }
+          onChange={ this.handle }
         />
       </label>
     );
@@ -95,14 +125,16 @@ class Wallet extends React.Component {
 
   formComponents() {
     const { currencies } = this.state;
+    const { valor, moeda, pagamento, tag, descricao } = this.state;
 
     return (
       <form className="form">
-        {this.formComponentValor()}
-        {this.formComponentMoeda(currencies)}
-        {this.formComponentMetodoPagamento()}
-        {this.formComponentTag()}
-        {this.formComponentDescricao()}
+        {this.formComponentValor(valor)}
+        {this.formComponentMoeda(currencies, moeda)}
+        {this.formComponentMetodoPagamento(pagamento)}
+        {this.formComponentTag(tag)}
+        {this.formComponentDescricao(descricao)}
+        <button className="btnAddDesp" type="button">Adicionar despesa</button>
       </form>
     );
   }

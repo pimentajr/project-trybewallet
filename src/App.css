@@ -95,12 +95,33 @@
   min-width: auto;
   justify-content: space-between;
   background-color: black;
+  padding-right: 20px;
 }
 
 .form label {
   color: antiquewhite;
   padding: 20px 30px;
   font-weight: bold;
+}
+
+#valor {
+  width: 100px;
+}
+
+/* .btnAddDesp {
+  height: 10px;
+  background-color: blue;
+  color:blueviolet
+} */
+
+.form button {
+  height: 40px;
+  /* padding: 20px 30px; */
+  margin-top: 20px;
+  font-weight: bold;
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
