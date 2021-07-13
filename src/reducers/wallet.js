@@ -6,6 +6,7 @@ import {
   REM_EXPENSE,
   EDITOR_ON,
   EDITOR_OFF,
+  EDIT_DONE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -34,6 +35,15 @@ const wallet = (state = INITIAL_STATE, action) => {
       editID: state.expenses.filter(({ id }) => id === action.editID) };
   case EDITOR_OFF:
     return { ...state, editing: false, editID: '' };
+  // case EDIT_DONE:
+  //   return { ...state, editing: false, expenses: [...state.expenses.map((expense) => {
+  //     return expense.id === action.modified.id;
+  //   })] };
+  case EDIT_DONE:
+    return { ...state, editing: false, expenses: [...state.expenses.reduce((acc, curr) => {
+      return curr.id === action.modified.id 
+        ? acc.concat(action.modified) : acc.concat(curr);
+    }, [])] };
   default:
     return state;
   }

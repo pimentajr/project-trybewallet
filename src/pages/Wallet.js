@@ -158,7 +158,6 @@ const mapDispatchToProps = (dispatch) => ({
   requestExpenses: (forms) => dispatch(fetchToExpenses(forms)),
   editOn: (id) => dispatch(openEditor(id)),
   editOff: () => dispatch(closeEditor()),
-  // setId: (id) => dispatch(sendId(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
