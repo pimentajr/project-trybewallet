@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 
 export default function CoinOptions() {
   const coins = useSelector((state) => state.wallet.currencies);
+  const coinsTotal = Object.keys(coins);
   return (
     <>
-      { coins.map((coin, index) => {
+      { coinsTotal.map((coin, index) => {
         if (coin !== 'USDT') {
           return (
             <option key={ index }>

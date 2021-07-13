@@ -36,7 +36,7 @@ const initialState = {
 
 function AddExpenseForm() {
   const [states, setState] = useState(initialState);
-  const rates = useSelector((state) => state.wallet.rates);
+  const currencyRate = useSelector((state) => state.wallet.currencies);
   const dispatch = useDispatch();
   const fetching2 = () => dispatch(isFetching());
   const spendInfor = (param) => dispatch(spendInformation(param));
@@ -49,7 +49,7 @@ function AddExpenseForm() {
   }
   function handleAddSpend() {
     fetching2();
-    spendInfor({ ...states, exchangeRates: rates });
+    spendInfor({ ...states, exchangeRates: currencyRate });
     setState({ ...states, id: states.id + 1 });
   }
   return (
