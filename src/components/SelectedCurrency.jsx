@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchApi } from '../actions/index';
 
 class SelectedCurrency extends Component {
+  componentDidMount() {
+    const { coinType } = this.props;
+    coinType();
+  }
+
   render() {
-    // const { coinType } = this.props;
+    const { coinTypetest } = this.props;
+    const test = Object.keys(coinTypetest).filter((value) => value !== 'USDT');
     return (
       <label htmlFor="options">
         Moeda:
         <select id="options">
-          {/* {
-            coinType.map((type) => <option key={ type.code }>{ type.code }</option>)
-          } */}
+          {
+            // onChange= {(e) => onChangeSelect(e.target.value)} -> usar no select talvez
+            test.map((type, index) => <option key={ index }>{ type }</option>)
+          }
         </select>
       </label>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  coinType: state.wallet.currencies,
+const mapDispatchToProps = (dispatch) => ({
+  coinType: () => dispatch(fetchApi()),
 });
 
-export default connect(mapStateToProps)(SelectedCurrency);
+const mapStateToProps = (state) => ({
+  coinTypetest: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedCurrency);
 
 SelectedCurrency.propTypes = {
   coinType: PropTypes.array,

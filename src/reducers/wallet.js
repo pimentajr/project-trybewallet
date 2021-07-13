@@ -5,7 +5,7 @@ import {
 } from '../actions/index';
 
 const INITIAL_STATE = {
-  currencies: {},
+  currencies: [],
   expenses: [],
   isLoading: false,
 };
