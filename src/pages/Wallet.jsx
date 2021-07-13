@@ -4,8 +4,26 @@ import PropTypes from 'prop-types';
 import ExpenseForm from './components/ExpenseForm';
 
 class Wallet extends React.Component {
+
+  sumExpenses() {
+    const { userExpenses } = this.props;
+
+    let sum = 0;
+    if (userExpenses) {
+      userExpenses.forEach((item) => {
+        const currency = item.currency;
+        const amount = item.exchangeRates[currency].ask;
+
+        sum += Math.round((parseInt(item.value, 10) * amount) * 100) / 100;
+        return 0;
+      });
+    }
+
+    return sum;
+  }
+
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, userExpenses } = this.props;
 
     return (
       <div>
@@ -23,7 +41,7 @@ class Wallet extends React.Component {
               <span
                 data-testid="total-field"
               >
-                0
+                { this.sumExpenses() }
               </span>
               <span data-testid="header-currency-field"> BRL </span>
             </div>
