@@ -1,4 +1,5 @@
 import React from 'react';
+import Form from './Form';
 import Header from './Header';
 
 class Wallet extends React.Component {
@@ -7,6 +8,7 @@ class Wallet extends React.Component {
       <div>
         TrybeWallet
         <Header />
+        <Form />
       </div>
     );
   }
