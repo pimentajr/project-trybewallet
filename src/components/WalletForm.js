@@ -11,6 +11,7 @@ class WalletForm extends Component {
 
   render() {
     const { cur } = this.props;
+    const currArray = Object.keys(cur).filter((coin) => coin !== 'USDT');
     return (
       <form>
         <label htmlFor="value">
@@ -32,7 +33,7 @@ class WalletForm extends Component {
         <label htmlFor="currency">
           Moeda:
           <select id="currency">
-            { cur.map((value, index) => <option key={ index }>{ value }</option>)}
+            {currArray.map((value, index) => <option key={ index }>{ value }</option>)}
           </select>
         </label>
         <label htmlFor="payment">
@@ -69,5 +70,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
 
 WalletForm.propTypes = {
   fetchCur: PropTypes.func.isRequired,
-  cur: PropTypes.arrayOf.isRequired,
+  cur: PropTypes.objectOf.isRequired,
 };

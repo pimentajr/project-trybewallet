@@ -14,7 +14,4 @@ export const requestCurrencies = (payload) => ({
 
 export const fetchCurrencies = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
   .then((response) => response.json())
-  .then((data) => {
-    const dataArray = Object.keys(data).filter((coin) => coin !== 'USDT');
-    dispatch(requestCurrencies(dataArray));
-  });
+  .then((currencies) => dispatch(requestCurrencies(currencies)));
