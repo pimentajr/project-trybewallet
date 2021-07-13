@@ -11,6 +11,11 @@ export const addExpensesAction = (payload, id) => ({
   id,
 });
 
+export const removeExpensesAction = (id) => ({
+  type: 'REMOVE_EXPENSES',
+  id,
+});
+
 export const saveCoins = () => ({
   type: 'REQUEST_COIN',
 });

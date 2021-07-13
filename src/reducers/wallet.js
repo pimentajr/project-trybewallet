@@ -12,10 +12,6 @@ const stateCoins = (state = INITIAL_STATE, action) => {
     return { ...state, loading: true };
   case 'RECEIVE_COIN':
     return { ...state, loading: false, allCoins: action.values };
-    // return { ...state,
-    //   loading: false,
-    //   allCoins: Object.values(action.values).filter((item) => item.codein !== 'BRLT'),
-    // };
   case 'ADD_EXPENSES':
     return ({
       ...state,
@@ -25,6 +21,11 @@ const stateCoins = (state = INITIAL_STATE, action) => {
           ...action.payload,
           exchangeRates: state.allCoins,
         }],
+    });
+  case 'REMOVE_EXPENSES':
+    return ({
+      ...state,
+      expenses: [...state.expenses.filter((item) => item.id !== action.id)],
     });
   default:
     return state;
