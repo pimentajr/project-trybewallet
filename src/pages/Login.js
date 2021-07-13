@@ -35,7 +35,10 @@ class Login extends React.Component {
     const regex = /^\w+(\w+)@\w+([-.]\w+).\w+([-.]\w+)*$/;
     const passwordMinLength = 6;
     if (regex.test(email) && password.length >= passwordMinLength && disabled) {
-      this.setState((prev) => ({ disabled: !prev.disabled }));
+      this.setState({ disabled: false });
+    } else if ((!regex.test(email) || password.length < passwordMinLength)
+     && !disabled) {
+      this.setState({ disabled: true });
     }
   }
 

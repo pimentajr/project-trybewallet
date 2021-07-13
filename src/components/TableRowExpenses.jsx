@@ -11,16 +11,26 @@ class TableRowExpenses extends Component {
         <td>{expenses.description}</td>
         <td>{expenses.tag}</td>
         <td>{expenses.method}</td>
-        <td>{expenses.value}</td>
-        <td>{expenses.exchangeRates[expenses.currency].name}</td>
-        <td>{Number(expenses.exchangeRates[expenses.currency].ask).toFixed(2)}</td>
         <td>
+          {expenses.exchangeRates[expenses.currency].code}
+          {' '}
+          {Number(expenses.value).toFixed(2)}
+        </td>
+        <td>{expenses.exchangeRates[expenses.currency].name}</td>
+        <td>
+          R$
+          {' '}
+          {Number(expenses.exchangeRates[expenses.currency].ask).toFixed(2)}
+        </td>
+        <td>
+          R$
+          {' '}
           {
             (Number(expenses.exchangeRates[expenses.currency].ask)
               * Number(expenses.value)).toFixed(2)
           }
         </td>
-        <td>Real</td>
+        <td>Real Brasileiro</td>
         <td>
           <button
             type="button"
@@ -28,15 +38,17 @@ class TableRowExpenses extends Component {
             onClick={ () => {
               dispatchEditing(expenses);
             } }
+            className="edit"
           >
-            Editar
+            <span role="img" aria-label="editar">✏️</span>
           </button>
           <button
             type="button"
             data-testid="delete-btn"
             onClick={ () => dispatchDelete(expenses) }
+            className="delete"
           >
-            Excluir
+            <span role="img" aria-label="editar">🗑️</span>
           </button>
         </td>
       </tr>

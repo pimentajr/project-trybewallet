@@ -10,17 +10,21 @@ class Header extends Component {
         exchangeRates[currency].ask * Number(value)
       ));
     return (
-      <div>
+      <div className="header">
+        <h1>Wallet</h1>
         <h5 data-testid="email-field">{getEmail}</h5>
-        <p data-testid="total-field">
-          {
-            eachValue
-              .reduce((acc, curr) => acc + Number(curr), 0)
-          }
-        </p>
-        <select data-testid="header-currency-field">
-          <option>BRL</option>
-        </select>
+        <div className="flex flex-end">
+          <p data-testid="total-field">
+            Despesa Total:
+            {' '}
+            {
+              eachValue
+                .reduce((acc, curr) => acc + Number(curr), 0).toFixed(2)
+            }
+            {' '}
+            <span data-testid="header-currency-field">BRL</span>
+          </p>
+        </div>
       </div>
     );
   }

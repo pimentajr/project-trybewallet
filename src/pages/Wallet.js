@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { fetchAPI, getExpenses, fetchNewCurr, editExpense } from '../actions';
 import Header from '../components/Header';
 import TableExpenses from '../components/TableExpenses';
+import './styles/Wallet.css';
 
 const Alimentação = 'Alimentação';
 class Wallet extends React.Component {
@@ -37,6 +38,7 @@ class Wallet extends React.Component {
     return (
       <button
         type="button"
+        className="button2"
         onClick={ () => {
           fetchNew();
           dispatchExpenses(this.state);
@@ -61,6 +63,7 @@ class Wallet extends React.Component {
     return (
       <button
         type="button"
+        className="button2"
         onClick={ () => {
           fetchNew();
           dispatchEdit({ value, description, currency, method, tag });
@@ -95,7 +98,7 @@ class Wallet extends React.Component {
         </label>
         <label htmlFor="description">
           Descrição
-          <textarea
+          <input
             name="description"
             id="description"
             onChange={ this.handleChange }
@@ -161,30 +164,32 @@ class Wallet extends React.Component {
     return (
       <>
         <Header />
-        <form>
-          {this.labelValueDescription()}
-          <label htmlFor="currency">
-            Moeda
-            <select
-              name="currency"
-              id="currency"
-              data-testid="currency-input"
-              onChange={ this.handleChange }
-              value={ currency }
-            >
-              {Object.keys(stateCurrencies)
-                .filter((e) => e !== 'USDT')
-                .map((e) => stateCurrencies[e])
-                .map((e, i) => (
-                  <option key={ i } onChange={ this.handleChange }>
-                    {e.code}
-                  </option>
-                ))}
-            </select>
-          </label>
-          {this.labelmethodTag()}
-        </form>
-        {stateIsEditing ? this.buttonEdit() : this.buttonExpenses()}
+        <div className={ stateIsEditing ? 'form2' : 'form' }>
+          <form>
+            {this.labelValueDescription()}
+            <label htmlFor="currency">
+              Moeda
+              <select
+                name="currency"
+                id="currency"
+                data-testid="currency-input"
+                onChange={ this.handleChange }
+                value={ currency }
+              >
+                {Object.keys(stateCurrencies)
+                  .filter((e) => e !== 'USDT')
+                  .map((e) => stateCurrencies[e])
+                  .map((e, i) => (
+                    <option key={ i } onChange={ this.handleChange }>
+                      {e.code}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            {this.labelmethodTag()}
+          </form>
+          {stateIsEditing ? this.buttonEdit() : this.buttonExpenses()}
+        </div>
         <TableExpenses />
       </>
     );

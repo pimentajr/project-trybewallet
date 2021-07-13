@@ -24,7 +24,7 @@
 .img {
   width: 400px;
   height: 200px;
-  margin-bottom: 40px
+  margin-bottom: 40px;
 }
 
 .input {
@@ -45,6 +45,7 @@
   text-align: center;
   background-color: #41d39b;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .button:disabled {
