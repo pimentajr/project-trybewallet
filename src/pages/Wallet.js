@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Expenses from '../components/ExpenseForm';
+import HeaderExpense from '../components/HeaderExpense';
 import Table from '../components/TableHeader';
 import { fetchAPI } from '../services/API';
 
@@ -40,8 +40,9 @@ export default function Wallet() {
           </div>
         </div>
       </nav>
-      <Expenses />
+      <HeaderExpense />
       <Table />
+
     </div>
   );
 }

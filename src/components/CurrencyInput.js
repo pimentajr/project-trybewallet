@@ -7,8 +7,8 @@ export default function CurrencyInput() {
   const getOptions = () => {
     if (currencies.length > 0) {
       return currencies.map((el, index) => (
-        <option key={ index } value={ el.code }>
-          {el.code}
+        <option key={ index } value={ el }>
+          {el}
         </option>
       ));
     }

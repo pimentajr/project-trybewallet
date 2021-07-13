@@ -1,4 +1,4 @@
-import { addExpense, dataFailure, getCurrencies, updateExpense } from '../actions';
+import { addExpense, dataFailure, getCurrencies } from '../actions';
 
 const URL = 'https://economia.awesomeapi.com.br/json/all';
 const redx = (prev, curr) => {
@@ -16,8 +16,8 @@ export const fetchAPI = () => async (dispatch) => {
   try {
     const r = await fetch(URL);
     const coin = await r.json();
-    const currencies = Object.values(coin);
-    const filteredList = currencies.filter((el) => el.codein !== 'BRLT');
+    const currencies = Object.keys(coin);
+    const filteredList = currencies.filter((el) => el !== 'USDT');
     return dispatch(getCurrencies(filteredList));
   } catch (error) {
     return dispatch(dataFailure(`${error}`));
@@ -41,18 +41,18 @@ export const sendExpense = (expense) => async (dispatch) => {
   }
 };
 
-export const fixExpense = (expense) => async (dispatch) => {
-  try {
-    const r = await fetch(URL);
-    const rjson = await r.json();
-    const currencies = Object.values(rjson);
-    const exchangeRates = currencies.reduce(redx, {});
-    const newExpense = {
-      ...expense,
-      exchangeRates,
-    };
-    await dispatch(updateExpense(newExpense));
-  } catch (error) {
-    return dispatch(dataFailure(`${error}`));
-  }
-};
+// export const fixExpense = (expense) => async (dispatch) => {
+//   try {
+//     const r = await fetch(URL);
+//     const rjson = await r.json();
+//     const currencies = Object.values(rjson);
+//     const exchangeRates = currencies.reduce(redx, {});
+//     const newExpense = {
+//       ...expense,
+//       exchangeRates,
+//     };
+//     await dispatch(updateExpense(newExpense));
+//   } catch (error) {
+//     return dispatch(dataFailure(`${error}`));
+//   }
+// };

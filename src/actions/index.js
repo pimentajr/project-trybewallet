@@ -1,4 +1,3 @@
-// Coloque aqui suas actions
 export const USER_INFO = 'USER_INFO';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const DATA_FAILURE = 'DATA_FAILURE';
