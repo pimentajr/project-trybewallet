@@ -36,3 +36,8 @@ export const newExpense = (expenses) => (dispatch) => (
       dispatch(saveExpenses(expenses, dataExchangeRates));
     })
 );
+
+export const delExpense = (id) => ({
+  type: 'DEL_EXPENSE',
+  payload: id,
+});

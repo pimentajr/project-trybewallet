@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { delExpense } from '../actions/index';
 
 export class TableW extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpense } = this.props;
     return (
       <table>
         <tr>
@@ -18,10 +19,10 @@ export class TableW extends Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
+        {/* consulta ao projeto do Alberto Candido para ver formato de função. */}
         {expenses.length > 0 && expenses.map((expense, index) => {
-          console.log(expense);
           const exchangeRate = Object.entries(expense.exchangeRates)
-            .find(([key]) => key === expense.currency)[1];
+            .find(([i]) => i === expense.currency)[1];
           return (
             <tr key={ index }>
               <td>{expense.description}</td>
@@ -35,6 +36,8 @@ export class TableW extends Component {
               <td>
                 <button
                   type="button"
+                  onClick={ () => deleteExpense(expense.id) }
+                  data-testid="delete-btn"
                 >
                   Deletar
                 </button>
@@ -53,10 +56,15 @@ export class TableW extends Component {
 
 TableW.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet }) => ({
   expenses: wallet.expenses,
 });
 
-export default connect(mapStateToProps)(TableW);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (id) => dispatch(delExpense(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableW);
