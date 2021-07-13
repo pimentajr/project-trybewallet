@@ -9,15 +9,15 @@ class TableWallet extends Component {
       <table>
         <thead>
           <tr>
-            <tr>Descrição</tr>
-            <tr>Tag</tr>
-            <tr>Método de pagamento</tr>
-            <tr>Valor</tr>
-            <tr>Moeda</tr>
-            <tr>Câmbio utilizado</tr>
-            <tr>Valor convertido</tr>
-            <tr>Moeda de conversão</tr>
-            <tr>Editar e excluir</tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar e excluir</th>
           </tr>
         </thead>
         <tbody>
