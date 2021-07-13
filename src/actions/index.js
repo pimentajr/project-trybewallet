@@ -1,6 +1,9 @@
 // Coloque aqui suas actions
 export const USER_DATA = 'USER_DATA';
 export const LOADING = 'LOADING';
+export const LOADING_SUCCESS = 'LOADING_SUCCESS';
+export const LOADING_ERROR = 'LOADING_ERROR';
+export const LOADING_EXPENSES = 'LOADING_EXPENSES';
 
 export const userData = (email) => ({
   type: 'USER_DATA',
@@ -17,16 +20,25 @@ export const loadingSuccess = (json) => ({
 });
 
 export const loadingError = (erro) => ({
-  type: 'LOADING',
+  type: 'LOADING_ERROR',
   payload: erro,
 });
 
-export function fetchResponses() {
+export const loadingExpenses = (payload, responseJson) => ({
+  type: 'LOADING_EXPENSES',
+  payload,
+  responseJson,
+});
+
+export function fetchResponses(payload = false) {
   return (dispatch) => {
     dispatch(loading());
     return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json)
-      .then((responseJson) => dispatch(loadingSuccess(responseJson)))
+      .then((response) => response.json())
+      .then((responseJson) => (
+        payload
+          ? dispatch(loadingExpenses(payload, responseJson))
+          : dispatch(loadingSuccess(responseJson))))
       .catch((error) => dispatch(loadingError(error)));
   };
 }
