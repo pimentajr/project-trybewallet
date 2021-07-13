@@ -19,6 +19,16 @@ export const removeArrayExpenses = (payload) => ({
   payload,
 });
 
+export const sendId = (payload) => ({
+  type: 'SEND_ID',
+  payload,
+});
+
+export const editArrayExpenses = (payload) => ({
+  type: 'EDIT_EXPENSES',
+  payload,
+});
+
 export const fetchCurrencie = () => async (dispath) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const object = await response.json();

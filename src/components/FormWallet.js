@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ButtonAdd from './ButtonAdd';
 import CompMethod from './CompMethod';
-// import { connect } from 'react-redux';
 import CompOptionMoed from './CompOptionMoed';
+import { sendId } from '../actions';
+import CompMethodDesp from './CompMethodDesp';
+import CompInputText from './CompInputText';
 
 class FormWallet extends Component {
   constructor() {
     super();
     this.state = {
+      id: undefined,
       value: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -15,6 +20,39 @@ class FormWallet extends Component {
       description: '',
     };
     this.ocValue = this.ocValue.bind(this);
+    this.setValueState = this.setValueState.bind(this);
+    this.resetState = this.resetState.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.setValueState();
+  }
+
+  setValueState() {
+    const { editId, funcEditId, editItem } = this.props;
+    if (editId !== undefined) {
+      const { value, currency, method, tag, description } = editItem[editId];
+      this.setState({
+        id: editId,
+        value,
+        currency,
+        method,
+        tag,
+        description,
+      });
+      funcEditId(undefined);
+    }
+  }
+
+  resetState() {
+    this.setState({
+      id: undefined,
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+    });
   }
 
   ocValue({ target }) {
@@ -25,55 +63,65 @@ class FormWallet extends Component {
   }
 
   render() {
-    const { value, description, currency, method, tag } = this.state;
+    const { id, value, description, currency, method, tag } = this.state;
     return (
       <form>
-        <label htmlFor="value">
-          Valor
-          <input
-            id="value"
-            name="value"
-            value={ value }
-            onChange={ this.ocValue }
-            type="text"
-          />
-        </label>
-        <label htmlFor="desc">
-          Descrição
-          <input
-            id="desc"
-            name="description"
-            value={ description }
-            onChange={ this.ocValue }
-            type="text"
-          />
-        </label>
+        <CompInputText value={ value } desc={ description } func={ this.ocValue } />
         <label htmlFor="moed">
           Moeda
-          <select name="currency" id="moed" value={ currency } onChange={ this.ocValue }>
+          <select
+            name="currency"
+            data-testid="currency-input"
+            id="moed"
+            value={ currency }
+            onChange={ this.ocValue }
+          >
             <CompOptionMoed />
           </select>
         </label>
         <label htmlFor="method">
           Método de pagamento
-          <select name="method" id="method" value={ method } onChange={ this.ocValue }>
+          <select
+            name="method"
+            id="method"
+            data-testid="method-input"
+            value={ method }
+            onChange={ this.ocValue }
+          >
             <CompMethod />
           </select>
         </label>
         <label htmlFor="methoddesp">
           Tag
-          <select name="tag" id="methoddesp" value={ tag } onChange={ this.ocValue }>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+          <select
+            name="tag"
+            id="methoddesp"
+            value={ tag }
+            data-testid="tag-input"
+            onChange={ this.ocValue }
+          >
+            <CompMethodDesp />
           </select>
         </label>
-        <ButtonAdd propsForm={ this.state } />
+        <ButtonAdd propsForm={ this.state } idd={ id } func={ this.resetState } />
       </form>
     );
   }
 }
 
-export default FormWallet;
+const mapStatetoProps = (state) => ({
+  editId: state.user.id,
+  editItem: state.wallet.expenses,
+});
+
+const matDispachToProps = (dispach) => ({
+  funcEditId: (value) => dispach(sendId(value)),
+});
+
+export default connect(mapStatetoProps, matDispachToProps)(FormWallet);
+
+FormWallet.propTypes = {
+  editId: PropTypes.number.isRequired,
+  editItem: PropTypes.objectOf().isRequired,
+  funcEditId: PropTypes.func.isRequired,
+};

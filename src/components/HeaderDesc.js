@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeArrayExpenses } from '../actions';
+import { removeArrayExpenses, sendId } from '../actions';
 import CompTbHead from './CompTbHead';
 
 const HeaderDesc = (props) => {
-  const { expenses, removeItem } = props;
+  const { expenses, removeItem, sendIdedit } = props;
+
   return (
     <table>
       <thead>
@@ -36,7 +37,7 @@ const HeaderDesc = (props) => {
                 <button
                   type="button"
                   data-testid="edit-btn"
-                  onClick="teste"
+                  onClick={ () => sendIdedit(id) }
                 >
                   Editar
                 </button>
@@ -54,11 +55,13 @@ const mapStateProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeItem: (value) => dispatch(removeArrayExpenses(value)),
+  sendIdedit: (value) => dispatch(sendId(value)),
 });
 
 export default connect(mapStateProps, mapDispatchToProps)(HeaderDesc);
 
 HeaderDesc.propTypes = {
   removeItem: PropTypes.func.isRequired,
+  sendIdedit: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

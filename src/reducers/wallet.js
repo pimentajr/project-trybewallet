@@ -7,7 +7,6 @@ const WALLET_STATE = {
 };
 
 function functionWallet(state = WALLET_STATE, action) {
-  let idIndex = 0;
   switch (action.type) {
   case 'SUCESS_FETCH':
     return {
@@ -15,24 +14,25 @@ function functionWallet(state = WALLET_STATE, action) {
       currencies: action.payload,
     };
   case 'SUCESS_EXPENSES':
-    for (let index = 0; index <= state.expenses.length; index += 1) {
-      if (state.expenses[index] !== undefined) {
-        idIndex = state.expenses[index].id + 1;
-      }
-    }
     return {
       ...state,
-      expenses: [...state.expenses, {
-        id: idIndex,
-        ...action.payload,
-      }],
+      expenses: [...state.expenses, action.payload],
     };
   case 'REMOVE_EXPENSES':
-    console.log(action.payload);
     return {
       ...state,
       expenses: [...state.expenses.filter((e) => e.id !== action.payload)],
     };
+  case 'EDIT_EXPENSES':
+    console.log(action.payload.id);
+    console.log(action.payload);
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((e) => e.id !== action.payload.id),
+        action.payload,
+      ],
+    };
+    //  .sort((a, b) => a.id - b.id),
   default:
     return state;
   }
