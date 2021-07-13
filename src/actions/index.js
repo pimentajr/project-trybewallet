@@ -1,4 +1,5 @@
-// Reference: Exporting multiple action on Redux: https://stackoverflow.com/questions/53588272/export-multiple-actions-in-action-js-file-redux
+// Reference:
+// Exporting multiple actions on Redux: https://stackoverflow.com/questions/53588272/export-multiple-actions-in-action-js-file-redux
 
 export const userEmail = (email) => ({
   type: 'USER_EMAIL',
