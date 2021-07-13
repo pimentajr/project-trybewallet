@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import WalletForm from '../components/WalletForm';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       value: 0,
     };
