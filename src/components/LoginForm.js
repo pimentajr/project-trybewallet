@@ -26,7 +26,7 @@ export default function LoginForm(props) {
           />
         </label>
         <button
-          type="button"
+          type="submit"
           disabled={ handleDisabled() }
         >
           Entrar

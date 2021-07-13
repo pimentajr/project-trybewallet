@@ -17,7 +17,8 @@ export default function Login() {
 
   const handleSubmit = (element) => {
     element.preventDefault();
-    dispatch(sendInfo(login));
+    console.log('teste');
+    dispatch(sendInfo(login.email));
     history.push('/carteira');
   };
 
