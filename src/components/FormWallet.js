@@ -31,7 +31,8 @@ class FormWallet extends Component {
   setValueState() {
     const { editId, funcEditId, editItem } = this.props;
     if (editId !== undefined) {
-      const { value, currency, method, tag, description } = editItem[editId];
+      const { value, currency, method, tag, description,
+        exchangeRates } = editItem[editId];
       this.setState({
         id: editId,
         value,
@@ -39,6 +40,7 @@ class FormWallet extends Component {
         method,
         tag,
         description,
+        exchangeRates,
       });
       funcEditId(undefined);
     }
@@ -52,6 +54,7 @@ class FormWallet extends Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
+      exchangeRates: {},
     });
   }
 
@@ -63,7 +66,7 @@ class FormWallet extends Component {
   }
 
   render() {
-    const { id, value, description, currency, method, tag } = this.state;
+    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
     return (
       <form>
         <CompInputText value={ value } desc={ description } func={ this.ocValue } />
@@ -103,7 +106,12 @@ class FormWallet extends Component {
             <CompMethodDesp />
           </select>
         </label>
-        <ButtonAdd propsForm={ this.state } idd={ id } func={ this.resetState } />
+        <ButtonAdd
+          propsForm={ this.state }
+          idd={ id }
+          func={ this.resetState }
+          exchangeRates={ exchangeRates }
+        />
       </form>
     );
   }

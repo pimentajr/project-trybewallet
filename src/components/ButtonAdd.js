@@ -33,8 +33,7 @@ class ButtonAdd extends Component {
   }
 
   async editExpenses() {
-    const { editCurrencie, propsForm, getCurrency, func } = this.props;
-    const { payload } = await getCurrency();
+    const { editCurrencie, propsForm, func, exchangeRates } = this.props;
     const { id, value, tag, currency, method, description } = propsForm;
     const newvalue = {
       id,
@@ -43,7 +42,7 @@ class ButtonAdd extends Component {
       currency,
       method,
       description,
-      exchangeRates: payload,
+      exchangeRates,
     };
     func();
     editCurrencie(newvalue);
@@ -80,6 +79,7 @@ ButtonAdd.propTypes = {
   idd: PropTypes.number.isRequired,
   expensesItems: PropTypes.objectOf().isRequired,
   editCurrencie: PropTypes.func.isRequired,
+  exchangeRates: PropTypes.objectOf().isRequired,
   propsForm: PropTypes.shape({
     id: PropTypes.number,
     value: PropTypes.string,
