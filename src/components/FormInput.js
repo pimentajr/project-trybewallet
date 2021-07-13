@@ -8,11 +8,11 @@ class FormInput extends Component {
   constructor() {
     super();
     this.state = {
-      count: 0,
       arrayApi: '',
       arrayMethod: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       arrayTag: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
       objExpenses: {},
+      count: 0,
     };
 
     this.inputValue = this.inputValue.bind(this);
@@ -38,9 +38,7 @@ class FormInput extends Component {
         ...objExpenses,
         id: count,
         [name]: value,
-        exchangeRates: Object.entries(arrayApi)
-          .map((e) => ({
-            [e[1].code]: { code: e[1].code, name: e[1].name, ask: e[1].ask } }))[0],
+        exchangeRates: arrayApi,
       },
     });
   }

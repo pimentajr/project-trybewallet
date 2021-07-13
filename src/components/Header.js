@@ -17,23 +17,26 @@ class Header extends Component {
     const { fromCurrencies, toCurrency } = this.props;
     const { accuValue } = this.state;
     if (fromCurrencies.length === 0) {
-      console.log('accuV', accuValue);
       toCurrency(accuValue);
-      return accuValue;
+      return 0;
     }
-    console.log('curren', fromCurrencies);
     return (parseFloat(fromCurrencies));
   }
 
   render() {
     const { user } = this.props;
     return (
-      <>
+      <div className="headerMain">
         <div>Header</div>
-        <div data-testid="email-field">{ user }</div>
-        <div data-testid="total-field">{ this.firstValuation() }</div>
-        <div data-testid="header-currency-field">BRL</div>
-      </>
+        <div className="headerSec">
+          <div data-testid="email-field">{ user }</div>
+          <p data-testid="total-field" className="headerSec">
+            Despesas totais:
+            { this.firstValuation() }
+            <div data-testid="header-currency-field">BRL</div>
+          </p>
+        </div>
+      </div>
     );
   }
 }
