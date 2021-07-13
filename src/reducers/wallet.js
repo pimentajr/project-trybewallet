@@ -6,7 +6,7 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  totalField: '',
+  totalField: 0,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -15,6 +15,17 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currencies: [action.payload],
+    };
+
+  case 'SAVE_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
+  case 'SUM_EXPENSE':
+    return {
+      ...state,
+      totalField: state.totalField + action.payload,
     };
   default:
     return { ...state, totalField: 0 };

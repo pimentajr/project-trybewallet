@@ -5,34 +5,33 @@ import { connect } from 'react-redux';
 class ExpensesForm extends Component {
   render() {
     const { currencies } = this.props;
-    const Moedas = (currencies.map((coins) => Object.values(coins)
-      .map((siglas) => siglas)
+    const currenciesType = (currencies.map((coins) => Object.values(coins)
       .filter((item) => item.codein !== 'BRLT')
       .map(
         (element) => <option key={ element.code }>{element.code}</option>,
       )));
     return (
       <form>
-        <label htmlFor="input-valor">
+        <label htmlFor="input-value">
           Valor:
-          <input type="text" id="input-valor" />
+          <input type="number" id="input-value" required />
         </label>
         <label htmlFor="input-description">
           Descrição:
-          <input type="text" id="input-description" />
+          <input type="text" id="input-description" required />
         </label>
         <label htmlFor="select-currency">
           Moedas
           <select id="select-currency">
-            {Moedas}
+            {currenciesType}
           </select>
         </label>
         <label htmlFor="payment-method">
           Método de pagamento:
           <select id="payment-method">
-            <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
+            <option>Dinheiro</option>
           </select>
         </label>
         <label htmlFor="expenses-type">
