@@ -25,7 +25,7 @@ class ExpenseTable extends React.Component {
   }
 
   render() {
-    // const { expenses } = this.props;
+    const { expenses } = this.props;
     return (
       <table>
         <tr>
@@ -39,7 +39,7 @@ class ExpenseTable extends React.Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
-        {/* { expenses.map(({
+        { expenses.map(({
           id,
           value,
           description,
@@ -61,7 +61,7 @@ class ExpenseTable extends React.Component {
             <button type="button">Editar</button>
             { this.deleteButton(id) }
           </tr>
-        ))} */}
+        ))}
       </table>
     );
   }
