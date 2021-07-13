@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchResponses } from '../actions';
+import Tabela from '../components/Tabela';
 
 class Wallet extends Component {
   constructor(props) {
     super(props);
-    const { expenses } = this.props;
 
+    const { expenses } = this.props;
     this.state = {
       id: expenses.length,
       value: '',
@@ -70,8 +71,8 @@ class Wallet extends Component {
           Método de Pagamento:
           <select value={ method } id="method" onChange={ this.change }>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Débito">Cartão de Débito</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Cartão de Débito">Cartão de débito</option>
+            <option value="Cartão de Crédito">Cartão de crédito</option>
           </select>
         </label>
         <label htmlFor="tag">
@@ -79,8 +80,8 @@ class Wallet extends Component {
           <select value={ tag } id="tag" onChange={ this.change }>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
-            <option value="Alimentacao">Alimentação</option>
-            <option value="Saude">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Saúde">Saúde</option>
             <option value="Transporte">Transporte</option>
           </select>
         </label>
@@ -115,6 +116,7 @@ class Wallet extends Component {
         </p>
         { this.form() }
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <Tabela />
       </header>
     );
   }
@@ -133,7 +135,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string,
-  expenses: PropTypes.expenses,
+  expenses: PropTypes.array,
   loading: PropTypes.bool,
   dispatchFetches: PropTypes.func,
 }.isRequired;
