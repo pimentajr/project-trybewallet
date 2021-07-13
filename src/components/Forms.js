@@ -79,6 +79,7 @@ class Forms extends Component {
             <option>Saúde</option>
           </select>
         </label>
+        <button type="submit">Adicionar Despesas</button>
       </form>
     );
   }
