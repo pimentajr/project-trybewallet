@@ -38,7 +38,7 @@ class WalletComponent extends Component {
   }
 
   render() {
-    const { acronymCurrency } = this.props;
+    const { curr } = this.props;
     return (
       <div>
         <form>
@@ -49,8 +49,9 @@ class WalletComponent extends Component {
           <label htmlFor="Moeda">
             Moeda
             <select id="Moeda" name="currency" onChange={ this.handleChange }>
-              { Object.values(acronymCurrency).filter((item) => item.codein !== 'BRLT')
-                .map((item2, index) => <option key={ index }>{item2.code}</option>) }
+              {
+                curr && curr.map((e, index) => <option key={ index }>{e.code}</option>)
+              }
             </select>
           </label>
           <label htmlFor="metodo-pagamento">
@@ -71,14 +72,9 @@ class WalletComponent extends Component {
               <option>Saúde</option>
             </select>
           </label>
-          <label htmlFor="description">
+          <label htmlFor="descr">
             Descrição
-            <input
-              type="text"
-              name="description"
-              id="description"
-              onChange={ this.handleChange }
-            />
+            <input type="text" name="descr" id="descr" onChange={ this.handleChange } />
           </label>
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
@@ -89,7 +85,7 @@ class WalletComponent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  acronymCurrency: state.wallet.allCoins,
+  curr: state.wallet.allCoins,
   id: state.wallet.id,
 });
 

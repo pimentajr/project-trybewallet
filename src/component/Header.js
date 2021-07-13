@@ -23,7 +23,7 @@ class Header extends Component {
           </p>
           <p data-testid="total-field">
             Despesas total R$
-            { this.sumTot() }
+            { this.sumTot }
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
