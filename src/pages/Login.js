@@ -6,13 +6,17 @@ class Login extends React.Component {
       <div className="login-container">
         <h3>Login</h3>
         <label htmlFor="email-login">
-          Email:
-          <input data-testid="email-input" type="text" name="email" />
+          <input data-testid="email-input" type="text" name="email" placeholder="Email" />
         </label>
         <label htmlFor="passwaord-login">
-          Password:
-          <input data-testid="password-input" type="password" name="password" />
+          <input
+            data-testid="password-input"
+            type="password"
+            name="password"
+            placeholder="Senha"
+          />
         </label>
+        <button type="button">Entrar</button>
       </div>
     );
   }
