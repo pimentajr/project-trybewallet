@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class Form extends Component {
+class Form extends Component {
   render() {
+    const { moeda } = this.props;
     return (
       <div>
         <form>
@@ -16,7 +18,7 @@ export default class Form extends Component {
           <label htmlFor="moeda">
             Moeda
             <select id="moeda">
-              {/* <option /> */}
+              {moeda.map((value, index) => <option key={ index }>{value}</option>)}
             </select>
           </label>
           <label htmlFor="metodo-pag">
@@ -42,3 +44,11 @@ export default class Form extends Component {
     );
   }
 }
+
+
+
+const mapStateToProps = (state) => ({
+  moeda: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps)(Form);

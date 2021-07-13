@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../App.css';
 import Form from '../components/Form';
+import { fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -12,6 +13,11 @@ class Wallet extends React.Component {
       gastos: 0,
       cambio: 'BRL',
     };
+  }
+
+  componentDidMount() {
+    const { pegandoMoedas } = this.props;
+    pegandoMoedas();
   }
 
   render() {
@@ -41,10 +47,15 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   userEmail: PropTypes.func.isRequired,
+  pegandoMoedas: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  pegandoMoedas: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
