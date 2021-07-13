@@ -1,0 +1,30 @@
+header {
+  align-items: center;
+  background-color: rgb(104, 159, 104);
+  color: honeydew;
+  display: flex;
+  font-size: 20px;
+  justify-content: space-around;
+  margin-bottom: 3%;
+  padding: 1.5%;
+}
+
+header h1 {
+  color: honeydew;
+  font-family: Impact, sans-serif;
+  font-size: 40px;
+  opacity: 80%;
+}
+
+header h1:hover {
+  opacity: 100%;
+}
+
+input , select {
+  margin-left: 0.5%;
+  margin-right: 1.5%;
+}
+
+.myform {
+  margin: 1%;
+}

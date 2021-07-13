@@ -1,5 +1,5 @@
 import React from 'react';
-// import 'bulma/css/bulma.min.css';
+import 'bulma/css/bulma.min.css';
 import '../Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

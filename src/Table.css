@@ -1,0 +1,8 @@
+th , tr , td {
+  background-clip: padding-box;
+  border: 20px solid transparent;
+}
+
+table {
+  margin: auto;
+}

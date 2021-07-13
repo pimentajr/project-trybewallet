@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import 'bulma/css/bulma.min.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import '../../Table.css';
 
 class Table extends Component {
   convertCambio({ value, currency, exchangeRates }) {
@@ -22,7 +24,7 @@ class Table extends Component {
     const { expenses, delExpenses } = this.props;
     return (
       <table>
-        <tr className="">
+        <tr className="row">
           <th>ID</th>
           <th>Descrição</th>
           <th>Tag</th>

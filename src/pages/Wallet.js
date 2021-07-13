@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import 'bulma/css/bulma.min.css';
 import Valor from './components/Valor';
 import Descrição from './components/Descricao';
 import Moeda from './components/Moeda';
@@ -9,6 +8,7 @@ import Pagamento from './components/Pagamento';
 import Tag from './components/Tag';
 import * as actions from '../actions';
 import Table from './components/Table';
+import '../Wallet.css';
 
 class Wallet extends React.Component {
   constructor() {
@@ -61,18 +61,20 @@ class Wallet extends React.Component {
     return (
       <section>
         <header>
-          <h1 className="title">TrybeWallet</h1>
+          <h1>TrybeWallet</h1>
           <h3 data-testid="email-field">
+            <p>Bem vindo!</p>
             { email }
           </h3>
           <h2 data-testid="total-field">
+            Total:
             { this.calulator() }
           </h2>
           <h2 data-testid="header-currency-field">
             BRL
           </h2>
         </header>
-        <form id="myform">
+        <form className="myform">
           <Valor
             inputValue={ this.readInput }
           />
