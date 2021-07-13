@@ -3,34 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Forms from './Forms';
 import Count from './Count';
-import { fetchCurrencies, newExpenseAction } from '../actions';
+import { newExpenseAction } from '../actions';
+import Customize from './Customize';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  async handleClick() {
-    // get form details
-    const { addExpense, getCurrencies, currencies, expenses } = this.props;
-    const formElement = document.forms['newExpense-form'];
-    await getCurrencies();
-
-    addExpense({
-      id: expenses.length,
-      value: formElement.elements.totalValue.value,
-      description: formElement.elements.description.value,
-      currency: formElement.elements.currency.value,
-      method: formElement.elements.method.value,
-      tag: formElement.elements.tag.value,
-      exchangeRates: currencies,
-    });
-
-    formElement.reset();
-  }
-
   render() {
     // render forms
     const { email, expenses } = this.props;
@@ -44,18 +20,20 @@ class Wallet extends React.Component {
     // render forms
     return (
       <div>
-        <header>
-          <p data-testid="email-field">{email}</p>
+        <div>
           <p data-testid="total-field">
             Despesa Total: R$
             {total}
+            <div data-testid="header-currency-field"> BRL </div>
           </p>
-        </header>
-        <Forms />
-        <Count />
-        <button type="button" onClick={ this.handleClick }>
-          Adicionar despesa
-        </button>
+          <p data-testid="email-field">{email}</p>
+        </div>
+        <div>
+          {expenses.length > 0 ? (<Count />) : (
+            <h3>Nenhuma Despesa Cadastrada</h3>
+          )}
+        </div>
+        <div>{editMenu ? <Customize /> : <Forms />}</div>
       </div>
     );
   }
@@ -67,12 +45,12 @@ function mapStateToProps(state) {
     email: state.user.email,
     currencies: state.wallet.currencies,
     expenses: state.wallet.expenses,
+    editMenu: state.wallet.editMenu,
   };
 }
 
 // dispatch
 const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(fetchCurrencies()),
   addExpense: (details) => dispatch(newExpenseAction(details)),
 });
 
@@ -81,8 +59,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 // props validation
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  addExpense: PropTypes.func.isRequired,
-  getCurrencies: PropTypes.func.isRequired,
 };

@@ -1,65 +1,66 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencies, newExpenseAction } from '../actions';
+import { fetchCurrencies, changeExpense } from '../actions';
 
-class Forms extends React.Component {
-  // constructor
+class Customize extends React.Component {
   constructor() {
     super();
 
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // mounts
   componentDidMount() {
-    const { getCurrencies } = this.props;
+    const { getCurrencies, objToChange } = this.props;
     getCurrencies();
+    document.getElementById('description').value = objToChange.description;
+    document.getElementById('currency').value = objToChange.currency;
+    document.getElementById('method').value = objToChange.method;
+    document.getElementById('tag').value = objToChange.tag;
+    document.getElementById('totalValue').value = parseFloat(objToChange.value);
   }
 
-  // handeClick
-  async handleClick() {
-    const { addExpense, getCurrencies, currencies, expenses } = this.props;
-    const formElement = document.forms['newExpense-form'];
-    await getCurrencies();
-
-    addExpense({
-      id: expenses.length,
+  handleClick() {
+    const { objToChange, executeChange } = this.props;
+    const formElement = document.forms['Customize-form'];
+    const changedExpense = {
+      id: objToChange.id,
       value: formElement.elements.totalValue.value,
       description: formElement.elements.description.value,
       currency: formElement.elements.currency.value,
       method: formElement.elements.method.value,
       tag: formElement.elements.tag.value,
-      exchangeRates: currencies,
-    });
-
-    formElement.reset();
+      exchangeRates: objToChange.exchangeRates,
+    };
+    executeChange(false, changedExpense);
   }
 
-  // render
   render() {
     const { currencies } = this.props;
     return (
       <div>
-        <form id="newExpense-form">
+        <form id="Customize-form">
           <label htmlFor="totalValue">
             Valor
-            <input type="number" id="totalValue" />
+            <input type="number" id="totalValue" data-testid="value-input" />
           </label>
           <label htmlFor="description">
             Descrição
-            <input type="text" id="description" autoComplete="off" />
+            <input type="text" id="description" data-testid="description-input" />
           </label>
           <label htmlFor="currency">
             Moeda
-            <select id="currency">
+            <select id="currency" data-testid="currency-input">
               {Object.keys(currencies).map((curr, index) => (curr !== 'USDT' ? (
-                <option key={ index } id={ curr }>{curr}</option>) : null))}
+                <option key={ index } id={ curr }>
+                  {curr}
+                </option>
+              ) : null))}
             </select>
           </label>
           <label htmlFor="method">
             Método de pagamento
-            <select id="method">
+            <select id="method" data-testid="method-input">
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -67,7 +68,7 @@ class Forms extends React.Component {
           </label>
           <label htmlFor="tag">
             Tag
-            <select id="tag">
+            <select id="tag" data-testid="tag-input">
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Saúde">Saúde</option>
@@ -75,8 +76,8 @@ class Forms extends React.Component {
               <option value="Transporte">Transporte</option>
             </select>
           </label>
-          <button type="button" onClick={ this.handleClick }>
-            Adicionar despesa
+          <button type="button" onClick={ () => this.handleClick() }>
+            Editar despesa
           </button>
         </form>
       </div>
@@ -84,36 +85,30 @@ class Forms extends React.Component {
   }
 }
 
-// states
 function mapStateToProps(state) {
   return {
-    email: state.user.email,
     currencies: state.wallet.currencies,
-    expenses: state.wallet.expenses,
-    editMenu: state.wallet.editMenu,
+    objToChange: state.wallet.objToChange,
   };
 }
 
-// dispatch
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
-  addExpense: (details) => dispatch(newExpenseAction(details)),
+  executeChange: (bool, changedObj) => dispatch(changeExpense(bool, changedObj)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forms);
+export default connect(mapStateToProps, mapDispatchToProps)(Customize);
 
-// props validation
-Forms.propTypes = {
+Customize.propTypes = {
+  objToChange: PropTypes.objectOf(PropTypes.any).isRequired,
   getCurrencies: PropTypes.func.isRequired,
-  addExpense: PropTypes.func.isRequired,
+  executeChange: PropTypes.func.isRequired,
   currencies: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.any),
     PropTypes.objectOf(PropTypes.any),
   ]),
-  expenses: PropTypes.arrayOf(PropTypes.any),
 };
 
-Forms.defaultProps = {
+Customize.defaultProps = {
   currencies: [],
-  expenses: [],
 };

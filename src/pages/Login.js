@@ -20,50 +20,54 @@ class Login extends React.Component {
   btnState() {
     const form = document.getElementById('login-form');
     const btnSubmit = document.getElementById('submit-btn');
-    btnSubmit.disable = !form.checkValidity();
+    btnSubmit.disabled = !form.checkValidity();
   }
 
   // Render forms
   render() {
     const { dispatchEmail } = this.props;
     const { email } = this.state;
-
     return (
       <div>
         <form id="login-form" onChange={ this.btnState }>
           <label htmlFor="email">
             Login
             <input
+              autoComplete="off"
+              className="login-email"
+              id="email"
               name="email"
               type="email"
               data-testid="email-input"
-              className="login-email"
-              id="email"
               required
               onChange={ (e) => this.setState({ email: e.target.value }) }
             />
           </label>
-          <label htmlFor="pass">
-            Senha
-            <input
-              type="password"
-              data-testid="password-input"
-              className="login-pass"
-              id="pass"
-              pattern=".{6,}" // Input Pattern: https://www.w3schools.com/tags/att_input_pattern.asp
-              required
-            />
-          </label>
-          <Link to="/carteira">
-            <button
-              type="button"
-              id="submit-btn"
-              onClick={ dispatchEmail(email) }
-              disabled
-            >
-              Entrar
-            </button>
-          </Link>
+          <div>
+            <label htmlFor="login">
+              Senha
+              <input
+                type="password"
+                data-testid="password-input"
+                className="login-pass"
+                id="login"
+                pattern=".{6,}"
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <Link to="/carteira">
+              <button
+                type="button"
+                id="submit-btn"
+                onClick={ dispatchEmail(email) } // se mudar para arrow para o erro mas quebra o teste
+                disabled
+              >
+                Entrar
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     );
