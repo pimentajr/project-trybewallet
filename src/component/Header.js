@@ -22,6 +22,7 @@ class Header extends Component {
           <section data-testid="total-field">
             Despesas total:
             {
+              // O colega Jose Henrique me ajudou com esta lógica
               noExpenses() ? 0 : expensesResult.reduce((acc, expense) => {
                 const conversion = Number(expense.exchangeRates[expense.currency].ask);
                 acc += parseFloat(conversion) * parseFloat(Number(expense.value));

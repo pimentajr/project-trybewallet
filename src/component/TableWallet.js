@@ -17,7 +17,7 @@ class TableWallet extends Component {
             <th>Câmbio utilizado</th>
             <th>Valor convertido</th>
             <th>Moeda de conversão</th>
-            <th>Editar e excluir</th>
+            <th>Editar/Excluir</th>
           </tr>
         </thead>
         <tbody>
