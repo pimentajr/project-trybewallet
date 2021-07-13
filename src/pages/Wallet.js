@@ -8,10 +8,10 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
-      currencies: ['BRL', 'USD'],
     };
 
     this.getCurrencies = this.getCurrencies.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -22,16 +22,16 @@ class Wallet extends React.Component {
     const { fetchCurrency } = this.props;
     try {
       await fetchCurrency();
-      const { currency } = this.props;
-      this.setState({ currencies: currency });
     } catch (error) {
       return console.log(error);
     }
   }
 
+  handleSubmit() {
+  }
+
   render() {
-    const { email } = this.props;
-    const { currencies } = this.state;
+    const { email, currency } = this.props;
     return (
       <div>
         <p data-testid="email-field">{ email }</p>
@@ -51,7 +51,7 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              { currencies.map((crncy, index) => <option key={ index }>{crncy}</option>) }
+              { currency.map((crncy, index) => <option key={ index }>{crncy}</option>) }
             </select>
           </label>
           <label htmlFor="payment-method">
@@ -72,6 +72,7 @@ class Wallet extends React.Component {
               <option>Saúde</option>
             </select>
           </label>
+          <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
         </form>
       </div>
     );
@@ -79,7 +80,7 @@ class Wallet extends React.Component {
 }
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currency: PropTypes.objectOf().isRequired,
+  currency: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   fetchCurrency: PropTypes.func.isRequired,
 };
 
