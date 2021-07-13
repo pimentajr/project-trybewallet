@@ -7,7 +7,6 @@ import ExpensesTable from '../components/ExpensesTable';
 class Wallet extends React.Component {
   render() {
     const { email, expenses } = this.props;
-    console.log(expenses);
     const totalRates = expenses.length === 0 ? 0
       : expenses.reduce((acumulator, expense) => {
         const { value, currency, exchangeRates } = expense;

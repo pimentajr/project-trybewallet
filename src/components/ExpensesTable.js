@@ -29,8 +29,13 @@ class ExpensesTable extends React.Component {
               <td>{ item.method }</td>
               <td>{ item.value }</td>
               <td>{ item.exchangeRates[item.currency].name.split('/')[0] }</td>
-              <td>{ parseFloat(item.exchangeRates[item.currency].ask) }</td>
-              <td>{ parseFloat(item.exchangeRates[item.currency].ask) * item.value }</td>
+              <td>{ parseFloat(item.exchangeRates[item.currency].ask).toFixed(2) }</td>
+              <td>
+                {
+                  ((parseFloat(item.exchangeRates[item.currency].ask))
+                      * item.value).toFixed(2)
+                }
+              </td>
               <td>Real</td>
               <td>
                 <button type="button">
