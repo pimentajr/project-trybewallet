@@ -1,4 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { REMOVE_EXPENSE } from '../actions/removeExpense';
 import { SUBMIT_CURRENCIES } from '../actions/submitCurrencies';
 import { SUBMIT_EXPENSES } from '../actions/submitExpenses';
 
@@ -23,12 +24,10 @@ const wallet = (state = INITIAL_STATE, action) => {
         exchangeRates: action.exchange,
       }],
     };
-  // case 'WALLET_SUB':
-  //   return {
-  //     ...state,
-  //     currencies: action.currencies,
-  //     expenses: state.expenses - action.expenses,
-  //   };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+    };
   case SUBMIT_CURRENCIES:
     return {
       ...state,

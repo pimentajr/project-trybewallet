@@ -1,8 +1,14 @@
+.wallet-page {
+  display: flex;
+  flex-direction: column;
+}
+
 .header-container {
   border: 1px solid black;
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+  align-items: baseline;
 }
 
 .email {
@@ -19,5 +25,11 @@
 
 .fieldset-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+}
+
+#add-button {
+  margin: 10px auto;
 }

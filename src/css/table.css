@@ -1,0 +1,16 @@
+thead,
+tfoot {
+    background-color: #3f87a6;
+    color: #fff;
+}
+
+tbody {
+    background-color: #e4f0f5;
+}
+
+table {
+  border: 2px solid black;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  margin: auto;
+}
