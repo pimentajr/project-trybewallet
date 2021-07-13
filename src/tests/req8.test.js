@@ -100,7 +100,7 @@ describe('8.2 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gas
     userEvent.click(addButton);
 
     await waitFor(() => {
-      expect(mockedExchange).toBeCalledTimes(3);
+      expect(mockedExchange).toBeCalledTimes(2);
     });
 
     const expectedStateExpense2 = [
