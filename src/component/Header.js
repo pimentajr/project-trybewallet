@@ -3,17 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends Component {
-  sumTot() {
-    const { expensesResult } = this.props;
-    let sum = 0;
-    expensesResult.forEach(({ value, currency, exchangeRates }) => {
-      sum += exchangeRates[currency].ask * value;
-    });
-    return sum.toFixed(2);
-  }
-
   render() {
-    const { showMail } = this.props;
+    const { showMail, expensesResult } = this.props;
+    const noExpenses = () => {
+      if (expensesResult.length === 0) {
+        return true;
+      }
+      return false;
+    };
+
     return (
       <div>
         <header>
@@ -21,10 +19,16 @@ class Header extends Component {
             Email:
             { showMail }
           </p>
-          <p data-testid="total-field">
-            Despesas total R$
-            { this.sumTot }
-          </p>
+          <section data-testid="total-field">
+            Despesas total:
+            {
+              noExpenses() ? 0 : expensesResult.reduce((acc, expense) => {
+                const conversion = Number(expense.exchangeRates[expense.currency].ask);
+                acc += parseFloat(conversion) * parseFloat(Number(expense.value));
+                return acc;
+              }, 0).toFixed(2)
+            }
+          </section>
           <p data-testid="header-currency-field">BRL</p>
         </header>
       </div>
