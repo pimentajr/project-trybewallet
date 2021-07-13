@@ -18,10 +18,6 @@ export const spendInformation = (state) => ({
   state,
 });
 
-// export const isFetching = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-//  .then((response) => response.json())
-//  .then((currencies) => dispatch(requestCoinsApi(Object.values(currencies))));
-
 export function isFetching() {
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
