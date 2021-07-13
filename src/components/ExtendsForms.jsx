@@ -5,16 +5,15 @@ const optionsTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'
 
 class ExtendsForms extends Component {
   render() {
-    const { method, currencies, tag, handleInput } = this.props;
+    const { method, currency, tag, currencies, handleInput } = this.props;
     return (
       <>
         <label htmlFor="moedaSelect">
           Moeda:
           <select
             id="moedaSelect"
-            type="number"
-            name="moeda"
-            value={ currencies }
+            name="currency"
+            value={ currency }
             onChange={ handleInput }
           >
             {Object.keys(currencies)

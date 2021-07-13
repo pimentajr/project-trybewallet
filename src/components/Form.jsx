@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setCoins, addExpenses } from '../actions';
 import ExtendsForms from './ExtendsForms';
+import ExpensesTable from './ExpensesTable';
 
 class Form extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Form extends Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
@@ -39,12 +40,12 @@ class Form extends Component {
       method,
       currency,
       tag,
-      expenseRates: currencies,
+      exchangeRates: currencies,
     });
   }
 
   render() {
-    const { value, description, method, tag } = this.state;
+    const { value, description, method, currency, tag } = this.state;
     const { currencies } = this.props;
     return (
       <form>
@@ -70,11 +71,13 @@ class Form extends Component {
             onChange={ (e) => this.handleInput(e) }
           />
         </label>
+
         <ExtendsForms
-          handleInput={ this.handleInput }
           method={ method }
-          currencies={ currencies }
+          currency={ currency }
           tag={ tag }
+          currencies={ currencies }
+          handleInput={ this.handleInput }
         />
 
         <button
@@ -83,6 +86,8 @@ class Form extends Component {
         >
           Adicionar despesa
         </button>
+
+        <ExpensesTable />
       </form>
     );
   }
@@ -99,9 +104,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Form.propTypes = {
-  value: 0,
+  value: PropTypes.number,
   description: PropTypes.string,
-  currency: PropTypes.object,
+  currency: PropTypes.string,
   method: PropTypes.string,
   tag: PropTypes.string,
 }.isRequired;
