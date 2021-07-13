@@ -19,7 +19,22 @@ export function fetchCurrentType() {
     .then((currencies) => dispatch(walletCurrent(currencies)));
 }
 
-export const walletExpenses = (payload) => ({
+export const walletExpenses = (expenses, dataExchange) => ({
   type: ACTION_EXPENSES,
-  payload,
+  payload: {
+    expenses,
+    dataExchange,
+  },
 });
+
+export const exchangeRates = () => (
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+);
+
+export const newExpense = (expenses) => (dispatch) => (
+  exchangeRates()
+    .then((dataExchange) => {
+      dispatch(walletExpenses(expenses, dataExchange));
+    })
+);
