@@ -5,8 +5,8 @@ body {
 .table {
   display: grid table-column;
   border: 2px black solid;
-  flex-basis: 100%;
   box-shadow: 2px 3px 3px black;
+  flex-basis: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
