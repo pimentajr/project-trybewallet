@@ -63,11 +63,9 @@ class Login extends React.Component {
   submitLogin(event) {
     const { email } = this.state;
     event.preventDefault();
-    const { login } = this.props;
+    const { login, history } = this.props;
     login(email);
-    return (
-      <Redirect exact path="/carteira" Component="Wallet" />
-    );
+    history.push('/carteira');
   }
 
   render() {
