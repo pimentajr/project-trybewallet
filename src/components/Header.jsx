@@ -6,6 +6,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      total: 0,
       currency: 'BRL',
     };
   }
@@ -13,9 +14,14 @@ class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
     const { currency } = this.state;
-    const totalValue = expenses.reduce(
-      (acc, curr) => parseFloat(acc) + parseFloat(curr.value), 0,
-    );
+    let { total } = this.state;
+    if (expenses.length > 0) {
+      total = expenses.reduce((acc, curr) => {
+        const parse = Number(curr.exchangeRates[curr.currency].ask);
+        acc += Number(parse) + Number(curr.value);
+        return acc;
+      }, 0).toFixed(2);
+    }
 
     return (
       <div className="header">
@@ -26,8 +32,7 @@ class Header extends React.Component {
           </div>
           <div className="user-info-container">
             <p>
-              Dispesa Total:
-              <span data-testid="total-field">{totalValue}</span>
+              <span data-testid="total-field">{total}</span>
               <span data-testid="header-currency-field">{currency}</span>
             </p>
           </div>

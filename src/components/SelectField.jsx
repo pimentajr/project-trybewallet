@@ -15,7 +15,9 @@ class SelectField extends React.Component {
             onChange={ handleChange }
             value={ value }
           >
-            {options.map((opt) => <option key={ opt } value={ opt }>{opt}</option>)}
+            {options.map((opt, idx) => (
+              <option key={ idx } value={ opt }>{opt}</option>
+            ))}
           </select>
         </label>
       </div>
