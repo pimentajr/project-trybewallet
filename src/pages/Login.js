@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as EmailValidator from 'email-validator';
 import PropTypes from 'prop-types';
 import * as userAction from '../actions';
 
@@ -21,8 +20,9 @@ class Login extends Component {
   validateCredentials() {
     const { email, password } = this.state;
 
+    const reEmail = /^([\w\d._\-#])+@([\w\d._\-#]+[.][\w\d._\-#]+)+$/;
     const re = /^.{5,}$/;
-    if (EmailValidator.validate(email) && re.test(String(password))) {
+    if (reEmail.test(email) && re.test(String(password))) {
       this.setState({ btnDisabled: false });
     } else {
       this.setState({ btnDisabled: true });
