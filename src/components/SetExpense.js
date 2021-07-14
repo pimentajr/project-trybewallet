@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getCurrency from '../services/APIservice';
-import Method from '../Method';
-import Tag from '../Tag';
+import Method from './Method';
+import Tag from './Tag';
 import { setCurrency, fetchExchangesRatesApi } from '../actions';
 
 class EnterExpense extends React.Component {
