@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchApi } from '../actions';
 
 class Form extends Component {
   constructor() {
@@ -11,7 +14,23 @@ class Form extends Component {
       tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleChange = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
+    this.handleFetch = this.handleFetch.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleFetch();
+  }
+
+  async handleFetch() {
+    const { reqAction } = this.props;
+    const { response } = await reqAction();
+    const curr = Object.keys(response);
+    const arrayCurr = curr.filter((coin) => coin !== 'USDT');
+    this.setState({
+      currencies: arrayCurr,
+    });
+    return arrayCurr;
   }
 
   handleChange({ target }) {
@@ -21,12 +40,12 @@ class Form extends Component {
     });
   }
 
-  handleClick() {
-    console.log('oi');
-  }
+  // handleClick() {
+  //   console.log('oi');
+  // }
 
   renderSelects() {
-    const { currency, method, tag } = this.state;
+    const { currency, method, tag, currencies } = this.state;
     return (
       <>
         <label htmlFor="currency">
@@ -37,7 +56,9 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
-            <option key="currency">{ currency }</option>
+            { currencies && currencies
+              .map((curr, index) => (
+                <option value={ curr } key={ index }>{ curr }</option>))}
           </select>
         </label>
         <label htmlFor="method">
@@ -103,4 +124,16 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  reqAction: () => dispatch(fetchApi()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state,
+});
+
+Form.propTypes = ({
+  reqAction: PropTypes.func,
+}).isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
