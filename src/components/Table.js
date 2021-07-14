@@ -1,16 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteRow } from '../actions';
 
 class Table extends React.Component {
+  constructor() {
+    super();
+    this.renderTable = this.renderTable.bind(this);
+  }
+
   renderTable(expense) {
+    const { eraseRow } = this.props;
     const sigle = expense.currency;
     const coinName = expense.exchangeRates[`${sigle}`].name;
     const cambio = coinName.split('/')[0];
     const conversionValue = expense.exchangeRates[`${sigle}`].ask;
     const convertedValue = expense.value * expense.exchangeRates[`${sigle}`].ask;
     return (
-      <tr>
+      <tr key={ expense.id } id={ `Row${expense.id}` }>
         <td>{expense.description}</td>
         <td>{expense.tag}</td>
         <td>{expense.method}</td>
@@ -19,6 +26,15 @@ class Table extends React.Component {
         <td>{parseFloat(conversionValue).toFixed(2)}</td>
         <td>{parseFloat(convertedValue).toFixed(2)}</td>
         <td>Real</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => eraseRow(`${expense.id}`) }
+          >
+            Deletar
+          </button>
+        </td>
       </tr>
     );
   }
@@ -28,18 +44,22 @@ class Table extends React.Component {
     return (
       <div>
         <table>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-          { expenses.map(this.renderTable) }
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map(this.renderTable) }
+          </tbody>
         </table>
       </div>
     );
@@ -50,7 +70,11 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  eraseRow: (id) => dispatch(deleteRow(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({
@@ -61,4 +85,5 @@ Table.propTypes = {
     method: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
   })).isRequired,
+  eraseRow: PropTypes.func.isRequired,
 };

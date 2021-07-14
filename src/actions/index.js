@@ -13,6 +13,11 @@ export const testeExpencies = (payload) => ({
   payload,
 });
 
+export const deleteRow = (payload) => ({
+  type: 'DELETE_ROW',
+  payload,
+});
+
 export const fetchCoins = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
   .then((result) => result.json())
   .then((data) => dispatch(getCurrencies(Object.keys(data))));

@@ -15,6 +15,11 @@ function walletReducer(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+  case 'DELETE_ROW':
+    return {
+      ...state,
+      expenses: state.expenses.filter((e) => e.id !== parseFloat(action.payload)),
+    };
   default:
     return state;
   }
