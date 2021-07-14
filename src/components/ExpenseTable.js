@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
 
 class ExpenseTable extends Component {
   constructor() {
@@ -83,6 +82,7 @@ class ExpenseTable extends Component {
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.func.isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
