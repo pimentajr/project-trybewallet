@@ -8,8 +8,23 @@ class Wallet extends React.Component {
     this.state = {
       expense: '',
       description: '',
+      currencies: [],
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.fillCurrencies();
+  }
+
+  async fillCurrencies() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const result = await response.json();
+    const currenciesList = Object.keys(result);
+    currenciesList.splice(currenciesList.indexOf('USDT'), 1);
+    this.setState({
+      currencies: currenciesList,
+    });
   }
 
   handleChange({ value, name }) {
@@ -71,14 +86,17 @@ class Wallet extends React.Component {
   }
 
   renderSelectCurrency() {
+    const { currencies } = this.state;
     return (
       <form>
         <label htmlFor="selectCurrency">
           Moeda
           <select name="selectCurrency" id="selectCurrency">
-            {/* <option value="valor1">Valor 1</option>
-            <option value="valor2">Valor 2</option>
-            <option value="valor3">Valor 3</option> */}
+            { currencies.map((moeda) => (
+              <option key={ moeda } value={ moeda }>
+                { moeda }
+              </option>
+            ))}
           </select>
           {/* value={ description }
             onChange={ (e) => this.handleChange(e.target) } */}
@@ -127,7 +145,7 @@ class Wallet extends React.Component {
     return (
       <>
         {this.renderHeader()}
-        <div>
+        <div className="expenseContainer">
           {this.renderInputExpense()}
           {this.renderInputDescription()}
           {this.renderSelectCurrency()}

@@ -9,6 +9,16 @@
   width: fit-content;
 }
 
+.expenseContainer {
+  align-items: center;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  justify-content: space-between;
+}
+
 .header {
   align-items: center;
   background-color: #343a40;
