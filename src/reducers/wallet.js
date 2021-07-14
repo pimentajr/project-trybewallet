@@ -20,10 +20,11 @@ const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
     };
   case DELETE_EXPENSE: {
     const oldArray = [...state.expenses];
-    const newArray = oldArray.filter((el) => el.id !== payload);
+    const newArray = oldArray.filter((el) => el.id !== payload.id);
     return {
       ...state,
       expenses: [...newArray],
+      totalCalculed: Number(state.totalCalculed) - Number(payload.value),
     };
   }
   case CALCULATE_EXPENSES:

@@ -19,6 +19,38 @@ class ExpensesForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.sendInformation = this.sendInformation.bind(this);
+    this.resetState = this.resetState.bind(this);
+  }
+
+  resetState() {
+    this.setState({
+      value: 0,
+      description: '',
+    });
+  }
+
+  async sendInformation() {
+    const { expenses, addNewExpense, calculateTotalExpenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const exchangeRates = await fetchApi();
+
+    const currencyAskPrice = exchangeRates[currency].ask;
+    const convertedValue = this.calculateConversion(currencyAskPrice, value);
+    const id = expenses.length === 0 ? 0 : expenses[expenses.length - 1].id + 1;
+
+    const obj = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    };
+
+    addNewExpense(obj);
+    calculateTotalExpenses(convertedValue);
+    this.resetState();
   }
 
   handleChange({ target: { name, value } }) {
@@ -27,33 +59,9 @@ class ExpensesForm extends Component {
     });
   }
 
-  async sendInformation() {
-    const { expenses, addNewExpense } = this.props;
-    const { value, description, currency, method, tag } = this.state;
-    const exchangeRates = await fetchApi();
-    const obj = {
-      id: expenses.length,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates,
-    };
-    addNewExpense(obj);
-    this.convertAndSendExpense(value, currency);
-    this.setState({
-      value: 0,
-      description: '',
-    });
-  }
-
-  convertAndSendExpense(value, currency) {
-    const { currencies, calculateTotalExpenses } = this.props;
-    const valueToConvert = value;
-    const quotation = currencies.find(({ code }) => code === currency);
-    const convertedValue = Math.round(valueToConvert * quotation.ask * 100) / 100;
-    calculateTotalExpenses(convertedValue);
+  calculateConversion(quotation, expenseValue) {
+    const convertedValue = Math.round(expenseValue * quotation * 100) / 100;
+    return convertedValue;
   }
 
   render() {

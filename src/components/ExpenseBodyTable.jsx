@@ -19,6 +19,11 @@ class ExpenseBodyTable extends Component {
     return convertedValue;
   }
 
+  manageDelete(id, value) {
+    const { deleteById } = this.props;
+    deleteById({ id, value });
+  }
+
   render() {
     const { info: {
       value,
@@ -28,9 +33,7 @@ class ExpenseBodyTable extends Component {
       method,
       exchangeRates,
       id,
-    },
-    deleteById,
-    calculateTotal } = this.props;
+    } } = this.props;
     const askPrice = (this.getCurrencyQuotation(currency));
     const convertedTotal = this.calculateConversion(askPrice, value);
     const usedCurrency = this.getCurrencyName(exchangeRates, currency);
@@ -49,8 +52,7 @@ class ExpenseBodyTable extends Component {
             type="button"
             data-testid="delete-btn"
             onClick={ () => {
-              deleteById(id);
-              calculateTotal(-convertedTotal);
+              this.manageDelete(id, convertedTotal);
             } }
           >
             Delete
@@ -77,13 +79,13 @@ ExpenseBodyTable.propTypes = ({
     id: PropTypes.number,
   }),
   deleteById: PropTypes.func,
-  calculateTotal: PropTypes.func,
+  // calculateTotal: PropTypes.func,
 });
 
 ExpenseBodyTable.defaultProps = ({
   info: {},
   deleteById: () => {},
-  calculateTotal: () => {},
+  // calculateTotal: () => {},
 });
 
 export default connect(null, mapDispatchToProps)(ExpenseBodyTable);

@@ -31,14 +31,33 @@ class Wallet extends React.Component {
     }));
   }
 
+  calculateConversion() {
+    const { expenses } = this.props;
+    const askPrices = [];
+    expenses.forEach(({ currency, exchangeRates }) => {
+      askPrices.push(exchangeRates[currency].ask);
+    });
+    return askPrices;
+  }
+
+  calculateTotal() {
+    const { expenses } = this.props;
+    const askValues = this.calculateConversion();
+    const totalNotConverted = expenses.reduce((acc, curr, index) => (
+      acc + Number(curr.value) * askValues[index]), 0);
+    return (Math.round(totalNotConverted * 100) / 100).toFixed(2);
+  }
+
   render() {
-    const { email, total } = this.props;
+    const { email } = this.props;
     const { currency } = this.state;
     return (
       <div>
         <header>
           <span data-testid="email-field">{ email }</span>
-          <span data-testid="total-field">{ total.toFixed(2) }</span>
+          <span data-testid="total-field">
+            { this.calculateTotal() }
+          </span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <main>
@@ -52,7 +71,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
-  total: wallet.totalCalculed,
+  expenses: wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -61,12 +80,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = ({
   email: PropTypes.string.isRequired,
-  total: PropTypes.number,
   saveObj: PropTypes.func,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 });
 
 Wallet.defaultProps = ({
-  total: 0,
   saveObj: () => {},
 });
 
