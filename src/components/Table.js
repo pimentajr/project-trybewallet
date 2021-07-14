@@ -1,20 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { fetchCurrency, addExpense } from '../actions';
+import PropTypes from 'prop-types';
+import { removeExpense } from '../actions';
 
 class Table extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     description: '',
-  //     value: 0,
-  //     currency: '',
-  //     method: '',
-  //     tag: '',
-  //   };
+  // Esse botão acessa dispara uma action que delata o item do id conrrespondente
+  // handleButton(id) {
+  //   remove
   // }
+
   thead() {
     return (
       <thead>
@@ -39,21 +33,28 @@ class Table extends React.Component {
       .find((actualCurr) => (actualCurr.code === currency));
     const total = Number(value) * Number(exchangeRate.ask);
     const name = exchangeRate.name.split('/')[0];
-
+    const { remove } = this.props;
     return (
-      <tbody key={ id }>
-        <tr>
-          <td>{description}</td>
-          <td>{tag}</td>
-          <td>{method}</td>
-          <td>{value}</td>
-          <td>{name}</td>
-          <td>{Number(exchangeRate.ask).toFixed(2)}</td>
-          <td>{total.toFixed(2)}</td>
-          <td>Real</td>
-          <td>Editar/Excluir</td>
-        </tr>
-      </tbody>
+      <tr key={ id }>
+        <td>{description}</td>
+        <td>{tag}</td>
+        <td>{method}</td>
+        <td>{value}</td>
+        <td>{name}</td>
+        <td>{Number(exchangeRate.ask).toFixed(2)}</td>
+        <td>{total.toFixed(2)}</td>
+        <td>Real</td>
+        <td>
+          <button type="button">Editar</button>
+          <button
+            data-testid="delete-btn"
+            type="button"
+            onClick={ () => remove(id) }
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
     );
   }
 
@@ -62,7 +63,9 @@ class Table extends React.Component {
     return (
       <table>
         {this.thead()}
-        {expenses.map((expense) => this.tbody(expense))}
+        <tbody>
+          {expenses.map((expense) => this.tbody(expense))}
+        </tbody>
       </table>
     );
   }
@@ -72,8 +75,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  remove: (id) => dispatch(removeExpense(id)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
