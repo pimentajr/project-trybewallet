@@ -7,6 +7,8 @@ export const REQUESTING_COINS = 'REQUESTING_COINS';
 export const RECEIVE_COINS = 'RECEIVE_COINS';
 export const RECEIVE_EXPENSE_DATA = 'RECEIVE_EXPENSE_DATA';
 
+export const delExpenseAction = (id) => ({ type: 'DELETE_EXPENSE', id });
+
 export const loginUser = (email) => ({
   type: LOGIN_USER,
   email,

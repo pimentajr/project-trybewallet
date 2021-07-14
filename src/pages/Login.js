@@ -48,7 +48,6 @@ class Login extends React.Component {
           <fieldset>
             <input
               type="email"
-              id="email-input"
               name="email"
               data-testid="email-input"
               placeholder="Digite seu e-mail"
@@ -56,7 +55,6 @@ class Login extends React.Component {
             />
             <input
               type="password"
-              id="password-input"
               name="password"
               data-testid="password-input"
               placeholder="Digite sua senha"
