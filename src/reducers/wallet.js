@@ -7,6 +7,11 @@ const INITIAL_STATE = {
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+  case 'WALLET_ACTION':
+    return {
+      ...state,
+      expenses: [...state.expenses, { id: state.expenses.length, ...action.param }],
+    };
   case 'REQUEST_CURRENCY':
     return { ...state, isLoading: true };
   case 'RECEIVED_CURRENCY':

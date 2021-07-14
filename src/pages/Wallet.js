@@ -10,7 +10,6 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
-      gastos: 0,
       cambio: 'BRL',
     };
   }
@@ -21,8 +20,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail } = this.props;
-    const { gastos, cambio } = this.state;
+    const { userEmail, expenses } = this.props;
+    const { cambio } = this.state;
     return (
       <div>
         <div className="wallet-container">
@@ -35,7 +34,13 @@ class Wallet extends React.Component {
           </section>
           <section>
             <span data-testid="email-field">{userEmail}</span>
-            <span data-testid="total-field">{gastos}</span>
+            <span data-testid="total-field">
+              {expenses.reduce((acc, expense) => {
+                const selectedCurrency = expense.currency;
+                return Number(expense.exchangeRates[selectedCurrency].ask)
+                  * Number(expense.value) + acc;
+              }, 0)}
+            </span>
             <span data-testid="header-currency-field">{cambio}</span>
           </section>
         </div>
@@ -48,10 +53,12 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   userEmail: PropTypes.func.isRequired,
   pegandoMoedas: PropTypes.func.isRequired,
+  expenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

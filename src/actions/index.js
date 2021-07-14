@@ -6,13 +6,15 @@ const RECEIVED_CURRENCY = 'RECEIVED_CURRENCY';
 
 export const userAction = (param) => ({
   type: USER_ACTION,
-  payload: param,
+  param,
 });
 
-export const walletAction = (param) => ({
-  WALLET_ACTION,
-  payload: param,
-});
+export const walletAction = (param) => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  .then((res) => res.json())
+  .then((exchangeRates) => dispatch({
+    type: WALLET_ACTION,
+    param: { ...param, exchangeRates },
+  }));
 
 export const requestCurrencies = () => ({
   type: REQUEST_CURRENCY,
