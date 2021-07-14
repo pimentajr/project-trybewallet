@@ -7,7 +7,7 @@ const INITIAL_STATE = {};
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOGIN:
-    return action.value;
+    return { email: action.value };
   default: return state;
   }
 }

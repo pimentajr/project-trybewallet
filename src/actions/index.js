@@ -1,6 +1,6 @@
 export const LOGIN = 'LOGIN';
 
-const login = (value) => ({
+export const login = (value) => ({
   type: LOGIN,
   value,
 });

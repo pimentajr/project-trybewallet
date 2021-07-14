@@ -1,13 +1,13 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
-};
+// const INITIAL_STATE = {
+//   wallet: {
+//     currencies: [],
+//     expenses: [],
+//   },
+// };
 
-function wallet(state = INITIAL_STATE, action) {
+// // function wallet(state = INITIAL_STATE, action) {
 
-}
+// // }
 
-export default wallet;
+// export default wallet;
