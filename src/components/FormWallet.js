@@ -12,7 +12,7 @@ class FormWallet extends Component {
   constructor() {
     super();
     this.state = {
-      id: undefined,
+      id: -1,
       value: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -30,7 +30,8 @@ class FormWallet extends Component {
 
   setValueState() {
     const { editId, funcEditId, editItem } = this.props;
-    if (editId !== undefined) {
+    const not = -1;
+    if (editId >= 0) {
       const { value, currency, method, tag, description,
         exchangeRates } = editItem[editId];
       this.setState({
@@ -42,13 +43,13 @@ class FormWallet extends Component {
         description,
         exchangeRates,
       });
-      funcEditId(undefined);
+      funcEditId(not);
     }
   }
 
   resetState() {
     this.setState({
-      id: undefined,
+      id: -1,
       value: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -130,6 +131,6 @@ export default connect(mapStatetoProps, matDispachToProps)(FormWallet);
 
 FormWallet.propTypes = {
   editId: PropTypes.number.isRequired,
-  editItem: PropTypes.objectOf().isRequired,
+  editItem: PropTypes.arrayOf(PropTypes.object).isRequired,
   funcEditId: PropTypes.func.isRequired,
 };

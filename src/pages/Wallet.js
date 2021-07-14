@@ -18,7 +18,7 @@ class Wallet extends React.Component {
     expenses.forEach((e) => {
       const curr = e.currency;
       const valueSum = e.exchangeRates[curr].ask;
-      value += Number(e.value) * Number(valueSum);
+      value += Number(e.value * valueSum);
     });
     return value.toFixed(2);
   }

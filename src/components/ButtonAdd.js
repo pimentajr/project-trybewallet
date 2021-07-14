@@ -19,9 +19,9 @@ class ButtonAdd extends Component {
         idIndex = expensesItems.length;
       }
     }
-    const { id = idIndex, value, tag, currency, method, description } = propsForm;
+    const { value, tag, currency, method, description } = propsForm;
     const newvalue = {
-      id,
+      id: idIndex,
       value,
       tag,
       currency,
@@ -43,8 +43,9 @@ class ButtonAdd extends Component {
 
   render() {
     const { idd } = this.props;
+    const not = -1;
     return (
-      idd === undefined
+      idd === not
         ? <button type="button" onClick={ this.sendExpenses }>Adicionar despesa</button>
         : <button type="button" onClick={ this.editExpenses }>Editar despesa</button>
     );
@@ -69,7 +70,7 @@ ButtonAdd.propTypes = {
   getCurrency: PropTypes.func.isRequired,
   func: PropTypes.func.isRequired,
   idd: PropTypes.number.isRequired,
-  expensesItems: PropTypes.objectOf().isRequired,
+  expensesItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   editCurrencie: PropTypes.func.isRequired,
   propsForm: PropTypes.shape({
     id: PropTypes.number,
