@@ -18,6 +18,20 @@
   margin-top: 20px;
 }
 
-.wallet {
+.header {
+  align-items: center;
   display: flex;
+  height: 70px;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.wallet-form {
+  align-items: center;
+  background-color: darkslategrey;
+  color: white;
+  display: flex;
+  height: 90px;
+  justify-content: space-around;
 }

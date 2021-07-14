@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WalletForm from '../component/WalletForm';
 import { fetchCurrenciesApi } from '../actions';
+import trybeLogo from '../image/trybeP.png';
 import '../App.css';
 
 class Wallet extends React.Component {
@@ -12,19 +13,22 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { emailUser } = this.props;
+    const { emailUser, expenses } = this.props;
+    const sumOfExpenses = expenses.reduce((acc, curr) => acc + Number(curr.value)
+      * Number(curr.exchangeRates[curr.currency].ask), 0);
+
     return (
-      <div className="wallet">
-        <header>
-          <h1>TrybeWallet</h1>
+      <div>
+        <header className="header">
+          <img src={ trybeLogo } alt="logoTrybe" />
           <h2 data-testid="email-field">
             Olá:
             { emailUser }
           </h2>
           <label htmlFor="expenses">
             Despesas:
-            <input data-testid="total-field" type="number" value="0" />
-            <input data-testid="header-currency-field" type="text" value="BRL" />
+            <span data-testid="total-field">{ sumOfExpenses }</span>
+            <span data-testid="header-currency-field">BRL</span>
           </label>
         </header>
         <WalletForm />
@@ -33,7 +37,10 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ emailUser: state.user.email });
+const mapStateToProps = (state) => ({
+  emailUser: state.user.email,
+  expenses: state.wallet.expenses,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchThunk: () => dispatch(fetchCurrenciesApi()),
@@ -44,4 +51,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 Wallet.propTypes = {
   emailUser: PropTypes.string.isRequired,
   fetchThunk: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

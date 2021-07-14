@@ -33,3 +33,15 @@ export function fetchCurrenciesApi() {
         ((error) => dispatch(errorAppi(error))));
   };
 }
+
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+export function saveExpense(expense) {
+  const fetchApi = 'https://economia.awesomeapi.com.br/json/all';
+  return (dispatch) => {
+    fetch(fetchApi).then((response) => response.json())
+      .then((success) => dispatch({
+        type: SAVE_EXPENSE,
+        payload: { ...expense, exchangeRates: success },
+      }));
+  };
+}
