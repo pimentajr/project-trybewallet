@@ -1,86 +1,81 @@
 .login {
-	align-items: center;
-	background-color: white;
-	border-radius: 15px;
-	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.322);
-	display: flex;
-	justify-content: center;
-	height: 400px;
-	margin: 0 auto;
-	transform: translate(0, 50%);
-	width: 400px;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.322);
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  margin: 0 auto;
+  transform: translate(0, 50%);
+  width: 400px;
 }
 
 .form {
-	/* background-color: blueviolet; */
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-	height: 250px;
-	width: 250px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: space-around;
+  width: 250px;
 }
 
 .inputDiv {
-	align-items: center;
-	background-color: #F4F8F7;
-	border-radius: 2px;
-	color: rgb(148, 148, 148);
-	display: flex;
-	justify-content: space-between;
-	height: 40px;
-	width: 200px;
+  align-items: center;
+  background-color: #F4F8F7;
+  border-radius: 2px;
+  color: rgb(148, 148, 148);
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  width: 200px;
 }
 
 .inputDiv p {
-	margin: auto;
+  margin: auto;
 }
 
 .loginInput {
-	background-color: #F4F8F7;
-	border: none;
-	border-radius: 2px;
-	box-sizing: border-box;
-	height: 40px;
-	outline: none;
-	padding: 10px;
-	width: 160px;
+  background-color: #F4F8F7;
+  border: none;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 40px;
+  outline: none;
+  padding: 10px;
+  width: 160px;
 }
 
 .loginInput::placeholder {
   color: rgb(148, 148, 148);
-	font-weight: 500;
+  font-weight: 500;
 }
 
 .logTitle {
-	color: rgb(92, 222, 255);	
-	font-size: 40px;
+  color: rgb(92, 222, 255);	
+  font-size: 40px;
 }
 
 .sbmtBtn {
-	background-color: rgb(92, 222, 255);
-	border: none;
-	border-radius: 50px;
-	color: white;
-	cursor: pointer;
-	font-size: 18px;
-	font-weight: 500;
-	height: 40px;
-	transition: ease 0.2s;
-	width: 200px;
+  background-color: rgb(92, 222, 255);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  height: 40px;
+  transition: ease 0.2s;
+  width: 200px;
 }
 
 .sbmtBtn:hover {
-	background-color: rgb(24, 203, 248);
-	transition: ease 0.2s;
+  background-color: rgb(24, 203, 248);
+  transition: ease 0.2s;
 }
 
 .sbmtBtn:disabled {
-	background-color: rgb(188, 242, 255);
-	cursor: default;
-	transition: ease 0.2s;
+  background-color: rgb(188, 242, 255);
+  cursor: default;
+  transition: ease 0.2s;
 }
-
-/* .sbmtBtn:enabled {
-	background-color: rgb(92, 222, 255);
-} */

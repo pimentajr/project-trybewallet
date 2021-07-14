@@ -1,134 +1,125 @@
 header {
-	align-items: center;
-	background-color: white;
-	display: flex;
-	justify-content: space-between;
-	/* margin: 0 15px 0 30px; */
-	padding: 0 45px 0 60px;
+  align-items: center;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 45px 0 60px;
 }
 
 header h1 {
-	color: rgb(92, 222, 255);
+  color: rgb(92, 222, 255);
 }
 
 .forms {
-	align-items: center;
-	background-color: rgb(92, 222, 255);
-	display: flex;
-	height: 50px;
-	justify-content: space-around;
-	margin-right: 100px;
-	width: 100%;
+  align-items: center;
+  background-color: rgb(92, 222, 255);
+  display: flex;
+  height: 50px;
+  justify-content: space-around;
+  margin-right: 100px;
+  width: 100%;
 }
 
 .forms select, .forms input {
-	background-color: white;
-	border: none;
-	border-radius: 5px;
-	box-sizing: border-box;
-	height: 25px;
-	margin-left: 10px;
-	padding: 0 10px;
-	outline: none;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  height: 25px;
+  margin-left: 10px;
+  padding: 0 10px;
+  outline: none;
 }
 
 .forms select {
   appearance: none;
-	outline: none;
-	/* width: 80px; */
+  outline: none;
 }
 
 .forms select option {
   appearance: none;
-	border: none;
-	outline: none;
-	/* background-color: tomato; */
-	border-radius: 10px;
-	/* width: 80px; */
+  border: none;
+  border-radius: 10px;
+  outline: none;
 }
 
 .forms div {
-	/* /* background-color: tomato; */
-	display: flex;
-	justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .forms button {
-	background-color: rgb(0, 0, 0);
-	border: none;
-	border-radius: 5px;
-	color: white;
-	height: 27px;
-	margin-left: 30px;
-	margin-right: 35px;
-	width: 200px;
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  height: 27px;
+  margin-left: 30px;
+  margin-right: 35px;
+  width: 200px;
 }
 
 .subHeader {
-	display: flex;
-	justify-content: space-around;
-	width: 500px;
+  display: flex;
+  justify-content: space-around;
+  width: 500px;
 }
 
 .firstDiv {
-	/* background-color: tomato; */
-	width: 700px;
+  width: 700px;
 }
 
 .secDiv {
-	display: flex;
-	justify-content: space-between;
-	width: 800px;
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
 }
 
 table thead, table tbody {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	/* border-radius: 10px; */
-	height: 50px;
-	margin-top: 10px;
-	margin: -2px;
+  align-items: center;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-top: 10px;
+  margin: -2px;
 }
 
 table tr {
-	/* background-color: blueviolet; */
-	display: flex;
-	justify-content: space-between;
-	width: 94%;
+  display: flex;
+  justify-content: space-between;
+  width: 94%;
 }
 
 table td, table th {
-	/* background-color: red; */
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-	width: 250px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 250px;
 }
 
 table tbody {
-	align-items: center;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.171);
-	font-size: 18px;
-	font-weight: 700;
-	height: 70px;
-	margin-top: 10px;
-	margin: 10px 15px;
-	width: 80%;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.171);
+  font-size: 18px;
+  font-weight: 700;
+  height: 70px;
+  margin-top: 10px;
+  margin: 10px 15px;
+  width: 80%;
 }
 
 table thead {
-	background-color: rgb(188, 242, 255);
-	width: 82.5%;
+  background-color: rgb(188, 242, 255);
+  width: 82.5%;
 }
 
 table thead tr {
-	background-color: rgb(188, 242, 255);
-	width: 92.4%;
+  background-color: rgb(188, 242, 255);
+  width: 92.4%;
 }
 
 .edit {
-	background-color: rgb(24, 203, 248);
+  background-color: rgb(24, 203, 248);
 }
