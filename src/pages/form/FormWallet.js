@@ -1,67 +1,91 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addCurrencies } from '../../actions/index';
+import BtnFormWallet from './BtnFormWallet';
 
 class FormWallet extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      moedas: {},
+      currency: 'USD',
+      description: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      value: 0,
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.requisitionMoedasApi();
+    const { dispatchAddCurrencies } = this.props;
+    dispatchAddCurrencies();
   }
 
-  async requisitionMoedasApi() {
-    const Api = await fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json());
-    delete Api.USDT;
-    this.setState({ moedas: Api });
-    this.listMoedas();
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
+    });
   }
 
-  listMoedas() {
-    const { moedas } = this.state;
-    console.log(Object.keys(moedas));
-  }
-
-  render() {
-    const { moedas } = this.state;
+  firstHtml() {
+    const { value, description } = this.state;
     return (
-      <form>
-        <label htmlFor="Valor">
+      <>
+        <label htmlFor="value">
           Valor
           <input
             type="text"
-            id="Valor"
+            name="value"
+            id="value"
+            onChange={ this.handleChange }
+            value={ value }
           />
         </label>
-        <label htmlFor="Descrição">
+        <label htmlFor="description">
           Descrição
           <input
             type="text"
-            id="Descrição"
+            name="description"
+            id="description"
+            onChange={ this.handleChange }
+            value={ description }
           />
         </label>
-        <label htmlFor="Moeda">
+      </>
+    );
+  }
+
+  render() {
+    const { coins } = this.props;
+    const { currency, method, tag } = this.state;
+    return (
+      <form>
+        {this.firstHtml()}
+        <label htmlFor="currency">
           Moeda
-          <select id="Moeda">
-            {Object.keys(moedas).map((coin, index) => (
+          <select
+            name="currency"
+            onChange={ this.handleChange }
+            value={ currency }
+            id="currency"
+          >
+            {coins.map((coin, index) => (
               <option key={ index } value={ coin }>{coin}</option>
             ))}
           </select>
         </label>
-        <label htmlFor="Método de pagamento">
+        <label htmlFor="method" value={ method }>
           Método de pagamento
-          <select id="Método de pagamento">
+          <select name="method" id="method" onChange={ this.handleChange }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="Tag">
+        <label htmlFor="tag" value={ tag }>
           Tag
-          <select id="Tag">
+          <select name="tag" id="tag" onChange={ this.handleChange }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -69,10 +93,23 @@ class FormWallet extends Component {
             <option>Saúde</option>
           </select>
         </label>
+        <BtnFormWallet state={ this.state } />
       </form>
-
     );
   }
 }
 
-export default FormWallet;
+const mapStateToProps = (state) => ({
+  coins: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAddCurrencies: () => dispatch(addCurrencies()),
+});
+
+FormWallet.propTypes = {
+  dispatchAddCurrencies: PropTypes.func.isRequired,
+  coins: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
