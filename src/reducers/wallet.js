@@ -9,7 +9,7 @@ const wallet = {
 function walletReducer(state = wallet, action) {
   switch (action.type) {
   case ADD_EXPENSE:
-    return { ...state, expenses: [...state.expenses, action.values] };
+    return { ...state, expenses: [...state.expenses, action.expense] };
   default:
     return state;
   }

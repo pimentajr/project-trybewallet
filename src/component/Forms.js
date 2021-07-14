@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpense } from '../actions';
+import { fetchPrices } from '../actions';
 
 class Forms extends React.Component {
   constructor() {
@@ -122,11 +122,20 @@ class Forms extends React.Component {
   }
 
   addCurrency() {
-    const { dispatchWallet } = this.props;
+    const { dispatchWallet, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const id = expenses.length;
     return (
       <button
         type="button"
-        onClick={ () => dispatchWallet(this.state) }
+        onClick={ () => dispatchWallet({
+          value,
+          description,
+          currency,
+          method,
+          tag,
+          id,
+        }) }
       >
         Adicionar despesa
       </button>
@@ -148,11 +157,15 @@ class Forms extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchWallet: (expense) => dispatch(addExpense(expense)),
+  dispatchWallet: (expense) => dispatch(fetchPrices(expense)),
+});
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
 });
 
 Forms.propTypes = {
   dispatchWallet: PropTypes.func,
 }.isRequired;
 
-export default connect(null, mapDispatchToProps)(Forms);
+export default connect(mapStateToProps, mapDispatchToProps)(Forms);
