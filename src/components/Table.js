@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions';
+import { removeExpense, editingExpense } from '../actions';
 
 class Table extends React.Component {
   // Esse botão acessa dispara uma action que delata o item do id conrrespondente
@@ -83,7 +83,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (id) => dispatch(removeExpense(id)),
-  edit: (id) => dispatch(removeExpense(id)),
+  edit: (id) => dispatch(editingExpense(id)),
 });
 
 Table.propTypes = {

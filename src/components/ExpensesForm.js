@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrency, addExpense } from '../actions';
 
+const INITIAL_STATE = {
+  id: '',
+  description: '',
+  value: 0,
+  currency: '',
+  method: '',
+  tag: '',
+};
+
 class ExpensesForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      description: '',
-      value: 0,
-      currency: '',
-      method: '',
-      tag: '',
-    };
+    this.state = INITIAL_STATE;
   }
 
   componentDidMount() {
@@ -20,12 +23,8 @@ class ExpensesForm extends React.Component {
     APICurrency();
   }
 
-  currenciesOptions() {
-    const { currencies } = this.props;
-    return Object.keys(currencies).filter((curr) => curr !== 'USDT');
-  }
-
   description() {
+    const { editExpense } = this.props;
     const { description } = this.state;
     return (
       <label htmlFor="description">
@@ -34,16 +33,15 @@ class ExpensesForm extends React.Component {
           id="description"
           name="description"
           type="text"
-          value={ description }
+          value={ editExpense.isEditind ? editExpense.description : description }
           onChange={ ({ target }) => this.handleChange(target) }
-
         />
       </label>
     );
   }
 
   expenseValue() {
-    const { value } = this.state;
+    const { editExpense: { value } } = this.props;
     return (
       <label htmlFor="value">
         Valor:
@@ -52,15 +50,20 @@ class ExpensesForm extends React.Component {
           name="value"
           type="number"
           placeholder="0"
-          value={ value }
+          // value={ value }
           onChange={ ({ target }) => this.handleChange(target) }
         />
       </label>
     );
   }
 
+  currenciesOptions() {
+    const { currencies } = this.props;
+    return Object.keys(currencies).filter((curr) => curr !== 'USDT');
+  }
+
   currency() {
-    const { currency } = this.state;
+    const { editExpense: { currency } } = this.props;
     return (
       <label htmlFor="currency">
         Moeda:
@@ -68,10 +71,23 @@ class ExpensesForm extends React.Component {
           id="currency"
           name="currency"
           onChange={ ({ target }) => this.handleChange(target) }
-          select={ currency }
+          // select={ currency }
         >
+          <option
+            selected={ currency === '' }
+            value=""
+            key="initial"
+          >
+            Selecione uma moeda
+          </option>
           {this.currenciesOptions().map((moeda) => (
-            <option key={ moeda } value={ moeda }>{moeda}</option>
+            <option
+              selected={ currency === moeda }
+              key={ moeda }
+              value={ moeda }
+            >
+              {moeda}
+            </option>
           ))}
         </select>
       </label>
@@ -79,7 +95,7 @@ class ExpensesForm extends React.Component {
   }
 
   paymentMethod() {
-    const { method } = this.state;
+    const { editExpense: { method } } = this.props;
     return (
       <label htmlFor="method">
         Método de pagamento:
@@ -89,17 +105,25 @@ class ExpensesForm extends React.Component {
           onChange={ ({ target }) => this.handleChange(target) }
           select={ method }
         >
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
+          <option selected={ method === '' } value="">
+            Forma de pagamento
+          </option>
+          <option selected={ method === 'Dinheiro' } value="Dinheiro">
+            Dinheiro
+          </option>
+          <option selected={ method === 'Cartão de crédito' } value="Cartão de crédito">
+            Cartão de crédito
+          </option>
+          <option selected={ method === 'Cartão de débito' } value="Cartão de débito">
+            Cartão de débito
+          </option>
         </select>
       </label>
     );
   }
 
   expenseTag() {
-    const { tag } = this.state;
-
+    const { editExpense: { tag } } = this.props;
     return (
       <label htmlFor="tag">
         tag:
@@ -107,13 +131,19 @@ class ExpensesForm extends React.Component {
           id="tag"
           name="tag"
           onChange={ ({ target }) => this.handleChange(target) }
-          select={ tag }
+          selected={ tag }
         >
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saúde">Saúde</option>
+          <option selected={ tag === '' } value="">Tipo de despesa</option>
+          <option selected={ tag === 'Lazer' } value="Lazer">Lazer</option>
+          <option selected={ tag === 'Trabalho' } value="Trabalho">Trabalho</option>
+          <option selected={ tag === 'Transporte' } value="Transporte">Transporte</option>
+          <option selected={ tag === 'Saúde' } value="Saúde">Saúde</option>
+          <option
+            selected={ tag === 'Alimentação' }
+            value="Alimentação"
+          >
+            Alimentação
+          </option>
         </select>
       </label>
     );
@@ -123,7 +153,7 @@ class ExpensesForm extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleButton() {
+  submitButton() {
     const { description, value, currency, method, tag } = this.state;
     const { currencies, add, walletExpenses } = this.props;
     const expenses = {
@@ -138,7 +168,48 @@ class ExpensesForm extends React.Component {
     add(expenses);
   }
 
+  editButton() {
+    const { add, editExpense: {
+      id, description, value, currency, method, tag, exchangeRates,
+    } } = this.props;
+    const expenses = {
+      id,
+      description,
+      value,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+      isEditind: false,
+
+    };
+    add(expenses);
+  }
+
+  buttonCreator(isEditind) {
+    return (
+      !isEditind
+        ? (
+          <input
+            type="button"
+            name="add-expense"
+            value="Adicionar despesa"
+            onClick={ () => this.submitButton() }
+          />
+        )
+        : (
+          <input
+            type="button"
+            name=""
+            value="Editar gasto"
+            onClick={ () => this.editButton() }
+          />
+        )
+    );
+  }
+
   render() {
+    const { editExpense: { isEditind } } = this.props;
     return (
       <form className="expenses-form">
         {this.expenseTag()}
@@ -146,11 +217,7 @@ class ExpensesForm extends React.Component {
         {this.expenseValue()}
         {this.currency()}
         {this.paymentMethod()}
-        <input
-          type="button"
-          value="Adicionar despesa"
-          onClick={ () => this.handleButton() }
-        />
+        {this.buttonCreator(isEditind)}
       </form>
     );
   }
@@ -159,6 +226,7 @@ class ExpensesForm extends React.Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   walletExpenses: state.wallet.expenses,
+  editExpense: state.wallet.editExpense,
 });
 
 const mapDispatchToProps = (dispatch) => ({
