@@ -48,7 +48,7 @@ class Login extends React.Component {
           data-testid="email-input"
           placeholder="E-mail"
           value={ email }
-          type="email"
+          type="text"
           onChange={ this.handleChange }
         />
 
@@ -78,7 +78,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispSendEmail: (email) => dispatch(salvaEmail(email)),
+  dispSendEmail: (emailInput) => dispatch(salvaEmail(emailInput)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
