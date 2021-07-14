@@ -52,8 +52,7 @@ class SpendForm extends React.Component {
     const { fetchCurrencie } = this.props;
     await fetchCurrencie();
     const { currencies } = this.props;
-    const acronyms = Object.keys(currencies[currencies.length - 1]);
-    const acronymsCurrency = acronyms.filter((acron) => acron !== 'USDT');
+    const acronymsCurrency = currencies.filter((acron) => acron !== 'USDT');
     this.setState({
       acronymsCurrency,
     });
@@ -70,11 +69,11 @@ class SpendForm extends React.Component {
     const { addNewExpense, fetchCurrencie } = this.props;
     const { expenses } = this.state;
     await fetchCurrencie();
-    const { currencies } = this.props;
+    const { currencie } = this.props;
     const newExpense = {
       id: (expenses.length),
       ...expense,
-      exchangeRates: currencies[currencies.length - 1],
+      exchangeRates: currencie,
     };
     addNewExpense(newExpense);
     this.clearFormsAndReloadExpenses();
@@ -220,7 +219,8 @@ SpendForm.propTypes = {
   addNewExpense: PropTypes.func.isRequired,
   updateNewExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencie: PropTypes.objectOf(PropTypes.string).isRequired,
   fetchCurrencie: PropTypes.func.isRequired,
   editExp: PropTypes.objectOf.isRequired,
 };

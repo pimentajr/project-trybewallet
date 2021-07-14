@@ -13,7 +13,7 @@ export const addExpense = (expense) => ({ type: ADD_EXPENSE, expense });
 export const updateExpense = (expense) => ({ type: UPDATE_EXPENSE, expense });
 export const editExpense = (id) => ({ type: EDIT_EXPENSE, id });
 export const deleteExpense = (id) => ({ type: DELETE_EXPENSE, id });
-export const setCurrencies = (currencies) => ({ type: SUCESS_REQUEST, currencies });
+export const setCurrencies = (currencie) => ({ type: SUCESS_REQUEST, currencie });
 export const setError = (error) => ({ type: FAILED_REQUEST, error });
 
 // Melhoria: Colocar um caso de erro, caso de espera(loading), etc...

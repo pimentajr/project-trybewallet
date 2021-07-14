@@ -10,6 +10,7 @@ import {
 
 const INITIAL_STATE = {
   currencies: [],
+  currencie: {},
   expenses: [],
   error: '',
   spends: 0.00,
@@ -28,7 +29,7 @@ function getExpense(id, expenses) {
   return expenses.find((expense) => expense.id === id);
 }
 
-function wallet(state = INITIAL_STATE, { type, expense, currencies, error, id }) {
+function wallet(state = INITIAL_STATE, { type, expense, currencie, error, id }) {
   switch (type) {
   case ADD_EXPENSE: {
     const expenses = [...state.expenses, expense];
@@ -44,7 +45,7 @@ function wallet(state = INITIAL_STATE, { type, expense, currencies, error, id })
     const expenses = state.expenses.filter((exp) => exp.id !== id);
     return { ...state, expenses, spends: getSpends(expenses), editExp: {} }; }
   case SUCESS_REQUEST:
-    return { ...state, currencies: [...state.currencies, currencies] };
+    return { ...state, currencie, currencies: Object.keys(currencie) };
   case FAILED_REQUEST:
     return { ...state, error };
   default:
