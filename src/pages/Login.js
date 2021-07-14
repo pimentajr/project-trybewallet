@@ -32,7 +32,6 @@ class Login extends React.Component {
   submitInputEmail2State() {
     const { submitEmail, history } = this.props;
     const { email } = this.state;
-
     submitEmail(email);
     history.push('/carteira');
   }
