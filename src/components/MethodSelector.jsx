@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class TagSelector extends Component {
+export default class MethodSelector extends Component {
   constructor() {
     super();
     this.handleStateChange = this.handleStateChange.bind(this);
@@ -15,31 +15,29 @@ export default class TagSelector extends Component {
   render() {
     const { value } = this.props;
     return (
-      <label htmlFor="select-tag">
-        Tag
+      <label htmlFor="payment-method">
+        Método de pagamento
         <select
           value={ value }
+          data-testid="method-input"
           onChange={ this.handleStateChange }
-          data-testid="tag-input"
-          name="tag"
-          id="select-tag"
+          name="method"
+          id="payment-method"
         >
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saúde">Saúde</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
   }
 }
 
-TagSelector.propTypes = ({
+MethodSelector.propTypes = ({
   change: PropTypes.func.isRequired,
   value: PropTypes.string,
 });
 
-TagSelector.defaultProps = ({
+MethodSelector.defaultProps = ({
   value: '',
 });

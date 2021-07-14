@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ExpensesForm from '../components/ExpensesForm';
 import ExpensesTable from '../components/ExpensesTable';
+import EditExpenseForm from '../components/EditExpenseForm';
 import fetchApi from '../services';
 import { saveCurrency } from '../actions';
 
@@ -43,13 +44,13 @@ class Wallet extends React.Component {
   calculateTotal() {
     const { expenses } = this.props;
     const askValues = this.calculateConversion();
-    const totalNotConverted = expenses.reduce((acc, curr, index) => (
+    const totalConverted = expenses.reduce((acc, curr, index) => (
       acc + Number(curr.value) * askValues[index]), 0);
-    return (Math.round(totalNotConverted * 100) / 100).toFixed(2);
+    return (Math.round(totalConverted * 100) / 100).toFixed(2);
   }
 
   render() {
-    const { email } = this.props;
+    const { email, edit } = this.props;
     const { currency } = this.state;
     return (
       <div>
@@ -61,7 +62,8 @@ class Wallet extends React.Component {
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <main>
-          {currency.length > 0 && <ExpensesForm currencies={ currency } />}
+          {edit ? <EditExpenseForm currencies={ currency } />
+            : currency.length > 0 && <ExpensesForm currencies={ currency } />}
           <ExpensesTable />
         </main>
       </div>
@@ -72,6 +74,7 @@ class Wallet extends React.Component {
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   expenses: wallet.expenses,
+  edit: wallet.editExpense,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -82,10 +85,12 @@ Wallet.propTypes = ({
   email: PropTypes.string.isRequired,
   saveObj: PropTypes.func,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  edit: PropTypes.bool,
 });
 
 Wallet.defaultProps = ({
   saveObj: () => {},
+  edit: false,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

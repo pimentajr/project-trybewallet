@@ -1,9 +1,10 @@
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const AUTH_TO_LOGIN = 'AUTH_TO_LOGIN';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
-export const CALCULATE_EXPENSES = 'CALCULATE_EXPENSES';
 export const SAVE_CURRENCY = 'SAVE_CURRENCY';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const EDIT_EXPENSE_SUCCESS = 'EDIT_EXPENSE_SUCCESS';
 
 export const saveEmail = (payload) => ({
   type: SAVE_EMAIL,
@@ -25,12 +26,17 @@ export const deleteExpense = (payload) => ({
   payload,
 });
 
-export const calculateExpenses = (payload) => ({
-  type: CALCULATE_EXPENSES,
+export const saveCurrency = (payload) => ({
+  type: SAVE_CURRENCY,
   payload,
 });
 
-export const saveCurrency = (payload) => ({
-  type: SAVE_CURRENCY,
+export const editExpense = (payload) => ({
+  type: EDIT_EXPENSE,
+  payload,
+});
+
+export const editExpenseSuccess = (payload) => ({
+  type: EDIT_EXPENSE_SUCCESS,
   payload,
 });

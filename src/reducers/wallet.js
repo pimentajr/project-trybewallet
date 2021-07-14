@@ -1,14 +1,16 @@
 import {
   ADD_EXPENSE,
-  CALCULATE_EXPENSES,
   SAVE_CURRENCY,
   DELETE_EXPENSE,
+  EDIT_EXPENSE,
+  EDIT_EXPENSE_SUCCESS,
 } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  totalCalculed: 0,
+  editExpense: false,
+  expenseToEdit: [],
 };
 
 const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -27,11 +29,23 @@ const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
       totalCalculed: Number(state.totalCalculed) - Number(payload.value),
     };
   }
-  case CALCULATE_EXPENSES:
+  case EDIT_EXPENSE: {
+    const expense = state.expenses.find((el) => el.id === payload);
     return {
       ...state,
-      totalCalculed: Number(state.totalCalculed) + Number(payload),
+      editExpense: true,
+      expenseToEdit: expense,
     };
+  }
+  case EDIT_EXPENSE_SUCCESS: {
+    const filteredExpenses = state.expenses.filter((el) => el.id !== payload.id);
+    return {
+      ...state,
+      expenses: [...filteredExpenses, payload],
+      editExpense: false,
+      expenseToEdit: [],
+    };
+  }
   case SAVE_CURRENCY:
     return {
       ...state,
