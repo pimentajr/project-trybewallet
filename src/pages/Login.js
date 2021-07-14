@@ -1,9 +1,88 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      disabled: true,
+    };
+
+    this.handleState = this.handleState.bind(this);
+  }
+
+  handleState({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+    this.showBtn();
+  }
+
+  showBtn() {
+    // Como usar o metodo .test foi ensinado por Nath Zebral, enquanto ainda pertencia a turma 10A
+    const { email, password } = this.state;
+    const regexEmail = /\w+@\w+\.\w+/gi.test(email);
+    const regexPassword = /(.{5,})/gi.test(password);
+    if (regexEmail && regexPassword) {
+      this.setState({
+        disabled: false,
+      });
+    } else {
+      this.setState({
+        disabled: true,
+      });
+    }
+  }
+
   render() {
-    return <div>Login</div>;
+    const { email, password, disabled } = this.state;
+    const { dispatchLogin } = this.props;
+    return (
+      <div>
+        <form>
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ this.handleState }
+            placeholder="e-mail"
+            data-testid="email-input"
+          />
+          <input
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ this.handleState }
+            placeholder="password"
+            data-testid="password-input"
+          />
+          <Link to="/carteira">
+            <button
+              type="button"
+              onClick={ () => dispatchLogin(email) }
+              disabled={ disabled }
+            >
+              Entrar
+            </button>
+          </Link>
+        </form>
+      </div>
+    );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchLogin: (email) => dispatch(loginAction(email)),
+});
+
+Login.propTypes = {
+  dispatchLogin: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
