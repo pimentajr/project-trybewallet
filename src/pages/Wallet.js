@@ -26,7 +26,6 @@ import './Wallet.css';
 // };
 
 class Wallet extends React.Component {
-
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();

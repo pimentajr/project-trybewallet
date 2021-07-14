@@ -18,7 +18,7 @@ const walletReducer = (state = DEFAULT_STATE, action) => {
   case FETCH_CURRENCIES_SUCCEEDED:
     return {
       ...state,
-      currencies: Object.keys(action.currencies).filter((coin) => coin !== 'USDT'),
+      currencies: action.currencies,
     };
   case FETCH_CURRENCIES_FAILED:
     return {

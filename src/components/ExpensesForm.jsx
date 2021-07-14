@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import store from '../store';
+import PropTypes from 'prop-types';
+import { fetchAPI, walletAddExpense } from '../actions';
 
 const DEFAULT_STATE = {
   id: 0,
@@ -9,6 +10,7 @@ const DEFAULT_STATE = {
   coin: 'USD',
   method: 'Dinheiro',
   tag: 'Alimentação',
+  exchangeRates: {},
 };
 
 class ExpensesForm extends Component {
@@ -25,6 +27,10 @@ class ExpensesForm extends Component {
   }
 
   addExpense() {
+    const { fetchCurrencies, addExpense, wallet } = this.props;
+    const { currencies } = wallet;
+    fetchCurrencies();
+    addExpense({ ...this.state, exchangeRates: currencies });
     this.setState(() => DEFAULT_STATE);
   }
 
@@ -32,7 +38,7 @@ class ExpensesForm extends Component {
     const { wallet } = this.props;
     const { currencies } = wallet;
     const { value, description, coin, method, tag } = this.state;
-    const filteredCoins = currencies
+    const filteredCoins = Object.keys(currencies).filter((coins) => coins !== 'USDT')
       .map((coins, key) => <option key={ key } value={ coins }>{ coins }</option>);
 
     return (
@@ -52,7 +58,7 @@ class ExpensesForm extends Component {
         </label>
         <label htmlFor="coin">
           <strong>Moeda</strong>
-          <select id="coin" value={ coin } onClick={ this.handleChange }>
+          <select id="coin" value={ coin } onChange={ this.handleChange }>
             { filteredCoins }
           </select>
         </label>
@@ -84,6 +90,21 @@ class ExpensesForm extends Component {
   }
 }
 
+ExpensesForm.propTypes = {
+  wallet: PropTypes.shape(PropTypes.object).isRequired,
+  currencies: PropTypes.shape(PropTypes.array).isRequired,
+};
+
 const mapStateToProps = (state) => state;
 
-export default connect(mapStateToProps)(ExpensesForm);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchAPI()),
+  addExpense: (expense) => dispatch(walletAddExpense(expense)),
+});
+
+ExpensesForm.propTypes = {
+  addExpense: PropTypes.func.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

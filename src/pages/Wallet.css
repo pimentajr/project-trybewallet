@@ -74,12 +74,20 @@
 .wallet__table {
   display: flex;
   flex-direction: column;
-  padding: 6px 16px;
+  padding: 10px;
 }
 
-.wallet__table tr {
+.wallet__table thead tr,
+.wallet__table tbody tr {
   display: flex;
   justify-content: space-around;
+  padding: 0 0 6px 0;
+}
+
+.wallet__table thead th,
+.wallet__table tbody td {
+  text-align: center;
+  /* flex: 1; */
 }
 
 /* .wallet__table tr th {
