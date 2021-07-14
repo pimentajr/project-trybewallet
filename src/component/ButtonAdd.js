@@ -12,6 +12,7 @@ const ButtonAdd = () => {
     const { id, setId, total } = providerValues;
     setId(id + 1);
     const rate = wallet.currencies[walletExpenses.currency].ask;
+    providerValues.setRate(rate);
     providerValues.setTotal(total + Number(rate * walletExpenses.value));
     dispatch(fetchRates(walletExpenses));
     event.preventDefault();

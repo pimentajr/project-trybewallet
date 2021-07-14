@@ -14,8 +14,6 @@ export const GlobalStorage = ({ children }) => {
   const [rate, setRate] = React.useState('');
   const [total, setTotal] = React.useState(0);
 
-  console.log('Rates', exchangeRates);
-
   const walletExpenses = {
     value,
     description,

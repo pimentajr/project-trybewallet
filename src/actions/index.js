@@ -2,15 +2,7 @@ export const LOGIN = 'LOGIN';
 export const FETCH_STARTED = 'FETCH_STARTED';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_ERROR = 'FETCH_ERROR';
-export const ADD_ID_EXPENSE = 'ADD_ID_EXPENSE';
-export const ADD_VALUE_EXPENSE = 'ADD_VALUE_EXPENSE';
-export const ADD_DESCRIPTION_EXPENSE = 'ADD_DESCRIPTION_EXPENSE';
-export const ADD_CURRENCY_EXPENSE = 'ADD_CURRENCY_EXPENSE';
-export const ADD_METHOD_EXPENSE = 'ADD_METHOD_EXPENSE';
-export const ADD_TAG_EXPENSE = 'ADD_TAG_EXPENSE';
-export const ADD_EXCHANGE_EXPENSE = 'ADD_EXCHANGE_EXPENSE';
 export const ADD_TO_EXPENSES = 'ADD_TO_EXPENSES';
-export const ADD_OTHER_EXPENSES = 'ADD_OTHER_EXPENSES';
 
 export const login = (payload) => ({
   type: LOGIN,
