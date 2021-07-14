@@ -1,6 +1,5 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
-  currencies: 'BRL',
+  currencies: [],
   expenses: [],
 };
 
@@ -11,6 +10,11 @@ function userWallet(state = INITIAL_STATE, action) {
       currencies: action.currencies,
       expenses: action.expenses,
     });
+  case 'GET_CURRENCIES':
+    return {
+      ...state,
+      currencies: action.payload,
+    };
   case 'DEL_SPENT':
     return {
       ...state,
