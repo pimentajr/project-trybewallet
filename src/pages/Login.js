@@ -7,18 +7,43 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      disable: true,
-      redirect: false,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleButton = this.handleButton.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { value, name } = target;
+    this.setState({ [name]: value });
+  }
+
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  handleButton() {
+    const { email, password } = this.state;
+    const validEmail = /\S+@\S+\.\S+/;
+    const pwLength = 6;
+    console.log(password.length >= pwLength);
+    console.log(validEmail.test(email));
+    console.log(email);
+    console.log(password);
+    if ((password.length >= pwLength) && (validEmail.test(email))) {
+      return false;
+    }
+    return true;
   }
 
   render() {
-    const { disable } = this.state;
     return (
       <div className="login-container">
         <h3>Login</h3>
         <label htmlFor="email-login">
-          <input data-testid="email-input" type="text" name="email" placeholder="Email" />
+          <input
+            data-testid="email-input"
+            type="text"
+            name="email"
+            placeholder="Email"
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="passwaord-login">
           <input
@@ -26,9 +51,10 @@ class Login extends React.Component {
             type="password"
             name="password"
             placeholder="Senha"
+            onChange={ this.handleChange }
           />
         </label>
-        <button type="button" disabled={ disable }>Entrar</button>
+        <button type="button" disabled={ this.handleButton() }>Entrar</button>
       </div>
     );
   }
