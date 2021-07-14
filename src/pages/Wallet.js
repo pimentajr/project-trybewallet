@@ -6,6 +6,8 @@ import { fetchCurrenciesApi } from '../actions';
 import trybeLogo from '../image/trybeP.png';
 import '../App.css';
 
+// requisito 8 feito com a ajuda do Alberto Cândido
+
 class Wallet extends React.Component {
   componentDidMount() {
     const { fetchThunk } = this.props;
