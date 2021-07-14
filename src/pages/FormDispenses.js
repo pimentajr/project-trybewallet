@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import requestAPI from '../services/requestAPI';
-import { fetchAPI } from '../actions';
+import { fetchAPI, addExpense } from '../actions';
 
 class FormDispenses extends Component {
   constructor(props) {
     super(props);
     this.valuesAPI = this.valuesAPI.bind(this);
+    this.addNewExpenses = this.addNewExpenses.bind(this);
+    this.state = {
+      currency: 'USD',
+      description: '',
+      value: 0,
+      tag: 'Alimentação',
+      method: 'Dinheiro',
+    };
   }
 
   componentDidMount() {
@@ -24,6 +32,18 @@ class FormDispenses extends Component {
         <option key={ currencie } value={ currencie }>{currencie}</option>
       ))
     );
+  }
+
+  addNewExpenses() {
+    const { saveExpenses } = this.props;
+    saveExpenses(this.state);
+    this.setState({
+      currency: 'USD',
+      description: '',
+      value: 0,
+      tag: 'Alimentação',
+      method: 'Dinheiro',
+    });
   }
 
   render() {
@@ -62,6 +82,12 @@ class FormDispenses extends Component {
               <option value="transport-healt">Transporte e saúde</option>
             </select>
           </label>
+          <button
+            type="button"
+            onClick={ () => this.addNewExpenses() }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -74,11 +100,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadingValues: () => dispatch(fetchAPI()),
+  saveExpenses: (expenses) => dispatch(addExpense(expenses)),
 });
 
 FormDispenses.propTypes = {
   currencies: PropTypes.arrayOf,
   loadingValues: PropTypes.func,
+  expenses: PropTypes.arrayOf,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDispenses);
