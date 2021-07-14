@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import salvaEmail from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -37,6 +39,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, disabled } = this.state;
+    const { dispSendEmail } = this.props;
     return (
       <div>
         Login
@@ -63,7 +66,7 @@ class Login extends React.Component {
             <button
               type="button"
               disabled={ disabled }
-            // onClick={}
+              onClick={ () => dispSendEmail(email) }
             >
               Entrar
             </button>
@@ -74,4 +77,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispSendEmail: (email) => dispatch(salvaEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

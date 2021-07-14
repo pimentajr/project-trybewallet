@@ -1,9 +1,9 @@
-// Coloque aqui suas actions
+// Coloque aqui sus actions
 // Criando action creator provisório, apenas estrutura
 
-export default function batatas(a, b) {
+export default function salvaEmail(state) {
   return {
-    type: 'Tubérculos',
-    payload: [a, b],
+    type: 'ADD_EMAIL',
+    email: state,
   };
 }

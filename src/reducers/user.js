@@ -1,18 +1,24 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-// const INITIAL_STATE = {
-//   user: {
-//     email: '',
-//   },
-//   wallet: {
-//     currencies: [],
-//     expenses: [],
-//   },
-// };
+const INITIAL_STATE = {
+  user: {
+    email: '',
+  },
+  //   wallet: {
+  //     currencies: [],
+  //     expenses: [],
+  //   },
+};
 
-// export default function rootReducer(state = INITIAL_STATE, action) {
-//   // return {
-//   // switch(action.type) {
-
-//   // }
-//   // }
-// }
+export default function user(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case 'ADD_EMAIL':
+    return {
+      ...state,
+      email: action.email,
+    };
+  default:
+    return {
+      state,
+    };
+  }
+}
