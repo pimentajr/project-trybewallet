@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchMoedas } from '../actions';
 
 class WalletForm extends React.Component {
+  componentDidMount() {
+    const { dispatchFetchMoedas } = this.props;
+    dispatchFetchMoedas();
+  }
+
   render() {
+    const { currencies } = this.props;
+
     return (
       <form>
         <label htmlFor="valor">
@@ -15,7 +24,7 @@ class WalletForm extends React.Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            <option> </option>
+            { currencies.map((sigla, index) => <option key={ index } value= { sigla }> {sigla}</option>)}
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -41,4 +50,12 @@ class WalletForm extends React.Component {
   }
 }
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchFetchMoedas: (state) => dispatch(fetchMoedas(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
