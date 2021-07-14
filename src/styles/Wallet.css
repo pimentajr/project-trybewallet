@@ -20,15 +20,15 @@ header h1 {
   width: 100%;
 }
 
-.forms select, .forms input {
+.forms select , .forms input {
   background-color: white;
   border: none;
   border-radius: 5px;
   box-sizing: border-box;
   height: 25px;
   margin-left: 10px;
-  padding: 0 10px;
   outline: none;
+  padding: 0 10px;
 }
 
 .forms select {
@@ -49,7 +49,7 @@ header h1 {
 }
 
 .forms button {
-  background-color: rgb(0, 0, 0);
+  background-color: black;
   border: none;
   border-radius: 5px;
   color: white;
@@ -75,7 +75,7 @@ header h1 {
   width: 800px;
 }
 
-table thead, table tbody {
+table thead , table tbody {
   align-items: center;
   display: flex;
   height: 50px;
@@ -90,7 +90,7 @@ table tr {
   width: 94%;
 }
 
-table td, table th {
+table td , table th {
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -105,7 +105,6 @@ table tbody {
   font-size: 18px;
   font-weight: 700;
   height: 70px;
-  margin-top: 10px;
   margin: 10px 15px;
   width: 80%;
 }
