@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
 
 class ExpenseTable extends Component {
   constructor() {
@@ -9,8 +10,8 @@ class ExpenseTable extends Component {
   }
 
   deleteExpense(id) {
-    const { deleteExpense } = this.props;
-    deleteExpense(id);
+    const { actionDeleteExpense } = this.props;
+    actionDeleteExpense(id);
   }
 
   renderThead() {
@@ -82,7 +83,7 @@ class ExpenseTable extends Component {
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.func.isRequired,
-  deleteExpense: PropTypes.func.isRequired,
+  actionDeleteExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -90,7 +91,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (id) => dispatch(deleteExpense(id)),
+  actionDeleteExpense: (id) => dispatch(deleteExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
