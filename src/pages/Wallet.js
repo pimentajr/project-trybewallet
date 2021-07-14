@@ -2,13 +2,12 @@ import React from 'react';
 import '../styles/Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiCurrencies, getExpense } from '../actions';
+import { fetchApiCurrencies, getExpense2 } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // id: 0,
       value: '',
       description: '',
       currency: 'USD',
@@ -17,6 +16,8 @@ class Wallet extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.buttonFunction = this.buttonFunction.bind(this);
+    this.sumExpenses = this.sumExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -32,19 +33,20 @@ class Wallet extends React.Component {
   }
 
   buttonFunction() {
-    // const { id } = this.state; // currencies, storeExpenses, addNewExpense
-    // const { value, description, currency, method, tag } = this.state;
-    // const expenses = [{
-    //   id: storeExpenses.length,
-    //   value,
-    //   description,
-    //   currency,
-    //   method,
-    //   tag,
-    //   exchangeRates: {},
-    // }];
-    // this.setState({ id: id + 1 });
-    // addNewExpense();
+    const { storeExpenses, addNewExpense } = this.props;
+    const id = storeExpenses.length;
+    const myState = { ...this.state, id };
+    addNewExpense(myState);
+  }
+
+  sumExpenses() {
+    const { storeExpenses } = this.props;
+    const sum = storeExpenses.reduce((acc, cur) => {
+      const { value, currency, exchangeRates } = cur;
+      const { ask } = Object.values(exchangeRates).find(({ code }) => code === currency);
+      return acc + (value * ask);
+    }, 0);
+    return sum;
   }
 
   renderValueInput() {
@@ -143,7 +145,7 @@ class Wallet extends React.Component {
       <div className="page">
         <header className="header">
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ `Despesa Total: $ ${0} ` }</p>
+          <p data-testid="total-field">{`Despesa total: ${this.sumExpenses()}`}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
 
@@ -160,7 +162,7 @@ class Wallet extends React.Component {
 
           <button
             type="button"
-            onClick={ this.buttonFunction() }
+            onClick={ () => this.buttonFunction() }
           >
             Adicionar despesa
           </button>
@@ -183,7 +185,7 @@ const mapStateToProps = (state) => ({
 // Para que dessa prop o dispatch possa ser acionado.
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchApiCurrencies()),
-  addNewExpense: () => dispatch(getExpense()),
+  addNewExpense: (expense) => dispatch(getExpense2(expense)),
 });
 
 Wallet.propTypes = ({
@@ -193,5 +195,3 @@ Wallet.propTypes = ({
 }).isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-
-// TODO Dentro do botao colocar um dispatch para armazenar.

@@ -25,8 +25,21 @@ export function fetchApiCurrencies() {
         (error) => dispatch(getCurrenciesError(error))));
 }
 
-// Action responsável por jogar uma nova expense para a store.
-export const getExpense = (payload) => (
+export const getAllOfAPI = async () => {
+  const callAllAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const callAPIJson = await callAllAPI.json();
+  delete callAPIJson.USDT;
+  return callAPIJson;
+};
+
+// Actions responsáveis por jogar uma nova expense para a store.
+export const getExpense1 = (payload) => (
   { type: GET_EXPENSE,
     payload }
 );
+
+export const getExpense2 = (expense) => async (dispatch) => {
+  const exchangeRates = await getAllOfAPI();
+  const sendExpense = { ...expense, exchangeRates };
+  dispatch(getExpense1(sendExpense));
+};
