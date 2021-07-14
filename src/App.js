@@ -1,16 +1,12 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Login from './pages/Login';
 
 function App() {
   return (
-    <div>
-      <label htmlFor="email-input">
-        <input type="email" data-testid="email-input" />
-      </label>
-      <label htmlFor="password-input">
-        <input type="password" data-testid="password-input" />
-      </label>
-      <button type="button">Entrar</button>
-    </div>
+    <Switch>
+      <Route path="/" component={ Login } />
+    </Switch>
   );
 }
 
