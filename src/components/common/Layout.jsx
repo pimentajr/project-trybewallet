@@ -20,7 +20,7 @@ class Layout extends React.Component {
         <footer>
           <p>
             Trybe Wallet por
-            <a href="https://github.com/marceloPalochas">Marcelo Araujo</a>
+            <a href="https://github.com/MarceloPalochas"> Marcelo Araujo</a>
           </p>
         </footer>
       </>
