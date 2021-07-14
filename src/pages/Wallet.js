@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Form from '../Form';
+import Form from '../components/Form';
 import { fetchMoeda } from '../actions';
 
 class Wallet extends React.Component {
@@ -11,33 +11,22 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { username } = this.props;
+    const { username, expenses } = this.props;
+
+    const valor = expenses.reduce((acc, curr) => acc + Number(curr.value)
+     * Number(curr.exchangeRates[curr.currency].ask), 0);
+
     return (
       <div>
         <header data-testid="email-field">
           Olá TrybeWallet
           { username }
+          <label htmlFor="expenses">
+            Despesas:
+            <span data-testid="total-field">{ valor }</span>
+            <span data-testid="header-currency-field">BRL</span>
+          </label>
         </header>
-        <label htmlFor="gastos">
-          Total de Gastos:
-          <input
-            id="gastos"
-            data-testid="total-field"
-            name="gastos"
-            type="number"
-            value="0"
-          />
-        </label>
-        <label htmlFor="cambio">
-          Cambio:
-          <input
-            id="cambio"
-            data-testid="header-currency-field"
-            name="cambio"
-            type="text"
-            value="BRL"
-          />
-        </label>
         <Form />
       </div>
     );
@@ -45,7 +34,8 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  username: state.user.email });
+  username: state.user.email,
+  expenses: state.wallet.expenses });
 
 const mapDispatchToProps = (dispatch) => ({
   thunk: () => dispatch(fetchMoeda()),
@@ -55,5 +45,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   username: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   thunk: PropTypes.func.isRequired,
 };
+
+// Requisito 7 e 8 realizado com auxilio dos colegas de turma Alberto Candido e Gabriela Azevedo.
