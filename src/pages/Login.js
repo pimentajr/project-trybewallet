@@ -7,24 +7,23 @@ import { saveEmail } from '../actions';
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
-      email: '',
-      senha: '',
-      button: true,
+      Email: '',
+      password: '',
+      disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.ableVerification = this.ableVerification.bind(this);
   }
 
-  handleChange(event) {
+  handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    }, this.verifyMail);
+    }, this.ableVerification);
   }
 
-  verifyMail() {
+  ableVerification() {
     const { Email, password } = this.state;
     const rgxEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const testEmail = rgxEmail.test(Email);
@@ -51,7 +50,7 @@ class Login extends React.Component {
           <input
             type="text"
             data-testid="email-input"
-            placeholder="Digite o e-mail"
+            placeholder="Digite seu email"
             name="Email"
             value={ Email }
             onChange={ this.handleChange }
@@ -60,17 +59,36 @@ class Login extends React.Component {
 
         <label htmlFor="password">
           <input
-            type="text"
+            type="password"
             data-testid="password-input"
-            placeholder="Digite a senha"
+            placeholder="Digite sua senha"
             name="password"
-            value={ Email }
+            value={ password }
             onChange={ this.handleChange }
           />
         </label>
+
+        <Link to="/carteira">
+          <button
+            type="button"
+            onClick={ () => email(Email) }
+            disabled={ disabled }
+          >
+            ENTRAR
+          </button>
+        </Link>
+
       </form>
-    )
+    );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  email: (payload) => dispatch(saveEmail(payload)),
+});
+
+Login.propTypes = {
+  saveEmail: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
