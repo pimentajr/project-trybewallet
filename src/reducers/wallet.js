@@ -3,6 +3,7 @@
 import {
   SET_WALLET,
   SEND_INFO_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -16,6 +17,9 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, currencies: action.payload };
   case SEND_INFO_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case DELETE_EXPENSE:
+    return { ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)] };
   default:
     return state;
   }
