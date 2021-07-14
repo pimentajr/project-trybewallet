@@ -10,13 +10,3 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
-
-// {
-//   user: {
-//     email: '',
-//   },
-//   wallet: {
-//     currencies: [],
-//     expenses: []
-//   }
-// }
