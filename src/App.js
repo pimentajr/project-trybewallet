@@ -1,13 +1,14 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
 function App() {
-  const history = useHistory();
   return (
-    <div>
-      <Login history={ history } />
-    </div>
+    <Switch>
+      <Route path="/" exact render={ (props) => <Login { ...props } /> } />
+      <Route path="/carteira" exact component={ Wallet } />
+    </Switch>
   );
 }
 

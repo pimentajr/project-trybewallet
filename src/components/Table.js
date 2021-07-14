@@ -11,7 +11,7 @@ class Table extends Component {
       <div>
         <table>
           <Theader />
-          { expenses.map((exp, index) => {
+          { expenses && expenses.map((exp, index) => {
             const { description, tag, method, value, exchangeRates, currency } = exp;
             const valueFloat = Number.parseFloat(value);
             const currencyName = (exchangeRates[currency].name)

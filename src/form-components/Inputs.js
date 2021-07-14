@@ -5,7 +5,7 @@ class Inputs extends Component {
   render() {
     const { value, description, func } = this.props;
     return (
-      <div>
+      <div className="firstDiv">
         <label htmlFor="value">
           Valor:
           <input

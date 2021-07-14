@@ -5,7 +5,7 @@ class Selects extends Component {
   render() {
     const { currencies, method, tag, currency, func, FIFTEEN } = this.props;
     return (
-      <div>
+      <div className="secDiv">
         <label htmlFor="currency">
           Moeda:
           <select

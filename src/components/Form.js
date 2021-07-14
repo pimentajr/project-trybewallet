@@ -10,7 +10,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      currencies: [],
+      exchangeRates: [],
       value: 0,
       description: '',
       currency: 'USD',
@@ -50,7 +50,7 @@ class Form extends Component {
     setExpense(expense);
     this.setState((prev) => ({
       id: prev.id + 1,
-      currencies: [],
+      exchangeRates: [],
       value: 0,
       description: '',
       currency: 'USD',
@@ -66,18 +66,18 @@ class Form extends Component {
         await fetchCurrenciesApi();
         const { currencies } = this.props;
         this.setState({
-          currencies,
+          exchangeRates: currencies,
         });
       },
     );
   }
 
   render() {
-    const { currencies, method, tag, description, currency, value } = this.state;
+    const { exchangeRates, method, tag, description, currency, value } = this.state;
     const FIFTEEN = 15;
     return (
       <div>
-        <form>
+        <form className="forms">
           <Inputs
             value={ value }
             description={ description }
@@ -87,7 +87,7 @@ class Form extends Component {
             method={ method }
             tag={ tag }
             currency={ currency }
-            currencies={ currencies }
+            currencies={ exchangeRates }
             FIFTEEN={ FIFTEEN }
             func={ this.changeValues }
           />
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Form.propTypes = {
   fetchCurrenciesApi: PropTypes.func.isRequired,
-  currencies: PropTypes.objectOf(String).isRequired,
+  currencies: PropTypes.arrayOf(String).isRequired,
   setExpense: PropTypes.func.isRequired,
 };
 

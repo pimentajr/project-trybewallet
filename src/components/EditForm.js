@@ -53,7 +53,7 @@ class EditForm extends Component {
     const FIFTEEN = 15;
     return (
       <div>
-        <form>
+        <form className="forms edit">
           <Inputs
             value={ value }
             description={ description }

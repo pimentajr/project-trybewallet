@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../styles/Login.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { emailAction } from '../actions';
 
 class Login extends React.Component {
@@ -77,25 +80,42 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     return (
-      <form>
-        <input
-          type="email"
-          data-testid="email-input"
-          name="email"
-          placeholder="E-mail"
-          onChange={ this.changeValue }
-          value={ email }
-        />
-        <input
-          type="password"
-          data-testid="password-input"
-          name="password"
-          placeholder="Passowrd"
-          onChange={ this.changeValue }
-          value={ password }
-        />
-        <button type="button" onClick={ this.submit } className="sbmtBtn">Entrar</button>
-      </form>
+      <div className="login">
+        <form className="form">
+          <h1 className="logTitle">login</h1>
+          <div className="inputDiv">
+            <p><FontAwesomeIcon icon={ faEnvelope } /></p>
+            <input
+              type="email"
+              data-testid="email-input"
+              name="email"
+              placeholder="E-mail"
+              onChange={ this.changeValue }
+              value={ email }
+              className="loginInput"
+            />
+          </div>
+          <div className="inputDiv">
+            <p><FontAwesomeIcon icon={ faKey } /></p>
+            <input
+              type="password"
+              data-testid="password-input"
+              name="password"
+              placeholder="Passowrd"
+              onChange={ this.changeValue }
+              value={ password }
+              className="loginInput"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={ this.submit }
+            className="sbmtBtn"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     );
   }
 }
