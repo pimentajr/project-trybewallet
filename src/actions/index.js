@@ -1,14 +1,30 @@
 export const SET_USER = 'SET_USER';
-export const SET_WALLET = 'SET_WALLET';
-export const CONNECT_WALLET = 'CONNECT_WALLET';
+export const CUR_WALLET = 'CUR_WALLET';
+export const EXP_WALLET = 'EXP_WALLET';
+export const DEL_WALLET = 'DEL_WALLET';
 
-export const setUser = (payload) => ({ type: SET_USER, payload });
-export const setWallet = (payload) => ({ type: SET_WALLET, payload });
-export const connectWallet = () => ({ type: CONNECT_WALLET });
+export const setUser = (email) => ({ type: SET_USER, email });
+export const curWallet = (currencies) => ({ type: CUR_WALLET, currencies });
+export const expWallet = (expenses) => ({ type: EXP_WALLET, expenses });
+export const delWallet = (id) => ({ type: DEL_WALLET, id });
 
-export const fetchCoins = () => (dispatch) => (
-  fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((response) => response.json())
-    .then((data) => dispatch(setWallet(data)))
-    .catch(console.error)
-);
+async function fetchCurrency() {
+  try {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    return await response.json();
+  } catch (message) {
+    return console.error(message);
+  }
+}
+
+export const fetchCoins = () => async (dispatch) => {
+  const currency = await fetchCurrency();
+  dispatch(curWallet(currency));
+};
+
+export const fetchWallet = (expenses) => async (dispatch) => {
+  const currency = await fetchCurrency();
+  const data = { ...expenses, exchangeRates: currency };
+  dispatch(expWallet(data));
+  return data;
+};

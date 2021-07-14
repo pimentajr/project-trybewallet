@@ -4,12 +4,12 @@ const initialState = {
   email: '',
 };
 
-const user = (state = initialState, { type, payload }) => {
+const user = (state = initialState, { type, email }) => {
   switch (type) {
   case SET_USER:
     return {
       ...state,
-      email: payload.user.email,
+      email,
     };
 
   default:

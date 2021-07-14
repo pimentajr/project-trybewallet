@@ -4,26 +4,28 @@ import React, { Component } from 'react';
 import Value from './Value';
 import Description from './Description';
 import Currencies from './Currencies';
-import Payment from './Payment';
+import Method from './Method';
 import Tag from './Tag';
 
 class Form extends Component {
   render() {
-    const { currencies } = this.props;
+    const { currencies, handleChange, value } = this.props;
     return (
       <form>
-        <Value />
-        <Description />
-        <Currencies currencies={ currencies } />
-        <Payment />
-        <Tag />
+        <Value handleChange={ handleChange } value={ value } />
+        <Description handleChange={ handleChange } />
+        <Currencies currencies={ currencies } handleChange={ handleChange } />
+        <Method handleChange={ handleChange } />
+        <Tag handleChange={ handleChange } />
       </form>
     );
   }
 }
 
 Form.propTypes = {
-  currencies: PropTypes.string.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export default Form;

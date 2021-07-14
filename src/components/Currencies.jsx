@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 class Currencies extends Component {
   render() {
-    const { currencies } = this.props;
+    const { currencies, handleChange } = this.props;
     return (
-      <label htmlFor="currencies">
+      <label htmlFor="currency">
         Moeda:
-        <select id="currencies">
+        <select id="currency" onChange={ handleChange }>
           {
             currencies.map((item, i) => (
               <option key={ i } value={ item }>
@@ -23,6 +23,7 @@ class Currencies extends Component {
 
 Currencies.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default Currencies;
