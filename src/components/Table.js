@@ -33,7 +33,7 @@ class Table extends React.Component {
       .find((actualCurr) => (actualCurr.code === currency));
     const total = Number(value) * Number(exchangeRate.ask);
     const name = exchangeRate.name.split('/')[0];
-    const { remove } = this.props;
+    const { remove, edit } = this.props;
     return (
       <tr key={ id }>
         <td>{description}</td>
@@ -45,7 +45,13 @@ class Table extends React.Component {
         <td>{total.toFixed(2)}</td>
         <td>Real</td>
         <td>
-          <button type="button">Editar</button>
+          <button
+            data-testid="edit-btn"
+            type="button"
+            onClick={ () => edit(id) }
+          >
+            Editar
+          </button>
           <button
             data-testid="delete-btn"
             type="button"
@@ -77,11 +83,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (id) => dispatch(removeExpense(id)),
+  edit: (id) => dispatch(removeExpense(id)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   remove: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

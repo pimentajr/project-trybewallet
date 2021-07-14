@@ -26,6 +26,7 @@ class ExpensesForm extends React.Component {
   }
 
   description() {
+    const { description } = this.state;
     return (
       <label htmlFor="description">
         Descrição:
@@ -33,6 +34,7 @@ class ExpensesForm extends React.Component {
           id="description"
           name="description"
           type="text"
+          value={ description }
           onChange={ ({ target }) => this.handleChange(target) }
 
         />
@@ -41,6 +43,7 @@ class ExpensesForm extends React.Component {
   }
 
   expenseValue() {
+    const { value } = this.state;
     return (
       <label htmlFor="value">
         Valor:
@@ -49,6 +52,7 @@ class ExpensesForm extends React.Component {
           name="value"
           type="number"
           placeholder="0"
+          value={ value }
           onChange={ ({ target }) => this.handleChange(target) }
         />
       </label>
@@ -56,6 +60,7 @@ class ExpensesForm extends React.Component {
   }
 
   currency() {
+    const { currency } = this.state;
     return (
       <label htmlFor="currency">
         Moeda:
@@ -63,6 +68,7 @@ class ExpensesForm extends React.Component {
           id="currency"
           name="currency"
           onChange={ ({ target }) => this.handleChange(target) }
+          select={ currency }
         >
           {this.currenciesOptions().map((moeda) => (
             <option key={ moeda } value={ moeda }>{moeda}</option>
@@ -73,6 +79,7 @@ class ExpensesForm extends React.Component {
   }
 
   paymentMethod() {
+    const { method } = this.state;
     return (
       <label htmlFor="method">
         Método de pagamento:
@@ -80,6 +87,7 @@ class ExpensesForm extends React.Component {
           id="method"
           name="method"
           onChange={ ({ target }) => this.handleChange(target) }
+          select={ method }
         >
           <option value="Dinheiro">Dinheiro</option>
           <option value="Cartão de crédito">Cartão de crédito</option>
@@ -90,6 +98,8 @@ class ExpensesForm extends React.Component {
   }
 
   expenseTag() {
+    const { tag } = this.state;
+
     return (
       <label htmlFor="tag">
         tag:
@@ -97,6 +107,7 @@ class ExpensesForm extends React.Component {
           id="tag"
           name="tag"
           onChange={ ({ target }) => this.handleChange(target) }
+          select={ tag }
         >
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
