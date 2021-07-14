@@ -21,6 +21,47 @@ class Wallet extends React.Component {
     }, 0);
   }
 
+  renderTable() {
+    const { expenses } = this.props;
+    const ths = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir'];
+    return (
+      <table>
+        <thead>
+          <tr>
+            { ths.map((word) => <th key={ word }>{ word }</th>) }
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.map((expense) => {
+            const { name, ask } = expense.exchangeRates[expense.currency];
+            return (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ parseFloat(expense.value) }</td>
+                <td>{ name.split('/')[0] }</td>
+                <td>{ (parseFloat(ask)).toFixed(2) }</td>
+                <td>{ (parseFloat(ask) * parseFloat(expense.value)).toFixed(2) }</td>
+                <td>Real</td>
+                <td>Editar/Excluir</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  }
+
   render() {
     const { userEmail } = this.props;
     return (
@@ -40,6 +81,7 @@ class Wallet extends React.Component {
         </header>
         <main>
           <WalletForm />
+          { this.renderTable() }
         </main>
       </>
     );
