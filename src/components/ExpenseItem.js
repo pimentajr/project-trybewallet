@@ -21,15 +21,16 @@ class ExpenseItem extends Component {
 
   render() {
     const { expense } = this.props;
+    const formattedValue = (expense.value / 100).toFixed(2);
     const exchangeRate = Number(expense.exchangeRates[expense.currency].ask);
     const currencyName = expense.exchangeRates[expense.currency].name;
-    const convertedValue = Number(expense.value) * exchangeRate;
+    const convertedValue = Number(expense.value / 100) * exchangeRate;
     return (
       <tr>
         <td>{ expense.description }</td>
         <td>{ expense.tag }</td>
         <td>{ expense.method }</td>
-        <td>{ expense.value }</td>
+        <td>{ formattedValue }</td>
         <td>{ currencyName.split('/')[0] }</td>
         <td>{ exchangeRate.toFixed(2) }</td>
         <td>{ convertedValue.toFixed(2) }</td>
@@ -65,7 +66,7 @@ ExpenseItem.propTypes = {
     description: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
     currency: PropTypes.string.isRequired,
     exchangeRates: PropTypes.shape({
       name: PropTypes.string,

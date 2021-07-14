@@ -1,0 +1,13 @@
+table {
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+th, td {
+  text-align: right;
+  padding: 5px 15px;
+}
+
+button {
+  margin-left: 4px;
+}

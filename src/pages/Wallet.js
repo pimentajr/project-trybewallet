@@ -6,15 +6,17 @@ import NewExpenseForm from '../components/NewExpenseForm';
 import EditExpenseForm from '../components/EditExpenseForm';
 import ExpensesTable from '../components/ExpensesTable';
 
+import './Wallet.css';
+
 class Wallet extends React.Component {
   render() {
     const { isEditingExpense } = this.props;
     return (
-      <>
+      <div className="wallet-page-container">
         <Header />
         { isEditingExpense ? <EditExpenseForm /> : <NewExpenseForm /> }
         <ExpensesTable />
-      </>
+      </div>
     );
   }
 }

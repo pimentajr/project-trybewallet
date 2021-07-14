@@ -1,0 +1,35 @@
+.expense-form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.expense-form label {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  font-size: 14px;
+  width: min-content;
+}
+
+.expense-form input,
+.expense-form textarea,
+.expense-form button {
+  margin-left: 10px;
+  max-width: 160px;
+  padding: 5px 10px;
+
+}
+
+#value-input {
+  width: 100px;
+  text-align: right;
+}
+
+#currency-input, #method-input, #tag-input {
+  width: fit-content;
+  padding: 5px;
+  margin-left: 10px;
+
+}

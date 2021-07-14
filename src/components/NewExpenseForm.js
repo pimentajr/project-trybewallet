@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import CurrencyInput from './CurrencyInput';
 
 import { submitExpenseAction } from '../actions';
+
+import './NewExpenseForm.css';
 
 class NewExpenseForm extends Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class NewExpenseForm extends Component {
     this.state = {
       currencyOptions: [],
       newExpense: {
-        value: '0',
+        value: 0,
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
@@ -19,6 +22,7 @@ class NewExpenseForm extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +37,12 @@ class NewExpenseForm extends Component {
   handleInputChange({ target }) {
     const { name, value } = target;
     this.setState(({ newExpense }) => ({ newExpense: { ...newExpense, [name]: value } }));
+  }
+
+  handleValueChange(value) {
+    this.setState((oldState) => ({
+      ...oldState,
+      newExpense: { ...oldState.newExpense, value } }));
   }
 
   async handleSubmit() {
@@ -52,7 +62,7 @@ class NewExpenseForm extends Component {
 
     this.setState({
       newExpense: {
-        value: '0',
+        value: 0,
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
@@ -62,26 +72,23 @@ class NewExpenseForm extends Component {
   }
 
   renderValueInput() {
-    const { newExpense: { value } } = this.state;
+    const { newExpense: { value, currency } } = this.state;
     return (
-      <label htmlFor="value-input">
-        Valor
-        <input
-          type="number"
-          name="value"
-          id="value-input"
-          value={ value }
-          onChange={ this.handleInputChange }
-        />
-      </label>);
+      <CurrencyInput
+        id="value-input"
+        value={ value }
+        currency={ currency }
+        onValueChange={ this.handleValueChange }
+      />
+    );
   }
 
   renderDescriptionInput() {
     const { newExpense: { description } } = this.state;
     return (
       <label htmlFor="description-input">
-        Descrição
-        <textarea
+        Descrição:
+        <input
           id="description-input"
           name="description"
           value={ description }
@@ -95,7 +102,7 @@ class NewExpenseForm extends Component {
     const { currencyOptions, newExpense: { currency } } = this.state;
     return (
       <label htmlFor="currency-input">
-        Moeda
+        Moeda:
         <select
           id="currency-input"
           name="currency"
@@ -115,10 +122,10 @@ class NewExpenseForm extends Component {
   renderPaymentMethodInput() {
     const { newExpense: { method } } = this.state;
     return (
-      <label htmlFor="método de pagamento">
-        Método de pagamento
+      <label htmlFor="method-input">
+        Método de pagamento:
         <select
-          id="método de pagamento"
+          id="method-input"
           name="method"
           value={ method }
           onChange={ this.handleInputChange }
@@ -134,10 +141,10 @@ class NewExpenseForm extends Component {
   renderTagInput() {
     const { newExpense: { tag } } = this.state;
     return (
-      <label htmlFor="tag">
-        Tag
+      <label htmlFor="tag-input">
+        Tag:
         <select
-          id="tag"
+          id="tag-input"
           name="tag"
           value={ tag }
           onChange={ this.handleInputChange }
@@ -154,10 +161,10 @@ class NewExpenseForm extends Component {
 
   render() {
     return (
-      <form>
+      <form className="expense-form">
+        {this.renderCurrencyInput()}
         {this.renderValueInput()}
         {this.renderDescriptionInput()}
-        {this.renderCurrencyInput()}
         {this.renderPaymentMethodInput()}
         {this.renderTagInput()}
         <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>

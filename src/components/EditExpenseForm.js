@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveExpenseAction } from '../actions';
+import CurrencyInput from './CurrencyInput';
 
 class EditExpenseForm extends Component {
   constructor(props) {
@@ -35,11 +36,16 @@ class EditExpenseForm extends Component {
     this.renderPaymentMethodInput = this.renderPaymentMethodInput.bind(this);
     this.renderCurrencyInput = this.renderCurrencyInput.bind(this);
     this.handleSaveExpense = this.handleSaveExpense.bind(this);
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
 
   handleInputChange({ target }) {
     const { name, value } = target;
     this.setState(({ expense }) => ({ expense: { ...expense, [name]: value } }));
+  }
+
+  handleValueChange(value) {
+    this.setState(({ expense }) => ({ expense: { ...expense, value } }));
   }
 
   handleSaveExpense() {
@@ -49,26 +55,23 @@ class EditExpenseForm extends Component {
   }
 
   renderValueInput() {
-    const { expense: { value } } = this.state;
+    const { expense: { value, currency } } = this.state;
     return (
-      <label htmlFor="value-input">
-        Valor
-        <input
-          type="number"
-          name="value"
-          data-testid="value-input"
-          value={ value }
-          onChange={ this.handleInputChange }
-        />
-      </label>);
+      <CurrencyInput
+        id="value-input"
+        value={ value }
+        currency={ currency }
+        onValueChange={ this.handleValueChange }
+      />
+    );
   }
 
   renderDescriptionInput() {
     const { expense: { description } } = this.state;
     return (
       <label htmlFor="description-input">
-        Descrição
-        <textarea
+        Descrição:
+        <input
           data-testid="description-input"
           name="description"
           value={ description }
@@ -81,10 +84,10 @@ class EditExpenseForm extends Component {
   renderCurrencyInput() {
     const { expense: { currency, exchangeRates } } = this.state;
     return (
-      <label htmlFor="currency">
-        Moeda
+      <label htmlFor="currency-input">
+        Moeda:
         <select
-          id="currency"
+          id="currency-input"
           data-testid="currency-input"
           name="currency"
           value={ currency }
@@ -103,10 +106,10 @@ class EditExpenseForm extends Component {
   renderPaymentMethodInput() {
     const { expense: { method } } = this.state;
     return (
-      <label htmlFor="método de pagamento">
-        Método de pagamento
+      <label htmlFor="method-input">
+        Método de pagamento:
         <select
-          id="método de pagamento"
+          id="method-input"
           data-testid="method-input"
           name="method"
           value={ method }
@@ -124,9 +127,9 @@ class EditExpenseForm extends Component {
     const { expense: { tag } } = this.state;
     return (
       <label htmlFor="tag">
-        Tag
+        Tag:
         <select
-          id="tag"
+          id="tag-input"
           data-testid="tag-input"
           name="tag"
           value={ tag }
@@ -144,11 +147,10 @@ class EditExpenseForm extends Component {
 
   render() {
     return (
-      <form>
-        <p>Editando...</p>
+      <form className="expense-form">
+        {this.renderCurrencyInput()}
         {this.renderValueInput()}
         {this.renderDescriptionInput()}
-        {this.renderCurrencyInput()}
         {this.renderPaymentMethodInput()}
         {this.renderTagInput()}
         <button type="button" onClick={ this.handleSaveExpense }>Editar despesa</button>
@@ -170,7 +172,7 @@ EditExpenseForm.propTypes = {
   saveExpense: PropTypes.func.isRequired,
   editingExpenseId: PropTypes.number.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,

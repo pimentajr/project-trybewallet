@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpenseItem from './ExpenseItem';
 
+import './ExpensesTable.css';
+
 class ExpensesTable extends Component {
   render() {
     const { expenses } = this.props;
@@ -36,7 +38,7 @@ ExpensesTable.propTypes = {
     id: PropTypes.number.isRequired,
     tag: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
     currency: PropTypes.string.isRequired,
   })).isRequired,
 };
