@@ -1,5 +1,6 @@
 export const SET_USEREMAIL = 'SET_USEREMAIL';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
+export const SET_EXPENSES = 'SET_EXPENSES';
 
 export const setUserEmail = (payload) => ({
   type: SET_USEREMAIL,
@@ -17,3 +18,8 @@ export const getCurrenciesThunk = () => async (dispatch) => {
 
   dispatch(requestCurrenciesSuccess(currencies));
 };
+
+export const addExpenses = (payload) => ({
+  type: SET_EXPENSES,
+  payload,
+});
