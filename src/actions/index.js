@@ -1,11 +1,12 @@
 // Coloque aqui suas actions
-export const SEND_EMAIL = 'SEND_EMAIL';
+export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_CURRENCIES = 'GET_CURRENCIES';
 export const REQUEST_CURRENCIES_SUCCESS = 'REQUEST_CURRENCIES';
 export const REQUEST_CURRENCIES_FAILED = 'REQUEST_CURRENCIES_FAILED';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
-export const sendEmail = (email) => ({
-  type: SEND_EMAIL,
+export const userLogin = (email) => ({
+  type: USER_LOGIN,
   email,
 });
 
@@ -40,3 +41,8 @@ export function getCurrencies() {
         ));
   };
 }
+
+export const addExpense = (state) => ({
+  type: ADD_EXPENSE,
+  payload: state,
+});

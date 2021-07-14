@@ -11,7 +11,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    const total = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number(exchangeRates[currency].ask) * Number(value))
+    ), 0);
+
     return (
       <div>
         <header className="header">
@@ -20,10 +24,13 @@ class Wallet extends React.Component {
             Email:
             {email}
           </p>
-          <p data-testid="total-field">Despesa total: R$ 0</p>
-          <select data-testid="header-currency-field">
-            <option value="valor1">BRL</option>
-          </select>
+          <p>
+            Total:
+            <span data-testid="total-field">
+              {total > 0 ? Math.round(total * 100) / 100 : '0'}
+            </span>
+            <span data-testid="header-currency-field"> BRL</span>
+          </p>
         </header>
         <div className="money-icon-container" />
         <ExpenseForm />
@@ -34,6 +41,8 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  isLoading: state.wallet.isLoading,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -42,7 +51,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string,
-  carregando: PropTypes.bool,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

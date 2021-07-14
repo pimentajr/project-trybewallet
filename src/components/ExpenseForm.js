@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addExpense } from '../actions';
 
 class ExpenseForm extends Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: '',
       description: '',
-      coin: 'BRL',
-      payment: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.inputChange = this.inputChange.bind(this);
   }
 
-  handleChange({ target }) {
+  inputChange({ target }) {
     const { name, value } = target;
 
     this.setState({
@@ -30,16 +33,54 @@ class ExpenseForm extends Component {
     );
   }
 
-  removeUSDT(currency) {
-    if (currency !== 'USDT') {
-      return currency;
+  async requestCurrencies() {
+    const URL = 'https://economia.awesomeapi.com.br/json/all';
+    try {
+      const response = await fetch(URL);
+      const json = await response.json();
+      return json;
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  async updateExchangeRates() {
+    const rates = await this.requestCurrencies();
+    this.setState({
+      exchangeRates: rates,
+    });
+
+    const { adicionarDespesa } = this.props;
+    adicionarDespesa(this.state);
+
+    const { id } = this.state;
+    const nextId = id + 1;
+
+    this.setState({
+      id: nextId,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      exchangeRates: {},
+    });
+  }
+
+  createAddExpenseButton() {
+    return (
+      <button
+        type="button"
+        onClick={ () => this.updateExchangeRates() }
+      >
+        Adicionar despesa
+      </button>
+    );
   }
 
   render() {
     const { currencies } = this.props;
-    const { value, description, coin, payment, tag } = this.state;
-    const paymentTypes = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const { value, description, currency, method, tag } = this.state;
+    const methodTypes = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagTypes = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
     return (
@@ -51,24 +92,24 @@ class ExpenseForm extends Component {
             name="value"
             type="number"
             value={ value }
-            onChange={ this.handleChange }
+            onChange={ this.inputChange }
           />
         </label>
         <label htmlFor="c">
           Moeda
-          <select id="c" name="coin" value={ coin } onChange={ this.handleChange }>
-            {this.createOptions(Object.keys(currencies).filter(this.removeUSDT))}
+          <select id="c" name="currency" value={ currency } onChange={ this.inputChange }>
+            {this.createOptions(currencies)}
           </select>
         </label>
         <label htmlFor="p">
           Método de pagamento
-          <select id="p" name="payment" value={ payment } onChange={ this.handleChange }>
-            {this.createOptions(paymentTypes)}
+          <select id="p" name="method" value={ method } onChange={ this.inputChange }>
+            {this.createOptions(methodTypes)}
           </select>
         </label>
         <label htmlFor="t">
           Tag
-          <select id="t" name="tag" value={ tag } onChange={ this.handleChange }>
+          <select id="t" name="tag" value={ tag } onChange={ this.inputChange }>
             {this.createOptions(tagTypes)}
           </select>
         </label>
@@ -79,9 +120,10 @@ class ExpenseForm extends Component {
             name="description"
             type="text"
             value={ description }
-            onChange={ this.handleChange }
+            onChange={ this.inputChange }
           />
         </label>
+        {this.createAddExpenseButton()}
       </form>
     );
   }
@@ -89,7 +131,7 @@ class ExpenseForm extends Component {
 
 ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf(
-    PropTypes.object,
+    PropTypes.string,
   ),
 }.isRequired;
 
@@ -97,4 +139,8 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(ExpenseForm);
+const mapDispatchToProps = (dispatch) => ({
+  adicionarDespesa: (payload) => dispatch(addExpense(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
