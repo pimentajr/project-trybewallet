@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -22,10 +23,10 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const validEmail = /\S+@\S+\.\S+/;
     const pwLength = 6;
-    console.log(password.length >= pwLength);
-    console.log(validEmail.test(email));
-    console.log(email);
-    console.log(password);
+    // console.log(password.length >= pwLength);
+    // console.log(validEmail.test(email));
+    // console.log(email);
+    // console.log(password);
     if ((password.length >= pwLength) && (validEmail.test(email))) {
       return false;
     }
@@ -54,7 +55,9 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button type="button" disabled={ this.handleButton() }>Entrar</button>
+        <Link to="/carteira">
+          <button type="button" disabled={ this.handleButton() }>Entrar</button>
+        </Link>
       </div>
     );
   }
