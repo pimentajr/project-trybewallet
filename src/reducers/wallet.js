@@ -11,9 +11,9 @@ const INITIAL_STATE = {
 function filterExpenses(expenses, editedExpense) {
   const newExpenses = expenses.map((expense, index) => {
     if (index === editedExpense.id) {
-      return editedExpense
+      return editedExpense;
     }
-    return expense
+    return expense;
   });
   return newExpenses;
 }

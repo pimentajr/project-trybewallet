@@ -10,6 +10,7 @@ class Tabela extends Component {
     this.removeGasto = this.removeGasto.bind(this);
     this.editaGasto = this.editaGasto.bind(this);
   }
+  
   removeGasto(index) {
     const { removeExpense, allExpenses } = this.props;
     removeExpense(allExpenses[index].id);
@@ -39,7 +40,7 @@ class Tabela extends Component {
         </thead>
         <tbody>
           { allExpenses.map((expense,
-            index) => <TableRow key={ index } index={ index } expense={ expense } removeGasto={ ()=> this.removeGasto(index) } editaGasto={ ()=> this.editaGasto(index) }/>)}
+            index) => <TableRow key={ index } index={ index } expense={ expense } removeGasto={ () => this.removeGasto(index) } editaGasto={ () => this.editaGasto(index) } />)}
         </tbody>
       </table>
     );

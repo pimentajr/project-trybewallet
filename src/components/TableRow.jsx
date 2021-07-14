@@ -71,7 +71,9 @@ TableRow.propTypes = {
       ask: PropTypes.number,
     }),
   }).isRequired,
-  removeExpense: PropTypes.func.isRequired,
+  removeGasto: PropTypes.func.isRequired,
+  editaGasto: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default connect(null, null)(TableRow);

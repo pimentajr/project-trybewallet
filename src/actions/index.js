@@ -1,5 +1,5 @@
 // Coloque aqui suas actions
-import fetchCurrency from "../services/api";
+import fetchCurrency from '../services/api';
 
 export const LOGIN = 'LOGIN';
 export const ADD_CURRENCY = 'ADD_CURRENCY';
@@ -37,5 +37,5 @@ export function fetchAPI() {
   return (dispatch) => (
     fetchCurrency()
       .then((response) => dispatch(getCurrency((Object.values(response)))))
-  )
+  );
 }
