@@ -8,6 +8,8 @@ import Moeda from '../components/Moeda';
 import Pagamento from '../components/Pagamento';
 import Tag from '../components/Tag';
 import Tabela from '../components/Tabela';
+import AddButton from '../components/AddButton';
+import EditButton from '../components/EditButton';
 import fetchCurrency from '../services/api';
 
 class Wallet extends React.Component {
@@ -105,7 +107,8 @@ class Wallet extends React.Component {
           />
           <Pagamento method={ method } handleInput={ this.handleInput } />
           <Tag tag={ tag } handleInput={ this.handleInput } />
-          { !editing ? <button type="button" onClick={ this.addExpense }>Adicionar despesa</button> : <button type="button" onClick={ this.changeExpense }>Editar despesa</button> }
+          { !editing && <AddButton addExpense={ this.addExpense } /> }
+          { editing && <EditButton changeExpense={ this.changeExpense } /> }
         </form>
         <Tabela />
       </div>
