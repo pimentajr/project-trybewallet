@@ -10,7 +10,7 @@ class Header extends Component {
 
   totalExpense() {
     const { expenses } = this.props;
-    const total = expenses.reducer((acc, element) => {
+    const total = expenses.reduce((acc, element) => {
       const { value, currency, askCurrency } = element;
       const { ask } = Object.values(askCurrency).find(({ code }) => code === currency);
       return acc + (ask * value);
