@@ -22,7 +22,7 @@
 
 .inputDiv {
   align-items: center;
-  background-color: #F4F8F7;
+  background-color: #f4f8f7;
   border-radius: 2px;
   color: rgb(148, 148, 148);
   display: flex;
@@ -36,7 +36,7 @@
 }
 
 .loginInput {
-  background-color: #F4F8F7;
+  background-color: #f4f8f7;
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
@@ -52,7 +52,7 @@
 }
 
 .logTitle {
-  color: rgb(92, 222, 255);	
+  color: rgb(92, 222, 255);
   font-size: 40px;
 }
 

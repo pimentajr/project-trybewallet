@@ -80,7 +80,6 @@ table thead , table tbody {
   display: flex;
   height: 50px;
   justify-content: center;
-  margin-top: 10px;
   margin: -2px;
 }
 
