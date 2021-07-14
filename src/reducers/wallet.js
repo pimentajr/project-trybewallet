@@ -11,7 +11,7 @@ function functionWallet(state = WALLET_STATE, action) {
   case 'SUCESS_FETCH':
     return {
       ...state,
-      currencies: action.payload,
+      currencies: Object.keys(action.payload),
     };
   case 'SUCESS_EXPENSES':
     return {

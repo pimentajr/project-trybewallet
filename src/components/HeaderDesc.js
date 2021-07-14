@@ -23,7 +23,7 @@ const HeaderDesc = (props) => {
               <td>{ exchangeRates[currency].name.split('/')[0] }</td>
               <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
               <td>
-                { Number(exchangeRates[currency].ask) * Number(value) }
+                { (Number(exchangeRates[currency].ask) * Number(value)).toFixed(2) }
               </td>
               <td>Real</td>
               <td>

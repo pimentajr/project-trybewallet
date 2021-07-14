@@ -6,7 +6,6 @@ import { fetchCurrencie } from '../actions';
 class CompOptionMoed extends Component {
   constructor() {
     super();
-    this.state = { moedas: ['BRL'] };
     this.getFetchApi = this.getFetchApi.bind(this);
   }
 
@@ -14,24 +13,23 @@ class CompOptionMoed extends Component {
     this.getFetchApi();
   }
 
-  async getFetchApi() {
+  getFetchApi() {
     const { requestFetch } = this.props;
-    const { payload } = await requestFetch();
-    this.setState({ moedas: payload });
+    requestFetch();
   }
 
   render() {
-    const { moedas } = this.state;
-    const newArray = Object.values(moedas);
-    const moedValid = newArray.filter(({ codein }) => codein !== 'BRLT');
+    const { currencies } = this.props;
+    const moedValid = currencies.filter((moeda) => moeda !== 'USDT');
     return (
-      moedValid.map(({ code }, index) => (
-        <option value={ code } key={ index }>{ code }</option>))
+      moedValid.map((moeda, index) => (
+        <option key={ index } value={ moeda }>{ moeda }</option>
+      ))
     );
   }
 }
 const arrayCurrencies = (state) => ({
-  arraysWallet: state,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispachProps = (dispatch) => ({
@@ -40,6 +38,7 @@ const mapDispachProps = (dispatch) => ({
 
 CompOptionMoed.propTypes = {
   requestFetch: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(arrayCurrencies, mapDispachProps)(CompOptionMoed);
