@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import storeUserEmail from '../actions';
 
 function Login() {
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
 
-  function checkEmail(e, p) {
+  function checkEmailAndPass(e, p) {
     const validEmail = /^[a-zA-Z]+@[a-zA-Z]+\.[com]{3,}$/i;
     const passLength = 6;
     return validEmail.test(e) && p.length >= passLength;
   }
+
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -30,12 +35,15 @@ function Login() {
           onChange={ (e) => setPass(e.target.value) }
         />
       </label>
-      <button
-        type="button"
-        disabled={ email && pass ? !checkEmail(email, pass) : true }
-      >
-        Entrar
-      </button>
+      <Link to="/carteira">
+        <button
+          type="button"
+          disabled={ email && pass ? !checkEmailAndPass(email, pass) : true }
+          onClick={ () => dispatch(storeUserEmail(email, true)) }
+        >
+          Entrar
+        </button>
+      </Link>
     </div>
   );
 }
