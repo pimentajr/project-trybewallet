@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../component/Layout';
 import withStore from '../utils/withStore';
-import { Header, Select } from '../component/Login';
+import { Header, Select, ExpensesTable } from '../component/Login';
 import {
   addNewExpense as addNewExpenseAgent,
   editExpense as editExpenseAgent,
@@ -151,6 +151,9 @@ class Wallet extends React.Component {
             {' '}
 
           </form>
+          <ExpensesTable
+            startEdit={ this.startEdit }
+          />
         </main>
       </Layout>
     );
