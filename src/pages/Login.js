@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import signUp from '../actions';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
+class Login extends Component {
+  constructor() {
+    super();
     this.state = {
       email: '',
       password: '',

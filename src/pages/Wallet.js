@@ -1,17 +1,42 @@
-import React from 'react';
-import Form from '../components/Form';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Form from './Form';
 import Header from '../components/Header';
+import { fetchApi } from '../actions';
 
-class Wallet extends React.Component {
+class Wallet extends Component {
   render() {
+    const { getData, expenses } = this.props;
+    getData();
+    const reducerExpenses = () => {
+      const total = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+        acc + (Number(exchangeRates[currency].ask) * Number(value))
+      ), 0);
+      return total.toFixed(2);
+    };
+
     return (
       <div>
         <h3>TrybeWallet</h3>
-        <Header />
+        <Header total={ reducerExpenses() } />
         <Form />
       </div>
     );
   }
 }
 
-export default Wallet;
+const mapDisptchToProps = (dispatch) => ({
+  getData: () => dispatch(fetchApi()),
+});
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+Wallet.propTypes = {
+  getData: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf.isRequired,
+};
+
+export default connect(mapStateToProps, mapDisptchToProps)(Wallet);
