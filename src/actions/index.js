@@ -1,9 +1,9 @@
 // Coloque aqui suas actions
-function actionEmail(email) {
-  return {
-    type: 'ADD_EMAIL',
-    email,
-  };
-}
+export const LOGIN = 'LOGIN';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
+export const DEFAULT_ACTION = 'DEFAULT_ACTION';
 
-export default actionEmail;
+export const login = (email) => ({
+  type: LOGIN,
+  email,
+});

@@ -1,21 +1,19 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { SAVE_EMAIL } from '../actions';
+
+// Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
 };
 
-function userReducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'NEW_ACTION':
-    return { state: action.state };
+function user(state = INITIAL_STATE, { type, payload }) {
+  switch (type) {
+  case SAVE_EMAIL:
+    return {
+      email: payload.email,
+    };
+
   default:
     return state;
   }
 }
-
-export default userReducer;
+export default user;
