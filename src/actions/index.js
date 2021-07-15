@@ -7,9 +7,23 @@ export const loginUserWallet = (payload) => ({
   payload,
 });
 
-export const USER_WALLET = 'USER_WALLET';
+export const REQUEST_COINS = 'REQUEST_COINS';
 
-export const userWallet = (payload) => ({
-  type: USER_WALLET,
+export const fetchCoins = (payload) => ({
+  type: REQUEST_COINS,
   payload,
 });
+
+export const REQUEST_SUCESS = 'REQUEST_SUCESS';
+
+export const fetchSucess = (payload) => ({
+  type: REQUEST_SUCESS,
+  payload,
+});
+
+export const fetchCoinsOnApi = () => (dispatch) => {
+  dispatch(fetchCoins());
+  return fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((result) => result.json())
+    .then((data) => dispatch(fetchSucess(data)));
+};
