@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import Header from './Header';
+import Header from '../components/Header';
 import Form from '../components/form';
 
 class Wallet extends Component {
   render() {
     return (
-      <div>
+      <body>
         <Header />
         <Form />
-      </div>
+      </body>
     );
   }
 }

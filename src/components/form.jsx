@@ -1,9 +1,9 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchApi, addExpansesAction } from '../actions/index';
 
-class Form extends React.Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
