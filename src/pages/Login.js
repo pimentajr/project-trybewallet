@@ -1,94 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveEmail } from '../actions';
+import { connect } from 'react-redux';
+import { userLogin } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      Email: '',
+      email: '',
       password: '',
-      disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.ableVerification = this.ableVerification.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
+
     this.setState({
       [name]: value,
-    }, this.ableVerification);
-  }
-
-  ableVerification() {
-    const { Email, password } = this.state;
-    const rgxEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const testEmail = rgxEmail.test(Email);
-    const passwordMin = 6;
-
-    if (testEmail && password.length >= passwordMin) {
-      this.setState({
-        disabled: false,
-      });
-    } else {
-      this.setState({
-        disabled: true,
-      });
-    }
+    });
   }
 
   render() {
-    const { Email, password, disabled } = this.state;
-    const { email } = this.props;
+    const { email, password } = this.state;
+    const length = 6;
+    const { userData } = this.props;
+
+    const emailRegex = () => {
+      const emailValid = /\S+@\S+\.\S+/;
+
+      const emailCorrect = emailValid.test(email);
+      return emailCorrect;
+    };
+
+    const passwordValid = password.length >= length;
+
     return (
-      <form>
+      <div>
+        <input
+          name="email"
+          type="email"
+          data-testid="email-input"
+          placeholder="Email"
+          value={ email }
+          onChange={ this.handleChange }
 
-        <label htmlFor="email">
-          <input
-            type="text"
-            data-testid="email-input"
-            placeholder="Digite seu email"
-            name="Email"
-            value={ Email }
-            onChange={ this.handleChange }
-          />
-        </label>
+        />
+        <input
+          style={ { display: 'flex', marginTop: '10px' } }
+          type="password"
+          name="password"
+          data-testid="password-input"
+          placeholder="Senha"
+          value={ password }
+          onChange={ this.handleChange }
 
-        <label htmlFor="password">
-          <input
-            type="password"
-            data-testid="password-input"
-            placeholder="Digite sua senha"
-            name="password"
-            value={ password }
-            onChange={ this.handleChange }
-          />
-        </label>
-
-        <Link to="/carteira">
+        />
+        <Link
+          onClick={ () => (userData(email)) }
+          to="/carteira"
+        >
           <button
             type="button"
-            onClick={ () => email(Email) }
-            disabled={ disabled }
+            disabled={ !(emailRegex() && passwordValid) }
           >
-            ENTRAR
+            Entrar
           </button>
         </Link>
+      </div>
 
-      </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  email: (payload) => dispatch(saveEmail(payload)),
-});
-
 Login.propTypes = {
-  saveEmail: PropTypes.func,
+  userData: PropTypes.func,
 }.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  userData: (email) => dispatch(userLogin(email)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);
