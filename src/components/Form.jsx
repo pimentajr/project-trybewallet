@@ -115,8 +115,8 @@ class Form extends Component {
               {moeda.map((curren, index) => <option key={ index }>{curren}</option>)}
             </select>
           </label>
-          {this.methodLabel}
-          {this.tagLabel}
+          {this.methodLabel()}
+          {this.tagLabel()}
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
       </div>
