@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { userLogin } from '../actions';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: '',
       password: '',
@@ -37,20 +37,28 @@ class Login extends React.Component {
     return (
       <div>
         Login
-        <input
-          data-testid="email-input"
-          type="email"
-          placeholder="Email"
-          value={ email }
-          onChange={ (event) => this.handleInputs('email', event.target.value) }
-        />
-        <input
-          data-testid="password-input"
-          type="password"
-          placeholder="password"
-          value={ password }
-          onChange={ (event) => this.handleInputs('password', event.target.value) }
-        />
+        <label htmlFor="email">
+          <input
+            data-testid="email-input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={ email }
+            onChange={ (event) => this.handleInputs('email', event.target.value) }
+          />
+        </label>
+        <label htmlFor="password">
+          <input
+            data-testid="password-input"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="password"
+            value={ password }
+            onChange={ (event) => this.handleInputs('password', event.target.value) }
+          />
+        </label>
         <Link to="/carteira">
           <button
             type="button"
