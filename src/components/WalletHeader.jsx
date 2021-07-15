@@ -10,7 +10,7 @@ class WalletHeader extends React.Component {
   totalValue() {
     const { expenses } = this.props;
     let result = 0;
-    
+
     expenses.forEach(({ exchangeRates, currency, value }) => {
       result += exchangeRates[currency].ask * value; 
     });
@@ -27,7 +27,7 @@ class WalletHeader extends React.Component {
         <ul>
           <li data-testid="email-field">{email}</li>
           <li>
-            Despesa total: <span data-testid="total-field">{ totValue }</span>
+            Despesa total: <span data-testid="total-field">{ totValue } </span>
             <span data-testid="header-currency-field">BRL</span>
           </li>
         </ul>

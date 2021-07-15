@@ -10,8 +10,8 @@ class FormsWallet extends React.Component {
       value: 0,
       description:'',
       currency:'USD',
-      method:'dinheiro',
-      tag:'alimentacao',
+      method:'Dinheiro',
+      tag:'Alimentação',
     }
 
     this.handleChange = this.handleChange.bind(this);
