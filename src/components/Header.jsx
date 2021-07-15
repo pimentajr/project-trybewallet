@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import store from '../store';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
-    const { user, wallet } = store.getState();
+    const { user, wallet } = this.props;
     const { email } = user;
     const { expenses } = wallet;
 
@@ -32,3 +33,14 @@ export default class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  user: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
+  wallet: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
+};
+
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(Header);
