@@ -8,9 +8,11 @@ import { GET_STATE } from '../actions/getState';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  buttonIsClick: false,
 };
 
 function wallet(state = INITIAL_STATE, action = {}) {
+  const NUMBER = 5;
   switch (action.type) {
   case REQUEST_API:
     return {
@@ -29,7 +31,8 @@ function wallet(state = INITIAL_STATE, action = {}) {
   case GET_STATE:
     return {
       ...state,
-      ...state.expenses.splice(action.test, 0, action.payload),
+      buttonIsClick: action.button,
+      ...state.expenses.splice(action.test, NUMBER, action.payload),
     };
   default:
     return state;

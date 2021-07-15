@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getState } from '../actions/getState';
 
 class Category extends Component {
   constructor(props) {
@@ -10,9 +13,13 @@ class Category extends Component {
   }
 
   handleTest(e) {
+    const { getStateAction } = this.props;
+    const NUMBER = 0;
     this.setState({
       tag: e.target.value,
     });
+    const { tag } = this.state;
+    getStateAction(tag, NUMBER);
   }
 
   render() {
@@ -24,7 +31,7 @@ class Category extends Component {
           <select
             id="Category"
             value={ tag }
-            onClick={ this.handleTest }
+            onChange={ this.handleTest }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -38,4 +45,16 @@ class Category extends Component {
   }
 }
 
-export default Category;
+const mapDispatchToProps = (dispatch) => ({
+  getStateAction: (payload, test) => dispatch(getState(payload, test)),
+});
+
+const mapStateToProps = (state) => ({
+  buttonClicked: state.wallet.button,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
+
+Category.propTypes = {
+  getStateAction: PropTypes.array,
+}.isRequired;

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getState } from '../actions/getState';
 
 class ExpenseAmount extends Component {
   constructor(props) {
@@ -10,9 +13,13 @@ class ExpenseAmount extends Component {
   }
 
   handleTest(e) {
+    const { getStateAction } = this.props;
+    const NUMBER = 2;
     this.setState({
       amount: e.target.value,
     });
+    const { amount } = this.state;
+    getStateAction(amount, NUMBER);
   }
 
   render() {
@@ -34,4 +41,12 @@ class ExpenseAmount extends Component {
   }
 }
 
-export default ExpenseAmount;
+const mapDispatchToProps = (dispatch) => ({
+  getStateAction: (payload, test) => dispatch(getState(payload, test)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseAmount);
+
+ExpenseAmount.propTypes = {
+  getStateAction: PropTypes.array,
+}.isRequired;

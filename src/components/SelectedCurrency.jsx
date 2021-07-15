@@ -20,11 +20,12 @@ class SelectedCurrency extends Component {
 
   handleTest(e) {
     const { getStateAction } = this.props;
+    const NUMBER = 1;
     this.setState({
       currency: e.target.value,
     });
     const { currency } = this.state;
-    getStateAction(currency, 1);
+    getStateAction(currency, NUMBER);
   }
 
   render() {
@@ -37,7 +38,7 @@ class SelectedCurrency extends Component {
         <select
           id="options"
           value={ currency }
-          onClick={ this.handleTest }
+          onChange={ this.handleTest }
         >
           {
             test.map((type, index) => <option key={ index }>{ type }</option>)
