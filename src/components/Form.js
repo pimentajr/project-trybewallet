@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      retApp: [],
+    };
+    this.fetchApp = this.fetchApp.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchApp();
+  }
+
+  async fetchApp() {
+    const API = 'https://economia.awesomeapi.com.br/json/all';
+    const fetchApi = await fetch(API);
+    const returnJson = await fetchApi.json();
+
+    const getCurrencies = Object.keys(returnJson);
+    const filterCurrencie = getCurrencies.filter((target) => target !== 'USDT');
+
+    this.setState({
+      retApp: [...filterCurrencie],
+    });
+  }
+
   render() {
+    const { retApp } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -15,7 +41,9 @@ class Form extends Component {
         <label htmlFor="currency">
           Moeda
           <select id="currency">
-            <option value="BRL">BRL </option>
+            {retApp.map((currency) => (
+              <option key={ currency } value={ currency }>{ currency }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-method">
