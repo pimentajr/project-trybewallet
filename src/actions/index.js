@@ -17,6 +17,14 @@ export const requestApiError = (payload) => ({
   payload,
 });
 
+export function addExpansesAction(payload, id) {
+  return ({
+    type: ADD_EXPENSES,
+    id,
+    payload,
+  });
+}
+
 export const API = 'https://economia.awesomeapi.com.br/json/all';
 
 export const fetchApi = () => (dispatch) => {

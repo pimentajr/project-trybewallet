@@ -1,29 +1,16 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 import Header from './Header';
-import Category from '../components/Category';
-import ExpenseAmount from '../components/ExpenseAmount';
-import PaymentDescription from '../components/PaymentDescription';
-import PaymentMethod from '../components/PaymentMethod';
-import SelectedCurrency from '../components/SelectedCurrency';
-import AddExpenses from '../components/AddExpenses';
+import Form from '../components/form';
 
-function Wallet() {
-  return (
-    <div>
-      <Header />
-      <form>
-        <ExpenseAmount />
-        <PaymentDescription />
-        <SelectedCurrency />
-        <PaymentMethod />
-        <Category />
-      </form>
-      <section>
-        <AddExpenses />
-      </section>
-    </div>
-  );
+class Wallet extends Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <Form />
+      </div>
+    );
+  }
 }
 
-export default (Wallet);
+export default Wallet;

@@ -8,19 +8,21 @@ import { GET_STATE } from '../actions/getState';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  buttonIsClick: false,
+  isFetching: false,
+  id: 0,
 };
 
 function wallet(state = INITIAL_STATE, action = {}) {
-  const NUMBER = 5;
   switch (action.type) {
   case REQUEST_API:
     return {
       ...state,
+      isFetching: true,
     };
   case REQUEST_API_SUCESS:
     return {
       ...state,
+      isFetching: false,
       currencies: action.payload,
     };
   case REQUEST_API_ERROR:
@@ -29,11 +31,15 @@ function wallet(state = INITIAL_STATE, action = {}) {
       currencies: Error,
     };
   case GET_STATE:
-    return {
+    return ({
       ...state,
-      buttonIsClick: action.button,
-      ...state.expenses.splice(action.test, NUMBER, action.payload),
-    };
+      id: state.id + 1,
+      expenses: [...state.expenses,
+        { id: action.id,
+          ...action.payload,
+          exchangeRates: state.currencies,
+        }],
+    });
   default:
     return state;
   }
