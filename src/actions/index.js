@@ -17,14 +17,6 @@ export const addToWallet = (payload) => ({
   type: ADD_TO_WALLET, payload });
 
 export function fetchAndAddToWallet() {
-
-  // return (dispatch) => {
-  //   return fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json())
-  //     .then((payload) => {
-  //       dispatch(requestCurrenciesGood(payload));
-  //     });
-  // };
-
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json())
     .then((payload) => {
       dispatch(requestCurrenciesGood(payload));
