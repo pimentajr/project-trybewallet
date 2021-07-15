@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class ExpensesButton extends React.Component {
   render() {
     const { handler } = this.props;
+
     return (
       <button
         type="button"
@@ -15,7 +16,9 @@ class ExpensesButton extends React.Component {
     );
   }
 }
+
 ExpensesButton.propTypes = {
   handler: PropTypes.func,
 }.isRequired;
+
 export default ExpensesButton;
