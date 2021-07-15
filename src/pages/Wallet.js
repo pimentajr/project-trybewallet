@@ -37,7 +37,10 @@ class Wallet extends React.Component {
     const { user } = this.props;
     return (
       <header className="header">
-        <h3 className="header-text">TrybeWallet</h3>
+        <div className="container">
+          <h3 className="header-text">TrybeWallet</h3>
+          <img src="https://img.icons8.com/color/48/000000/wallet--v2.png" alt="carteira" />
+        </div>
         <h3 data-testid="email-field" className="header-text">{user}</h3>
         <h4 data-testid="total-field" className="header-text">0</h4>
         <h4 data-testid="header-currency-field" className="header-text">BRL</h4>
@@ -141,6 +144,20 @@ class Wallet extends React.Component {
     );
   }
 
+  renderAddExpenseButton() {
+    return (
+      <button
+        type="button"
+        className="buttonAdd"
+        onClick={ (e) => {
+          // setUserAction(email);
+        } }
+      >
+        Adicionar Despesa
+      </button>
+    );
+  }
+
   render() {
     return (
       <>
@@ -151,6 +168,7 @@ class Wallet extends React.Component {
           {this.renderSelectCurrency()}
           {this.renderSelectPayment()}
           {this.renderSelectTag()}
+          {this.renderAddExpenseButton()}
         </div>
       </>
     );

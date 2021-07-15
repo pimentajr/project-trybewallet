@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setUser } from '../actions';
+import wallet from '../wallet.gif';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +11,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,6 +19,13 @@ class Login extends React.Component {
   handleChange({ value, name }) {
     this.setState({
       [name]: value,
+    }, () => {
+      const { email, password } = this.state;
+      const reg = /\S+@\S+\.\S+/;
+      const min = 6;
+      this.setState({
+        disabled: !(email.match(reg) && password.length >= min),
+      });
     });
   }
 
@@ -48,7 +57,6 @@ class Login extends React.Component {
             name="password"
             data-testid="password-input"
             placeholder="Senha"
-            minLength="6"
             value={ password }
             onChange={ (e) => this.handleChange(e.target) }
           />
@@ -58,20 +66,17 @@ class Login extends React.Component {
   }
 
   renderSubmitButton() {
-    const { email, password } = this.state;
+    const { email, disabled } = this.state;
     const { setUserAction } = this.props;
     return (
-      <Link
-        to="/carteira"
-        className="button"
-        onClick={ (e) => {
-          if (!email && !password) {
-            e.preventDefault();
-          }
-          setUserAction(email);
-        } }
-      >
-        Entrar
+      <Link to="/carteira">
+        <button
+          type="button"
+          disabled={ disabled }
+          onClick={ () => setUserAction(email) }
+        >
+          Entrar
+        </button>
       </Link>
     );
   }
@@ -80,6 +85,7 @@ class Login extends React.Component {
     return (
       <div className="loginContainer">
         <h3>TrybeWallet</h3>
+        <img src={ wallet } alt="carteira" className="image" />
         <div className="inputForm">
           {this.renderEmailInput()}
           {this.renderPasswordInput()}
