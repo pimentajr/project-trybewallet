@@ -2,6 +2,7 @@
 const INICIAL_STATE = {
   currencies: [],
   expenses: [],
+  totalSUM: 187.12,
 };
 
 function wallet(state = INICIAL_STATE, action) {
