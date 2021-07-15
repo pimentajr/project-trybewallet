@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-class InitialCoins extends React.Component {
+class InitialCoins extends Component {
   render() {
     const { askCoin } = this.props;
     return (
       <>
-        { askCoin.map((value, key) => {
-          if (value.codein !== 'BRLT') {
+        { Object.keys(askCoin).map((value, key) => {
+          if (value !== 'USDT') {
             return (
-              <option key={ key }>{ value.code }</option>);
+              <option key={ key }>{ value }</option>);
           }
           return null;
         }) }

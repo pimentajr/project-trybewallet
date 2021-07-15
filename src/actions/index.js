@@ -3,6 +3,8 @@ export const SPENDING = 'SPENDING';
 export const REQUEST_COINS = 'REQUEST_COINS';
 export const REQUEST_COINS_SUCCESS = 'REQUEST_COINS_SUCCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const ADD_EXPENSES_SUCCESS = 'ADD_EXPENSES_SUCCESS';
 
 export const requestLogin = (payload) => ({
   type: LOGIN,
@@ -23,9 +25,13 @@ export const requestCoinError = (coins) => ({
   coins,
 });
 
-export const fetchCoins = () => (dispatch) => {
-  dispatch(requestCoin());
-  return fetch('https://economia.awesomeapi.com.br/json/all')
+export const addExpensesSuccess = (state) => ({
+  type: ADD_EXPENSES_SUCCESS,
+  state,
+});
+
+export function fetchCoins() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((result) => dispatch(requestCoinSuccess(Object.values(result))));
-};
+    .then((result) => dispatch(requestCoinSuccess(result)));
+}

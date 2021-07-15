@@ -6,7 +6,10 @@ import Form from './Form';
 
 class Wallet extends React.Component {
   render() {
-    const { getUser } = this.props;
+    const { getUser, expenses } = this.props;
+    const getTheExpense = expenses
+      .map((value) => Number(value
+        .exchangeRates[value.currency].ask) * Number(value.value));
     return (
       <div>
         TrybeWallet
@@ -16,7 +19,11 @@ class Wallet extends React.Component {
             { getUser }
           </div>
           <div data-testid="total-field">
-            { 0 }
+            Total:
+            { getTheExpense.reduce((acc, sum) => {
+              acc += sum;
+              return acc;
+            }, 0)}
           </div>
           <div data-testid="header-currency-field">
             BRL
@@ -38,6 +45,7 @@ Wallet.propTypes = ({
 
 const mapStateToProps = (state) => ({
   getUser: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);

@@ -32,6 +32,7 @@ class Login extends React.Component {
   render() {
     const ableOrDisable = this.ableDisable();
     const { email } = this.state;
+    console.log(email);
     const { isLoggedIn } = this.props;
     return (
       <div>
