@@ -1,6 +1,7 @@
 export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_API_SUCESS = 'REQUEST_API_SUCESS';
 export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
+export const GET_EXPENSES = 'GET_EXPENSES';
 
 export const requestApi = (payload) => ({
   type: REQUEST_API,
@@ -19,7 +20,7 @@ export const requestApiError = (payload) => ({
 
 export function addExpansesAction(payload, id) {
   return ({
-    type: ADD_EXPENSES,
+    type: GET_EXPENSES,
     id,
     payload,
   });

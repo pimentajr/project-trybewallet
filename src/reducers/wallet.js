@@ -2,8 +2,8 @@ import {
   REQUEST_API,
   REQUEST_API_SUCESS,
   REQUEST_API_ERROR,
+  GET_EXPENSES,
 } from '../actions/index';
-import { GET_STATE } from '../actions/getState';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -30,7 +30,7 @@ function wallet(state = INITIAL_STATE, action = {}) {
       ...state,
       currencies: Error,
     };
-  case GET_STATE:
+  case GET_EXPENSES:
     return ({
       ...state,
       id: state.id + 1,
