@@ -149,7 +149,7 @@ class Wallet extends React.Component {
       <button
         type="button"
         className="buttonAdd"
-        onClick={ (e) => {
+        onClick={ () => {
           // setUserAction(email);
         } }
       >
