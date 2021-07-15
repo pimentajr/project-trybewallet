@@ -1,36 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApi } from '../actions';
+import { editExpenses } from '../actions';
 
 class Form extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { expensesReducer } = this.props;
     this.state = {
-      value: 0,
+      id: expensesReducer.length,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleFetch = this.handleFetch.bind(this);
+    this.getExpenses = this.getExpenses.bind(this);
   }
 
   componentDidMount() {
     this.handleFetch();
+    const { editExpensesAction } = this.props;
+    editExpensesAction(this.getExpenses);
+  }
+
+  getExpenses(param) {
+    const { expensesReducer } = this.props;
+    const findExpense = expensesReducer.find(({ id }) => id === param.id);
+    this.setState({
+      id: findExpense.id,
+      value: findExpense.value,
+      description: findExpense.description,
+      currency: findExpense.currency,
+      method: findExpense.method,
+      tag: findExpense.tag,
+      exchangeRates: findExpense.exchangeRates,
+    });
   }
 
   async handleFetch() {
-    const { reqAction } = this.props;
-    const { response } = await reqAction();
-    const curr = Object.keys(response);
-    const arrayCurr = curr.filter((coin) => coin !== 'USDT');
-    this.setState({
-      currencies: arrayCurr,
-    });
-    return arrayCurr;
+    const { callApi } = this.props;
+    const { response } = await callApi();
+    console.log(response);
   }
 
   handleChange({ target }) {
@@ -40,12 +55,23 @@ class Form extends Component {
     });
   }
 
-  // handleClick() {
-  //   console.log('oi');
-  // }
+  handleClick() {
+    const { callApi, expensesReducer } = this.props;
+    callApi(this.state);
+    this.setState({
+      id: expensesReducer.length + 1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+    });
+  }
 
   renderSelects() {
-    const { currency, method, tag, currencies } = this.state;
+    const { currencies } = this.props;
+    const { currency, method, tag } = this.state;
     return (
       <>
         <label htmlFor="currency">
@@ -118,22 +144,29 @@ class Form extends Component {
           />
         </label>
         {this.renderSelects()}
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  reqAction: () => dispatch(fetchApi()),
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
 });
 
-const mapStateToProps = (state) => ({
-  currencies: state,
+const mapDispatchToProps = (dispatch) => ({
+  // updateExpensesAction: (obj) => dispatch(updateExpenses(obj)),
+  editExpensesAction: (edit) => dispatch(editExpenses(edit)),
 });
 
 Form.propTypes = ({
-  reqAction: PropTypes.func,
+  callApi: PropTypes.func,
 }).isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
