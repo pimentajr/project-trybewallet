@@ -18,7 +18,6 @@ class ExpensesTable extends Component {
   render() {
     const { wallet } = this.props;
     const { expenses } = wallet;
-
     const tableBody = expenses.map((expense) => {
       const { id, value, description, coin, method, tag, exchangeRates } = expense;
       const currentCoin = exchangeRates[coin];
@@ -29,12 +28,18 @@ class ExpensesTable extends Component {
             <td>{ tag }</td>
             <td>{ method }</td>
             <td>{ `${coin} ${value}` }</td>
-            <td>{ currentCoin.name.replace(/\/.*/g, '') }</td>
-            <td>{ `R$ ${parseFloat(currentCoin.ask).toFixed(2)}` }</td>
-            <td>{ `R$ ${(currentCoin.ask * value).toFixed(2)}` }</td>
+            {/* <td>{ currentCoin.name }</td> */}
+            {/* <td>{ `R$ ${parseFloat(currentCoin.ask).toFixed(2)}` }</td> */}
+            {/* <td>{ `R$ ${(currentCoin.ask * value).toFixed(2)}` }</td> */}
             <td>Real</td>
             <td>
-              <button type="button" onClick={ () => this.removeRow(id) }>Remover</button>
+              <button
+                data-testid="delete-btn"
+                type="button"
+                onClick={ () => this.removeRow(id) }
+              >
+                Remover
+              </button>
             </td>
           </tr>
         </tbody>
@@ -63,8 +68,8 @@ class ExpensesTable extends Component {
 }
 
 ExpensesTable.propTypes = {
-  wallet: PropTypes.shape(PropTypes.array).isRequired,
-  expenses: PropTypes.shape(PropTypes.array).isRequired,
+  wallet: PropTypes.objectOf(PropTypes.any).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   remove: PropTypes.func.isRequired,
 };
 

@@ -37,7 +37,7 @@ export const walletRemoveExpense = (expenseId) => ({
 });
 
 export const fetchAPI = () => (dispatch) => {
-  // dispatch(fetchCurrencies());
+  dispatch(fetchCurrencies());
   fetch(URL)
     .then((response) => response.json())
     .then((data) => dispatch(fetchCurrenciesSucess(data)))

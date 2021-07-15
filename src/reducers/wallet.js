@@ -14,7 +14,7 @@ const DEFAULT_STATE = {
 const walletReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
   case FETCH_CURRENCIES:
-    return { ...state, loading: true };
+    return { ...state };
   case FETCH_CURRENCIES_SUCCEEDED:
     return {
       ...state,

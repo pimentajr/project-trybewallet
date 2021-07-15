@@ -9,8 +9,13 @@ class Header extends Component {
     const { expenses } = wallet;
 
     const expensesTotal = expenses
-      .reduce((accumulator, { value, currency, exchangeRates }) => {
-        accumulator += value * exchangeRates[currency].ask;
+      .reduce((accumulator, currentCurrency) => {
+        try {
+          const { value, currency, exchangeRates } = currentCurrency;
+          accumulator += value * exchangeRates[currency].ask;
+        } catch (err) {
+          console.log(err);
+        }
         return accumulator;
       }, 0).toFixed(2);
 
@@ -35,10 +40,13 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
-  wallet: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
-  email: PropTypes.string.isRequired,
-  expenses: PropTypes.shape(PropTypes.checkPropTypes).isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+  }).isRequired,
+  wallet: PropTypes.shape({
+    currencies: PropTypes.arrayOf(PropTypes.any),
+    expenses: PropTypes.arrayOf(PropTypes.any),
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => state;

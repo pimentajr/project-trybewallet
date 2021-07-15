@@ -5,15 +5,14 @@ import { fetchAPI, walletAddExpense } from '../actions';
 
 const DEFAULT_STATE = {
   value: '',
-  description: '',
-  coin: 'USD',
+  currency: 'USD',
   method: 'Dinheiro',
   tag: 'Alimentação',
+  description: '',
   exchangeRates: {},
 };
 
 class ExpensesForm extends Component {
-  // const { expenses } = this.props;
   constructor(props) {
     super(props);
     this.state = { id: 0, ...DEFAULT_STATE };
@@ -37,18 +36,18 @@ class ExpensesForm extends Component {
   mountForms() {
     const { wallet } = this.props;
     const { currencies } = wallet;
-    const { value, description, coin, method, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const filteredCoins = Object.keys(currencies).filter((coins) => coins !== 'USDT')
       .map((coins, key) => <option key={ key } value={ coins }>{ coins }</option>);
 
     return (
       <form className="wallet__form" action="#">
         <label htmlFor="value">
-          <strong>Valor</strong>
+          Valor
           <input value={ value } id="value" type="text" onChange={ this.handleChange } />
         </label>
         <label htmlFor="description">
-          <strong>Descrição</strong>
+          Descrição
           <input
             value={ description }
             id="description"
@@ -56,14 +55,14 @@ class ExpensesForm extends Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="coin">
-          <strong>Moeda</strong>
-          <select id="coin" value={ coin } onChange={ this.handleChange }>
+        <label htmlFor="currency">
+          Moeda
+          <select id="currency" value={ currency } onChange={ this.handleChange }>
             { filteredCoins }
           </select>
         </label>
         <label htmlFor="method">
-          <strong>Método de pagamento</strong>
+          Método de pagamento
           <select id="method" value={ method } onChange={ this.handleChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -71,7 +70,7 @@ class ExpensesForm extends Component {
           </select>
         </label>
         <label htmlFor="tag">
-          <strong>Tag</strong>
+          Tag
           <select id="tag" value={ tag } onChange={ this.handleChange }>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -91,8 +90,8 @@ class ExpensesForm extends Component {
 }
 
 ExpensesForm.propTypes = {
-  wallet: PropTypes.shape(PropTypes.object).isRequired,
-  currencies: PropTypes.shape(PropTypes.array).isRequired,
+  wallet: PropTypes.shape(PropTypes.checkPropTypes()).isRequired,
+  currencies: PropTypes.shape(PropTypes.checkPropTypes()).isRequired,
 };
 
 const mapStateToProps = (state) => state;
