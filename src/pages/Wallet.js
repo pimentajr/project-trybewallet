@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencies, addExpenses, fetchExchangeRates } from '../actions';
+import { fetchCurrencies, addExpenses, fetchExchangeRates, updateEdition }
+  from '../actions';
 import Table from './Table';
 
 class Wallet extends React.Component {
@@ -26,6 +27,8 @@ class Wallet extends React.Component {
     this.renderCurrency = this.renderCurrency.bind(this);
     this.renderPaymentMethod = this.renderPaymentMethod.bind(this);
     this.renderTag = this.renderTag.bind(this);
+    this.submitButton = this.submitButton.bind(this);
+    this.sendEditionButton = this.sendEditionButton.bind(this);
   }
 
   componentDidMount() {
@@ -40,17 +43,40 @@ class Wallet extends React.Component {
     });
   }
 
+  // Lógica explicada por Guilherme Pereira e José Henrique Margraf Melo
   async handleSubmit(e) {
     e.preventDefault();
     const { fetchExchangeRate } = this.props;
     await fetchExchangeRate();
     const { newExpenses, expenses, rawData } = this.props;
-    // linha de código inspirado no código escrito por José Henrique Margraf Melo: https://github.com/tryber/sd-011-project-trybewallet/pull/28/files
     const lastExpense = expenses[expenses.length - 1];
     this.setState({
       id: lastExpense ? lastExpense.id + 1 : 0,
       exchangeRates: rawData,
     }, () => { newExpenses(this.state); });
+  }
+
+  submitButton() {
+    return (
+      <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
+    );
+  }
+
+  sendEditionButton() {
+    const { sendEdition } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const editedKeys = { value, description, currency, method, tag };
+    return (
+      <button
+        type="button"
+        onClick={ (e) => {
+          e.preventDefault();
+          sendEdition(editedKeys);
+        } }
+      >
+        Editar despesa
+      </button>
+    );
   }
 
   renderValue() {
@@ -61,6 +87,7 @@ class Wallet extends React.Component {
         <input
           type="number"
           id="expenseInput"
+          data-testid="value-input"
           name="value"
           value={ value }
           onChange={ this.handleChange }
@@ -76,6 +103,7 @@ class Wallet extends React.Component {
         Descrição
         <textarea
           id="expenseDescription"
+          data-testid="description-input"
           name="description"
           value={ description }
           onChange={ this.handleChange }
@@ -85,16 +113,18 @@ class Wallet extends React.Component {
   }
 
   renderCurrency() {
-    const { currencyList } = this.props;
+    const { currencyList, isEditing } = this.props;
     const { currency } = this.state;
     return (
       <label htmlFor="currency">
         Moeda
         <select
           id="currency"
+          data-testid="currency-input"
           name="currency"
           value={ currency }
           onChange={ this.handleChange }
+          disabled={ isEditing }
         >
           { currencyList.map((c, index) => <option key={ index }>{c}</option>) }
         </select>
@@ -109,6 +139,7 @@ class Wallet extends React.Component {
         Método de pagamento
         <select
           id="payment-method"
+          data-testid="method-input"
           name="method"
           value={ method }
           onChange={ this.handleChange }
@@ -126,7 +157,13 @@ class Wallet extends React.Component {
     return (
       <label htmlFor="tag">
         Tag
-        <select id="tag" name="tag" value={ tag } onChange={ this.handleChange }>
+        <select
+          data-testid="tag-input"
+          id="tag"
+          name="tag"
+          value={ tag }
+          onChange={ this.handleChange }
+        >
           <option>Alimentação</option>
           <option>Lazer</option>
           <option>Trabalho</option>
@@ -138,7 +175,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, expenses } = this.props;
+    const { email, expenses, isEditing } = this.props;
 
     const totalExpenses = expenses
       .map((ex) => Number(ex.value) * Number(ex.exchangeRates[ex.currency].ask))
@@ -164,7 +201,9 @@ class Wallet extends React.Component {
           { this.renderPaymentMethod() }
           { this.renderTag() }
 
-          <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
+          { !isEditing
+            ? this.submitButton()
+            : this.sendEditionButton() }
           <Table />
         </form>
       </div>
@@ -180,6 +219,8 @@ Wallet.propTypes = {
   expenses: PropTypes.shape(PropTypes.any).isRequired,
   rawData: PropTypes.shape(PropTypes.any).isRequired,
   fetchExchangeRate: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  sendEdition: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -187,12 +228,14 @@ const mapStateToProps = (state) => ({
   currencyList: state.wallet.currencies,
   expenses: state.wallet.expenses,
   rawData: state.wallet.rawData,
+  isEditing: state.wallet.isOnEdition,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrency: () => dispatch(fetchCurrencies()),
   newExpenses: (payload) => dispatch(addExpenses(payload)),
   fetchExchangeRate: (payload) => dispatch(fetchExchangeRates(payload)),
+  sendEdition: (payload) => dispatch(updateEdition(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
