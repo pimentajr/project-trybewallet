@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from './Form';
 import Header from '../components/Header';
+import Table from '../components/Table';
 import { fetchApi } from '../actions';
 
 class Wallet extends Component {
@@ -21,6 +22,7 @@ class Wallet extends Component {
         <h3>TrybeWallet</h3>
         <Header total={ reducerExpenses() } />
         <Form />
+        <Table />
       </div>
     );
   }

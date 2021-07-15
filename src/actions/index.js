@@ -3,6 +3,7 @@ export const NEW_EXPENSES = 'NEW_EXPENSES';
 export const LOGIN = 'LOGIN';
 export const REQUEST_API = 'REQUEST_API';
 export const GET_DATA = 'GET_DATA';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export default function signUp(email) {
   return {
@@ -35,3 +36,8 @@ export function fetchApi() {
     dispatch(getData(data));
   };
 }
+
+export const removeExpense = (expense) => ({
+  type: REMOVE_EXPENSE,
+  expense,
+});

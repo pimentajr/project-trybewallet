@@ -21,6 +21,11 @@ function wallet(state = INICIAL_STATE, action) {
       ...state,
       currencies: [action.data],
     };
+  case 'REMOVE_EXPENSE':
+    return {
+      ...state,
+      expenses: state.expenses.filter((a) => a.id !== action.expense),
+    };
   default:
     return state;
   }
