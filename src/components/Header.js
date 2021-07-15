@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-class Header extends Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
+
     this.totalExpenses = this.totalExpenses.bind(this);
   }
 
@@ -20,23 +21,30 @@ class Header extends Component {
   }
 
   render() {
-    const { userData } = this.props;
+    const { email } = this.props;
+
     return (
       <header>
-        <h2 data-testid="email-field">{ userData || 'name'}</h2>
-        <h2 data-testid="total-field">{ this.totalExpenses }</h2>
-        <h2 data-testid="header-currency-field">BRL</h2>
+        <p data-testid="email-field">
+          { email }
+        </p>
+        <p data-testid="total-field">
+          { this.totalExpenses() }
+        </p>
+        <p data-testid="header-currency-field">
+          BRL
+        </p>
       </header>
     );
   }
 }
 Header.propTypes = {
-  userData: PropTypes.string,
+  email: PropTypes.string,
 }.isRequired;
 
-const mapToStateProps = (state) => ({
-  userData: state.user.email,
+const mapStateToProps = (state) => ({
+  email: state.user.email,
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapToStateProps)(Header);
+export default connect(mapStateToProps, null)(Header);

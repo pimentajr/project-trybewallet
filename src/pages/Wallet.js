@@ -35,9 +35,7 @@ class Wallet extends React.Component {
     return (
       <div>
         <span>Trybe Wallet</span>
-        <div>
-          <Header />
-        </div>
+        <Header />
         <Form currencies={ currencies } />
       </div>
     );
