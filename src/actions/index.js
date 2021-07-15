@@ -23,4 +23,3 @@ export const coinsThunk = () => async (dispatch) => {
   const filterCoins = coinsFilter(changeApi);
   dispatch(coinsOption(filterCoins));
 };
-
