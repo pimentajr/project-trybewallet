@@ -17,7 +17,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_SUCESS:
     return {
       ...state,
-      currencies: Object.keys(action.payload).filter((iten) => iten !== 'USDT'),
+      currencies: Object.keys(action.payload).filter((item) => item !== 'USDT'),
       loading: false,
     };
   default: return state;

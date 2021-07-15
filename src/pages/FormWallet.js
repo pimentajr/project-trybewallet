@@ -25,7 +25,7 @@ class FormWallet extends Component {
           Moeda:
           <select id="moeda">
             { currencies.map((item, index) => (
-              <option key={ index } value={ item }>{item}</option>)) }
+              <option key={ index } value={ item }>{ item }</option>)) }
           </select>
         </label>
         <label htmlFor="pagamento">
