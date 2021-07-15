@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import requestAPI from '../services/requestAPI';
+// import requestAPI from '../services/requestAPI';
 import { fetchAPI, addExpense } from '../actions';
 
 class FormDispenses extends Component {
@@ -9,6 +9,9 @@ class FormDispenses extends Component {
     super(props);
     this.valuesAPI = this.valuesAPI.bind(this);
     this.addNewExpenses = this.addNewExpenses.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.formWallet = this.formWallet.bind(this);
+    this.formWalletExtend = this.formWalletExtend.bind(this);
     this.state = {
       currency: 'USD',
       description: '',
@@ -25,8 +28,6 @@ class FormDispenses extends Component {
 
   valuesAPI() {
     const { currencies } = this.props;
-    console.log(currencies);
-
     return (
       currencies.map((currencie) => (
         <option key={ currencie } value={ currencie }>{currencie}</option>
@@ -46,48 +47,95 @@ class FormDispenses extends Component {
     });
   }
 
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  formWallet() {
+    const { value, description } = this.state;
+    return (
+      <>
+        <label htmlFor="value">
+          Valor
+          <input
+            type="number"
+            value={ value }
+            name="value"
+            id="value"
+            placeholder="digite o valor da despesa"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição
+          <input
+            type="text"
+            value={ description }
+            name="description"
+            id="description"
+            placeholder="digite a descrição da despesa"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="value-coins">
+          Moeda
+          <select id="value-coins">
+            {this.valuesAPI()}
+          </select>
+        </label>
+      </>
+    );
+  }
+
+  formWalletExtend() {
+    const { method, tag } = this.state;
+    return (
+      <>
+        <label htmlFor="method">
+          Método de pagamento
+          <select
+            id="method"
+            name="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
+            <option value="money">Dinheiro</option>
+            <option value="credit-card">Cartão de crédito</option>
+            <option value="debit-card">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag
+          <select
+            id="tag"
+            name="tag"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
+            <option value="food">Alimentação</option>
+            <option value="freetime">Lazer</option>
+            <option value="work">Trabalho</option>
+            <option value="transport-healt">Transporte e saúde</option>
+          </select>
+        </label>
+        <button
+          type="button"
+          onClick={ () => this.addNewExpenses() }
+        >
+          Adicionar despesa
+        </button>
+      </>
+    );
+  }
+
   render() {
-    console.log(requestAPI());
     return (
       <div>
         <form>
-          <label htmlFor="value">
-            Valor
-            <input type="text" name="value" id="value" />
-          </label>
-          <label htmlFor="description">
-            Descrição
-            <input type="text" name="description" id="description" />
-          </label>
-          <label htmlFor="value-coins">
-            Moeda
-            <select id="value-coins">
-              {this.valuesAPI()}
-            </select>
-          </label>
-          <label htmlFor="payment-method">
-            Método de pagamento
-            <select id="payment-method">
-              <option value="money">Dinheiro</option>
-              <option value="credit-card">Cartão de crédito</option>
-              <option value="debit-card">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag-dispenses">
-            Tag
-            <select id="tag-dispenses">
-              <option value="food">Alimentação</option>
-              <option value="freetime">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport-healt">Transporte e saúde</option>
-            </select>
-          </label>
-          <button
-            type="button"
-            onClick={ () => this.addNewExpenses() }
-          >
-            Adicionar despesa
-          </button>
+          { this.formWallet() }
+          { this.formWalletExtend() }
         </form>
       </div>
     );
@@ -100,7 +148,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadingValues: () => dispatch(fetchAPI()),
-  saveExpenses: (expenses) => dispatch(addExpense(expenses)),
+  saveExpenses: (expense) => dispatch(addExpense(expense)),
 });
 
 FormDispenses.propTypes = {

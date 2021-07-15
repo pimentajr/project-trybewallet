@@ -1,17 +1,21 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
-const INITIAL_STATE = { currencies: [], countId: 0, expenses: [] };
+const INITIAL_STATE = {
+  currencies: [],
+  countId: 0,
+  expense: [],
+};
 
 const addNewExpenses = (state = INITIAL_STATE, action) => {
-  const { countId, expenses } = state;
+  const { countId, expense } = state;
   const newExpense = {
     id: countId,
-    ...action.expenses,
+    ...action.expense,
   };
   return {
     ...state,
-    expenses: [
-      ...expenses,
+    expense: [
+      ...expense,
       newExpense,
     ],
     countId: countId + 1,
