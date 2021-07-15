@@ -25,11 +25,8 @@ class Wallet extends React.Component {
       const request = await fetch(url);
       const data = await request.json();
 
-      const currencies = Object.values(data);
-
-      currencies.map((currency) => ({
-        code: currency.code,
-      }));
+      const currenciesObj = Object.keys(data);
+      const currencies = currenciesObj.filter((currency) => currency !== 'USDT');
 
       this.setState({ currencies });
     } catch (error) {

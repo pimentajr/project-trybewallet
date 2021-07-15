@@ -17,9 +17,9 @@ class EntryForm extends Component {
               currencies.map((currency, index) => (
                 <option
                   key={ index }
-                  value={ currency.code }
+                  value={ currency }
                 >
-                  {currency.code}
+                  {currency}
                 </option>
               ))
             }
