@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Form from '../components/Form';
 import Wrapper from './Wallet.styles';
 
 function Wallet() {
@@ -18,6 +19,7 @@ function Wallet() {
         </div>
         <div data-testid="header-currency-field">BRL</div>
       </Wrapper>
+      <Form />
     </div>
   );
 }
