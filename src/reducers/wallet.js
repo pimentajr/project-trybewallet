@@ -1,4 +1,5 @@
-import { REQ_CURRENCIES_GOOD, ADD_TO_WALLET, ADD_TO_WALLET_TOTAL } from '../actions/index';
+import { REQ_CURRENCIES_GOOD,
+  ADD_TO_WALLET, ADD_TO_WALLET_TOTAL } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
