@@ -27,10 +27,10 @@ class ExpensesTable extends Component {
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
-            <td>{ `${currency} ${value}` }</td>
-            <td>{ currency }</td>
-            <td>{ `R$ ${parseFloat(currentCurrency.ask).toFixed(2)}` }</td>
-            <td>{ `R$ ${(currentCurrency.ask * value).toFixed(2)}` }</td>
+            <td>{ value }</td>
+            <td>{ currentCurrency.name }</td>
+            <td>{ parseFloat(currentCurrency.ask).toFixed(2) }</td>
+            <td>{ (currentCurrency.ask * value).toFixed(2) }</td>
             <td>Real</td>
             <td>
               <button
@@ -52,7 +52,7 @@ class ExpensesTable extends Component {
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
-            <th>Método de Pagamento</th>
+            <th>Método de pagamento</th>
             <th>Valor</th>
             <th>Moeda</th>
             <th>Câmbio utilizado</th>
