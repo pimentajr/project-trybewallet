@@ -3,19 +3,19 @@
 const INITIAL_STATE = {
   currencies: [],
   countId: 0,
-  expense: [],
+  expenses: [],
 };
 
 const addNewExpenses = (state = INITIAL_STATE, action) => {
-  const { countId, expense } = state;
+  const { countId, expenses } = state;
   const newExpense = {
     id: countId,
-    ...action.expense,
+    ...action.expenses,
   };
   return {
     ...state,
-    expense: [
-      ...expense,
+    expenses: [
+      ...expenses,
       newExpense,
     ],
     countId: countId + 1,

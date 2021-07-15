@@ -10,15 +10,15 @@ class Wallet extends React.Component {
   }
 
   sumExpenses() {
-    const { expense } = this.props;
-    console.log(expense);
-    const totalExpenses = expense.map(({ currency, value, exchangeRates }) => {
-      const dayCurrency = exchangeRates[currency];
-      const sumExpense = Number(value) * Number(dayCurrency.ask);
+    const { expenses } = this.props; // pegando o array de objetos salvo no redux
+
+    const totalExpenses = expenses.map(({ currency, value, exchangeRates }) => {
+      const atualCurrency = exchangeRates[currency]; // pego a moeda atual
+      const sumExpense = Number(value) * Number(atualCurrency.ask); // multiplicar a cotação atual pelo valor da moeda atual
       return sumExpense;
     });
-    console.log(totalExpenses);
-    return totalExpenses.reduce((total, expenses) => total + expenses, 0).toFixed(2);
+    console.log(totalExpenses); // retorna despesa já com a cotação atual
+    return totalExpenses.reduce((total, expense) => total + expense, 0).toFixed(2); // Conforme for salvando no redux, vou somar automaticamente
   }
 
   render() {
@@ -29,8 +29,10 @@ class Wallet extends React.Component {
         <header className="header">
           <p data-testid="email-field">{ email }</p>
           <p data-testid="total-field">
-            Despesas Totais: R$ 0,00
-            {/* { this.sumExpenses() } */}
+            Despesas Totais:
+            R$
+            { ' ' }
+            { this.sumExpenses() }
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
@@ -43,12 +45,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  expense: state.wallet.expense,
+  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
   email: PropTypes.objectOf,
-  expense: PropTypes.objectOf,
+  expenses: PropTypes.objectOf,
 }.isRequired;
 
 export default connect(mapStateToProps)(Wallet);

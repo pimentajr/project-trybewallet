@@ -16,8 +16,8 @@ class FormDispenses extends Component {
       currency: 'USD',
       description: '',
       value: 0,
-      tag: 'Alimentação',
-      method: 'Dinheiro',
+      tag: 'Lazer',
+      method: 'Cartão de crédito',
     };
   }
 
@@ -39,11 +39,11 @@ class FormDispenses extends Component {
     const { saveExpenses } = this.props;
     saveExpenses(this.state);
     this.setState({
-      currency: 'USD',
+      currency: 'EUR',
       description: '',
       value: 0,
-      tag: 'Alimentação',
-      method: 'Dinheiro',
+      tag: 'Trabalho',
+      method: 'Cartão de débito',
     });
   }
 
@@ -64,6 +64,7 @@ class FormDispenses extends Component {
             value={ value }
             name="value"
             id="value"
+            min="0"
             placeholder="digite o valor da despesa"
             onChange={ this.handleChange }
           />
@@ -117,7 +118,8 @@ class FormDispenses extends Component {
             <option value="food">Alimentação</option>
             <option value="freetime">Lazer</option>
             <option value="work">Trabalho</option>
-            <option value="transport-healt">Transporte e saúde</option>
+            <option value="transport">Transporte</option>
+            <option value="health">Saúde</option>
           </select>
         </label>
         <button
@@ -148,7 +150,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadingValues: () => dispatch(fetchAPI()),
-  saveExpenses: (expense) => dispatch(addExpense(expense)),
+  saveExpenses: (expenses) => dispatch(addExpense(expenses)),
 });
 
 FormDispenses.propTypes = {

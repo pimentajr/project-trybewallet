@@ -11,9 +11,9 @@ export const valuesWallet = (currencies) => ({
   currencies,
 });
 
-export const addValues = (expense) => ({
+export const addValues = (expenses) => ({
   type: 'ADDVALUES',
-  expense,
+  expenses,
 });
 
 export const fetchAPI = () => async (dispatch) => {
@@ -23,10 +23,10 @@ export const fetchAPI = () => async (dispatch) => {
   dispatch(valuesWallet(excludeUSDT));
 };
 
-export const addExpense = (expense) => async (dispatch) => {
+export const addExpense = (expenses) => async (dispatch) => {
   const resultFetchAPI = await requestAPI();
   const actualExpense = {
-    ...expense,
+    ...expenses,
     exchangeRates: resultFetchAPI,
   };
   dispatch(addValues(actualExpense));
