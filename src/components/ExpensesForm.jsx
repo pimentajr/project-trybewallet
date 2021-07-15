@@ -9,9 +9,7 @@ import fetchApi from '../services';
 class ExpensesForm extends Component {
   constructor(props) {
     super(props);
-    const { currencies } = props;
     this.state = {
-      currencies: [...currencies],
       value: 0,
       description: '',
       currency: 'USD',
@@ -60,7 +58,8 @@ class ExpensesForm extends Component {
   }
 
   render() {
-    const { currencies, value, description, method, tag, currency } = this.state;
+    const { value, description, method, tag, currency } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
@@ -90,8 +89,8 @@ class ExpensesForm extends Component {
             onChange={ this.handleChange }
             id="currency-selector"
           >
-            {currencies.map(({ code }) => (
-              <option key={ code } value={ code }>{ code }</option>
+            {currencies.map((el) => (
+              <option key={ el } value={ el }>{ el }</option>
             ))}
           </select>
         </label>
@@ -105,6 +104,7 @@ class ExpensesForm extends Component {
 
 const mapStateToProps = ({ wallet }) => ({
   expenses: wallet.expenses,
+  currencies: wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ExpensesForm.propTypes = ({
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   addNewExpense: PropTypes.func.isRequired,
 });

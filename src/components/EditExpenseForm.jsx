@@ -9,7 +9,6 @@ class EditExpenseForm extends Component {
   constructor(props) {
     super(props);
     const {
-      currencies,
       expense: {
         value,
         description,
@@ -19,7 +18,6 @@ class EditExpenseForm extends Component {
         id,
       } } = props;
     this.state = {
-      currencies: [...currencies],
       value,
       description,
       currency,
@@ -53,7 +51,8 @@ class EditExpenseForm extends Component {
   }
 
   render() {
-    const { currencies, value, description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
@@ -86,8 +85,8 @@ class EditExpenseForm extends Component {
             onChange={ this.handleChange }
             id="currency-selector"
           >
-            {currencies.map(({ code }) => (
-              <option key={ code } value={ code }>{ code }</option>
+            {currencies.map((el) => (
+              <option key={ el } value={ el }>{ el }</option>
             ))}
           </select>
         </label>
@@ -100,6 +99,7 @@ class EditExpenseForm extends Component {
 }
 
 const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
   expenses: wallet.expenses,
   expense: wallet.expenseToEdit,
 });
@@ -110,7 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 EditExpenseForm.propTypes = ({
   expense: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   editSuccess: PropTypes.func.isRequired,
 });
 

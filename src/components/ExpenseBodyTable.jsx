@@ -6,12 +6,11 @@ import { deleteExpense, editExpense } from '../actions';
 class ExpenseBodyTable extends Component {
   getCurrencyQuotation(selectedCurrency) {
     const { info: { exchangeRates } } = this.props;
-    const value = exchangeRates[selectedCurrency].ask;
-    return value;
+    return exchangeRates[selectedCurrency].ask;
   }
 
-  getCurrencyName(obj, value) {
-    return obj[value].name.split('/')[0];
+  getCurrencyName(exchangeRates, currency) {
+    return exchangeRates[currency].name.split('/')[0];
   }
 
   calculateConversion(quotation, expenseValue) {

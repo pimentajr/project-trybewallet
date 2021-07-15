@@ -42,6 +42,8 @@ describe('11 - Crie um botão para editar uma despesa da tabela contendo as segu
       ).toBeInTheDocument();
     });
 
+    console.log(store.getState().wallet.expenses[0].exchangeRates)
+
     expect(screen.getAllByRole('cell', { name: 'Trabalho' })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('cell', { name: 'Dinheiro' })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('cell', { name: '100' })[0]).toBeInTheDocument();

@@ -23,7 +23,7 @@ class Wallet extends React.Component {
       apiResponse[element]))
       .filter(({ codein }) => codein !== 'BRLT');
     this.handleState(arrayOfCurrencies);
-    saveObj(arrayOfCurrencies);
+    saveObj(arrayOfCurrencies.map((currency) => currency.code));
   }
 
   handleState(value) {
@@ -62,8 +62,7 @@ class Wallet extends React.Component {
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <main>
-          {edit ? <EditExpenseForm currencies={ currency } />
-            : currency.length > 0 && <ExpensesForm currencies={ currency } />}
+          {edit ? <EditExpenseForm /> : currency.length > 0 && <ExpensesForm />}
           <ExpensesTable />
         </main>
       </div>
