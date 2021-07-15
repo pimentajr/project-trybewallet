@@ -8,7 +8,7 @@ class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: 'alguem@email.com',
+      email: '',
       password: '',
       disableButton: true,
     };
