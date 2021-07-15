@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { emailAssignment } from '../actions';
 
 class FormsLogin extends React.Component {
@@ -23,7 +24,7 @@ class FormsLogin extends React.Component {
 
     this.setState({
       email,
-      isEmailValid: resultTest
+      isEmailValid: resultTest,
     });
   }
 
@@ -36,8 +37,8 @@ class FormsLogin extends React.Component {
     } else {
       this.setState({ isPasswordValid: false });
     }
-
   }
+
   render() {
     const { setEmail } = this.props;
     const { email, isEmailValid, isPasswordValid } = this.state;
@@ -57,17 +58,25 @@ class FormsLogin extends React.Component {
           onChange={ this.handleChangePassword }
         />
         <Link to="/carteira">
-          <button type="button" disabled={ isDisabled } onClick={ () => setEmail(email)}>Entrar</button>
+          <button
+            type="button"
+            disabled={ isDisabled }
+            onClick={ () => setEmail(email) }
+          >
+            Entrar
+          </button>
         </Link>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    setEmail: (email) => dispatch(emailAssignment(email))
-  })
-}
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (email) => dispatch(emailAssignment(email)),
+});
 
-export default connect(null, mapDispatchToProps)(FormsLogin); 
+export default connect(null, mapDispatchToProps)(FormsLogin);
+
+FormsLogin.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+};
