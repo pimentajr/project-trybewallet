@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { newExpenses } from '../actions';
 
 class Form extends Component {
   constructor() {
     super();
     this.state = {
       currencies: [],
-      // id: '0',
-      // value: '',
-      // description: '',
-      // currency: '',
-      // method: '',
-      // tag: '',
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: '',
+      tag: '',
     };
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.addExpenses = this.addExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -34,8 +38,24 @@ class Form extends Component {
       }));
   }
 
+  async addExpenses(action) {
+    const resultado = await fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((response) => response);
+    const { id, value, description, currency, method, tag } = this.state;
+    const objectExpense = {
+      id, value, description, currency, method, tag, exchangeRates: resultado,
+    };
+    await action(objectExpense);
+    const newID = id + 1;
+    this.setState({
+      id: newID,
+    });
+  }
+
   render() {
     const { currencies } = this.state;
+    const { sendExpense } = this.props;
     return (
       <div>
         <form>
@@ -74,10 +94,19 @@ class Form extends Component {
               <option key="Saúde">Saúde</option>
             </select>
           </label>
+          <button type="button" onClick={ () => this.addExpenses(sendExpense) }>Adicionar despesa</button>
         </form>
       </div>
     );
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  sendExpense: (obj) => dispatch(newExpenses(obj)),
+});
+
+Form.propTypes = {
+  sendExpense: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Form);
