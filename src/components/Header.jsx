@@ -21,7 +21,7 @@ export default class Header extends Component {
           { email }
         </span>
         <span data-testid="total-field">
-          <strong>Total: R$ </strong>
+          <strong>Despesa Total: R$ </strong>
           { expensesTotal }
         </span>
         <span data-testid="header-currency-field">

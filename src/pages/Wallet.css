@@ -90,5 +90,6 @@
   /* flex: 1; */
 }
 
-/* .wallet__table tr th {
-} */
+.wallet__table button {
+  padding: 6px 10px;
+}
