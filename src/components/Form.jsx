@@ -17,7 +17,9 @@ class Form extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);    
+    this.handleChange = this.handleChange.bind(this);
+    this.tagLabel = this.tagLabel.bind(this);
+    this.methodLabel = this.methodLabel.bind(this);
   }
 
   handleChange({ target }) {
@@ -25,7 +27,6 @@ class Form extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(name, value)
   }
 
   handleClick() {
@@ -40,9 +41,44 @@ class Form extends Component {
     });
   }
 
+  tagLabel() {
+    const { tag } = this.state;
+    return (
+      <label htmlFor="tag">
+        Tag
+        <select name="tag" value={ tag } id="tag" onChange={ this.handleChange }>
+          <option>Alimentação</option>
+          <option>Lazer</option>
+          <option>Trabalho</option>
+          <option>Transporte</option>
+          <option>Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
+  methodLabel() {
+    const { method } = this.state;
+    return (
+      <label htmlFor="method">
+        Método de pagamento
+        <select
+          name="method"
+          value={ method }
+          id="method"
+          onChange={ this.handleChange }
+        >
+          <option name="method">Dinheiro</option>
+          <option name="method">Cartão de crédito</option>
+          <option name="method">Cartão de débito</option>
+        </select>
+      </label>
+    );
+  }
+
   // eslint-disable-next-line max-lines-per-function
   render() {
-    const { value, method, description, currency, tag } = this.state;
+    const { value, description, currency } = this.state;
     const { moeda } = this.props;
     return (
       <div>
@@ -79,29 +115,8 @@ class Form extends Component {
               {moeda.map((curren, index) => <option key={ index }>{curren}</option>)}
             </select>
           </label>
-          <label htmlFor="method">
-            Método de pagamento
-            <select
-              name="method"
-              value={ method }
-              id="method"
-              onChange={ this.handleChange }
-            >
-              <option name="method">Dinheiro</option>
-              <option name="method">Cartão de crédito</option>
-              <option name="method">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select name="tag" value={ tag } id="tag" onChange={ this.handleChange }>
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          {this.methodLabel}
+          {this.tagLabel}
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
       </div>
@@ -111,6 +126,7 @@ class Form extends Component {
 
 Form.propTypes = {
   moeda: PropTypes.func.isRequired,
+  despesas: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
