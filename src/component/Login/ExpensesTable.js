@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStore from '../../utils/withStore';
 import { deleteExpense as deleteExpenseAgent } from '../../agents';
 
