@@ -15,6 +15,11 @@ export const requestSucess = (payload) => ({
   payload,
 });
 
+export const montarExpense = (payload) => ({
+  type: 'MOUNT_EXPENSE',
+  payload,
+});
+
 export const fetchMoedas = () => (dispatch) => {
   dispatch(requestMoedas());
   return fetch('https://economia.awesomeapi.com.br/json/all')
