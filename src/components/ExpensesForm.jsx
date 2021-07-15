@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchAPI, walletAddExpense } from '../actions';
 
 const DEFAULT_STATE = {
+  id: 0,
   value: '',
   currency: 'USD',
   method: 'Dinheiro',
@@ -15,7 +16,7 @@ const DEFAULT_STATE = {
 class ExpensesForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { id: 0, ...DEFAULT_STATE };
+    this.state = DEFAULT_STATE;
     this.handleChange = this.handleChange.bind(this);
     this.addExpense = this.addExpense.bind(this);
   }
@@ -30,7 +31,7 @@ class ExpensesForm extends Component {
     const { currencies } = wallet;
     fetchCurrencies();
     addExpense({ ...this.state, exchangeRates: currencies });
-    this.setState((prevState) => ({ id: prevState.id + 1, DEFAULT_STATE }));
+    this.setState((prevState) => ({ id: prevState.id + 1 }));
   }
 
   mountForms() {
