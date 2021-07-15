@@ -19,18 +19,18 @@ class ExpensesTable extends Component {
     const { wallet } = this.props;
     const { expenses } = wallet;
     const tableBody = expenses.map((expense) => {
-      const { id, value, description, coin, method, tag, exchangeRates } = expense;
-      const currentCoin = exchangeRates[coin];
+      const { id, value, description, currency, method, tag, exchangeRates } = expense;
+      const currentCurrency = exchangeRates[currency];
       return (
         <tbody key={ id }>
           <tr>
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
-            <td>{ `${coin} ${value}` }</td>
-            {/* <td>{ currentCoin.name }</td> */}
-            {/* <td>{ `R$ ${parseFloat(currentCoin.ask).toFixed(2)}` }</td> */}
-            {/* <td>{ `R$ ${(currentCoin.ask * value).toFixed(2)}` }</td> */}
+            <td>{ `${currency} ${value}` }</td>
+            <td>{ currentCurrency.name }</td>
+            <td>{ `R$ ${parseFloat(currentCurrency.ask).toFixed(2)}` }</td>
+            <td>{ `R$ ${(currentCurrency.ask * value).toFixed(2)}` }</td>
             <td>Real</td>
             <td>
               <button
