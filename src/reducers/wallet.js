@@ -1,14 +1,25 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
-  totalEx: 0,
+  currencies: [],
+  expenses: [],
 };
-function walletReducer(state = INITIAL_STATE, action) {
+
+const FETCH_API = 'FETCH-API';
+const ADD_EXPENSE = 'ADD_EXPENSE';
+function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'ADD_EX':
-    return state;
+  case FETCH_API:
+    return {
+      ...state,
+      currencies: action.payload,
+    };
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: action.state,
+    };
   default:
     return state;
   }
 }
 
-export default walletReducer;
+export default wallet;

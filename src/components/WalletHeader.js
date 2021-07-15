@@ -14,17 +14,17 @@ class Head extends Component {
     const { total } = this.state;
     return (
       <header>
-        <p1 data-testid="email-field">
+        <span data-testid="email-field">
           Email:
           {email}
-        </p1>
-        <p1 data-testid="total-field">
+        </span>
+        <span data-testid="total-field">
           Total:
           { total }
-        </p1>
-        <p1 data-testid="header-currency-field">
+        </span>
+        <span data-testid="header-currency-field">
           BRL
-        </p1>
+        </span>
       </header>
     );
   }
