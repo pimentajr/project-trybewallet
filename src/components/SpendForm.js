@@ -15,7 +15,6 @@ class SpendForm extends React.Component {
         currency: '',
         method: '',
       },
-      acronymsCurrency: [],
       expenses: [],
       enableToEdit: true,
     };
@@ -24,7 +23,6 @@ class SpendForm extends React.Component {
     this.inputsTexts = this.inputsTexts.bind(this);
     this.selectInputs = this.selectInputs.bind(this);
 
-    this.setAcronymsCurrency = this.setAcronymsCurrency.bind(this);
     this.addExp = this.addExp.bind(this);
     this.setExpenses = this.setExpenses.bind(this);
     this.setEditExp = this.setEditExp.bind(this);
@@ -32,8 +30,9 @@ class SpendForm extends React.Component {
   }
 
   componentDidMount() {
+    const { fetchCurrencie } = this.props;
+    fetchCurrencie();
     this.setExpenses();
-    this.setAcronymsCurrency();
   }
 
   componentDidUpdate() {
@@ -46,16 +45,6 @@ class SpendForm extends React.Component {
     if (expense && Object.keys(expense).length !== 0 && enableToEdit) {
       this.setState({ expense, enableToEdit: false });
     }
-  }
-
-  async setAcronymsCurrency() {
-    const { fetchCurrencie } = this.props;
-    await fetchCurrencie();
-    const { currencies } = this.props;
-    const acronymsCurrency = currencies.filter((acron) => acron !== 'USDT');
-    this.setState({
-      acronymsCurrency,
-    });
   }
 
   setExpenses() {
@@ -132,7 +121,8 @@ class SpendForm extends React.Component {
   }
 
   selectInputs() {
-    const { expense, acronymsCurrency } = this.state;
+    const { currencies } = this.props;
+    const { expense } = this.state;
     const { method, tag, currency } = expense;
     return (
       <fieldset>
@@ -144,7 +134,7 @@ class SpendForm extends React.Component {
             onChange={ this.handleChange }
             value={ currency }
           >
-            {acronymsCurrency.map((option, index) => (
+            {currencies.filter((acron) => acron !== 'USDT').map((option, index) => (
               <option value={ option } key={ `${option}${index}` }>{ option }</option>
             ))}
           </select>
@@ -204,6 +194,7 @@ class SpendForm extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
+  currencie: state.wallet.currencie,
   editExp: state.wallet.editExp,
 });
 
