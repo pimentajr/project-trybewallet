@@ -32,7 +32,7 @@ export const walletAddExpense = (expense) => ({
 });
 
 export const walletRemoveExpense = (expenseId) => ({
-  type: WALLET_ADDED_EXPENSE,
+  type: WALLET_REMOVED_EXPENSE,
   expenseId,
 });
 

@@ -7,12 +7,12 @@ class ExpensesTable extends Component {
   constructor() {
     super();
 
-    this.removeRow = this.removeRow.bind(this);
+    this.removeTableRow = this.removeTableRow.bind(this);
   }
 
-  removeRow(id) {
-    const { remove } = this.props;
-    remove(id);
+  removeTableRow(id) {
+    const { removeRow } = this.props;
+    removeRow(id);
   }
 
   render() {
@@ -28,7 +28,7 @@ class ExpensesTable extends Component {
             <td>{ tag }</td>
             <td>{ method }</td>
             <td>{ `${currency} ${value}` }</td>
-            <td>{ currentCurrency.name }</td>
+            <td>{ currency }</td>
             <td>{ `R$ ${parseFloat(currentCurrency.ask).toFixed(2)}` }</td>
             <td>{ `R$ ${(currentCurrency.ask * value).toFixed(2)}` }</td>
             <td>Real</td>
@@ -36,7 +36,7 @@ class ExpensesTable extends Component {
               <button
                 data-testid="delete-btn"
                 type="button"
-                onClick={ () => this.removeRow(id) }
+                onClick={ () => this.removeTableRow(id) }
               >
                 Remover
               </button>
@@ -70,13 +70,13 @@ class ExpensesTable extends Component {
 ExpensesTable.propTypes = {
   wallet: PropTypes.objectOf(PropTypes.any).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  remove: PropTypes.func.isRequired,
+  removeRow: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  remove: (id) => dispatch(walletRemoveExpense(id)),
+  removeRow: (id) => dispatch(walletRemoveExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
