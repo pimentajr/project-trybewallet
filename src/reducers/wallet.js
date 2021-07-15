@@ -1,4 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { NEW_EXPENSE } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -6,9 +8,13 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'SHOW_EMAIL':
+  case NEW_EXPENSE:
     return {
-      email: action.payload.email,
+      ...state,
+      expenses: [
+        ...state.expenses,
+        action.expense,
+      ],
     };
   default:
     return state;
