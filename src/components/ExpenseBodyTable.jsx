@@ -43,7 +43,7 @@ class ExpenseBodyTable extends Component {
         <td>{method}</td>
         <td>{value}</td>
         <td>{usedCurrency}</td>
-        <td>{Math.round(askPrice * 100) / 100}</td>
+        <td>{(Math.round(askPrice * 100) / 100).toFixed(2)}</td>
         <td>{convertedTotal}</td>
         <td>Real</td>
         <td>

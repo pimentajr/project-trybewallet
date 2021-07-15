@@ -109,7 +109,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 EditExpenseForm.propTypes = ({
-  expense: PropTypes.arrayOf(PropTypes.object).isRequired,
+  expense: PropTypes.shape({
+    exchangeRates: PropTypes.shape({}),
+    value: PropTypes.string,
+    description: PropTypes.string,
+    tag: PropTypes.string,
+    method: PropTypes.string,
+    currency: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   editSuccess: PropTypes.func.isRequired,
 });

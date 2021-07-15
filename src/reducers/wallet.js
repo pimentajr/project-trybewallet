@@ -39,9 +39,10 @@ const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
   }
   case EDIT_EXPENSE_SUCCESS: {
     const filteredExpenses = state.expenses.filter((el) => el.id !== payload.id);
+    const nexExpenses = [...filteredExpenses, payload].sort((a, b) => a.id - b.id);
     return {
       ...state,
-      expenses: [...filteredExpenses, payload],
+      expenses: [...nexExpenses],
       editExpense: false,
       expenseToEdit: [],
     };
