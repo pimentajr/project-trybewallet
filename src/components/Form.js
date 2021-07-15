@@ -94,7 +94,7 @@ class Form extends Component {
               <option key="Saúde">Saúde</option>
             </select>
           </label>
-          <button type="button" onClick={ () => this.addExpenses(sendExpense) }>Adicionar despesa</button>
+          <button type="button" onClick={ () => this.addExpenses(sendExpense) }>s</button>
         </form>
       </div>
     );
