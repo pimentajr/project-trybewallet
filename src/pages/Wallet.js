@@ -17,6 +17,7 @@ class Wallet extends React.Component {
       const sumExpense = Number(value) * Number(dayCurrency.ask);
       return sumExpense;
     });
+    console.log(totalExpenses);
     return totalExpenses.reduce((total, expenses) => total + expenses, 0).toFixed(2);
   }
 
@@ -28,8 +29,8 @@ class Wallet extends React.Component {
         <header className="header">
           <p data-testid="email-field">{ email }</p>
           <p data-testid="total-field">
-            Despesas Totais: R$
-            { this.sumExpenses() }
+            Despesas Totais: R$ 0,00
+            {/* { this.sumExpenses() } */}
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
