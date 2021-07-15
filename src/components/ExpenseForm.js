@@ -4,39 +4,69 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class ExpenseForm extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currencies: '',
+    };
+
+    this.getCurrencies = this.getCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCurrencies();
+  }
+
+  async getCurrencies() {
+    try {
+      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+      const results = await response.json();
+      const filter = Object.keys(results).filter((currencies) => currencies !== 'USDT');
+      console.log(filter);
+      this.setState({
+        currencies: filter,
+      });
+    } catch (error) {
+      this.setState({
+        currencies: error,
+      });
+    }
+  }
+
   render() {
-    const { currency } = this.props;
+    const { currencies } = this.state;
     return (
       <section>
-        <form id="xpenc-form">
-          <label htmlFor="xpenc-form">
+        <form>
+          <label htmlFor="valor">
             Valor
-            <input type="text" name="valor" />
+            <input type="text" id="valor" name="valor" />
           </label>
-          <label htmlFor="xpenc-form">
+          <label htmlFor="descricao">
             Descrição
-            <input type="text" name="descricao" />
+            <input type="text" id="descricao" name="descricao" />
           </label>
-          <label htmlFor="xpenc-form">
+          <label htmlFor="currency">
             Moeda
-            {console.log(currency)}
-            <select>
-              {currency
-                .map((item, index) => (
-                  <option value={ item } key={ index }>{item}</option>))}
+            <select id="currency">
+              {currencies
+                ? currencies.map((item, index) => (
+                  <option value={ item } key={ index }>{item}</option>))
+                : <option>erro</option>}
             </select>
           </label>
-          <label htmlFor="xpenc-form">
+          <label htmlFor="payment-method">
             Método de pagamento
-            <select>
+            <select id="payment-method">
               <option value="dinheiro">Dinheiro</option>
               <option value="credito">Cartão de crédito</option>
               <option value="debito">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="xpenc-form">
+          <label htmlFor="tag">
             Tag
-            <select>
+            <select id="tag">
               <option value="alimentacao">Alimentação</option>
               <option value="lazer">Lazer</option>
               <option value="trabalho">Trabalho</option>

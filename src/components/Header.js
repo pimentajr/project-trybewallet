@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
+    const totalCost = 0;
     const { email } = this.props;
     return (
       <header>
@@ -12,9 +13,10 @@ class Header extends React.Component {
         </div>
         <div data-testid="total-field">
           Despesa Total
+          {totalCost}
         </div>
         <div data-testid="header-currency-field">
-          Currency
+          BRL
         </div>
       </header>
     );
