@@ -21,6 +21,7 @@ class Forms extends React.Component {
     this.method = this.method.bind(this);
     this.tag = this.tag.bind(this);
     this.addCurrency = this.addCurrency.bind(this);
+    this.table = this.table.bind(this);
   }
 
   componentDidMount() {
@@ -142,16 +143,75 @@ class Forms extends React.Component {
     );
   }
 
+  table() {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+            <th>{ this.addCurrency() }</th>
+          </tr>
+        </thead>
+        {/* <tbody>
+          {this.tableBody()}
+        </tbody> */}
+      </table>
+    );
+  }
+
+  tableBody() {
+    const { expenses } = this.props;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = expenses;
+    return (
+      <tr>
+        <td>{description}</td>
+        <td>{ tag }</td>
+        <td>{method}</td>
+        <td>{ value }</td>
+        <td>{currency}</td>
+        <td>2</td>
+        <td>{Math.round(2 * 100) / 100}</td>
+        <td>Real</td>
+        <td>
+          <button type="button">Editar</button>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            // onClick={ () => deleteOneExpense() }
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    );
+  }
+
   render() {
     return (
-      <form>
-        { this.value() }
-        { this.description() }
-        { this.currency() }
-        { this.method() }
-        { this.tag() }
-        { this.addCurrency() }
-      </form>
+      <>
+        <form>
+          { this.value() }
+          { this.description() }
+          { this.currency() }
+          { this.method() }
+          { this.tag() }
+        </form>
+        { this.table() }
+      </>
     );
   }
 }

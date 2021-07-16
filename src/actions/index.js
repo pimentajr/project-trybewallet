@@ -17,7 +17,7 @@ const askFetch = async () => {
 };
 
 export const fetchPrices = (expense) => async (dispatch) => {
-  const askCurrency = await askFetch();
-  const xpense = { ...expense, askCurrency };
+  const exchangeRates = await askFetch();
+  const xpense = { ...expense, exchangeRates };
   dispatch(addExpense(xpense));
 };

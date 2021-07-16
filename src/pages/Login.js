@@ -12,7 +12,6 @@ class Login extends React.Component {
       password: '',
       disabled: true,
     };
-
     this.handleState = this.handleState.bind(this);
   }
 
