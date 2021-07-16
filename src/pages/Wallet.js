@@ -17,32 +17,32 @@ class Wallet extends React.Component {
             Valor
             <input id="input-value" type="text" />
           </label>
-          <label htmlFor="descrição">
+          <label htmlFor="description">
             Descrição
-            <input id="descrição" type="text" />
+            <input id="description" type="text" />
           </label>
           <label htmlFor="currency">
             Moeda
             <select role="combobox" id="currency">
-              <option value="dinheiro">Dinheiro</option>
+              <option value="dindin">Dindin</option>
             </select>
           </label>
-          <label htmlFor="metodo-de-pagamento">
+          <label htmlFor="payment-method">
             Método de Pagamento
             <select role="combobox" id="payment-method">
-              <option value="dinheiro"> Dinheiro</option>
-              <option value="cartao-de-credito">Cartão de crédito</option>
-              <option value="cartao-de-debito">Cartão de débito</option>
+              <option value="money"> Dinheiro</option>
+              <option value="credit-card">Cartão de crédito</option>
+              <option value="debit-card">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
             Tag
             <select role="combobox" id="tag">
-              <option value="alimentação">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
+              <option value="food">Alimentação</option>
+              <option value="laze">Lazer</option>
+              <option value="work">Trabalho</option>
+              <option value="Transport">Transporte</option>
+              <option value="health">Saúde</option>
             </select>
           </label>
         </form>
