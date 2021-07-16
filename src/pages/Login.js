@@ -64,7 +64,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            onClick={ () => sendLoginDispatch({ email }) }
+            onClick={ () => sendLoginDispatch(email) }
             disabled={ this.verifyLogin() }
           >
             Entrar

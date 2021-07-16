@@ -3,9 +3,9 @@ export const LOGIN = 'LOGIN';
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
 
-export const userLogin = (payload) => ({
+export const userLogin = (state) => ({
   type: LOGIN,
-  payload,
+  state,
 });
 
 export const request = () => ({
