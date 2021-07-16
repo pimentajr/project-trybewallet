@@ -93,7 +93,7 @@ class Form extends React.Component {
     return (
       <section>
         <label htmlFor="currencies">
-          Moedas:
+          Moeda:
           <select id="currencies" name="currency" onChange={ this.handleChange }>
             {currencies.map((currency, index) => (
               <option
@@ -142,7 +142,7 @@ class Form extends React.Component {
     return (
       <section>
         <label htmlFor="category">
-          Selecione uma categoria:
+          Tag
           <select id="category" name="tag" value={ tag } onChange={ this.handleChange }>
             <option value="alimentacao">
               Alimentação
