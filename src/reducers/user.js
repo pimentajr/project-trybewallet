@@ -3,8 +3,6 @@ import { SET_EMAIL } from '../actions/index';
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
-  redirect: false,
 };
 
 function user(state = INITIAL_STATE, action) {

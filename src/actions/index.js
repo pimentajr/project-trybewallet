@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
 export const SET_EMAIL = 'SET_EMAIL';
 
-export const setEmail = (payload) => ({
+export const setEmail = (email) => ({
   type: SET_EMAIL,
-  payload,
+  payload: email,
 });

@@ -30,10 +30,10 @@ class Login extends React.Component {
   }
 
   submitInputEmail2State() {
-    const { submitEmail, history } = this.props;
+    const { submitEmail, history: { push } } = this.props;
     const { email } = this.state;
     submitEmail(email);
-    history.push('/carteira');
+    push('/carteira');
   }
 
   render() {
@@ -74,7 +74,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  submitEmail: (payload) => dispatch(setEmail(payload)),
+  submitEmail: (email) => dispatch(setEmail(email)),
 });
 
 Login.propTypes = {
