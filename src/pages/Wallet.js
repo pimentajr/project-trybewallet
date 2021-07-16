@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { setWallet } from '../actions/index';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Form from '../components/Form';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -10,13 +11,20 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <Form />
+        <Table />
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setWalletAction: (payload) => dispatch(setWallet(payload)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   getCoins: () => { dispatch(saveCoins()); },
+// });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+// export default connect(null, mapDispatchToProps)(Wallet);
+
+// Wallet.propTypes = {
+
+// };
+
+export default Wallet;

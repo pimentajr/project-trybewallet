@@ -1,3 +1,20 @@
 .App {
   text-align: center;
 }
+
+.wallet-header {
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+}
+
+.despesa-moeda {
+  display: flex;
+}
+
+.form {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: .7em;
+  padding: 10px;
+}
