@@ -12,8 +12,8 @@ class Form extends React.Component {
       payment: '',
       tag: '',
       id: 0,
-      exchangeRates: {},
-      currency: 'USD',
+      // exchangeRates: {},
+      // currency: 'USD',
       currencies: [],
     };
     this.fetchCurrency = this.fetchCurrency.bind(this);
@@ -37,7 +37,7 @@ class Form extends React.Component {
     const objKeys = Object.keys(data);
     const currencies = objKeys.filter((currency) => currency !== 'USDT');
     this.setState({
-      exchangeRates: data,
+      // exchangeRates: data,
       currencies,
     });
   }
@@ -66,6 +66,7 @@ class Form extends React.Component {
         <label htmlFor="value">
           Valor:
           <input
+            id="value"
             type="number"
             min="9"
             name="expensesValue"
@@ -76,6 +77,7 @@ class Form extends React.Component {
         <label htmlFor="descrition">
           Descrição:
           <input
+            id="descrition"
             type="text"
             name="descrition"
             value={ descrition }
@@ -92,7 +94,7 @@ class Form extends React.Component {
       <section>
         <label htmlFor="currencies">
           Moedas:
-          <select name="currency" onChange={ this.handleChange }>
+          <select id="currencies" name="currency" onChange={ this.handleChange }>
             {currencies.map((currency, index) => (
               <option
                 key={ index }
@@ -114,7 +116,12 @@ class Form extends React.Component {
       <section>
         <label htmlFor="payment">
           Método de pagamento:
-          <select name="payment" value={ payment } onChange={ this.handleChange }>
+          <select
+            id="payment"
+            name="payment"
+            value={ payment }
+            onChange={ this.handleChange }
+          >
             <option value="dinheiro">
               Dinheiro
             </option>
@@ -136,7 +143,7 @@ class Form extends React.Component {
       <section>
         <label htmlFor="category">
           Selecione uma categoria:
-          <select name="tag" value={ tag } onChange={ this.handleChange }>
+          <select id="category" name="tag" value={ tag } onChange={ this.handleChange }>
             <option value="alimentacao">
               Alimentação
             </option>
