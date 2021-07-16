@@ -11,12 +11,12 @@ class CurrentType extends Component {
           if (type !== 'USDT') {
             return (
               <option key={ index }>{ type }</option>
-            )
+            );
           }
           return null;
         }) }
       </>
-    )
+    );
   }
 }
 
