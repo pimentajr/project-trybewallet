@@ -16,8 +16,6 @@ function Login(props) {
   const {
     email,
     password,
-    dunha,
-    // disparaDunha,
     dispatchNewEmail,
     dispatchNewPassword,
   } = props;
@@ -36,6 +34,7 @@ function Login(props) {
           onChange={ (event) => dispatchNewEmail(event.target.value) }
         />
       </label>
+      <br />
       <label htmlFor="password-input">
         Senha
         <input
@@ -45,6 +44,8 @@ function Login(props) {
           onChange={ (event) => dispatchNewPassword(event.target.value) }
         />
       </label>
+      <br />
+
       <button
         type="submit"
         onClick={ changeRoute }
@@ -52,7 +53,6 @@ function Login(props) {
       >
         Entrar
       </button>
-      <h1>{dunha}</h1>
       <h1>{email}</h1>
       <h2>{password}</h2>
     </div>
@@ -62,11 +62,9 @@ function Login(props) {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   password: state.user.password,
-  dunha: state.user.dunha,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  disparaDunha: () => dispatch({ type: 'DUNHA' }),
   dispatchNewEmail: (email) => dispatch({ type: 'LOGIN_EMAIL', email }),
   dispatchNewPassword: (password) => dispatch({ type: 'LOGIN_PASSWORD', password }),
 });
@@ -74,8 +72,6 @@ const mapDispatchToProps = (dispatch) => ({
 Login.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  dunha: PropTypes.string.isRequired,
-  // disparaDunha: PropTypes.func.isRequired,
   dispatchNewEmail: PropTypes.func.isRequired,
   dispatchNewPassword: PropTypes.func.isRequired,
 };

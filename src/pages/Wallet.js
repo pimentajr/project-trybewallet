@@ -2,35 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// Solução baseada em: https://github.com/reduxjs/react-redux/issues/255#issuecomment-259512261
-
-const requestCurrencies = () => ({
-  type: 'REQUEST_CURRENCIES',
-});
-
-const requestCurrentCurrencyPrices = () => ({
-  type: 'REQUEST_CURRENCIES_PRICES',
-});
-
+const requestCurrencies = () => ({ type: 'REQUEST_CURRENCIES' });
+const requestCurrentCurrencyPrices = () => ({ type: 'REQUEST_CURRENCIES_PRICES' });
+const receiveCurrencies = (currencies) => ({ type: 'RECEIVE_CURRENCIES', currencies });
 const receiveCurrenciesPrices = (currenciesPrices) => ({
   type: 'RECEIVE_CURRENCIES_PRICES',
   currenciesPrices,
 });
 
-const receiveCurrencies = (currencies) => ({
-  type: 'RECEIVE_CURRENCIES',
-  currencies,
-});
-
 class Wallet extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.findCurrencyPrice = this.findCurrencyPrice.bind(this);
-  }
-
   componentDidMount() {
-    const { requestCurrienciesProps, dispatcher } = this.props;
-    dispatcher(requestCurrienciesProps());
+    const { makeEventRequestCurrencies, dispatcher } = this.props;
+    dispatcher(makeEventRequestCurrencies());
   }
 
   renderSelectTag(handleTag) {
@@ -47,7 +30,6 @@ class Wallet extends React.Component {
           <option value="Trabalho">Trabalho</option>
           <option value="Transporte">Transporte</option>
           <option value="Saúde">Saúde</option>
-
         </select>
       </label>
     );
@@ -70,7 +52,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderCurrency(handleCurrency, currencies, value) {
+  renderCurrency(handleCurrency, currencies) {
     return (
       <label htmlFor="currency">
         Moeda
@@ -79,14 +61,13 @@ class Wallet extends React.Component {
           id="currency"
           onChange={ (event) => handleCurrency(event.target.value) }
         >
-          {currencies
-            && Object.values(currencies)
-              .filter((currency) => currency.codein !== 'BRLT')
-              .map((currency) => (
-                <option value={ currency.code } key={ currency.code }>
-                  {currency.code}
-                </option>
-              ))}
+          {currencies && Object.values(currencies)
+            .filter((currency) => currency.codein !== 'BRLT')
+            .map((currency) => (
+              <option value={ currency.code } key={ currency.code }>
+                {currency.code}
+              </option>
+            ))}
         </select>
       </label>
     );
@@ -101,7 +82,53 @@ class Wallet extends React.Component {
       .map((expense) => (<span key={ expenses.id }>{JSON.stringify(expense)}</span>));
   }
 
-  // eslint-disable-next-line max-lines-per-function
+  renderHeader(email, totalValue) {
+    return (
+      <div>
+        Header
+        <p data-testid="email-field">{email}</p>
+        <p data-testid="total-field">{totalValue}</p>
+        <p data-testid="header-currency-field"> BRL </p>
+      </div>);
+  }
+
+  renderValue(handleValue) {
+    return (
+      <label htmlFor="input-value">
+        Valor
+        <input
+          id="input-value"
+          type="text"
+          onChange={ (event) => handleValue(event.target.value) }
+        />
+      </label>
+    );
+  }
+
+  renderDescription(handleDescription) {
+    return (
+      <label htmlFor="description">
+        Descrição
+        <input
+          id="description"
+          type="text"
+          onChange={ (event) => handleDescription(event.target.value) }
+        />
+      </label>
+    );
+  }
+
+  renderAddExpense(buildFunctionToHandleAddExpense, dispatcher) {
+    return (
+      <button
+        type="button"
+        onClick={ buildFunctionToHandleAddExpense(dispatcher) }
+      >
+        Adicionar despesa
+      </button>
+    );
+  }
+
   render() {
     const {
       email,
@@ -113,84 +140,37 @@ class Wallet extends React.Component {
       handleTag,
       buildFunctionToHandleAddExpense,
       value,
-      id,
-      description,
-      method,
-      tag,
-      currency,
       expenses,
       dispatcher,
     } = this.props;
 
-    const totalValue = expenses
-      .map((expense) => {
-        const currencyRate = expense.exchangeRates[expense.currency];
-        return expense.value * currencyRate.ask;
-      })
-      .reduce((acc, cv) => acc + cv, 0);
+    const valuesInBrl = expenses.map((expense) => {
+      const currencyRate = expense.exchangeRates[expense.currency];
+      return expense.value * currencyRate.ask; // valor em Brasileirinhos
+    });
+
+    const totalValueInBrl = valuesInBrl.reduce((acc, cv) => acc + cv, 0);
+
     return (
       <div>
-        Header
-        <header>
-          <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{totalValue}</p>
-          <p data-testid="header-currency-field"> BRL </p>
-        </header>
-        =============
-        <br />
+        {
+          /* Essas funções não precisam de bind porque elas não passam
+          o this para o callback
+          Aqui eu não preciso porque o this não é passado para ninguem
+          caso utiliza-se onClick={} seria nescessario pois estou pasando this para onClick
+          https://tableless.com.br/react-this-bind-so-sei-que-assim/
+          */
+        }
+        {this.renderHeader(email, totalValueInBrl)}
         <form>
-          <label htmlFor="input-value">
-            Valor
-            <input
-              id="input-value"
-              type="text"
-              onChange={ (event) => {
-                handleValue(event.target.value);
-              } }
-            />
-          </label>
-          <br />
-          <label htmlFor="description">
-            Descrição
-            <input
-              id="description"
-              type="text"
-              value={ description }
-              onChange={ (event) => handleDescription(event.target.value) }
-            />
-          </label>
-          <br />
+          {this.renderValue(handleValue)}
+          {this.renderDescription(handleDescription)}
           {this.renderCurrency(handleCurrency, currencies, value)}
-          <br />
-
           {this.renderSelectPaymentMethod(handleMethod)}
-          <br />
-
           {this.renderSelectTag(handleTag)}
-          <br />
-
-          <button
-            type="button"
-            onClick={ buildFunctionToHandleAddExpense(dispatcher) }
-          >
-            Adicionar despesa
-          </button>
+          {this.renderAddExpense(dispatcher, buildFunctionToHandleAddExpense)}
         </form>
-        <p>
-          {id}
-          <br />
-          {description}
-          <br />
-          {value}
-          <br />
-          {currency}
-          <br />
-          {method}
-          <br />
-          {tag}
-        </p>
-        {this.renderExpenses(expenses)}
-
+        {}
       </div>
     );
   }
@@ -214,9 +194,9 @@ const mapStateToProps = (state) => {
 
 function requestCurrenciesAndDispatchReceiveCurrencies() {
   return (myDispatcher) => {
+    // Solução baseada em: https://github.com/reduxjs/react-redux/issues/255#issuecomment-259512261
     // Não entendi a necessidade disso!
     myDispatcher(requestCurrencies());
-
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
       .then((currencies) => myDispatcher(receiveCurrencies(currencies)));
@@ -225,9 +205,7 @@ function requestCurrenciesAndDispatchReceiveCurrencies() {
 
 function buildAddExpenseFunction(myDispatcher) {
   return () => {
-    // Não entendi a necessidade disso!
     myDispatcher(requestCurrentCurrencyPrices());
-
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
       .then((currencies) => myDispatcher(receiveCurrenciesPrices(currencies)));
@@ -235,7 +213,7 @@ function buildAddExpenseFunction(myDispatcher) {
 }
 
 const mapDispatchToProps = (dispatcher) => ({
-  requestCurrienciesProps: requestCurrenciesAndDispatchReceiveCurrencies,
+  makeEventRequestCurrencies: requestCurrenciesAndDispatchReceiveCurrencies,
   dispatcher,
   handleDescription: (descrip) => dispatcher({ type: 'SAVED_DESCRIPTION', descrip }),
   handleValue: (value) => dispatcher({ type: 'SAVED_VALUE', value }),
@@ -246,32 +224,21 @@ const mapDispatchToProps = (dispatcher) => ({
 });
 
 Wallet.propTypes = {
-  buildFunctionToHandleAddExpense: PropTypes.func,
+  buildFunctionToHandleAddExpense: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
-  currency: PropTypes.shape({
-    code: PropTypes.any,
-    codein: PropTypes.string,
-  }),
-  description: PropTypes.any,
+  currency: PropTypes.shape({ code: PropTypes.string, codein: PropTypes.string })
+    .isRequired,
   dispatcher: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  exchangeRates: PropTypes.shape({
-    filter: PropTypes.func,
-  }),
-  expenses: PropTypes.shape({
-    map: PropTypes.func,
-  }),
-  handleAddExpense: PropTypes.func,
-  handleCurrency: PropTypes.any,
-  handleDescription: PropTypes.func,
-  handleMethod: PropTypes.any,
-  handleTag: PropTypes.any,
-  handleValue: PropTypes.func,
-  id: PropTypes.any,
-  method: PropTypes.any,
-  requestCurrienciesProps: PropTypes.func.isRequired,
-  tag: PropTypes.any,
-  value: PropTypes.any,
+  exchangeRates: PropTypes.shape({ filter: PropTypes.func }).isRequired,
+  expenses: PropTypes.shape({ map: PropTypes.func }).isRequired,
+  handleCurrency: PropTypes.func.isRequired,
+  handleDescription: PropTypes.func.isRequired,
+  handleMethod: PropTypes.func.isRequired,
+  handleTag: PropTypes.func.isRequired,
+  handleValue: PropTypes.func.isRequired,
+  makeEventRequestCurrencies: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

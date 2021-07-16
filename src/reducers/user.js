@@ -2,11 +2,7 @@
 const INITIAL_STATE = {
   email: '',
   password: '',
-  dunha: 'Quem é o dunha?',
 };
-function handleDunhaEvent(state) {
-  return { ...state, dunha: 'Aquele que rasgou seu cu com a unha' };
-}
 
 function handleLoginEmail(state, action) {
   state.email = action.email;
@@ -25,8 +21,6 @@ function handlePasswordEmail(state, action) {
 
 export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'DUNHA':
-    return handleDunhaEvent(state);
   case 'LOGIN_EMAIL':
     return handleLoginEmail(state, action);
   case 'LOGIN_PASSWORD':

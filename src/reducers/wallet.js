@@ -1,12 +1,4 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// import { fetchEconomia } from '../actions';
-
-const INITIAL_STATE = {
-  currencies: {},
-  expenses: [],
-  newExpense: {},
-  count: 0,
-};
 
 function handleValue(state, action) {
   state.newExpense.value = action.value;
@@ -57,28 +49,29 @@ function handleRequestCurrencies(state) {
   return newState;
 }
 
-// eslint-disable-next-line complexity
-export default function wallet(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'RECEIVE_CURRENCIES':
-    return handleReceiveCurrencies(state, action);
-  case 'REQUEST_CURRENCIES':
-    return handleRequestCurrencies(state); // Por que preciso desse evento?
-  case 'RECEIVE_CURRENCIES_PRICES':
-    return handleReceiveCurrenciesPrices(state, action);
-  case 'REQUEST_CURRENCIES_PRICES':
-    return handleRequestCurrenciesPrices(state); // Por que preciso desse evento?
-  case 'SAVED_DESCRIPTION':
-    return handleDescription(state, action);
-  case 'SAVED_VALUE':
-    return handleValue(state, action);
-  case 'SAVED_CURRENCY':
-    return handleCurrency(state, action);
-  case 'SAVED_METHOD':
-    return handleMethod(state, action);
-  case 'SAVED_TAG':
-    return handleTag(state, action);
-  default:
-    return state;
+const eventHandlerMap = {
+  RECEIVE_CURRENCIES: handleReceiveCurrencies,
+  REQUEST_CURRENCIES: handleRequestCurrencies,
+  RECEIVE_CURRENCIES_PRICES: handleReceiveCurrenciesPrices,
+  REQUEST_CURRENCIES_PRICES: handleRequestCurrenciesPrices,
+  SAVED_DESCRIPTION: handleDescription,
+  SAVED_VALUE: handleValue,
+  SAVED_CURRENCY: handleCurrency,
+  SAVED_METHOD: handleMethod,
+  SAVED_TAG: handleTag,
+};
+
+export default function wallet(state, action) {
+  const handler = eventHandlerMap[action.type];
+  if (handler) {
+    return handler(state, action);
   }
+
+  // initial state
+  return {
+    currencies: {},
+    expenses: [],
+    newExpense: {},
+    count: 0,
+  };
 }
