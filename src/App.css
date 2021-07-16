@@ -35,8 +35,8 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   color: white;
   display: flex;
-  font-weight: 500;
   flex-direction: row;
+  font-weight: 500;
   height: 50px;
   justify-content: space-between;
 }
