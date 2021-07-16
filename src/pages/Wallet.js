@@ -7,6 +7,7 @@ import TableExpense from '../components/TableExpense';
 class Wallet extends React.Component {
   totalExpense() {
     const { expenses } = this.props;
+    if (!expenses) return 0;
     return expenses.reduce((acc, expense) => {
       const expenseValue = expense
         .exchangeRates[expense.currency]
