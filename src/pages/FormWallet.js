@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCoins } from '../actions';
+import { fetchCoins, fetchCoinsOnApi } from '../actions';
+import CurrentType from '../components/CurrentType';
 
 class FormWallet extends Component {
   componentDidMount() {
-    const { dispatchFetchCoins } = this.props;
+    const { dispatchFetchCoins, fetchCurrent } = this.props;
     dispatchFetchCoins();
+    fetchCurrent();
   }
 
   render() {
-    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -24,8 +25,7 @@ class FormWallet extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            { currencies.map((item, index) => (
-              <option key={ index } value={ item }>{ item }</option>)) }
+            <CurrentType />
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -52,16 +52,13 @@ class FormWallet extends Component {
 }
 
 FormWallet.propTypes = {
-  dispatchFetchCoins: PropTypes.string.isRequired,
-  currencies: PropTypes.string.isRequired,
+  dispatchFetchCoins: PropTypes.func.isRequired,
+  fetchCurrent: PropTypes.func.isRequired,
 };
-
-const mapStatToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchCoins: (state) => dispatch(fetchCoins(state)),
+  fetchCurrent: () => dispatch(fetchCoinsOnApi()),
 });
 
-export default connect(mapStatToProps, mapDispatchToProps)(FormWallet);
+export default connect(null, mapDispatchToProps)(FormWallet);

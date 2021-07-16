@@ -21,9 +21,8 @@ export const fetchSucess = (payload) => ({
   payload,
 });
 
-export const fetchCoinsOnApi = () => (dispatch) => {
-  dispatch(fetchCoins());
-  return fetch('https://economia.awesomeapi.com.br/json/all')
+export function fetchCoinsOnApi() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((data) => dispatch(fetchSucess(data)));
+    .then((currencies) => dispatch(fetchSucess(currencies)));
 };
