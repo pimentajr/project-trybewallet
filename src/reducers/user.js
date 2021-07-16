@@ -1,19 +1,20 @@
-import { SAVE_EMAIL } from '../actions';
+// eslint-disable-next-line import/named
+import { LOGIN } from '../actions';
 
-// Esse reducer será responsável por tratar as informações da pessoa usuária
-const INITIAL_STATE = {
+const INITIAL_STATE = ({
   email: '',
-};
+});
 
-function user(state = INITIAL_STATE, { type, payload }) {
-  switch (type) {
-  case SAVE_EMAIL:
+const user = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case LOGIN:
     return {
-      email: payload.email,
+      ...state,
+      email: action.email,
     };
-
   default:
     return state;
   }
-}
+};
+
 export default user;
