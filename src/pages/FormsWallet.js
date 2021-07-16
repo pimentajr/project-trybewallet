@@ -6,35 +6,29 @@ class FormsWallet extends React.Component {
       <form>
         <label htmlFor="valor">
           Valor:
-          <input
-            name="valor"
-            type="number"
-          />
+          <input name="valor" type="number" id="valor" />
         </label>
         <label htmlFor="descricao">
           Descrição:
-          <input
-            name="descricao"
-            type="text"
-          />
+          <input name="descricao" type="text" id="descricao" />
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select id="moeda">
-            <option value="vazio">Testando</option>
+          <select>
+            <option value="dinheiro">Dinheiro</option>
           </select>
         </label>
-        <label htmlFor="metodo-de-pagamennto">
+        <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
-          <select>
+          <select id="metodo-de-pagamento">
             <options value="dinheiro">Dinheiro</options>
             <options value="cartao-de-credito">Cartão de crédito</options>
-            <options value="cartao-de-debito">Cartão de Débito</options>
+            <options value="cartao-de-debito">Cartão de débito</options>
           </select>
         </label>
         <label htmlFor="categoria">
           Tag
-          <select>
+          <select id="categoria">
             <options value="alimentacao">Alimentação</options>
             <options value="lazer">Lazer</options>
             <options value="trabalho">Trabalho</options>
