@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormsWallet from '../components/FormsWallet';
 import { fetchCurrencies } from '../actions/wallet';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Wallet extends React.Component {
           <p data-testid="header-currency-field"> BRL </p>
         </header>
         { (loading) ? <p>Carregando...</p> : <FormsWallet />}
+        <ExpensesTable />
         <form>
           <label htmlFor="payment-method">
             Método de Pagamento
