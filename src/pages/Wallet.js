@@ -1,10 +1,17 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
+import FormsWallet from '../components/FormsWallet';
+import { fetchCurrencies } from '../actions/wallet';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrenciesAPI } = this.props;
+    fetchCurrenciesAPI();
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, loading } = this.props;
     return (
       <div>
         <header>
@@ -12,21 +19,8 @@ class Wallet extends React.Component {
           <p data-testid="total-field"> 0 </p>
           <p data-testid="header-currency-field"> BRL </p>
         </header>
+        { (loading) ? <p>Carregando...</p> : <FormsWallet />}
         <form>
-          <label htmlFor="input-value">
-            Valor
-            <input id="input-value" type="text" />
-          </label>
-          <label htmlFor="description">
-            Descrição
-            <input id="description" type="text" />
-          </label>
-          <label htmlFor="currency">
-            Moeda
-            <select role="combobox" id="currency">
-              <option value="dindin">Dindin</option>
-            </select>
-          </label>
           <label htmlFor="payment-method">
             Método de Pagamento
             <select role="combobox" id="payment-method">
@@ -52,8 +46,15 @@ class Wallet extends React.Component {
 }
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  loading: state.wallet.isLoading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrenciesAPI: () => dispatch(fetchCurrencies()),
 });
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
-export default connect(mapStateToProps)(Wallet);
+  email: PropTypes.string,
+  fetchCurrenciesAPI: PropTypes.func,
+  loading: PropTypes.bool,
+}.isRequired;
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

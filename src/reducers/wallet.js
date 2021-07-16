@@ -1,21 +1,32 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+
+import {
+  REQUEST_CURRENCIES,
+  REQUEST_SUCCESS,
+} from '../actions/wallet';
+
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
+  isLoading: false,
 };
 
-function walletReducer(state = INITIAL_STATE, action) {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'NEW_ACTION':
-    return { state: action.state };
+  case REQUEST_CURRENCIES:
+    return {
+      ...state,
+      isLoading: true,
+    };
+  case REQUEST_SUCCESS:
+    return {
+      ...state,
+      currencies: action.currencies.filter((currency) => currency.codein !== 'BRLT'),
+      isLoading: false,
+    };
   default:
     return state;
   }
-}
+};
 
-export default walletReducer;
+export default wallet;
