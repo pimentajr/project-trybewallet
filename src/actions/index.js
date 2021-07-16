@@ -1,5 +1,5 @@
 // Coloque aqui suas actions
-const urlApi = 'https://economia.awesomeapi.com.br/json/all';
+const apiUrl = 'https://economia.awesomeapi.com.br/json/all';
 
 export const LOGIN = 'LOGIN';
 export const CURRENCIES = 'CURRENCIES';
@@ -44,4 +44,3 @@ const loginActionCreator = (data) => ({
 });
 
 export default loginActionCreator;
-

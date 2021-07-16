@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import PaymentMethod from './PaymentMethod';
-import ExpenseTag from './ExpenseTag';
-import { fetchCurrencies, getExangeRatesAC, saveExpensesAC } from '../../actions';
+import FormrMethod from './FormrMethod';
+import FormrBtn from './FormrBtn';
+import { fetchCurrencies, getExangeRatesAC, saveExpensesAC } from '../actions';
 
 class WalletForm extends Component {
   constructor(_props) {
@@ -22,7 +22,6 @@ class WalletForm extends Component {
       expense: [],
     };
   }
-
 
   handleChange(event) {
     const { id: name, value } = event.target;
