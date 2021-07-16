@@ -1,34 +1,30 @@
-export const userLogin = (email) => ({
-  type: 'USER_LOGIN',
-  email,
+export const userLogin = (email) => ({ type: 'USER_LOGIN', email });
+
+export const loadingFetch = () => ({ type: 'LOADING_FETCH' });
+
+export const acceptFetch = (payload) => ({ type: 'ACCEPT_FETCH', payload });
+
+export const rejectFecth = (payload) => ({ type: 'REJECT_FETCH', payload });
+
+export const sendExpenses = (payload, responseJSON) => ({
+  type: 'SEND_EXPENSES',
+  payload,
+  responseJSON,
 });
 
-export default { userLogin };
+export function fetchPosts(payload = false) {
+  return (dispatch) => {
+    dispatch(loadingFetch());
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((responseJSON) => (
+        payload
+          ? dispatch(sendExpenses(payload, responseJSON))
+          : dispatch(acceptFetch(responseJSON))))
+      .cath((error) => dispatch(rejectFecth(error)));
+  };
+}
 
-// export const REQUEST_API = 'REQUEST_API';
-// export const REQUEST_API_SUCESS = 'REQUEST_API_SUCESS';
-// export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
+export const deleteExpense = (id) => ({ type: 'DELETE_EXPENSE', id });
 
-// const requestApi = (payload) => ({
-//   type: 'REQUEST_API',
-//   payload,
-// });
-
-// const requestSucessApi = (payload) => ({
-//   type: 'REQUEST_API_SUCESS',
-//   payload,
-// });
-
-// const requestErrorApi = (payload) => ({
-//   type: 'REQUEST_API_ERROR',
-//   payload,
-// });
-
-// const API = 'https://economia.awesomeapi.com.br/json/all';
-// export const fecthApi = () => (dispatch) => {
-//   dispatch(requestApi());
-//   return fetch(API)
-//     .then((result) => result.json())
-//     .then((data) => dispatch(requestSucessApi(data)))
-//     .catch((error) => dispatch(requestErrorApi(error)));
-// };
+export const changeExpense = (expense) => ({ type: 'CHANGE_EXPENSE', expense });

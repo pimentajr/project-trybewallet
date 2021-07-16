@@ -51,7 +51,7 @@ class Login extends React.Component {
           name="email"
           value={ email }
           onChange={ this.handleChange }
-          placeholder="Email"
+          placeholder="alguem@email.com"
         />
         <input
           data-testid="password-input"
