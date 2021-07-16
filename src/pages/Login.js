@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLogin } from '../actions';
 
@@ -11,7 +11,6 @@ class Login extends React.Component {
       email: '',
       password: '',
       disabled: true,
-      login: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,18 +35,9 @@ class Login extends React.Component {
     } else { this.setState({ disabled: true }); }
   } // peguei parte desta função com o Túlio Sploradori - Turma 11
 
-  loginTrue() {
-    this.setState({ login: true });
-  }
-
   render() {
     const { dispatchLogin } = this.props;
-    const { email, password, disabled, login } = this.state;
-
-    if (login) {
-      dispatchLogin(email);
-      return <Redirect to="/carteira" />;
-    }
+    const { email, password, disabled } = this.state;
 
     return (
       <div>
@@ -74,13 +64,15 @@ class Login extends React.Component {
             onKeyUp={ this.validateEmailAndPassword }
           />
 
-          <button
-            type="button"
-            disabled={ disabled }
-            onClick={ () => this.loginTrue() }
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ disabled }
+              onClick={ () => dispatchLogin(email) }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>);
   }
