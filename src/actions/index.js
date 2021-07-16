@@ -19,11 +19,19 @@ const requestCoinSuccess = (payload) => ({
   payload,
 });
 
-export const fetchMoeda = () => (dispatch) => {
+export const salvaDespesa = (state, payload) => ({
+  type: 'RESPONSE_PARAM',
+  state,
+  payload,
+});
+
+// Verifica se há algo no state
+export const fetchMoeda = (state = false) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     // pega o objeto da API e transforma em.json
     .then((result) => result.json())
-    // levar os dados -data- para o meu payload retornando-o
-    .then((data) => dispatch(requestCoinSuccess(data)));
+    // levar os dados -data- para o meu payload retornando-os (o state ou data, de acordo com o q houver no state)
+    .then((data) => (state ? dispatch(salvaDespesa(state, data))
+      : dispatch(requestCoinSuccess(data))));
 };

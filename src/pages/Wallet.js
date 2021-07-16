@@ -1,10 +1,14 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    const spent = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number((exchangeRates[currency].ask * value)))
+    ), 0);
     // console.log(email);
     return (
       <div>
@@ -12,7 +16,7 @@ class Wallet extends React.Component {
         <header>
           <span data-testid="email-field">{ email }</span>
           <p>
-            <span data-testid="total-field">0</span>
+            <span data-testid="total-field">{ spent || 0 }</span>
           </p>
           <p>
             <span data-testid="header-currency-field">BRL</span>
@@ -26,6 +30,11 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);
+
+Wallet.propTypes = {
+  email: Proptypes.string,
+}.isRequired;

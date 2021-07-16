@@ -19,6 +19,12 @@ function wallet(state = INITIAL_STATE, action) {
       currencies: Object.keys(action.payload).filter((coin) => coin !== 'USDT'),
       isLoading: false,
     };
+  case 'RESPONSE_PARAM':
+    action.state.exchangeRates = action.payload;
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
+    };
   default:
     return state;
   }
