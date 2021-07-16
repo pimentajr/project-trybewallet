@@ -89,7 +89,12 @@ class Form extends React.Component {
           </select>
         </label>
         { this.handleForm() }
-        <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
+        {/* <button
+          type="submit"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button> */}
         <Table />
       </form>
     );
