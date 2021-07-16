@@ -2,20 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from '../components/WalletHeader';
-import { fetchApiRequest, ADDExpense } from '../actions';
+import { fetchApiRequest, fetchAPIExpense } from '../actions';
 
 class Wallet extends React.Component {
-  constructor() {
-    const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      valu: 0,
-      descri: '',
-      method: payments[0],
-      tag: tags[0],
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChanges = this.handleChanges.bind(this);
+    this.AddExpense = this.AddExpense.bind(this);
   }
 
   componentDidMount() {
@@ -23,20 +24,11 @@ class Wallet extends React.Component {
     FetchApi();
   }
 
-  handleChanges({ target }) {
-    const { value, name } = target;
-    this.setState({
-      [name]: value,
-    });
-    console.log(this.state);
-  }
+  getTotal(expenses) {
+    const total = (expenses.length === 0) ? 0 : expenses
+      .reduce((acc, cur) => acc + cur.value * cur.exchangeRates[cur.currency].ask, 0);
 
-  handleButton(event) {
-    event.preventDefault();
-    const { expenseDispatch } = this.props;
-    const { email, valu, descri, method, tag } = this.state;
-
-    expenseDispatch([{ email, valu, descri, method, tag }]);
+    return total.toFixed(2);
   }
 
   optionCreator(coinApi) {
@@ -46,29 +38,51 @@ class Wallet extends React.Component {
     ));
   }
 
+  AddExpense() {
+    const { addExpense, expenses } = this.props;
+    const expensesLength = expenses.length;
+    addExpense(this.state);
+
+    if (expensesLength >= 0) {
+      this.setState({ id: expensesLength + 1 });
+    }
+  }
+
+  handleChanges({ target }) {
+    const { value, name } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
-    const { coinApi, email } = this.props;
+    const { coinApi, email, expenses } = this.props;
     return (
       <div>
-        <Head email={ email } />
+        <Head email={ email } total={ this.getTotal(expenses) } />
         <form>
           <label htmlFor="valu">
             valor
-            <input type="number" id="valu" name="valu" onChange={ this.handleChanges } />
+            <input type="number" id="valu" name="value" onChange={ this.handleChanges } />
           </label>
-          <label htmlFor="descri">
+          <label htmlFor="description">
             Descrição
-            <input type="text" id="descr" name="descr" onChange={ this.handleChanges } />
+            <input
+              type="text"
+              id="description"
+              name="description"
+              onChange={ this.handleChanges }
+            />
           </label>
-          <label htmlFor="coin">
+          <label htmlFor="currency">
             Moeda
-            <select id="coin" name="coin" onChange={ this.handleChanges }>
+            <select id="currency" name="currency" onChange={ this.handleChanges }>
               { this.optionCreator(coinApi) }
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Método de pagamento
-            <select id="payment" name="payment" onChange={ this.handleChanges }>
+            <select id="method" name="method" onChange={ this.handleChanges }>
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -84,7 +98,7 @@ class Wallet extends React.Component {
               <option>Saúde</option>
             </select>
           </label>
-          <button type="button">Adicionar Despesa</button>
+          <button type="button" onClick={ this.AddExpense }>Adicionar Despesa</button>
         </form>
       </div>
     );
@@ -94,14 +108,16 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   coinApi: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   FetchApi: PropTypes.func.isRequired,
   coinApi: PropTypes.objectOf(PropTypes.any).isRequired,
-  expenseDispatch: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 const mapDispatchToProps = (dispatch) => ({
   FetchApi: (state) => dispatch(fetchApiRequest(state)),
-  expenseDispatch: (state) => dispatch(ADDExpense(state)) });
+  addExpense: (expense) => dispatch(fetchAPIExpense(expense)) });
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -4,7 +4,7 @@ const INITIAL_STATE = {
 };
 
 const FETCH_API = 'FETCH-API';
-const ADD_EXPENSE = 'ADD_EXPENSE';
+const NEW_EXPENSE = 'NEW_EXPENSE';
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case FETCH_API:
@@ -12,10 +12,10 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       currencies: action.payload,
     };
-  case ADD_EXPENSE:
+  case NEW_EXPENSE:
     return {
       ...state,
-      expenses: action.state,
+      expenses: state.expenses.concat(action.expense),
     };
   default:
     return state;

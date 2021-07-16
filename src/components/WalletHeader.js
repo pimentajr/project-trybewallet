@@ -2,16 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Head extends Component {
-  constructor() {
-    super();
-    this.state = {
-      total: 0,
-    };
-  }
-
   render() {
-    const { email } = this.props;
-    const { total } = this.state;
+    const { email, total } = this.props;
     return (
       <header>
         <span data-testid="email-field">
@@ -31,5 +23,6 @@ class Head extends Component {
 }
 Head.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.string.isRequired,
 };
 export default Head;
