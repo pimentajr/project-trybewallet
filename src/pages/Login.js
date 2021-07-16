@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/Login.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { emailAction } from '../actions';
 
 class Login extends React.Component {
@@ -84,7 +84,8 @@ class Login extends React.Component {
         <form className="form">
           <h1 className="logTitle">login</h1>
           <div className="inputDiv">
-            <p><FontAwesomeIcon icon={ faEnvelope } /></p>
+            {/* <p><FontAwesomeIcon icon={ faEnvelope } /></p> */}
+            <p>E</p>
             <input
               type="email"
               data-testid="email-input"
@@ -96,7 +97,8 @@ class Login extends React.Component {
             />
           </div>
           <div className="inputDiv">
-            <p><FontAwesomeIcon icon={ faKey } /></p>
+            {/* <p><FontAwesomeIcon icon={ faKey } /></p> */}
+            <p>P</p>
             <input
               type="password"
               data-testid="password-input"
