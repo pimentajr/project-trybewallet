@@ -1,7 +1,8 @@
 import {
   REQUEST_CURRENCY_API,
   REQUEST_CURRENCY_API_SUCESS,
-  ADD_EXPENSES } from '../actions/index';
+  ADD_EXPENSES,
+  REMOVE_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -20,17 +21,23 @@ function wallet(state = INITIAL_STATE, action) {
   case REQUEST_CURRENCY_API_SUCESS:
     return {
       ...state,
-      currencies: action.payload,
       isLoading: false,
+      currencies: action.payload,
     };
   case ADD_EXPENSES:
-    return ({
+    return {
       ...state,
       id: state.id + 1,
       expenses: [...state.expenses,
         { id: action.id,
-          ...action.payload,
-          exchangesRates: state.currencies }],
+          ...action.expenses,
+          exchangeRates: state.currencies,
+        }],
+    };
+  case REMOVE_EXPENSE:
+    return ({
+      ...state,
+      expenses: [...state.expenses.filter((item) => item.id !== action.id)],
     });
   default:
     return state;

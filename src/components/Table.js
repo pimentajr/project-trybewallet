@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as rootActions from '../actions';
 
 class Table extends React.Component {
+  delEspense(id) {
+    const { expenseRemove } = this.props;
+    expenseRemove(id);
+  }
+
   render() {
     const { expenseStatement } = this.props;
     return (
@@ -57,7 +63,11 @@ const mapStateToprops = (state) => ({
   expenseStatement: state.wallet.expenses,
 });
 
-export default connect(mapStateToprops)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  expenseRemove: (id) => dispatch(rootActions.removeExpense(id)),
+});
+
+export default connect(mapStateToprops, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenseStatement: PropTypes.func,

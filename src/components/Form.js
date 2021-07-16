@@ -30,60 +30,68 @@ class Form extends React.Component {
     });
   }
 
-  handleClick() {
+  handleClick(event) {
+    event.preventDefault();
     const { setAPI } = this.props;
     setAPI();
     const { expenses, id } = this.props;
     expenses(this.state, id);
   }
 
+  handleForm() {
+    return (
+      <div>
+        <label htmlFor="payment">
+          Método de pagamento:
+          <select id="payment" name="method" onChange={ this.handleChange }>
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag:
+          <select id="tag" name="tag" onChange={ this.handleChange }>
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <input
+            type="text"
+            id="description"
+            name="description"
+            onChange={ this.handleChange }
+          />
+        </label>
+      </div>
+    );
+  }
+
   render() {
     const { currencyAcronym } = this.props;
     return (
-      <div className="form">
-        <form>
-          <label htmlFor="valor">
-            Valor:
-            <input type="number" id="valor" name="value" onChange={ this.handleChange } />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select id="currency" name="currency" onChange={ this.handleChange }>
-              { Object.values(currencyAcronym).filter((item) => item.codein !== 'BRLT')
-                .map((e, index) => <option key={ index }>{e.code}</option>)}
-            </select>
-          </label>
-          <label htmlFor="payment">
-            Método de pagamento:
-            <select id="payment" name="method" onChange={ this.handleChange }>
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag:
-            <select id="tag" name="tag" onChange={ this.handleChange }>
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input
-              type="text"
-              id="description"
-              name="description"
-              onChange={ this.handleChange }
-            />
-          </label>
-          <button type="button" onClick={ this.handleClick }>Adicionar despesas</button>
-        </form>
+      <form>
+        <label htmlFor="valor">
+          Valor
+          <input type="number" name="valor" id="valor" onChange={ this.handleChange } />
+        </label>
+        <label htmlFor="moeda">
+          Moeda
+          <select name="moeda" id="moeda" onChange={ this.handleChange }>
+            { currencyAcronym && Object.values(currencyAcronym)
+              .filter((item) => item.codein !== 'BRLT')
+              .map((initials, index) => <option key={ index }>{initials.code}</option>) }
+          </select>
+        </label>
+        { this.handleForm() }
+        <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
         <Table />
-      </div>
+      </form>
     );
   }
 }
@@ -95,7 +103,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setAPI: () => dispatch(rootActions.fetchCurrencyAPI()),
-  expenses: (payload, id) => dispatch(rootActions.addExpenses(payload, id)),
+  expenses: (expenses, id) => dispatch(rootActions.addExpenses(expenses, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
