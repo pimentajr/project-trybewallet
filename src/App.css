@@ -11,7 +11,7 @@
 }
 
 .buttonAdd {
-  background-color: #0d1821;
+  background-color: rgb(158, 154, 154);
   border-radius: 25px;
   color: #f0f4ef;
   display: flex;
@@ -31,9 +31,11 @@
 
 .expenseContainer {
   align-items: center;
-  background-color: whitesmoke;
+  background-color: #343a40;
   border: 1px solid rgba(0, 0, 0, 0.125);
+  color: white;
   display: flex;
+  font-weight: 500;
   flex-direction: row;
   height: 50px;
   justify-content: space-between;
@@ -41,14 +43,13 @@
 
 .header {
   align-items: center;
-  background-color: #343a40;
+  background-color: whitesmoke;
   display: flex;
   height: 100px;
   justify-content: space-evenly;
 }
 
 .header-text {
-  color: #f8f9fa;
   font-weight: 500;
   margin: 0;
 }
