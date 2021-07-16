@@ -7,13 +7,13 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      expensesValue: 0,
-      descrition: '',
-      payment: '',
-      tag: '',
+      value: 0,
+      description: '',
+      method: 'Cartão de crédito',
+      tag: 'Lazer',
       id: 0,
-      // exchangeRates: {},
-      // currency: 'USD',
+      exchangeRates: {},
+      currency: 'USD',
       currencies: [],
     };
     this.fetchCurrency = this.fetchCurrency.bind(this);
@@ -37,7 +37,7 @@ class Form extends React.Component {
     const objKeys = Object.keys(data);
     const currencies = objKeys.filter((currency) => currency !== 'USDT');
     this.setState({
-      // exchangeRates: data,
+      exchangeRates: data,
       currencies,
     });
   }
@@ -50,7 +50,11 @@ class Form extends React.Component {
   }
 
   handleClick() {
+    this.fetchCurrency();
     const objForm = this.state;
+    const { exchangeRates, currency } = this.state;
+    console.log(currency, exchangeRates);
+    delete objForm.currencies;
     let { id } = this.state;
     const { dispatchExpenses } = this.props;
     dispatchExpenses(objForm);
@@ -60,7 +64,7 @@ class Form extends React.Component {
   }
 
   inputExpenses() {
-    const { expensesValue, descrition } = this.state;
+    const { value, description } = this.state;
     return (
       <section>
         <label htmlFor="value">
@@ -69,18 +73,18 @@ class Form extends React.Component {
             id="value"
             type="number"
             min="9"
-            name="expensesValue"
-            value={ expensesValue }
+            name="value"
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="descrition">
+        <label htmlFor="description">
           Descrição:
           <input
-            id="descrition"
+            id="description"
             type="text"
-            name="descrition"
-            value={ descrition }
+            name="description"
+            value={ description }
             onChange={ this.handleChange }
           />
         </label>
@@ -95,7 +99,7 @@ class Form extends React.Component {
         <label htmlFor="currencies">
           Moeda:
           <select id="currencies" name="currency" onChange={ this.handleChange }>
-            {currencies.map((currency, index) => (
+            {currencies && currencies.map((currency, index) => (
               <option
                 key={ index }
                 value={ currency }
@@ -111,15 +115,15 @@ class Form extends React.Component {
   }
 
   inputMethodyPayment() {
-    const { payment } = this.state;
+    const { method } = this.state;
     return (
       <section>
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento:
           <select
-            id="payment"
-            name="payment"
-            value={ payment }
+            id="method"
+            name="method"
+            value={ method }
             onChange={ this.handleChange }
           >
             <option value="dinheiro">
