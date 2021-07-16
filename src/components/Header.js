@@ -26,8 +26,7 @@ class Header extends Component {
           <h1>lucasWallet</h1>
           <div className="subHeader">
             <p data-testid="email-field">
-              Email:
-              { userEmail }
+              {`Email: ${userEmail}`}
             </p>
             <p data-testid="total-field">
               Despesa Total: R$
