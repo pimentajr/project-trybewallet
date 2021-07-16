@@ -59,6 +59,11 @@ class Table extends React.Component {
   }
 }
 
+/**
+ * Consultei o repsitório do Ivaldo Souza para resolver o map dentro do tbody
+* Link: https://github.com/tryber/sd-011-project-trybewallet/pull/11/commits/124b9e05e7580b379786ff50caef4ba95687421d
+ */
+
 const mapStateToprops = (state) => ({
   expenseStatement: state.wallet.expenses,
 });

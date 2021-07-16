@@ -44,4 +44,9 @@ function wallet(state = INITIAL_STATE, action) {
   }
 }
 
+/**
+ * Consultei o repositório da Gabriela Feijó para reslver o problema com o switch case add_expense
+ * Link: https://github.com/tryber/sd-011-project-trybewallet/pull/90/commits/9dbc6234fbd7dcb9d4235c8eda338f06499ae18d
+ */
+
 export default wallet;
