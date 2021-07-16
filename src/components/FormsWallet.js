@@ -21,19 +21,19 @@ class FormsWallet extends React.Component {
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
           <select id="metodo-de-pagamento">
-            <options value="dinheiro">Dinheiro</options>
-            <options value="cartao-de-credito">Cartão de crédito</options>
-            <options value="cartao-de-debito">Cartão de débito</options>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="cartao-de-credito">Cartão de crédito</option>
+            <option value="cartao-de-debito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="categoria">
-          Tag
+          Tag:
           <select id="categoria">
-            <options value="alimentacao">Alimentação</options>
-            <options value="lazer">Lazer</options>
-            <options value="trabalho">Trabalho</options>
-            <options value="transporte">Transporte</options>
-            <options value="saude">Saúde</options>
+            <option value="alimentacao">Alimentação</option>
+            <option value="lazer">Lazer</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="transporte">Transporte</option>
+            <option value="saude">Saúde</option>
           </select>
         </label>
       </form>
