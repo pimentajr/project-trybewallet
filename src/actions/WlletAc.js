@@ -1,7 +1,7 @@
-function sendWallet(valorTotal) {
+function sendWallet(stateLocal) {
   return {
-    type: 'Wallet',
-    valorTotal,
+    type: 'ADCIONADESPESAS',
+    stateLocal, // veio por dispatch do Form.js
   };
 }
 

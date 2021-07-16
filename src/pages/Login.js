@@ -1,89 +1,102 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import sendLogin from '../actions';
+import { Redirect } from 'react-router-dom';
+import loginActionCreator from '../actions';
 
-class Login extends Component {
-  constructor() {
-    super();
+class Login extends React.Component {
+  constructor(_props) {
+    super(_props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.validateLogin = this.validateLogin.bind(this);
+
     this.state = {
       email: '',
       password: '',
-      button: true,
+      shouldRedirect: false,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClik = this.handleClik.bind(this);
   }
 
-  handleClik() {
-    const { getUser } = this.props;
-    const { email } = this.state;
-    getUser(email);
+  componentDidMount() {
+    document.querySelector('button').disabled = true;
+  }
+
+  componentDidUpdate() {
+    this.validateLogin();
   }
 
   handleChange(event) {
-    const { value, name } = event.target;
+    const { type: name, value } = event.target;
+
     this.setState({
       [name]: value,
-    }, () => { // segundo parametro do setstate para regularizar a sincronicidade
-      const { email, password } = this.state;
-      const number = 6;
-      if (/^[\w0-9.]+@\w+\.com$/.test(email) && password.length >= number) {
-        this.setState({
-          button: false,
-        });
-      } else {
-        this.setState({
-          button: true,
-        });
-      }
     });
   }
 
+  handleClick() {
+    const { props: { loginDispatch }, state } = this;
+    loginDispatch(state);
+    this.setState({
+      shouldRedirect: true,
+    });
+  }
+
+  validateLogin() {
+    const { email, password } = this.state;
+    const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+    const minLength = 6;
+    const btnEnviar = document.querySelector('button');
+
+    if (btnEnviar) {
+      if (emailRegex.test(email) && password.length >= minLength) {
+        btnEnviar.disabled = false;
+      } else {
+        btnEnviar.disabled = true;
+      }
+    }
+  }
+
   render() {
-    const { button } = this.state;
+    const { email, password, shouldRedirect } = this.state;
+
     return (
-      <div>
-        <h1> Faça seu Login</h1>
-        <form className="Login">
-          <label htmlFor="email-input">
-            email:
+      shouldRedirect ? <Redirect to="/carteira" />
+        : (
+          <form>
             <input
-              // id="email-input"
-              data-testid="email-input"
-              name="email"
               type="email"
+              value={ email }
               onChange={ this.handleChange }
+              data-testid="email-input"
             />
-          </label>
-          <input
-            name="password"
-            type="password"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-          />
-          <Link to="/carteira">
+            <input
+              type="password"
+              value={ password }
+              onChange={ this.handleChange }
+              data-testid="password-input"
+            />
             <button
-              name="button"
-              disabled={ button } // quando disabled recebe true ele fica desativado.
               type="button"
-              onClick={ this.handleClik }
+              value="Entrar"
+              onClick={ this.handleClick }
             >
               Entrar
             </button>
-          </Link>
-        </form>
-      </div>
+          </form>
+
+        )
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: (email) => dispatch(sendLogin(email)),
+  loginDispatch: (data) => dispatch(loginActionCreator(data)),
 });
+
 Login.propTypes = {
-  getUser: PropTypes.func.isRequired,
+  loginDispatch: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
