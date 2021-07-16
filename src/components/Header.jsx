@@ -1,12 +1,14 @@
 import React from 'react';
-import store from '../store';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
+    const { email } = this.props;
     return (
       <header>
         <p data-testid="email-field">
-          {store.getState().user.email}
+          {email}
         </p>
 
       </header>
@@ -14,4 +16,12 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+});
+
+export default connect(mapStateToProps)(Header);
+
+Header.propTypes = {
+  email: PropTypes.string,
+}.isRequired;

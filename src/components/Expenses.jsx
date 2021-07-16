@@ -4,21 +4,40 @@ import PropTypes from 'prop-types';
 // import store from '../store';
 
 class Expenses extends React.Component {
-  render() {
+  constructor() {
+    super();
+
+    this.sumExpenses = this.sumExpenses.bind(this);
+  }
+
+  sumExpenses() {
     const { expensesTotal } = this.props;
+    const infos = expensesTotal.map(({ expensesValue, currency, exchangeRates }) => {
+      const currencySelect = exchangeRates[currency];
+      const priceActual = Number(expensesValue) * Number(currencySelect.ask);
+
+      return priceActual;
+    });
+    return infos.reduce((total, expenses) => {
+      total += expenses;
+      return total;
+    }, 0).toFixed(2);
+  }
+
+  render() {
     return (
       <section
         data-testid="total-field"
       >
         Despesas Totais:
-        {expensesTotal}
+        {this.sumExpenses()}
       </section>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  expensesTotal: state.wallet.expensesTotal,
+  expensesTotal: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Expenses);
