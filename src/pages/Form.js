@@ -1,37 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Form extends Component {
-  constructor() {
-    super();
-    this.state = {
-      value: 0,
-      description: '',
-      currency: 'USD',
-      payment: 'Dinheiro',
-      tag: 'Alimentação',
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(name, value) {
-    this.setState({
-      [name]: value,
-    });
-  }
-
   render() {
-    const { value, description, currency, payment, tag } = this.state;
-    const { currencies } = this.props;
+    const { value, description, currency, payment, tag, currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
           Valor
-          <input type="text" id="value" value={ value } />
+          <input type="text" name="value" id="value" value={ value } />
         </label>
         <label htmlFor="description">
           Descrição
-          <input type="text" id="description" value={ description } />
+          <input type="text" name="description" id="description" value={ description } />
         </label>
         <label htmlFor="currency">
           Moeda
@@ -62,8 +44,17 @@ class Form extends Component {
   }
 }
 
-Form.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
 
-export default Form;
+Form.propTypes = {
+  value: PropTypes.number,
+  description: PropTypes.string,
+  currency: PropTypes.number,
+  payment: PropTypes.string,
+  tag: PropTypes.string,
+  currencies: PropTypes.arrayOf(PropTypes.string),
+}.isRequired;
+
+export default connect(mapStateToProps, null)(Form);

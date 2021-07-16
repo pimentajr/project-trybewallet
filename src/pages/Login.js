@@ -38,6 +38,7 @@ class Login extends React.Component {
       <div>
         Login
         <label htmlFor="email">
+          Email:
           <input
             data-testid="email-input"
             type="email"
@@ -49,6 +50,7 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="password">
+          Senha:
           <input
             data-testid="password-input"
             type="password"
@@ -62,7 +64,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            onClick={ () => sendLoginDispatch(email) }
+            onClick={ () => sendLoginDispatch({ email }) }
             disabled={ this.verifyLogin() }
           >
             Entrar
@@ -74,7 +76,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  sendLoginDispatch: (state) => dispatch(userLogin(state)),
+  sendLoginDispatch: (email) => dispatch(userLogin(email)),
 });
 
 Login.propTypes = {
