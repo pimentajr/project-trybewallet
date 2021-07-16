@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 class Form extends Component {
   render() {
-    const { value, description, currency, payment, tag, currencies } = this.props;
+    const { value, description, currency, payment, tag } = this.props;
+    const { currencies, onChange } = this.props;
     return (
       <form>
         <label htmlFor="value">
@@ -17,13 +18,13 @@ class Form extends Component {
         </label>
         <label htmlFor="currency">
           Moeda
-          <select id="currency" value={ currency } onChange={ this.handleChange }>
+          <select id="currency" value={ currency } onChange={ onChange }>
             { currencies.map((item, index) => <option key={ index }>{ item }</option>) }
           </select>
         </label>
         <label htmlFor="payment">
           Método de pagamento
-          <select id="payment" value={ payment } onChange={ this.handleChange }>
+          <select id="payment" value={ payment } onChange={ onChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -31,7 +32,7 @@ class Form extends Component {
         </label>
         <label htmlFor="expense">
           Tag
-          <select id="expense" value={ tag } onChange={ this.handleChange }>
+          <select id="expense" value={ tag } onChange={ onChange }>
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
@@ -55,6 +56,7 @@ Form.propTypes = {
   payment: PropTypes.string,
   tag: PropTypes.string,
   currencies: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps, null)(Form);
