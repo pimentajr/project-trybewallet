@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 class Header extends Component {
   render() {
     const { login, expenses } = this.props;
-    const exchangeRate = expenses.map((exp) => Number(exp.exchangeRates[exp.currency].ask) * Number(exp.value));
+    const exchangeRate = expenses
+      .map((exp) => Number(exp.exchangeRates[exp.currency].ask) * Number(exp.value));
     return (
       <header>
         <h3 data-testid="email-field">{ login }</h3>
