@@ -3,6 +3,7 @@ export const LOGIN = 'LOGIN';
 export const FETCH_STARTED = 'FETCH_STARTED';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_ERROR = 'FETCH_ERROR';
+export const SEND_EXPENSE = 'SEND_EXPENSE';
 
 export function login(payload) {
   return {
@@ -25,6 +26,11 @@ export const fetchError = (payload) => ({
   payload,
 });
 
+export const sendExpense = (payload) => ({
+  type: SEND_EXPENSE,
+  payload,
+});
+
 // feito com o auxilio do Bruno Duarte
 export const fetchApi = () => async (dispatch) => {
   try {
@@ -35,4 +41,11 @@ export const fetchApi = () => async (dispatch) => {
   } catch (error) {
     dispatch(fetchError(error.message));
   }
+};
+
+export const fetchExchangeRates = (Obj) => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const responseJSON = await response.json();
+  Obj.exchangeRates = responseJSON;
+  return dispatch(sendExpense(Obj));
 };
