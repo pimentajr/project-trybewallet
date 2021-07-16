@@ -6,15 +6,14 @@ import PropTypes from 'prop-types';
 class Expenses extends React.Component {
   constructor() {
     super();
-
     this.sumExpenses = this.sumExpenses.bind(this);
   }
 
   sumExpenses() {
     const { expensesTotal } = this.props;
-    const infos = expensesTotal.map(({ expensesValue, currency, exchangeRates }) => {
+    const infos = expensesTotal.map(({ value, currency, exchangeRates }) => {
       const currencySelect = exchangeRates[currency];
-      const priceActual = Number(expensesValue) * Number(currencySelect.ask);
+      const priceActual = Number(value) * Number(currencySelect.ask);
 
       return priceActual;
     });

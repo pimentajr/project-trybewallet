@@ -116,6 +116,7 @@ class Form extends React.Component {
 
   inputMethodyPayment() {
     const { method } = this.state;
+    console.log(method);
     return (
       <section>
         <label htmlFor="method">
@@ -123,18 +124,11 @@ class Form extends React.Component {
           <select
             id="method"
             name="method"
-            value={ method }
             onChange={ this.handleChange }
           >
-            <option value="dinheiro">
-              Dinheiro
-            </option>
-            <option value="cartao-de-credito">
-              Cartão de crédito
-            </option>
-            <option value="cartao-de-debito">
-              Cartão de débito
-            </option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
       </section>
@@ -148,21 +142,11 @@ class Form extends React.Component {
         <label htmlFor="category">
           Tag
           <select id="category" name="tag" value={ tag } onChange={ this.handleChange }>
-            <option value="alimentacao">
-              Alimentação
-            </option>
-            <option value="lazer">
-              Lazer
-            </option>
-            <option value="trabalho">
-              Trabalho
-            </option>
-            <option value="transporte">
-              Transporte
-            </option>
-            <option value="saude">
-              Saúde
-            </option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </section>
