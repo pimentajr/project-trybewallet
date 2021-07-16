@@ -2,6 +2,7 @@
 export const LOGIN = 'LOGIN';
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
+export const EXPENSES = 'EXPENSES';
 
 export const userLogin = (state) => ({
   type: LOGIN,
@@ -22,4 +23,15 @@ export const fetchAPI = () => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const result = await response.json(response);
   dispatch(success(Object.keys(result).filter((currency) => currency !== 'USDT')));
+};
+
+export const setExpenses = (expenses) => ({
+  type: EXPENSES,
+  expenses,
+});
+
+export const fetchExpenses = () => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const result = await response.json(response);
+  dispatch(setExpenses(result));
 };
