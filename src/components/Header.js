@@ -17,7 +17,7 @@ class Header extends React.Component {
         .reduce((total, expense) => (
           total + expense.value * expense.exchangeRates[expense.currency].ask), 0);
       return totalCost.toFixed(2);
-    }
+    } return 0;
   }
 
   render() {
