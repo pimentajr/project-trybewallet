@@ -34,7 +34,7 @@ class Table extends React.Component {
     const { expenses, deleteExpenseAction } = this.props;
     return (
       <table className="table">
-        {this.renderThead}
+        {this.renderThead()}
         <tbody className="tbody">
           {
             expenses.map((ex) => {
