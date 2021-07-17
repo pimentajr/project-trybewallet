@@ -32,6 +32,7 @@ class Header extends React.Component {
           </div>
           <div className="user-info-container">
             <p>
+              Dispesa Total:
               <span data-testid="total-field">{total}</span>
               <span data-testid="header-currency-field">{coin}</span>
             </p>
