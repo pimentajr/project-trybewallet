@@ -3,6 +3,7 @@ import {
   GET_CURRENCY_SUCCESS,
   GET_CURRENCY_FAILED,
   ADD_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -37,6 +38,11 @@ function walletReducer(state = INITIAL_STATE, action) {
             exchangeRates: state.currencies,
           },
         ],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((ex) => ex.id !== action.id),
     };
   default:
     return state;

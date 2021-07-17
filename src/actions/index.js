@@ -3,6 +3,7 @@ export const GET_CURRENCY = 'GET_CURRENCY';
 export const GET_CURRENCY_SUCCESS = 'GET_CURRENCY_SUCCESS';
 export const GET_CURRENCY_FAILED = 'GET_CURRENCY_FAILED';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -26,6 +27,11 @@ export const getCurrencyFailed = (payload) => ({
 export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
   payload,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 export const getCurrenciesThunk = () => async (dispatch) => {
