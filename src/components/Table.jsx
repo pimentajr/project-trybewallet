@@ -31,7 +31,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { expenses, deleteExpense } = this.props;
+    const { expenses, deleteExpenseAction } = this.props;
     return (
       <table className="table">
         {this.renderThead}
@@ -60,7 +60,7 @@ class Table extends React.Component {
                       <button
                         data-testid="delete-btn"
                         type="button"
-                        onClick={ () => deleteExpense(id) }
+                        onClick={ () => deleteExpenseAction(id) }
                       >
                         <img src={ deleteImg } alt="delete" />
                       </button>
@@ -81,12 +81,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (id) => dispatch(deleteExpense(id)),
+  deleteExpenseAction: (id) => dispatch(deleteExpense(id)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteExpense: PropTypes.func.isRequired,
+  deleteExpenseAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
