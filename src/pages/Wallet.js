@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import CurrencySelect from "../components/CurrencySelect";
 
 class Wallet extends React.Component {
   render() {
@@ -10,7 +11,7 @@ class Wallet extends React.Component {
       <div>
         <header>
           <h1>TrybeWallet</h1>
-          <p data-testid="email-field">{ email }</p>
+          <p data-testid="email-field">{email}</p>
           <p data-testid="total-field">0</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
@@ -23,12 +24,7 @@ class Wallet extends React.Component {
             Descrição
             <input id="descricao" />
           </label>
-          <label htmlFor="moeda">
-            Moeda
-            <select id="moeda">
-              <option>teste</option>
-            </select>
-          </label>
+          <CurrencySelect />
           <label htmlFor="pagamento">
             Método de pagamento
             <select id="pagamento">
