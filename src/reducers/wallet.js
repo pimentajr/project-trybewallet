@@ -7,6 +7,8 @@ const initialState = {
 
 function wallet(state = initialState, action) {
   switch (action.type) {
+  case 'CURRENCIES':
+    return { ...state, currencies: Object.keys(action.payload) };
   default:
     return state;
   }

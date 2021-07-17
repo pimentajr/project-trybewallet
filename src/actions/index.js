@@ -1,8 +1,17 @@
 // Coloque aqui suas actions
-export default function storeUserEmail(email, logged) {
+function storeUserEmail(email, logged) {
   return {
     type: 'USER_EMAIL',
     payload: email,
     logged,
   };
 }
+
+export function storeCurrencies(payload) {
+  return {
+    type: 'CURRENCIES',
+    payload,
+  };
+}
+
+export default storeUserEmail;

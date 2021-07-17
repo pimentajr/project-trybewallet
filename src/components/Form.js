@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import fetchCurrencyList from '../service/currencyApi';
+import SelectOptions from './SelectOptions';
 
 function Form() {
+  const currencyList = useSelector((state) => state.wallet.currencies);
+  useEffect(() => {
+    fetchCurrencyList();
+  });
   return (
     <div>
       <form>
-        <label htmlFor="value">
-          Valor:
-          <input type="text" id="value" />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input type="text" id="description" />
-        </label>
+        <SelectOptions />
         <label htmlFor="currency">
-          Moeda:
-          <select id="currency">ola</select>
+          Moeda
+          <select id="currency">
+            {currencyList
+              ? currencyList
+                .filter((coin) => coin !== 'USDT')
+                .map((coinFinal, index) => <option key={ index }>{coinFinal}</option>)
+              : '' }
+          </select>
         </label>
         <label htmlFor="payment-option">
           Método de pagamento:
