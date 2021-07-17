@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { deleteExpense } from '../actions';
 
 class Table extends Component {
-  delete (id) {
+  delete(id) {
     const { dispatchDeleteExpense } = this.props;
     return (
       <button
-      type="button"
-      data-testid="delete-btn"
-      onClick={ () => dispatchDeleteExpense(id) }
+        type="button"
+        data-testid="delete-btn"
+        onClick={ () => dispatchDeleteExpense(id) }
       >
         Excluir
       </button>
@@ -53,7 +53,7 @@ class Table extends Component {
             currency,
             method,
             tag,
-            exchangesRates,
+            exchangeRates,
           }) => (
             <tr key={ id }>
               <td>{ description }</td>
@@ -61,17 +61,17 @@ class Table extends Component {
               <td>{ method }</td>
               <td>{ value }</td>
               <td>{ currency }</td>
-              <td>{ Number(exchangesRates[currency].ask).toFixed(2) }</td>
+              <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
               <td>
                 {
-                  (Number(exchangesRates[currency].ask) * Number(value))
+                  (Number(exchangeRates[currency].ask) * Number(value))
                     .toFixed(2)
                 }
               </td>
               <td>Real</td>
-              <td>{ exchangesRates[currency].name }</td>
+              <td>{ exchangeRates[currency].name }</td>
               <td>
-                { this.edit(id) }
+                { this.edit(id)}
                 { this.delete(id) }
               </td>
             </tr>

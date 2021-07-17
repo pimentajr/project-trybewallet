@@ -6,10 +6,10 @@ import Wallet from './pages/Wallet';
 class App extends Component {
   render() {
     return (
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route path="/carteira" component={ Wallet } />
-        </Switch>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/carteira" component={ Wallet } />
+      </Switch>
     );
   }
 }

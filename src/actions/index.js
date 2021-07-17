@@ -21,7 +21,7 @@ export function fetchPosts(payload = false) {
         payload
           ? dispatch(sendExpenses(payload, responseJSON))
           : dispatch(acceptFetch(responseJSON))))
-      .cath((error) => dispatch(rejectFecth(error)));
+      .catch((error) => dispatch(rejectFecth(error)));
   };
 }
 
