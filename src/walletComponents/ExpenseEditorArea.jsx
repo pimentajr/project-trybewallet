@@ -29,12 +29,11 @@ class ExpenseEditorArea extends Component {
   applyEdit() {
     const { finishEdit, editID } = this.props;
     const { exchangeRates } = editID[0];
-    console.log({ ...this.state, exchangeRates });
     finishEdit({ ...this.state, exchangeRates });
   }
 
-  handlerChange(e) {
-    const { name, value } = e.target;
+  handlerChange({ target }) {
+    const { name, value } = target;
     this.setState({ [name]: value });
   }
 
@@ -42,24 +41,31 @@ class ExpenseEditorArea extends Component {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
-      <>
-        <Value value={ value } handlerChange={ this.handlerChange } />
-        <Description description={ description } handlerChange={ this.handlerChange } />
-        <Currency
-          currency={ currency }
-          handlerChange={ this.handlerChange }
-          currencies={ currencies }
-        />
-        <PaymentMethod method={ method } handlerChange={ this.handlerChange } />
-        <Category category={ tag } handlerChange={ this.handlerChange } />
-        <button
-          type="button"
-          data-testid="edit-btn"
-          onClick={ () => this.applyEdit() }
-        >
-          Editar despesa
-        </button>
-      </>
+      <table>
+        <thead>
+          <tr>
+            <Value value={ value } handlerChange={ this.handlerChange } />
+            <Description
+              description={ description }
+              handlerChange={ this.handlerChange }
+            />
+            <Currency
+              currency={ currency }
+              handlerChange={ this.handlerChange }
+              currencies={ currencies }
+            />
+            <PaymentMethod method={ method } handlerChange={ this.handlerChange } />
+            <Category tag={ tag } handlerChange={ this.handlerChange } />
+            <button
+              type="button"
+              data-testid="edit-btn"
+              onClick={ () => this.applyEdit() }
+            >
+              Editar despesa
+            </button>
+          </tr>
+        </thead>
+      </table>
     );
   }
 }

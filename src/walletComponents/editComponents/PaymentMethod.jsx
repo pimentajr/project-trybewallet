@@ -11,6 +11,7 @@ export default class PaymentMethod extends Component {
           name="method"
           id="payment-method"
           value={ method }
+          data-testid="method-input"
           onChange={ (e) => handlerChange(e) }
         >
           <option>Dinheiro</option>

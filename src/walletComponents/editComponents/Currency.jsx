@@ -8,6 +8,7 @@ export default class Currency extends Component {
       <label htmlFor="currency">
         Moeda
         <select
+          data-testid="currency-input"
           name="currency"
           id="currency"
           value={ currency }

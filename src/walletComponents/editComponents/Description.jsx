@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Description extends Component {
   render() {
@@ -13,8 +14,14 @@ export default class Description extends Component {
           type="text"
           value={ description }
           onChange={ (e) => handlerChange(e) }
+          data-testid="description-input"
         />
       </label>
     );
   }
 }
+
+Description.propTypes = {
+  description: PropTypes.string.isRequired,
+  handlerChange: PropTypes.func.isRequired,
+};

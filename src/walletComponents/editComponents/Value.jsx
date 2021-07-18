@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Value extends Component {
   render() {
@@ -7,6 +8,7 @@ export default class Value extends Component {
       <label htmlFor="expenses">
         Valor
         <input
+          data-testid="value-input"
           name="value"
           id="expenses"
           type="number"
@@ -17,3 +19,8 @@ export default class Value extends Component {
     );
   }
 }
+
+Value.propTypes = {
+  value: PropTypes.number.isRequired,
+  handlerChange: PropTypes.func.isRequired,
+};
