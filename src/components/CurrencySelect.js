@@ -12,9 +12,9 @@ class CurrencySelect extends React.Component {
     const { currencies } = this.props;
 
     return (
-      <label htmlFor="moeda">
+      <label htmlFor="currency">
         Moeda
-        <select id="moeda">
+        <select id="currency" name="moeda">
           {currencies.map((item) => (
             <option key={item.code} value={item.code}>
               {item.code}
@@ -26,22 +26,27 @@ class CurrencySelect extends React.Component {
   }
 }
 
-function loadCurrenciesThunk(dispatch) {
-  fetch("https://economia.awesomeapi.com.br/json/all")
-    .then((res) => res.json())
-    .then((rawCurrencies) => {
-      return Object.entries(rawCurrencies)
-        .filter((item) => item[0] !== "USDT")
-        .map((item) => item[1]);
-    })
-    .then((filteredCurrencies) => {
-      dispatch({ type: "WALLET_SET_CURRENCIES", payload: filteredCurrencies });
-    });
+function loadCurrenciesThunk() {
+  return (dispatch) => {
+    return fetch("https://economia.awesomeapi.com.br/json/all")
+      .then((res) => res.json())
+      .then((rawCurrencies) => {
+        return Object.entries(rawCurrencies)
+          .filter((item) => item[0] !== "USDT")
+          .map((item) => item[1]);
+      })
+      .then((filteredCurrencies) => {
+        dispatch({
+          type: "WALLET_SET_CURRENCIES",
+          payload: filteredCurrencies,
+        });
+      });
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadCurrencies: () => dispatch(loadCurrenciesThunk),
+    loadCurrencies: () => dispatch(loadCurrenciesThunk()),
   };
 }
 
