@@ -10,31 +10,33 @@ class Header extends Component {
     });
   }
 
+  // componentDidMount() {
+
+  // }
+
   render() {
     const { total } = this.state;
     const { userEmail } = this.props;
     return (
       <header>
-        <header>
+        <span
+          data-testid="email-field"
+        >
+          { `Email: ${userEmail}` }
+        </span>
+        <p>
+          Despesa Total: R$
           <span
-            data-testid="email-field"
+            data-testid="total-field"
           >
-            { `Email: ${userEmail}` }
+            { total }
           </span>
-          <p>
-            Despesa Total: R$
-            <span
-              data-testid="total-field"
-            >
-              { total }
-            </span>
-          </p>
           <span
             data-testid="header-currency-field"
           >
             BRL
           </span>
-        </header>
+        </p>
       </header>
     );
   }
@@ -45,7 +47,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  userEmail: state.user,
+  userEmail: state.user.email,
 });
 
 export default connect(mapStateToProps, null)(Header);
