@@ -74,8 +74,6 @@ class Wallet extends React.Component {
 
   editor(id) {
     const { editOn, editOff, editing } = this.props;
-    const { value, description, currency, method, tag } = this.state;
-    console.log(`${value} ${description} ${currency} ${method} ${tag}`);
 
     if (editing) {
       editOff();

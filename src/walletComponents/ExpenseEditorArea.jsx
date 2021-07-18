@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Value from './editComponents/Value';
 import Description from './editComponents/Description';
 import Currency from './editComponents/Currency';
@@ -28,8 +29,6 @@ class ExpenseEditorArea extends Component {
   applyEdit() {
     const { finishEdit, editID } = this.props;
     const { exchangeRates } = editID[0];
-    // console.log(editID);
-    // problema na linha 45 do wallet.js
     console.log({ ...this.state, exchangeRates });
     finishEdit({ ...this.state, exchangeRates });
   }
@@ -41,7 +40,7 @@ class ExpenseEditorArea extends Component {
 
   render() {
     const { currencies } = this.props;
-    const { value, description, currency, method, tag, id } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <>
         <Value value={ value } handlerChange={ this.handlerChange } />
@@ -75,3 +74,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseEditorArea);
+
+ExpenseEditorArea.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editID: PropTypes.arrayOf(PropTypes.object).isRequired,
+  finishEdit: PropTypes.func.isRequired,
+};

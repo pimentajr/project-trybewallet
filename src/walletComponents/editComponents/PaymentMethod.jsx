@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class PaymentMethod extends Component {
   render() {
-    const { method, handleChange } = this.props;
+    const { method, handlerChange } = this.props;
     return (
       <label htmlFor="payment-method">
         Método de pagamento
@@ -10,7 +11,7 @@ export default class PaymentMethod extends Component {
           name="method"
           id="payment-method"
           value={ method }
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => handlerChange(e) }
         >
           <option>Dinheiro</option>
           <option>Cartão de crédito</option>
@@ -20,3 +21,8 @@ export default class PaymentMethod extends Component {
     );
   }
 }
+
+PaymentMethod.propTypes = {
+  method: PropTypes.string.isRequired,
+  handlerChange: PropTypes.func.isRequired,
+};

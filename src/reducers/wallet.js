@@ -35,15 +35,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       editID: state.expenses.filter(({ id }) => id === action.editID) };
   case EDITOR_OFF:
     return { ...state, editing: false, editID: '' };
-  // case EDIT_DONE:
-  //   return { ...state, editing: false, expenses: [...state.expenses.map((expense) => {
-  //     return expense.id === action.modified.id;
-  //   })] };
   case EDIT_DONE:
-    return { ...state, editing: false, expenses: [...state.expenses.reduce((acc, curr) => {
-      return curr.id === action.modified.id 
-        ? acc.concat(action.modified) : acc.concat(curr);
-    }, [])] };
+    return { ...state,
+      editing: false,
+      expenses: [...state.expenses.reduce((acc, curr) => (curr.id === action.modified.id
+        ? acc.concat(action.modified) : acc.concat(curr)), [])] };
   default:
     return state;
   }
