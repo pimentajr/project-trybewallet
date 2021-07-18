@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import AddExpense from '../components/AddExpense';
 
 class Wallet extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class Wallet extends React.Component {
         >
           BRL
         </div>
+        <AddExpense />
       </div>
     );
   }
