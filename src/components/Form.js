@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import CurrencySelect from "./CurrencySelect";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import CurrencySelect from './CurrencySelect';
 
 class Form extends React.Component {
   constructor(props) {
@@ -16,22 +16,23 @@ class Form extends React.Component {
     const formData = new FormData(formElement);
 
     const values = {
-      value: formData.get("valor"),
-      description: formData.get("descrição"),
-      currency: formData.get("moeda"),
-      method: formData.get("método de pagamento"),
-      tag: formData.get("tag"),
+      value: formData.get('valor'),
+      description: formData.get('descrição'),
+      currency: formData.get('moeda'),
+      method: formData.get('método de pagamento'),
+      tag: formData.get('tag'),
     };
 
     if (values.value && values.description) {
-      this.props.createExpense(values);
+      const { createExpense } = this.props;
+      createExpense(values);
       formElement.reset();
     }
   }
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={ this.onSubmit }>
         <label htmlFor="value">
           Valor
           <input id="value" name="valor" type="number" />
@@ -65,19 +66,15 @@ class Form extends React.Component {
   }
 }
 
-Form.propTypes = {};
-
 function createExpenseThunk(values) {
-  return (dispatch) => {
-    return fetch("https://economia.awesomeapi.com.br/json/all")
-      .then((res) => res.json())
-      .then((exchangeRates) => {
-        dispatch({
-          type: "WALLET_CREATE_EXPENSE",
-          payload: { ...values, exchangeRates },
-        });
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((res) => res.json())
+    .then((exchangeRates) => {
+      dispatch({
+        type: 'WALLET_CREATE_EXPENSE',
+        payload: { ...values, exchangeRates },
       });
-  };
+    });
 }
 
 function mapDispatchToProps(dispatch) {
@@ -87,5 +84,9 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
+
+Form.propTypes = {
+  createExpense: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Form);

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class CurrencySelect extends React.Component {
   componentDidMount() {
@@ -16,8 +16,8 @@ class CurrencySelect extends React.Component {
         Moeda
         <select id="currency" name="moeda">
           {currencies.map((item) => (
-            <option key={item.code} value={item.code}>
-              {item.code}
+            <option key={ item } value={ item }>
+              {item}
             </option>
           ))}
         </select>
@@ -27,21 +27,17 @@ class CurrencySelect extends React.Component {
 }
 
 function loadCurrenciesThunk() {
-  return (dispatch) => {
-    return fetch("https://economia.awesomeapi.com.br/json/all")
-      .then((res) => res.json())
-      .then((rawCurrencies) => {
-        return Object.entries(rawCurrencies)
-          .filter((item) => item[0] !== "USDT")
-          .map((item) => item[1]);
-      })
-      .then((filteredCurrencies) => {
-        dispatch({
-          type: "WALLET_SET_CURRENCIES",
-          payload: filteredCurrencies,
-        });
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((res) => res.json())
+    .then((rawCurrencies) => Object.entries(rawCurrencies)
+      .filter((item) => item[0] !== 'USDT')
+      .map((item) => item[1].code))
+    .then((filteredCurrencies) => {
+      dispatch({
+        type: 'WALLET_SET_CURRENCIES',
+        payload: filteredCurrencies,
       });
-  };
+    });
 }
 
 function mapDispatchToProps(dispatch) {
@@ -57,7 +53,7 @@ function mapStateToProps(state) {
 }
 
 CurrencySelect.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   loadCurrencies: PropTypes.func.isRequired,
 };
 
