@@ -4,7 +4,7 @@ class TableHeader extends Component {
   render() {
     return (
       <thead>
-        <tr className="line">
+        <tr className="header-line">
           <th className="column"> Descrição</th>
           <th className="column"> Tag</th>
           <th className="column"> Método de pagamento</th>

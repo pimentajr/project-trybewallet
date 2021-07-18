@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class TableBody extends Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { expenses, deleteExpenseAction } = this.props;
+    const { id } = target;
+    const filteredExpenses = expenses
+      .filter((deletedExpense) => deletedExpense.id !== parseFloat(id));
+    deleteExpenseAction(filteredExpenses);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -14,25 +29,24 @@ class TableBody extends Component {
             <td>{dataRow.method}</td>
             <td>{dataRow.value}</td>
             <td>{(dataRow.exchangeRates[dataRow.currency].name).split('/')[0]}</td>
-            <td>{dataRow.exchangeRates[dataRow.currency].ask}</td>
+            <td>{Number(dataRow.exchangeRates[dataRow.currency].ask).toFixed(2)}</td>
             <td>
               {Number((dataRow.value * dataRow.exchangeRates[dataRow.currency].ask))
                 .toFixed(2) }
             </td>
             <td>Real</td>
+            <td>
+              <button
+                type="button"
+                id={ dataRow.id }
+                onClick={ this.handleChange }
+                data-testid="delete-btn"
+              >
+                Deletar
+              </button>
+            </td>
           </tr>
         )) : <span /> }
-        {/* <tr className="row">
-          <td className="line"> Descrição</td>
-          <td className="line"> Tag</td>
-          <td className="line"> Método de pagamento</td>
-          <td className="line">Valor</td>
-          <td className="line"> Moeda</td>
-          <td className="line"> Câmbio utilizado</td>
-          <td className="line"> Valor convertido</td>
-          <td className="line"> Moeda de conversão</td>
-          <td className="line"> Editar/Excluir</td>
-        </tr> */}
       </tbody>
     );
   }
@@ -42,8 +56,12 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpenseAction: (payload) => dispatch(deleteExpense(payload)),
+});
+
 TableBody.propTypes = {
   expenses: PropTypes.array,
 }.isRequired;
 
-export default connect(mapStateToProps)(TableBody);
+export default connect(mapStateToProps, mapDispatchToProps)(TableBody);
