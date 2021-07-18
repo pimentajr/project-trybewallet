@@ -6,6 +6,6 @@ export const walletLogin = (userEmail) => ({
   user: userEmail,
 });
 
-export const wallet = () => ({
+export const walletAPI = () => ({
   type: 'a',
 });
