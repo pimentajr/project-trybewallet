@@ -1,16 +1,17 @@
-export default (
-  INNITIAL_STATE = [{
-    email: 'pedro@trybe-student.com',
-    password: '123abc',
-  }], action,
-) => {
-  switch (action.type) {
-  case 'ADD_USER':
-    return [...INNITIAL_STATE, {
-      email: 'fernanda@trybe-student.com',
-      password: 'abc123',
-    }];
-  default:
-    return INNITIAL_STATE;
-  }
+import { EMAIL } from '../actions';
+
+const INNITIAL_STATE = {
+  email: '',
 };
+
+export default function user(state = INNITIAL_STATE, action) {
+  switch (action.type) {
+  case EMAIL:
+    return {
+      ...state,
+      email: action.email,
+    };
+  default:
+    return state;
+  }
+}
