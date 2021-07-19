@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Login from './pages/Login';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
+class App extends Component {
+  render() {
+    return (
+      <Login />
+    );
+  }
 }
 
 export default App;
