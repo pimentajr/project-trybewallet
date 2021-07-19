@@ -14,7 +14,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       currencies: Object.keys(action.payload).filter((coin) => coin !== 'USDT'),
     };
   case 'SEND_EXPENSES':
-    action.payload.exchangeRates = action.responseJson;
+    action.payload.exchangeRates = action.responseJSON;
     return {
       ...state,
       expenses: [...state.expenses, action.payload],

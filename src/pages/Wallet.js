@@ -160,6 +160,7 @@ class Wallet extends Component {
     const total = expenses.reduce((acc, { exchangeRates, currency, value }) => (
       acc + (Number(exchangeRates[currency].ask) * Number(value))
     ), 0);
+
     return (
       <div>
         <header>
