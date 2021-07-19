@@ -21,7 +21,7 @@ class Login extends React.Component {
   }
 
   validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+$/;
+    const re = /^\S+@\S+\.\S+$/;
     return re.test(String(email).toLowerCase());
   }
 
