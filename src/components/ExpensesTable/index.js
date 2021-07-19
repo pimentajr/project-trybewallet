@@ -14,6 +14,24 @@ const headers = [
   'Editar/Excluir'];
 
 class ExpensesTable extends Component {
+  convertCurrencyValueToBRL(expense) {
+    return (Number(expense.value) * expense.exchangeRates[expense.currency]
+      .ask).toFixed(2);
+  }
+
+  actualCurrency(expense) {
+    return expense.exchangeRates[expense.currency].name.split('/')[0];
+  }
+
+  actualCotation(expense) {
+    return (Number(expense.exchangeRates[expense.currency]
+      .ask).toFixed(2));
+  }
+
+  deleteExpense() {
+    console.log(1);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -30,14 +48,15 @@ class ExpensesTable extends Component {
               <td>{expense.tag}</td>
               <td>{expense.method}</td>
               <td>{expense.value}</td>
-              <td>{expense.currency}</td>
-              <td>CAMBIO</td>
-              <td>VALOR CONVERTIDO</td>
+              <td>{this.actualCurrency(expense)}</td>
+              <td>{this.actualCotation(expense)}</td>
+              <td>{this.convertCurrencyValueToBRL(expense)}</td>
               <td>Real</td>
               <td>
                 <button
                   type="button"
                   data-testid="delete-btn"
+                  onClick={ (e) => this.deleteExpense(e) }
                 >
                   <img src="" alt="Botão deletar" />
                 </button>
