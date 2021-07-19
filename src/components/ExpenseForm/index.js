@@ -6,7 +6,7 @@ import PaymentMethodSelect from './paymentSelect';
 import CategorySelect from './categorySelect';
 import { fetchCurrencies, fetchAtualCotation } from '../../actions';
 
-const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const payMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class ExpenseForm extends Component {
@@ -17,7 +17,7 @@ class ExpenseForm extends Component {
       value: 0,
       description: '',
       currency: null,
-      method: paymentMethods[0],
+      method: payMethods[0],
       tag: categories[0],
     });
     this.handleChange = this.handleChange.bind(this);
@@ -88,7 +88,7 @@ class ExpenseForm extends Component {
           />
         </label>
         <CurrencySelect handleChange={ this.handleChange } />
-        <PaymentMethodSelect methods={ paymentMethods } handleChange={ this.handleChange } />
+        <PaymentMethodSelect methods={ payMethods } handleChange={ this.handleChange } />
         <CategorySelect tags={ categories } handleChange={ this.handleChange } />
         <button
           type="button"
