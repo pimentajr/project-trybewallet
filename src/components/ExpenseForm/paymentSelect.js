@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class PaymentMethodSelect extends Component {
   render() {
     return (
-      <label htmlFor="paymentMethod">
+      <label htmlFor="expense-paymentMethod">
         Método de pagamento
-        <select name="paymentMethod">
+        <select id="expense-paymentMethod">
           <option>
             Dinheiro
           </option>

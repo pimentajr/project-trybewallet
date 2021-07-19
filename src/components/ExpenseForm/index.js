@@ -39,20 +39,20 @@ class ExpenseForm extends Component {
     const { isLoading, value, description } = this.state;
     return isLoading ? 'Loading' : (
       <form>
-        <label htmlFor="value">
+        <label htmlFor="expense-value">
           Valor
           <input
             type="number"
-            name="value"
+            id="expense-value"
             value={ value }
             onChange={ (e) => this.handleChange(e) }
           />
         </label>
-        <label htmlFor="description">
+        <label htmlFor="expense-description">
           Descrição
           <input
             type="text"
-            name="description"
+            id="expense-description"
             value={ description }
             onChange={ (e) => this.handleChange(e) }
           />

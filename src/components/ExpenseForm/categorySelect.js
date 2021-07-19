@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class CategorySelect extends Component {
   render() {
     return (
-      <label htmlFor="category">
+      <label htmlFor="expense-category">
         Tag
-        <select name="category">
+        <select id="expense-category">
           <option>
             Alimentação
           </option>

@@ -6,9 +6,9 @@ class CurrencySelect extends Component {
   render() {
     const { currencies } = this.props;
     return (
-      <label htmlFor="currency">
+      <label htmlFor="expense-currency">
         Moeda
-        <select name="currency">
+        <select id="expense-currency">
           { currencies.map((currency, index) => (
             <option key={ index }>
               {currency}
