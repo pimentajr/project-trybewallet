@@ -44,6 +44,7 @@ export function fetchAtualCotation() {
       rejectedsCurrencies.forEach((currency) => delete AllCurrencies[currency]);
       const exchangeRates = { ...AllCurrencies };
       console.log(exchangeRates);
+      console.log(dispatch);
       // dispatch(atualCotation(expenses));
     });
 }
