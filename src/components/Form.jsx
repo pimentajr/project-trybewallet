@@ -31,7 +31,8 @@ class Form extends Component {
 
   btnAddExpenses(e) {
     e.preventDefault();
-    const { expenses, expense, currencies } = this.props;
+    const { expenses, expense, currencies, moeda } = this.props;
+    moeda();
     const { value, description, method, currency, tag } = this.state;
     expenses({
       id: expense.length,
