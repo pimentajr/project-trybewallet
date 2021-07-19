@@ -2,33 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class CategorySelect extends Component {
-  constructor(props) {
-    super();
-    const { categories } = props;
-    this.state = ({
-      category: categories[0],
-    });
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  handleSelect({ target }) {
-    this.setState(() => ({
-      category: target.value,
-    }));
-  }
-
   render() {
-    const { categories } = this.props;
-    const { category } = this.state;
+    const { tags, handleChange } = this.props;
     return (
       <label htmlFor="expense-category">
         Tag
         <select
           id="expense-category"
-          value={ category }
-          onChange={ (e) => this.handleSelect(e) }
+          name="tag"
+          // value={ category }
+          onChange={ (e) => handleChange(e) }
         >
-          {categories.map((currCategory, index) => (
+          {tags.map((currCategory, index) => (
             <option value={ currCategory } key={ index }>
               {currCategory}
             </option>))}
@@ -39,7 +24,8 @@ class CategorySelect extends Component {
 }
 
 CategorySelect.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default CategorySelect;

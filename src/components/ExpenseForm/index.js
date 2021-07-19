@@ -16,14 +16,20 @@ class ExpenseForm extends Component {
       isLoading: true,
       value: 0,
       description: '',
+      currency: null,
+      method: paymentMethods[0],
+      tag: categories[0],
     });
     this.handleChange = this.handleChange.bind(this);
+    this.updateCurrency = this.updateCurrency.bind(this);
     this.loadingToFalse = this.loadingToFalse.bind(this);
   }
 
   async componentDidMount() {
     const { getCurrencies } = this.props;
     await getCurrencies();
+    const { currencies } = this.props;
+    this.updateCurrency(currencies[0]);
     this.loadingToFalse();
   }
 
@@ -33,14 +39,28 @@ class ExpenseForm extends Component {
     }));
   }
 
+  async updateCurrency(currency) {
+    this.setState(() => ({
+      currency,
+    }));
+  }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
   }
 
   saveExpense() {
-    const { getAtualCotation } = this.props;
-    getAtualCotation();
+    const { saveWithAtualCotation } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const expenseInfo = {
+      value,
+      currency,
+      method,
+      tag,
+      description,
+    };
+    saveWithAtualCotation(expenseInfo);
   }
 
   render() {
@@ -67,9 +87,9 @@ class ExpenseForm extends Component {
             onChange={ (e) => this.handleChange(e) }
           />
         </label>
-        <CurrencySelect />
-        <PaymentMethodSelect paymentMethods={ paymentMethods } />
-        <CategorySelect categories={ categories } />
+        <CurrencySelect handleChange={ this.handleChange } />
+        <PaymentMethodSelect methods={ paymentMethods } handleChange={ this.handleChange } />
+        <CategorySelect tags={ categories } handleChange={ this.handleChange } />
         <button
           type="button"
           onClick={ () => this.saveExpense() }
@@ -83,7 +103,8 @@ class ExpenseForm extends Component {
 
 ExpenseForm.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
-  getAtualCotation: PropTypes.func.isRequired,
+  saveWithAtualCotation: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -92,7 +113,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
-  getAtualCotation: () => dispatch(fetchAtualCotation()),
+  saveWithAtualCotation: (expenseInfo) => dispatch(fetchAtualCotation(expenseInfo)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

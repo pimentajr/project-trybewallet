@@ -3,31 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class CurrencySelect extends Component {
-  constructor(props) {
-    super();
-    const { currencies } = props;
-    this.state = ({
-      currency: currencies[0],
-    });
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  handleSelect({ target }) {
-    this.setState(() => ({
-      currency: target.value,
-    }));
-  }
-
   render() {
-    const { currencies } = this.props;
-    const { currency } = this.state;
+    const { currencies, handleChange } = this.props;
     return (
       <label htmlFor="expense-currency">
         Moeda
         <select
           id="expense-currency"
-          value={ currency }
-          onChange={ (e) => this.handleSelect(e) }
+          name="currency"
+          // value={ currency }
+          onChange={ (e) => handleChange(e) }
         >
           { currencies.map((currCurrency, index) => (
             <option value={ currCurrency } key={ index }>
@@ -41,6 +26,7 @@ class CurrencySelect extends Component {
 
 CurrencySelect.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
 const LOGIN = 'LOGIN';
 const CURRENCIES = 'CURRENCIES';
-const COTATION = 'COTATION';
+const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
 export const walletLogin = (userEmail) => ({
   type: LOGIN,
@@ -15,10 +15,10 @@ export const walletCurrencies = (currencies) => ({
   },
 });
 
-export const atualCotation = (expenses) => ({
-  type: COTATION,
+export const saveExpense = (expense) => ({
+  type: SAVE_EXPENSE,
   payload: {
-    expenses,
+    expenses: expense,
   },
 });
 
@@ -28,13 +28,14 @@ export function fetchCurrencies() {
     .then((response) => response.json())
     .then((data) => {
       const keys = Object.keys(data);
-      const rejectedsCurrency = ['USDT', 'DOGE'];
+      // const rejectedsCurrency = ['USDT', 'DOGE'];
+      const rejectedsCurrency = ['DOGE'];
       const currencies = keys.filter((currency) => !rejectedsCurrency.includes(currency));
       dispatch(walletCurrencies(currencies));
     });
 }
 
-export function fetchAtualCotation() {
+export function fetchAtualCotation(expenseInfo) {
   const url = 'https://economia.awesomeapi.com.br/json/all';
   return (dispatch) => fetch(url)
     .then((response) => response.json())
@@ -43,8 +44,10 @@ export function fetchAtualCotation() {
       const rejectedsCurrencies = ['USDT', 'DOGE'];
       rejectedsCurrencies.forEach((currency) => delete AllCurrencies[currency]);
       const exchangeRates = { ...AllCurrencies };
-      console.log(exchangeRates);
-      console.log(dispatch);
-      // dispatch(atualCotation(expenses));
+      const expense = {
+        ...expenseInfo,
+        exchangeRates,
+      };
+      dispatch(saveExpense(expense));
     });
 }
