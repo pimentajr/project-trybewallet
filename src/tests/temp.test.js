@@ -16,64 +16,87 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 
 afterEach(() => jest.clearAllMocks());
 
-describe('6 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
-  test('Um campo para adicionar o valor da despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
+describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
+  test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
+    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
+
+    const addButton = await screen.findByRole('button', {
+      name: /adicionar despesa/i,
+    });
     const valueInput = await screen.findByLabelText(/valor/i);
-
-    expect(valueInput).toBeInTheDocument();
-  });
-
-  test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
     const currencyInput = await screen.findByRole('combobox', {
       name: /moeda/i,
     });
-
-    expect(currencyInput).toBeInTheDocument();
-  });
-
-  test('Um campo para selecionar qual método de pagamento será utilizado', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
     const methodInput = await screen.findByRole('combobox', {
       name: /método de pagamento/i,
     });
-
-    const moneyOption = screen.getByRole('option', { name: /dinheiro/i });
-    const creditOption = screen.getByRole('option', { name: /cartão de crédito/i });
-    const debitOption = screen.getByRole('option', { name: /cartão de débito/i });
-
-    expect(methodInput).toBeInTheDocument();
-    expect(moneyOption).toBeInTheDocument();
-    expect(creditOption).toBeInTheDocument();
-    expect(debitOption).toBeInTheDocument();
-  });
-
-  test('Um campo para selecionar uma categoria (tag) para a despesa.', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
     const tagInput = await screen.findByRole('combobox', {
       name: /tag/i,
     });
-    const foodOption = screen.getByRole('option', { name: /alimentação/i });
-    const funOption = screen.getByRole('option', { name: /lazer/i });
-    const workOption = screen.getByRole('option', { name: /trabalho/i });
-    const transportOption = screen.getByRole('option', { name: /transporte/i });
-    const healthOption = screen.getByRole('option', { name: /saúde/i });
-
-    expect(tagInput).toBeInTheDocument();
-    expect(foodOption).toBeInTheDocument();
-    expect(funOption).toBeInTheDocument();
-    expect(workOption).toBeInTheDocument();
-    expect(transportOption).toBeInTheDocument();
-    expect(healthOption).toBeInTheDocument();
-  });
-
-  test('Um campo para adicionar a descrição da despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
     const descriptionInput = await screen.findByRole('textbox', {
       name: /descrição/i,
     });
 
-    expect(descriptionInput).toBeInTheDocument();
-   });
+    userEvent.type(valueInput, '10');
+    userEvent.selectOptions(currencyInput, 'USD');
+    userEvent.selectOptions(methodInput, 'Cartão de crédito');
+    userEvent.selectOptions(tagInput, 'Lazer');
+    userEvent.type(descriptionInput, 'Dez dólares');
+    userEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(mockedExchange).toBeCalledTimes(2);
+    });
+
+    const expectedStateExpense = [
+      {
+        id: 0,
+        value: '10',
+        currency: 'USD',
+        method: 'Cartão de crédito',
+        tag: 'Lazer',
+        description: 'Dez dólares',
+        exchangeRates: mockData,
+      },
+    ];
+
+    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense);
+
+    userEvent.type(valueInput, '20');
+    userEvent.selectOptions(currencyInput, 'EUR');
+    userEvent.selectOptions(methodInput, 'Cartão de débito');
+    userEvent.selectOptions(tagInput, 'Trabalho');
+    userEvent.type(descriptionInput, 'Vinte euros');
+    userEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(mockedExchange).toBeCalledTimes(3);
+    });
+
+    const expectedStateExpense2 = [
+      {
+        id: 0,
+        value: '10',
+        currency: 'USD',
+        method: 'Cartão de crédito',
+        tag: 'Lazer',
+        description: 'Dez dólares',
+        exchangeRates: mockData,
+      },
+      {
+        id: 1,
+        value: '20',
+        currency: 'EUR',
+        method: 'Cartão de débito',
+        tag: 'Trabalho',
+        description: 'Vinte euros',
+        exchangeRates: mockData,
+      },
+    ];
+
+    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
+
+    const totalField = screen.getByTestId('total-field');
+    expect(totalField).toContainHTML('187.12');
+  });
 });

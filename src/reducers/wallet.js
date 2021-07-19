@@ -8,11 +8,11 @@ const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'CURRENCIES':
     return {
-      ...state, currencies: [...action.currencies],
+      ...state, currencies: [...action.payload.currencies],
     };
-  case '2':
+  case 'COTATION':
     return {
-      ...state, currencies: [...state.expenses, action.expenses],
+      ...state, expenses: [...state.expenses, { id: state.expenses.length, ...action.expenses }],
     };
   default:
     return state;
