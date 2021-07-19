@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+const rejectedsCurrencies = ['USDT', 'DOGE'];
+
 class CurrencySelect extends Component {
   render() {
     const { currencies, handleChange } = this.props;
+    const allowedCurrencies = currencies
+      .filter((currency) => !rejectedsCurrencies.includes(currency));
     return (
       <label htmlFor="expense-currency">
         Moeda
@@ -14,7 +18,7 @@ class CurrencySelect extends Component {
           // value={ currency }
           onChange={ (e) => handleChange(e) }
         >
-          { currencies.map((currCurrency, index) => (
+          { allowedCurrencies.map((currCurrency, index) => (
             <option value={ currCurrency } key={ index }>
               {currCurrency}
             </option>))}

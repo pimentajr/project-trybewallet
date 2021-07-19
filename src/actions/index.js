@@ -27,10 +27,7 @@ export function fetchCurrencies() {
   return (dispatch) => fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      const keys = Object.keys(data);
-      // const rejectedsCurrency = ['USDT', 'DOGE'];
-      const rejectedsCurrency = ['DOGE'];
-      const currencies = keys.filter((currency) => !rejectedsCurrency.includes(currency));
+      const currencies = Object.keys(data);
       dispatch(walletCurrencies(currencies));
     });
 }
@@ -41,7 +38,7 @@ export function fetchAtualCotation(expenseInfo) {
     .then((response) => response.json())
     .then((data) => {
       const AllCurrencies = { ...data };
-      const rejectedsCurrencies = ['USDT', 'DOGE'];
+      const rejectedsCurrencies = ['DOGE'];
       rejectedsCurrencies.forEach((currency) => delete AllCurrencies[currency]);
       const exchangeRates = { ...AllCurrencies };
       const expense = {
