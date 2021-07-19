@@ -18,12 +18,16 @@ export function storeCurrencies(payload) {
   };
 }
 
-export function APIRequest(payload) {
+export function APIRequest() {
   return { type: RECEIVE_API };
 }
 
-export const fetchCurrencyList = () => async () => {
-  dispatch(APIRequest());
+export const fetchCurrencyList = () => async (dispatch) => {
+  // dispatch(APIRequest());
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const responseObject = await response.json();
+  console.log('responseObj:', responseObject);
+  return dispatch(storeCurrencies(responseObject));
   // const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   // const responseObject = await response.json();
   // store.dispatch(storeCurrencies(responseObject));

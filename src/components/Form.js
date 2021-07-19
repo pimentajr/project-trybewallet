@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import fetchCurrencyList from '../service/currencyApi';
+import { connect } from 'react-redux';
+import { fetchCurrencyList } from '../actions';
 import SelectOptions from './SelectOptions';
 
 class Form extends Component {
@@ -11,21 +12,38 @@ class Form extends Component {
       value: '',
       description: '',
       currency: '',
-      method: '',
+      paymentMethod: '',
       tag: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
+    // console.log('fetch return:', fetchCurrencyList());
+    const { receivedCurrencies } = this.props;
     return (
       <div>
         <form>
-          <SelectOptions />
+          <label htmlFor="value">
+            Valor:
+            <input name="value" type="text" id="value" onChange={ this.handleChange } />
+          </label>
+          <label htmlFor="description">
+            Descrição:
+            <input name="description" type="text" id="description" onChange={ this.handleChange } />
+          </label>
           <label htmlFor="currency">
             Moeda
-            <select id="currency">
-              {currencyList
-                ? currencyList
+            <select name="currency" id="currency" onChange={ this.handleChange }>
+              {receivedCurrencies
+                ? receivedCurrencies
                   .filter((coin) => coin !== 'USDT')
                   .map((coinFinal, index) => <option key={ index }>{coinFinal}</option>)
                 : '' }
@@ -33,7 +51,7 @@ class Form extends Component {
           </label>
           <label htmlFor="payment-option">
             Método de pagamento:
-            <select id="payment-option">
+            <select name="paymentMethod" id="payment-option" onChange={ this.handleChange }>
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
@@ -41,7 +59,7 @@ class Form extends Component {
           </label>
           <label htmlFor="tag">
             Tag:
-            <select id="tag">
+            <select name="tag" id="tag" onChange={ this.handleChange }>
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
@@ -55,9 +73,8 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  receivedCurrencies: state.wallet.currencies,
+});
 
-// const currencyList = useSelector((state) => state.wallet.currencies);
-// useEffect(() => {
-//   fetchCurrencyList();
-// });
+export default connect(mapStateToProps)(Form);

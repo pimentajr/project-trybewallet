@@ -1,26 +1,44 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { APIRequest, fetchCurrencyList } from '../actions';
+// const userEmail = useSelector((state) => state.user.email);
+// import { useSelector } from 'react-redux';
 import Form from '../components/Form';
 
-function Wallet() {
-  const userEmail = useSelector((state) => state.user.email);
-  return (
-    <div>
+class Wallet extends Component {
+
+  componentDidMount() {
+    const { APIfetch } = this.props;
+    APIfetch();
+  }
+
+  render() {
+    return (
       <div>
-        TrybeWallet
-        <div data-testid="email-field">
-          Email:
-          {userEmail}
+        <div>
+          TrybeWallet
+          <div data-testid="email-field">
+            Email:
+            {'userEmail'}
+          </div>
+          <div data-testid="total-field">
+            <span>Despesa total: R$ </span>
+            0
+          </div>
+          <div data-testid="header-currency-field">BRL</div>
         </div>
-        <div data-testid="total-field">
-          <span>Despesa total: R$ </span>
-          0
-        </div>
-        <div data-testid="header-currency-field">BRL</div>
+        <Form />
       </div>
-      <Form />
-    </div>
-  );
+    );
+  }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  APIfetch: () => dispatch(fetchCurrencyList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
