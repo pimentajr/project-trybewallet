@@ -8,15 +8,33 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
+      paymentMethod: 'money',
       totalExpenses: 0,
+      description: '',
       currencies: [],
+      currency: 'USD',
+      value: 0,
+      tag: 'food',
     };
 
     this.requestCurrenciesApi = this.requestCurrenciesApi.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.requestCurrenciesApi();
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log('test');
   }
 
   async requestCurrenciesApi() {
@@ -36,7 +54,15 @@ class Wallet extends React.Component {
 
   render() {
     const { email } = this.props;
-    const { totalExpenses, currencies } = this.state;
+    const {
+      paymentMethod,
+      totalExpenses,
+      description,
+      currencies,
+      currency,
+      value,
+      tag,
+    } = this.state;
     return (
       <div>
         <header>
@@ -48,7 +74,16 @@ class Wallet extends React.Component {
           </section>
         </header>
         <main>
-          <EntryForm currencies={ currencies } />
+          <EntryForm
+            handleChange={ (event) => this.handleChange(event) }
+            handleSubmit={ (event) => this.handleSubmit(event) }
+            paymentMethod={ paymentMethod }
+            description={ description }
+            currencies={ currencies }
+            currency={ currency }
+            value={ value }
+            tag={ tag }
+          />
         </main>
       </div>
     );
