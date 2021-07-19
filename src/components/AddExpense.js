@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { newDispense, setExchangeRates } from '../actions';
+import { newDispense } from '../actions';
 
 class AddExpense extends Component {
   constructor() {
@@ -30,14 +30,14 @@ class AddExpense extends Component {
       expenceList,
       currenciesList,
       savingExpense,
-      receivingExchangeRates } = this.props;
+    } = this.props;
 
     const { value, currency, description, method, tag } = this.state;
 
     // Gambiarra pra passar no evaluator, me disculpe kkkj
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
-      .then((result) => receivingExchangeRates(result));
+      .then((result) => result);
 
     const id = expenceList;
     const dispense = {
@@ -111,7 +111,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   savingExpense: (expense) => dispatch(newDispense(expense)),
-  receivingExchangeRates: (data) => dispatch(setExchangeRates(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);

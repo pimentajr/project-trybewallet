@@ -6,6 +6,7 @@ import {
   requestCurrencies,
   receivedCurrencies,
 } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -27,12 +28,19 @@ class Wallet extends React.Component {
   }
 
   render() {
+    // const pageComponents = () => (
+    //   <>
+    //     <AddExpense />
+    //     <Table />
+    //   </>
+    // );
     const { loading } = this.props;
     const loadingLogic = loading ? <h1>Carregando</h1> : <AddExpense />;
     return (
       <>
         <Header />
         { loadingLogic }
+        <Table />
         TrybeWallet
       </>);
   }

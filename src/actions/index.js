@@ -3,7 +3,7 @@ export const LOGIN = 'LOGIN';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVED_CURRENCIES = 'RECEIVED_CURRENCIES';
 export const NEW_DISPENSE = 'NEW_DISPENSE';
-export const ENCHANGE_RATES = 'ENCHANGE_RATES';
+export const EXCHANGE_RATES = 'ENCHANGE_RATES';
 
 export const saveEmail = (payload) => ({
   type: LOGIN,
@@ -25,6 +25,6 @@ export const newDispense = (payload) => ({
 });
 
 export const setExchangeRates = (payload) => ({
-  type: ENCHANGE_RATES,
+  type: EXCHANGE_RATES,
   payload,
 });

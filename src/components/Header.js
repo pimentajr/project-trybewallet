@@ -7,9 +7,7 @@ function Header(props) {
     const { value, currency, exchangeRates } = expense;
     return acc + (parseFloat(value) * exchangeRates[currency].ask);
   }, 0);
-  // console.log(valueBRL);
 
-  // console.log(typeof expenses);
   return (
     <header className="header">
 
