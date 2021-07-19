@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import { walletAPI } from '../actions';
 import Header from '../components/Header';
+import ExpenseForm from '../components/ExpenseForm';
 
 class Wallet extends Component {
   render() {
@@ -10,6 +11,7 @@ class Wallet extends Component {
       <div>
         TrybeWallet
         <Header />
+        <ExpenseForm />
       </div>
     );
   }
