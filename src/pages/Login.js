@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -7,8 +7,10 @@ class Login extends React.Component {
     this.state = {
       email: '',
       senha: '',
+      login: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.loginOn = this.loginOn.bind(this);
   }
 
   handleChange({ target }) {
@@ -18,33 +20,67 @@ class Login extends React.Component {
     });
   }
 
-  render() {
+  validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  validate() {
     const { email, senha } = this.state;
+    const minCaracters = 6;
+    if (this.validateEmail(email) && senha.length >= minCaracters) {
+      return true;
+    }
+    return false;
+  }
+
+  loginOn() {
+    if (this.validate()) {
+      this.setState({
+        login: true,
+      });
+    }
+  }
+
+  render() {
+    const { email, senha, login } = this.state;
+    const logar = this.validate();
+
+    if (login) return <Redirect to="/carteira" />;
+
     return (
       <div>
         <form>
-          Login
-          <input
-            onChange={ this.handleChange }
-            value={ email }
-            type="email"
-            name="email"
-            data-testid="email-input"
-            placeholder="Digite seu email"
-          />
-          Senha
-          <input
-            onChange={ this.handleChange }
-            value={ senha }
-            type="password"
-            name="senha"
-            data-testid="password-input"
-            placeholder="Digite sua senha"
-          />
+          <label htmlFor="login">
+            Login
+            <input
+              onChange={ this.handleChange }
+              value={ email }
+              type="email"
+              name="email"
+              data-testid="email-input"
+              placeholder="Digite seu email"
+            />
+          </label>
+          <label htmlFor="senha">
+            Senha
+            <input
+              onChange={ this.handleChange }
+              value={ senha }
+              type="password"
+              name="senha"
+              data-testid="password-input"
+              placeholder="Digite sua senha"
+            />
+          </label>
         </form>
-        <Link to="/carteira">
+        <button
+          type="button"
+          disabled={ !logar }
+          onClick={ this.loginOn }
+        >
           Entrar
-        </Link>
+        </button>
       </div>
     );
   }

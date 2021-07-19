@@ -7,8 +7,8 @@ class App extends Component {
   render() {
     return (
       <Switch>
-        <Route to="/" exact component={ Login } />
-        <Route to="/carteira" component={ Wallet } />
+        <Route path="/" exact component={ Login } />
+        <Route path="/carteira" component={ Wallet } />
       </Switch>
 
     );
