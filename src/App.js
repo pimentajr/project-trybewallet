@@ -1,14 +1,25 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import './App.css';
-import Login from './pages/Login';
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
-export default function App() {
+import Login from './pages/Login';
+import Wallet from './pages/Wallet';
+
+export const App = (props) => {
   return (
-    <div className="App">
-      <Switch>
-        <Route exact path="/" render={ () => <Login /> } />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route path="/carteira" component={ Wallet } />
+    </Switch>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  
+});
+
+const mapDispatchToProps = {
+  
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
