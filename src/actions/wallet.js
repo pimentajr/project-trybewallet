@@ -34,10 +34,5 @@ export const updateCurrencyToNewExpense = (state) => (dispatch) => {
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
     .then((currencies) => dispatch(requestCurrenciesSuccess(currencies)))
-    .then((updateCurrencies) => dispatch(addExpense(state, updateCurrencies)));
+    .then((updateCurrencies) => dispatch(requestExpenses(state, updateCurrencies)));
 };
-
-export const requestDelet = (expense) => ({
-  type: REQUEST_DELETE,
-  expense,
-});
