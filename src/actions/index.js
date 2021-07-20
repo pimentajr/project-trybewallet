@@ -25,17 +25,11 @@ export const requestFailed = (error) => ({
   payload: error,
 });
 
-// export const addExpenseSuccess = (exchangeRates, wallet) => {
-//   return {
-//     type: ADD_EXPENSE,
-//     payload: { ...wallet, exchangeRates, id: newID },
-//   };
-// };
+export const addExpenseSuccess = (payload) => ({
+  type: ADD_EXPENSE,
+  payload,
+});
 
-// export const addExpenseFail = (error) => ({
-//   type: FAIL_ADD_EXPENSE,
-//   payload: error,
-// });
 export const fetchAPI = () => async (dispatch) => {
   dispatch(requestApi());
   return fetch('https://economia.awesomeapi.com.br/json/all')
@@ -44,8 +38,12 @@ export const fetchAPI = () => async (dispatch) => {
     .catch((error) => dispatch(requestFailed(error)));
 };
 
-export const addExpense = (payload, id) => ({
-  type: ADD_EXPENSE,
-  payload,
-  id,
-});
+export const addExpense = (state) => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  .then((result) => result.json())
+  .then((data) => {
+    const obj = {
+      ...state,
+      exchangeRates: data,
+    };
+    dispatch(addExpenseSuccess(obj));
+  });

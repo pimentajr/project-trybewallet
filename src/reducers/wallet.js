@@ -15,7 +15,6 @@ function wallet(state = INITIAL_STATE, action) {
       id: state.id + 1,
       expenses: [...state.expenses, { id: action.id,
         ...action.payload,
-        exchangeRates: [...state.currencies],
       }],
     });
   default:

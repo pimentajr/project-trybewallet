@@ -13,7 +13,7 @@ class Wallet extends React.Component {
       method: '',
       tag: '',
     };
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.totalExpenses = this.totalExpenses.bind(this);
     this.paymentForm = this.paymentForm.bind(this);
@@ -24,9 +24,8 @@ class Wallet extends React.Component {
     API();
   }
 
-  onClick() {
+  handleClick() {
     const { id, addexpense, API } = this.props;
-    console.log(API);
     API();
     addexpense(this.state, id);
   }
@@ -104,7 +103,7 @@ class Wallet extends React.Component {
         { this.CategoryForm() }
         <button
           type="button"
-          onClick={ this.onClick }
+          onClick={ this.handleClick }
         >
           Adicionar despesa
         </button>
@@ -170,7 +169,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   API: () => dispatch(fetchAPI()),
-  addexpense: (payload, id) => dispatch(addExpense(payload, id)),
+  addexpense: (data) => dispatch(addExpense(data)),
 });
 
 Wallet.propTypes = {
