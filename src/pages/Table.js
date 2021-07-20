@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 class Table extends Component {
   render() {
     const { expenses } = this.props;
+/*     console.log(expenses); */
 
     return (
       <div>
@@ -23,28 +24,28 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {expenses.map(({
+            { expenses.map(({
               id,
               value,
               description,
               currency,
-              payment,
+              method,
               tag,
-              exchangesRates,
+              exchangeRates,
             }) => (
               <tr key={ id }>
                 <td>{ description }</td>
                 <td>{ tag }</td>
-                <td>{ payment }</td>
+                <td>{ method }</td>
                 <td>{ value }</td>
                 <td>{ currency }</td>
-                <td>{ Number(exchangesRates).toFixed(2) }</td>
-                <td>{(Number(exchangesRates) * Number(value)).toFixed(2)}</td>
+                <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>{(Number(exchangeRates[currency].ask) * Number(value)).toFixed(2)}</td>
                 <td>Real</td>
-                {/*                 <td>
+                <td>
                   <button type="button" data-testid="edit-btn">Editar despesa</button>
-                  <button type="button">Excluir</button>
-                </td> */}
+                  <button type="button" data-testid="delete-btn">Excluir</button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -60,12 +61,11 @@ const mapStateToProps = (state) => ({
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string),
-/*   value: PropTypes.number,
+  value: PropTypes.number,
   description: PropTypes.string,
   currency: PropTypes.number,
   payment: PropTypes.string,
-  tag: PropTypes.string, */
+  tag: PropTypes.string,
 }.isRequired;
 
 export default connect(mapStateToProps, null)(Table);
-/* export default Table; */
