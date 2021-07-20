@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { APIRequest, fetchCurrencyList } from '../actions';
 import Form from '../components/Form';
+import Table from '../components/Table';
 
 class Wallet extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class Wallet extends Component {
           <div data-testid="header-currency-field">BRL</div>
         </div>
         <Form />
+        <Table />
       </div>
     );
   }
