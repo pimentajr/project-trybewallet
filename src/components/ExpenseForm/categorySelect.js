@@ -10,7 +10,6 @@ class CategorySelect extends Component {
         <select
           id="expense-category"
           name="tag"
-          // value={ category }
           onChange={ (e) => handleChange(e) }
         >
           {tags.map((currCategory, index) => (

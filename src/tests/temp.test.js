@@ -16,28 +16,58 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 
 afterEach(() => jest.clearAllMocks());
 
-describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seguintes características:', () => {
+describe('11 - Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
-  test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="delete-btn"`', () => {
+  test('O botão deve estar dentro da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
-    expect(screen.getAllByTestId('delete-btn')[0]).toBeInTheDocument();
+    expect(screen.getAllByTestId('edit-btn')[0]).toBeInTheDocument();
   });
 
-  test('Ao ser clicado, o botão deleta a linha da tabela, alterando o estado global.', () => {
+  test('Ao ser clicado, o botão habilita um formulário para editar a linha da tabela. Ao clicar em "Editar despesa" ela é atualizada e atualiza a soma de despesas no header.', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
-    const deleteBtn = screen.getAllByTestId('delete-btn')[0];
-    fireEvent.click(deleteBtn);
+    const toggleEditBtn = screen.getAllByTestId('edit-btn')[0];
+    fireEvent.click(toggleEditBtn);
 
-    expect(screen.getByRole('cell', { name: 'Vinte euros' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Trabalho' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Dinheiro' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: '20' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Euro' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: '6.57' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: '131.37' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Real' })).toBeInTheDocument();
+    const valueInput = await screen.findByTestId('value-input');
+    const currencyInput = await screen.findByTestId('currency-input');
+    const methodInput = await screen.findByTestId('method-input');
+    const tagInput = await screen.findByTestId('tag-input');
+    const descriptionInput = await screen.findByTestId('description-input');
+    const editButton = await screen.findByText(/Editar despesa/i);
+
+    userEvent.type(valueInput, '100');
+    userEvent.selectOptions(currencyInput, 'CAD');
+    userEvent.selectOptions(methodInput, 'Dinheiro');
+    userEvent.selectOptions(tagInput, 'Trabalho');
+    userEvent.type(descriptionInput, 'Cem dólares canadenses');
+
+    fireEvent.click(editButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('cell', { name: 'Cem dólares canadenses' }),
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByRole('cell', { name: 'Trabalho' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: 'Dinheiro' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: '100' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: 'Dólar Canadense' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: '4.20' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: '420.41' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('cell', { name: 'Real' })[0]).toBeInTheDocument();
+
     const newExpenses = [
+      {
+        id: 0,
+        value: '100',
+        currency: 'CAD',
+        method: 'Dinheiro',
+        tag: 'Trabalho',
+        description: 'Cem dólares canadenses',
+        exchangeRates: mockData,
+      },
       {
         id: 1,
         value: '20',
@@ -50,29 +80,5 @@ describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seg
     ];
 
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
-  });
-
-  test('Ao clicar no botão para remover uma despesa, o valor correspondente deve ser subtraído e a despesa total deve ser atualizada no header', () => {
-    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
-    const deleteBtn = screen.getAllByTestId('delete-btn')[0];
-
-    fireEvent.click(deleteBtn);
-
-    const newExpenses = [
-      {
-        id: 1,
-        value: '20',
-        currency: 'EUR',
-        method: 'Dinheiro',
-        tag: 'Trabalho',
-        description: 'Vinte euros',
-        exchangeRates: mockData,
-      },
-    ];
-
-    expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
-
-    const totalField = screen.getByTestId('total-field');
-    expect(totalField).toContainHTML('131.37');
   });
 });

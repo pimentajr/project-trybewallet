@@ -10,7 +10,6 @@ class PaymentMethodSelect extends Component {
         <select
           id="expense-paymentMethod"
           name="method"
-          // value={ paymentMethod }
           onChange={ (e) => handleChange(e) }
         >
           {methods.map((method, index) => (

@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import calculateTotalExpenses from '../../helpers/calculateTotal';
 
 class Header extends Component {
-  calculateTotalExpenses(expenses) {
-    return expenses
-      .reduce((acc,
-        cv) => Number(acc) + Number(cv.value * cv.exchangeRates[cv.currency].ask),
-      0).toFixed(2);
-  }
-
   render() {
     const { userEmail, expenses } = this.props;
     const totalExpense = expenses.length > 0
-      ? this.calculateTotalExpenses(expenses) : 0;
+      ? calculateTotalExpenses(expenses) : 0;
     return (
       <header>
         <span

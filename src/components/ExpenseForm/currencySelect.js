@@ -15,7 +15,6 @@ class CurrencySelect extends Component {
         <select
           id="expense-currency"
           name="currency"
-          // value={ currency }
           onChange={ (e) => handleChange(e) }
         >
           { allowedCurrencies.map((currCurrency, index) => (

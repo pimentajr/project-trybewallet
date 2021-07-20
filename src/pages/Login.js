@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { walletLogin } from '../actions';
+import verifyEmailWithRegex from '../helpers/verifyEmail';
 
 class Login extends Component {
   constructor() {
@@ -11,16 +12,6 @@ class Login extends Component {
       password: '',
     });
     this.handleChange = this.handleChange.bind(this);
-    this.verifyRegexEmail = this.verifyRegexEmail.bind(this);
-  }
-
-  verifyRegexEmail() {
-    /** Para realizar o uso de verificação do email, usei o regex pattern email abaixo:
-     * Source: https://forum.blip.ai/t/resolvido-regex-para-validacao-de-email/1635 */
-    const { email, password } = this.state;
-    const minPasswordLength = 6;
-    const emailRegex = /^([\w.-]+)@([\w-]+)((\.(\w){2,3})+)$/;
-    return (emailRegex.test(email) && password.length >= minPasswordLength);
   }
 
   handleChange({ target }) {
@@ -40,6 +31,11 @@ class Login extends Component {
   }
 
   render() {
+    const { email, password } = this.state;
+    const user = {
+      email,
+      password,
+    };
     return (
       <div>
         <form>
@@ -56,7 +52,7 @@ class Login extends Component {
           <button
             type="button"
             onClick={ () => this.loginWallet() }
-            disabled={ !this.verifyRegexEmail() }
+            disabled={ !verifyEmailWithRegex(user) }
           >
             Entrar
           </button>
