@@ -1,18 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setEmail } from '../actions';
+import { Redirect } from 'react-router-dom';
+import { enviaEmailParaStore } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
+      // email: '',
+      redirectToWallet: false,
       testEmail: true,
       testPass: true,
     };
     this.handlePass = this.handlePass.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
+    this.handleClickBtn = this.handleClickBtn.bind(this);
   }
 
   handlePass({ target: { value } }) {
@@ -26,7 +29,7 @@ class Login extends React.Component {
   }
 
   handleEmail({ target: { value } }) {
-    this.setState({ email: value });
+    // this.setState({ email: value });
     // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (reg.test(value)) {
@@ -36,9 +39,18 @@ class Login extends React.Component {
     }
   }
 
+  handleClickBtn() {
+    const { sendEmailToStore } = this.props;
+    const email = document.querySelector('#email');
+    sendEmailToStore(email.value);
+    this.setState({
+      redirectToWallet: true,
+    });
+  }
+
   render() {
-    const { testEmail, testPass, email } = this.state;
-    const { setEmailKey, history } = this.props;
+    const { testEmail, testPass, redirectToWallet } = this.state;
+    if (redirectToWallet) return <Redirect to="/carteira" />;
     return (
       <div>
         <h1>Login</h1>
@@ -47,6 +59,7 @@ class Login extends React.Component {
             data-testid="email-input"
             onChange={ this.handleEmail }
             type="email"
+            id="email"
           />
           <input
             data-testid="password-input"
@@ -55,10 +68,7 @@ class Login extends React.Component {
           />
           <button
             type="button"
-            onClick={ () => {
-              history.push('/carteira');
-              setEmailKey(email);
-            } }
+            onClick={ this.handleClickBtn }
             disabled={ testPass || testEmail }
           >
             Entrar
@@ -70,12 +80,14 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setEmailKey: (payload) => dispatch(setEmail(payload)),
+  sendEmailToStore: (email) => dispatch(enviaEmailParaStore(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
-Login.propTypes = ({
-  setEmailKey: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-});
+Login.propTypes = {
+  sendEmailToStore: PropTypes.func,
+};
+Login.defaultProps = {
+  sendEmailToStore: PropTypes.func,
+};
