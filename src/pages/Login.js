@@ -1,10 +1,14 @@
 import React from 'react';
 import '../App.css';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setUsername,
+  setUserPass,
+} from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       senha: '',
@@ -19,8 +23,6 @@ class Login extends React.Component {
   handleChange({ target }) {
     const { name, value } = target;
     this.setState(() => ({ [name]: value }));
-
-    console.log(name);
   }
 
   validateEmail(email) {
@@ -29,7 +31,7 @@ class Login extends React.Component {
   }
 
   validatePass(senha) {
-    const number = 7;
+    const number = 6;
     if (senha.length >= number) {
       return true;
     }
@@ -40,7 +42,6 @@ class Login extends React.Component {
     const { email, senha } = this.state;
     const validEmail = this.validateEmail(email);
     const validPass = this.validatePass(senha);
-    console.log('valid pass', validPass, senha);
     if (validEmail && validPass) {
       return false;
     }
@@ -48,7 +49,11 @@ class Login extends React.Component {
   }
 
   redirect() {
-    return <Redirect to="/carteira" />;
+    const { setStateUser, history } = this.props;
+    const { email, senha } = this.state;
+    setStateUser(email);
+    setUserPass(senha);
+    history.push('/carteira');
   }
 
   render() {
@@ -90,4 +95,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setStateUser: (payload) => dispatch(setUsername(payload)),
+  setUserPass: (payload) => dispatch(setUserPass(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setUserPass: PropTypes.func,
+}.isRequired;

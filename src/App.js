@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello, TrybeWallet!</h1>
-      <Login />
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Switch>
+          <Route path="/carteira" component={ Wallet } />
+          <Route render={ (props) => <Login { ...props } /> } />
+        </Switch>
+      </div>
+    );
+  }
 }
-
-export default App;
