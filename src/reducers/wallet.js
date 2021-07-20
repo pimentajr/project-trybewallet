@@ -11,12 +11,15 @@ function wallet(state = initialState, action) {
   case CURRENCIES:
     return { ...state,
       currencies: Object.keys(action.payload),
-      expenses: [{ exchangeRates: action.payload }] };
+    };
+    // expenses: [{ exchangeRates: action.payload }]
   case ADD_EXPENSES:
     return {
       ...state,
-      expenses: [{ ...action.payload,
-        ...exchangeRates }],
+      // expenses: [action.payload],
+      expenses: [...state.expenses, action.payload],
+      // expenses: [{ ...action.payload,
+      //   ...exchangeRates }],
     };
   default:
     return state;

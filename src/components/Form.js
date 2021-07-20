@@ -9,13 +9,15 @@ class Form extends Component {
     this.state = {
       id: 0,
       value: '',
-      description: '',
-      currency: '',
-      paymentMethod: '',
-      tag: '',
+      description: 'anything',
+      currency: 'USD',
+      method: '',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.updateGlobalState = this.updateGlobalState.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -24,9 +26,27 @@ class Form extends Component {
     });
   }
 
+  async updateGlobalState() {
+    const response = await this.fetchCurrencyList();
+    this.setState(() => ({
+      exchangeRates: response,
+    }));
+    const { handleClickSave } = this.props;
+    const { state } = this;
+    handleClickSave(state);
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
+  }
+
+  async fetchCurrencyList() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const responseObject = await response.json();
+    return responseObject;
+  }
+
   render() {
     const { receivedCurrencies, handleClickSave } = this.props;
-    const { state } = this;
     return (
       <div>
         <form>
@@ -50,7 +70,7 @@ class Form extends Component {
           </label>
           <label htmlFor="payment-option">
             Método de pagamento:
-            <select name="paymentMethod" id="payment-option" onChange={ this.handleChange }>
+            <select name="method" id="payment-option" onChange={ this.handleChange }>
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
@@ -68,7 +88,7 @@ class Form extends Component {
           </label>
           <button
             type="button"
-            onClick={ () => handleClickSave(state) }
+            onClick={ () => this.updateGlobalState() }
           >
             Adicionar despesa
           </button>
