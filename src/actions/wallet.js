@@ -1,8 +1,7 @@
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
-// export const REQUEST_DELETE = 'REQUEST_DELETE';
-export const REQUEST_UPDATE = 'REQUEST_UPDATE';
+
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
 
