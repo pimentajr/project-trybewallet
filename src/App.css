@@ -39,3 +39,7 @@
     transform: rotate(360deg);
   }
 }
+
+.bd-sol {
+  border: 1px solid black;
+}

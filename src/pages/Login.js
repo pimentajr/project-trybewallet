@@ -31,7 +31,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     return (
       <div>
-        <div>Alguma imagem legal</div>
+        <div>Image</div>
         <input
           data-testid="email-input"
           type="email"

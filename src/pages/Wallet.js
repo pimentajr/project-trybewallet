@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrencies } from '../actions';
 import Form from '../components/Form';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -23,10 +24,10 @@ class Wallet extends React.Component {
     });
     // verificar a necessidade de mostrar apenas os dois numeros apos a casa decimal
     // caso haja necessidade, citar o material utilizado como referencia: https://stackoverflow.com/questions/6134039/format-number-to-always-show-2-decimal-places
-    // let fixedValue = parseFloat(totalValue).toFixed(2);
+    const fixedValue = parseFloat(totalValue).toFixed(2);
     // console.log(fixedValue);
 
-    return totalValue;
+    return fixedValue;
   }
 
   render() {
@@ -39,6 +40,7 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <Form />
+        <ExpensesTable />
       </div>
     );
   }

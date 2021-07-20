@@ -117,12 +117,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
-Form.defaultProps = {
-  currencies: [],
-};
-
 Form.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.string),
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   saveCurrencies: PropTypes.func.isRequired,
   getAllExpenses: PropTypes.func.isRequired,
 };
