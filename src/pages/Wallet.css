@@ -74,12 +74,12 @@
   text-align: center;
 }
 
-.wallet-container > table {
+.expenses-table {
   background-color: rgb(50, 57, 62);
   width: 100%;
 }
 
-.wallet-container > table > thead {
+.expenses-table > thead {
   background-color: rgb(50, 57, 62);
   color: whitesmoke;
   height: 2.4rem;
@@ -88,12 +88,12 @@
   width: 100%;
 }
 
-.wallet-container > table > thead > tr {
+.expenses-table > thead > tr {
   margin: 0;
   width: 100%;
 }
 
-.wallet-container > table > tbody {
+.expenses-table > tbody {
   background-color: rgb(61, 69, 74);
   color: whitesmoke;
   height: 2rem;
@@ -102,18 +102,18 @@
   width: 100%;
 }
 
-.wallet-container > table > tbody > tr {
+.expenses-table > tbody > tr {
   height: 2rem;
   margin: 0;
   width: 100%;
 }
 
-.wallet-container > table > tbody > tr button {
+.expenses-table > tbody > tr button {
   height: 1.8rem;
   width: 50%;
 }
 
-.wallet-container > table > tbody > tr button img {
-  margin-top: 0.05rem;
+.expenses-table > tbody > tr button img {
   height: 90%;
+  margin-top: 0.05rem;
 }

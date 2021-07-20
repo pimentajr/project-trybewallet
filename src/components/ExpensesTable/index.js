@@ -39,7 +39,7 @@ class ExpensesTable extends Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table>
+      <table className="expenses-table">
         <thead>
           <tr>
             {headers.map((head) => <th key={ head }>{head}</th>)}
