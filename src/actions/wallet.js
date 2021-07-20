@@ -1,6 +1,6 @@
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
-export const REQUEST_ADD_EXPENSES = 'REQUEST_ADD_EXPENSES';
+export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 // export const REQUEST_DELETE = 'REQUEST_DELETE';
 export const REQUEST_UPDATE = 'REQUEST_UPDATE';
 const requestCurrencies = () => ({
@@ -11,12 +11,6 @@ const requestCurrencies = () => ({
 const requestSuccess = (currencies) => ({
   type: REQUEST_SUCCESS,
   currencies,
-});
-
-export const requestAddExpense = (state, updateCurrencies) => ({
-  type: ADD_EXPENSE,
-  state,
-  updateCurrencies,
 });
 
 export const fetchCurrencies = () => (dispatch) => {
