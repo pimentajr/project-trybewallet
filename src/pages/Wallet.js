@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { APIRequest, fetchCurrencyList } from '../actions';
-// const userEmail = useSelector((state) => state.user.email);
-// import { useSelector } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends Component {
@@ -13,13 +11,14 @@ class Wallet extends Component {
   }
 
   render() {
+    const { userEmail } = this.props;
     return (
       <div>
         <div>
           TrybeWallet
           <div data-testid="email-field">
             Email:
-            {'userEmail'}
+            {userEmail}
           </div>
           <div data-testid="total-field">
             <span>Despesa total: R$ </span>
@@ -33,9 +32,9 @@ class Wallet extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const mapStateToProps = (state) => ({
+  userEmail: state.user.email,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   APIfetch: () => dispatch(fetchCurrencyList()),

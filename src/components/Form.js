@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrencyList } from '../actions';
-import SelectOptions from './SelectOptions';
 
 class Form extends Component {
   constructor(props) {

@@ -3,11 +3,10 @@ export const USER_EMAIL = 'USER_EMAIL';
 export const CURRENCIES = 'CURRENCIES';
 export const RECEIVE_API = 'RECEIVE_API';
 
-function storeUserEmail(email, logged) {
+function storeUserEmail(email) {
   return {
     type: USER_EMAIL,
     payload: email,
-    logged,
   };
 }
 
@@ -26,7 +25,7 @@ export const fetchCurrencyList = () => async (dispatch) => {
   // dispatch(APIRequest());
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const responseObject = await response.json();
-  console.log('responseObj:', responseObject);
+  // console.log('responseObj:', responseObject);
   return dispatch(storeCurrencies(responseObject));
   // const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   // const responseObject = await response.json();

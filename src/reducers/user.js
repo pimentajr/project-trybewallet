@@ -1,9 +1,7 @@
 import { USER_EMAIL } from '../actions';
 
 const initialState = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function user(state = initialState, action) {
