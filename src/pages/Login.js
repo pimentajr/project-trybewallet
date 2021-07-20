@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Login extends React.component {
 
 }
 
-export default Login;
+export default connect(null)(Login);
