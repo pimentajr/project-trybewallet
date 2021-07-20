@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addExpenses } from '../actions';
 
 class Form extends Component {
   constructor(props) {
@@ -24,8 +25,8 @@ class Form extends Component {
   }
 
   render() {
-    // console.log('fetch return:', fetchCurrencyList());
-    const { receivedCurrencies } = this.props;
+    const { receivedCurrencies, handleClickSave } = this.props;
+    const { state } = this;
     return (
       <div>
         <form>
@@ -65,6 +66,12 @@ class Form extends Component {
               <option>Saúde</option>
             </select>
           </label>
+          <button
+            type="button"
+            onClick={ () => handleClickSave(state) }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -75,4 +82,8 @@ const mapStateToProps = (state) => ({
   receivedCurrencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = (dispatch) => ({
+  handleClickSave: (state) => dispatch(addExpenses(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

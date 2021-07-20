@@ -11,7 +11,7 @@ class Wallet extends Component {
   }
 
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, expensesData } = this.props;
     return (
       <div>
         <div>
@@ -34,6 +34,7 @@ class Wallet extends Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  expensesData: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
