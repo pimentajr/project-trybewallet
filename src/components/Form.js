@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { coinsThunk } from '../actions/index';
+import Tag from './Tag';
 
 class Form extends React.Component {
   constructor() {
@@ -30,7 +31,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, description } = this.state;
     const { currencies } = this.props;
     const save = this.handleChance;
     return (
@@ -68,16 +69,7 @@ class Form extends React.Component {
               <option>Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="tag">
-            Tag
-            <select id="tag" name="tag" value={ tag } onChange={ save }>
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <Tag />
           <button type="submit">
             Adicionar Despesas
           </button>
