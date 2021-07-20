@@ -5,21 +5,19 @@ import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 
-export const App = (props) => {
-  return (
-    <Switch>
-      <Route exact path="/" component={ Login } />
-      <Route path="/carteira" component={ Wallet } />
-    </Switch>
-  );
-};
+export const App = () => (
+  <Switch>
+    <Route exact path="/" component={ Login } />
+    <Route path="/carteira" component={ Wallet } />
+  </Switch>
+);
+// desta parte para baixo eu não sabia, fiz apartir de codigo de outros alunos
+const mapStateToProps = () => ({
 
-const mapStateToProps = (state) => ({
-  
 });
 
 const mapDispatchToProps = {
-  
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

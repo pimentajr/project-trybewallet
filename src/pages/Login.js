@@ -77,5 +77,5 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = ({
   setEmailKey: PropTypes.func.isRequired,
-  history: PropTypes.shape({push: PropTypes.func}).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 });
