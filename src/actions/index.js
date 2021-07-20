@@ -6,6 +6,7 @@ export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const newUser = (payload) => ({
   type: NEW_USER,
@@ -30,6 +31,11 @@ const requestSuccess = (payload) => ({
 export const addExpenses = (expenses) => ({
   type: ADD_EXPENSES,
   expenses,
+});
+
+export const deleteExpense = (idExpenses) => ({
+  type: DELETE_EXPENSES,
+  idExpenses,
 });
 
 export function setCoins() {

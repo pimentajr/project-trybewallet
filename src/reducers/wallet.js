@@ -4,6 +4,7 @@ import {
   REQUEST_ERROR,
   REQUEST_SUCCESS,
   ADD_EXPENSES,
+  DELETE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -23,6 +24,10 @@ function wallet(state = INITIAL_STATE, action) {
   case ADD_EXPENSES:
     return { ...state,
       expenses: [...state.expenses, action.expenses],
+    };
+  case DELETE_EXPENSES:
+    return { ...state,
+      expenses: state.expenses.filter((expenses, index) => index !== action.idExpenses),
     };
   default:
     return state;
