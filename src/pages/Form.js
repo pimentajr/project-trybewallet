@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchExpenses } from '../actions';
+import { fetchExpenses, fetchAPICurrencies } from '../actions';
 
 class Form extends Component {
   constructor(props) {
@@ -22,6 +22,11 @@ class Form extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    const { requestApi } = this.props;
+    requestApi();
+  }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -30,9 +35,12 @@ class Form extends Component {
   }
 
   handleClick() {
-    const { setExpenses } = this.props;
-    setExpenses(this.state); // envia o state via dispatch e reset state
+    // envia o state via dispatch e reset state
+    const { requestApi, expenses } = this.props;
+    requestApi(this.state);
+
     this.setState({
+      id: expenses.length + 1,
       value: '',
       description: '',
       currency: 'USD',
@@ -96,11 +104,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setExpenses: (payload) => dispatch(fetchExpenses(payload)),
+  fetchCurrencies: (state) => dispatch(fetchAPICurrencies(state)),
+  requestApi: (state) => dispatch(fetchExpenses(state)),
 });
 
 Form.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string),
+  expenses: PropTypes.array,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

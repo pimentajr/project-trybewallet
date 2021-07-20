@@ -24,7 +24,7 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            { expenses.map(({
+            { !expenses.length && expenses.map(({
               id,
               value,
               description,

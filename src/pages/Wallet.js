@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import { fetchAPI } from '../actions';
+import { fetchAPICurrencies } from '../actions';
 import Table from './Table';
 
 class Wallet extends React.Component {
@@ -11,7 +11,7 @@ class Wallet extends React.Component {
     requestApi();
   }
 
-  getTotal() {
+/*   getTotal() {
     const { expenses } = this.props;
     let total = 0;
     if (expenses.length > 0) {
@@ -20,7 +20,7 @@ class Wallet extends React.Component {
       });
     }
     return total;
-  }
+  } */
 
   render() {
     const { email } = this.props;
@@ -31,7 +31,7 @@ class Wallet extends React.Component {
             TrybeWallet
           </div>
           <h1 data-testid="email-field">{`Olá ${email}`}</h1>
-          <span data-testid="total-field">{ `Total despesas: ${this.getTotal()} ` }</span>
+          <span data-testid="total-field">{/* { `Total despesas: ${this.getTotal()} ` } */}</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <Form />
@@ -47,12 +47,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestApi: () => dispatch(fetchAPI()),
+  requestApi: () => dispatch(fetchAPICurrencies()),
 });
 
 Wallet.propTypes = {
+  email: PropTypes.string,
   requestApi: PropTypes.func,
   dispatchExpenses: PropTypes.func,
 }.isRequest;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+/* export default connect(mapStateToProps, null)(Wallet); */
