@@ -32,37 +32,27 @@ class Form extends React.Component {
   render() {
     const { value, currency, method, tag, description } = this.state;
     const { currencies } = this.props;
+    const save = this.handleChance;
     return (
       <div>
         <form>
-          <label htmlFor="valor">
+          <label htmlFor="vl">
             Valor
-            <input
-              id="valor"
-              value={ value }
-              type="number"
-              name="value"
-              onChange={ this.handleChance }
-            />
+            <input id="vl" value={ value } type="number" name="value" onChange={ save } />
           </label>
-          <label htmlFor="describle">
+          <label htmlFor="desc">
             Descrição
             <input
-              id="describle"
+              id="desc"
               type="text"
               name="description"
               value={ description }
-              onChange={ this.handleChance }
+              onChange={ save }
             />
           </label>
           <label htmlFor="moeda">
             Moeda
-            <select
-              id="moeda"
-              name="currency"
-              value={ currency }
-              onChange={ this.handleChance }
-            >
+            <select id="moeda" name="currency" value={ currency } onChange={ save }>
               {!currencies
                 ? <option value="BRL">BRL</option>
                 : currencies.map((currenc) => (
@@ -72,12 +62,7 @@ class Form extends React.Component {
           </label>
           <label htmlFor="metodo">
             Método de pagamento
-            <select
-              id="metodo"
-              name="method"
-              value={ method }
-              onChange={ this.handleChance }
-            >
+            <select id="metodo" name="method" value={ method } onChange={ save }>
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
@@ -85,12 +70,7 @@ class Form extends React.Component {
           </label>
           <label htmlFor="tag">
             Tag
-            <select
-              id="tag"
-              name="tag"
-              value={ tag }
-              onChange={ this.handleChance }
-            >
+            <select id="tag" name="tag" value={ tag } onChange={ save }>
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
