@@ -3,6 +3,7 @@ export const RECEIVE_QUOTE_API = 'RECEIVE_QUOTE_API';
 export const VALIDATE_LOGIN = 'VALIDATE_LOGIN';
 export const SAVE_CURRENCIES = 'SAVE_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 const requestQuoteApi = () => ({
   type: REQUEST_QUOTE_API,
@@ -27,6 +28,11 @@ export const receiveCurrencies = (currencie, expense) => ({
 export const addExpenses = (state) => ({
   type: ADD_EXPENSES,
   state,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 export function fetchCurrencies() {

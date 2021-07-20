@@ -1,5 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { RECEIVE_QUOTE_API, ADD_EXPENSES, REQUEST_QUOTE_API } from '../actions';
+import {
+  RECEIVE_QUOTE_API,
+  ADD_EXPENSES,
+  DELETE_EXPENSE,
+  REQUEST_QUOTE_API,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -31,6 +36,12 @@ function wallet(state = INITIAL_STATE, action) {
         },
       ],
       isFetching: false,
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses
+        .filter((expense) => expense.id !== action.id),
     };
   default:
     return state;
