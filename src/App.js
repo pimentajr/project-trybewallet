@@ -1,23 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
-
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 
-export const App = () => (
-  <Switch>
-    <Route exact path="/" component={ Login } />
-    <Route path="/carteira" component={ Wallet } />
-  </Switch>
-);
-// desta parte para baixo eu não sabia, fiz apartir de codigo de outros alunos
-const mapStateToProps = () => ({
+function App() {
+  return (
+    <div>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/carteira" component={ Wallet } />
+      </Switch>
+    </div>
+  );
+}
 
-});
-
-const mapDispatchToProps = {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -8,15 +8,15 @@ class Login extends React.Component {
     super();
     this.state = {
       email: '',
-      testEmail: false,
-      testPass: false,
+      testEmail: true,
+      testPass: true,
     };
     this.handlePass = this.handlePass.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
   }
 
   handlePass({ target: { value } }) {
-    const number = 5;
+    const number = 6;
     if (value.length < number) {
       this.setState({ testPass: true });
     }
@@ -44,20 +44,20 @@ class Login extends React.Component {
         <h1>Login</h1>
         <form>
           <input
-            datatestid="email-input"
+            data-testid="email-input"
             onChange={ this.handleEmail }
             type="email"
           />
           <input
-            datatestid="password-input"
+            data-testid="password-input"
             onChange={ this.handlePass }
             type="password"
           />
           <button
             type="button"
             onClick={ () => {
-              setEmailKey(email);
               history.push('/carteira');
+              setEmailKey(email);
             } }
             disabled={ testPass || testEmail }
           >
