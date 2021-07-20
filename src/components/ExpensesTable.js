@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { FaEdit, FaRegTrashAlt } from 'react-icons/fa';
-import { deleteExpense } from '../actions';
+import { deleteExpense, enableEditExpense } from '../actions';
 
 class ExpensesTable extends React.Component {
   delete(id) {
@@ -12,6 +12,17 @@ class ExpensesTable extends React.Component {
         type="button"
         data-testid="delete-btn"
         onClick={ () => dispatchDeleteExpense(id) }
+      />
+    );
+  }
+
+  edit(id) {
+    const { dispatchEnableEdit } = this.props;
+    return (
+      <FaEdit
+        type="button"
+        data-testid="edit-btn"
+        onClick={ () => dispatchEnableEdit(id) }
       />
     );
   }
@@ -52,7 +63,7 @@ class ExpensesTable extends React.Component {
                   </td>
                   <td>Real</td>
                   <td>
-                    <FaEdit />
+                    { this.edit(expense.id) }
                     { this.delete(expense.id) }
                   </td>
                 </tr>
@@ -71,11 +82,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteExpense: (id) => dispatch(deleteExpense(id)),
+  dispatchEnableEdit: (id) => dispatch(enableEditExpense(id)),
 });
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatchDeleteExpense: PropTypes.func.isRequired,
+  dispatchEnableEdit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
