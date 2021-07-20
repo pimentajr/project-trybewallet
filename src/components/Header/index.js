@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import calculateTotalExpenses from '../../helpers/calculateTotal';
+import trybeLogo from '../../images/Trybe_logo.png';
 
 class Header extends Component {
   render() {
@@ -10,24 +11,27 @@ class Header extends Component {
       ? calculateTotalExpenses(expenses) : 0;
     return (
       <header>
-        <span
-          data-testid="email-field"
-        >
-          { `Email: ${userEmail}` }
-        </span>
-        <p>
-          Despesa Total: R$
+        <img src={ trybeLogo } alt="Wallet logo" />
+        <div>
           <span
-            data-testid="total-field"
+            data-testid="email-field"
           >
-            { totalExpense }
+            { `Email: ${userEmail}` }
           </span>
-          <span
-            data-testid="header-currency-field"
-          >
-            BRL
+          <span>
+            Despesa Total: R$
+            <span
+              data-testid="total-field"
+            >
+              { totalExpense }
+            </span>
+            <span
+              data-testid="header-currency-field"
+            >
+              BRL
+            </span>
           </span>
-        </p>
+        </div>
       </header>
     );
   }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { walletLogin } from '../actions';
 import verifyEmailWithRegex from '../helpers/verifyEmail';
+import trybeLogo from '../images/Trybe_logo.png';
+import './Login.css';
 
 class Login extends Component {
   constructor() {
@@ -37,7 +39,8 @@ class Login extends Component {
       password,
     };
     return (
-      <div>
+      <div className="login-container">
+        <img className="wallet-logo" src={ trybeLogo } alt="Trybewallet logo" />
         <form>
           <input
             type="email"
