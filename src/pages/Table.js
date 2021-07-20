@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpenses } from '../actions';
 
 class Table extends Component {
+/*   constructor() {
+    super();
+    this.dispatchDelete = this.dispatchDelete.bind(this);
+  } */
+  /*   deleteExp(id) {
+    const { deletes } = this.props;
+    dispatchDelete(id);
+  } */
+  deleteExp(id) {
+    const { dispatchDelete } = this.props;
+    return (
+      <button
+        type="button"
+        data-testid="delete-btn"
+        onClick={ () => dispatchDelete(id) }
+      >
+        Excluir
+      </button>
+    );
+  }
+
   render() {
     const { expenses } = this.props;
-
     return (
       <div>
         <table>
@@ -43,7 +64,9 @@ class Table extends Component {
                 <td>Real</td>
                 <td>
                   <button type="button" data-testid="edit-btn">Editar despesa</button>
-                  <button type="button" data-testid="delete-btn">Excluir</button>
+                  { this.deleteExp(id) }
+                  {/* <button type="button" data-testid="delete-btn" onClick={ () => this.dispatchDelete(id) }>
+                  Excluir</button> */}
                 </td>
               </tr>
             ))}
@@ -58,6 +81,10 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDelete: (id) => dispatch(deleteExpenses(id)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string),
   value: PropTypes.number,
@@ -65,6 +92,7 @@ Table.propTypes = {
   currency: PropTypes.number,
   payment: PropTypes.string,
   tag: PropTypes.string,
+  dispatchDelete: PropTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

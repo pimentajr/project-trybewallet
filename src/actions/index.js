@@ -3,6 +3,7 @@ export const LOGIN = 'LOGIN';
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
 export const EXPENSES = 'EXPENSES';
+export const DELETE = 'DELETE';
 
 export const userLogin = (state) => ({
   type: LOGIN,
@@ -13,9 +14,9 @@ export const request = () => ({
   type: REQUEST,
 });
 
-export const success = (payload) => ({
+export const success = (currencies) => ({
   type: SUCCESS,
-  payload,
+  currencies,
 });
 
 export const fetchAPICurrencies = () => async (dispatch) => {
@@ -60,3 +61,8 @@ export const fetchApi = (expenses = false) => (dispatch) => {
     .then((result) => (expenses ? dispatch(sendExpenses(expenses, result))
       : dispatch(success(Object.keys(result).filter((currency) => currency !== 'USDT')))))
 }; */
+
+export const deleteExpenses = (id) => ({
+  type: DELETE,
+  id,
+});
