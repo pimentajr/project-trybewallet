@@ -35,10 +35,12 @@ class Form extends React.Component {
   }
 
   btnAddExpense() {
-    const { getCurrency } = this.props;
+    const { getCurrency, expenses } = this.props;
+    this.setState((previusState) => ({
+      id: previusState.id + 1,
+    }));
+    expenses(this.state);
     getCurrency();
-    const { expenses, id } = this.props;
-    expenses(this.state, id);
   }
 
   // criando novos renders por conta da quantidade de linha excedida
@@ -58,11 +60,11 @@ class Form extends React.Component {
   renderTags() {
     const tagOption = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
-      <label htmlFor="categories">
+      <label htmlFor="tag">
         Tag
         <select
-          name="categories"
-          id="categories"
+          name="tag"
+          id="tag"
           onChange={ this.handleChange }
         >
           {tagOption

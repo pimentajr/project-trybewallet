@@ -10,7 +10,6 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      btnDisabled: true,
     };
 
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -21,17 +20,15 @@ class Login extends React.Component {
     this.checkLogin();
   }
 
+  /* fonte passada para validação do email https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/ */
   checkLogin() {
-    const { email, password, btnDisabled } = this.state;
-    const regEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-    const checkEmail = regEmail.test(email);
-    const numLength = 6;
-    const checkPassword = password.length >= numLength;
-    if (checkEmail && checkPassword && btnDisabled) {
-      this.setState({ btnDisabled: false });
-    } else if ((!checkEmail || !checkPassword) && !btnDisabled) {
-      this.setState({ btnDisabled: true });
+    const { email, password } = this.state;
+    const re = /\S+@\S+\.\S+/;
+    const magicNumber = 6;
+    if (re.test(email) && password.length >= magicNumber) {
+      return false;
     }
+    return true;
   }
 
   handleChangeInput({ target }) {
@@ -42,7 +39,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, password, btnDisabled } = this.state;
+    const { email, password } = this.state;
     const { validateLogin } = this.props;
     return (
       <div>
@@ -53,7 +50,6 @@ class Login extends React.Component {
           placeholder="Informe seu email"
           name="email"
           value={ email }
-          required
           onChange={ this.handleChangeInput }
         />
         <input
@@ -62,14 +58,13 @@ class Login extends React.Component {
           placeholder="Informe sua senha"
           name="password"
           value={ password }
-          required
           onChange={ this.handleChangeInput }
         />
         <Link to="/carteira">
           <button
             type="button"
-            disabled={ btnDisabled }
-            onClick={ () => validateLogin(email, password) }
+            disabled={ this.checkLogin() }
+            onClick={ () => validateLogin(email) }
           >
             Entrar
           </button>
@@ -79,6 +74,8 @@ class Login extends React.Component {
   }
 }
 
+// recebendo evento que será disparado pela action.
+// recebe parametro e consegue ver o state | mapeia todo state para props
 const mapDispatchToProps = (dispatch) => ({
   validateLogin: (email) => dispatch(userLoginAction(email)),
 });
