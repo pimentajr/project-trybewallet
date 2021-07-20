@@ -1,17 +1,11 @@
-import { USER_LOGIN } from '../actions';
-
-const INICIAL_STATE = {
+const INITIAL_STATE = {
   email: '',
 };
 
-const user = (state = INICIAL_STATE, action) => {
-  switch (action.type) {
-  case USER_LOGIN:
-    return {
-      ...state,
-      email: action.payload,
-    };
-  default: return state;
-  }
+const user = (state = INITIAL_STATE, action) => {
+
 };
+
 export default user;
+
+// criar action
