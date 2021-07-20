@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteItem } from '../actions';
 
 class Table extends Component {
+  constructor(props) {
+    super(props);
+    this.hClick = this.hClick.bind(this);
+  }
+
   fa(total) {
     const number = (parseFloat(total.value) * total.exchangeRates[total.currency].ask);
     return Math.round(number * 100) / 100;
+  }
+
+  hClick({ target: { value } }) {
+    // console.log();
+    const { expenses, delItem } = this.props;
+    const newExpenses = expenses.filter((item) => item.id !== Number(value));
+    delItem(newExpenses);
   }
 
   render() {
@@ -40,7 +53,14 @@ class Table extends Component {
               <td>Real</td>
               <td>
                 <button type="button">Editar</button>
-                <button type="button">Excluir</button>
+                <button
+                  value={ item.id }
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ (e) => this.hClick(e) }
+                >
+                  Excluir
+                </button>
               </td>
             </tr>
           ))}
@@ -52,10 +72,15 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf.isRequired,
+  delItem: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  delItem: (state) => dispatch(deleteItem(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
