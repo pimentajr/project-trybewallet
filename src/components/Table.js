@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Table extends Component {
-
   fa(total) {
     const number = (parseFloat(total.value) * total.exchangeRates[total.currency].ask);
     return Math.round(number * 100) / 100;
@@ -49,6 +49,10 @@ class Table extends Component {
     );
   }
 }
+
+Table.propTypes = {
+  expenses: PropTypes.arrayOf.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,

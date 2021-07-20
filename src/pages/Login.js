@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { storeUserEmail } from '../actions';
 
@@ -36,7 +37,6 @@ class Login extends Component {
         <label htmlFor="email-input">
           <input
             name="email"
-            // value={ email }
             type="email"
             data-testid="email-input"
             required
@@ -46,7 +46,6 @@ class Login extends Component {
         <label htmlFor="password-input">
           <input
             name="pass"
-            // value={ pass }
             type="password"
             data-testid="password-input"
             required
@@ -58,7 +57,6 @@ class Login extends Component {
             type="button"
             disabled={ email && pass ? !(this.checkEmailAndPass(email, pass)) : true }
             onClick={ () => (credentials(email)) }
-            // corrigindo onClick
           >
             Entrar
           </button>
@@ -67,6 +65,10 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  credentials: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   credentials: (state) => dispatch(storeUserEmail(state)),

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { APIRequest, fetchCurrencyList } from '../actions';
+import PropTypes from 'prop-types';
+import { fetchCurrencyList } from '../actions';
 import Form from '../components/Form';
 import Table from '../components/Table';
 
@@ -53,6 +54,12 @@ class Wallet extends Component {
   }
 }
 
+Wallet.propTypes = {
+  APIfetch: PropTypes.func.isRequired,
+  expensesData: PropTypes.arrayOf.isRequired,
+  userEmail: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   expensesData: state.wallet.expenses,
@@ -63,5 +70,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-
-// {/* .map((obj) => expensesData.find((ol) => ol.currency === obj)) */}
