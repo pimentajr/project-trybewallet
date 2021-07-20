@@ -36,7 +36,7 @@ export const requestFailed = (error) => ({
 //   type: FAIL_ADD_EXPENSE,
 //   payload: error,
 // });
-export const fetchAPI = () => (dispatch) => {
+export const fetchAPI = () => async (dispatch) => {
   dispatch(requestApi());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())

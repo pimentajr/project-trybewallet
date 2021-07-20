@@ -26,6 +26,7 @@ class Wallet extends React.Component {
 
   onClick() {
     const { id, addexpense, API } = this.props;
+    console.log(API);
     API();
     addexpense(this.state, id);
   }
@@ -51,15 +52,14 @@ class Wallet extends React.Component {
 
   totalExpenses() {
     const { expenses } = this.props;
-    const { currency } = expenses;
     console.log(expenses);
-    if (currency !== undefined) {
-      return expenses.reduce((acc, curr) => {
-        console.log(expenses);
-        return acc + parseFloat(curr.value)
-        * parseFloat(curr.exchangeRates[curr.currency]);
-      }, 0);
+    if (expenses.length !== 0) {
+      return expenses.reduce((acc, expense) => {
+        const tax = Number(expense.exchangeRates[expense.currency].ask);
+        return acc + parseFloat(tax) * parseFloat(Number(expense.value));
+      }, 0).toFixed(2);
     }
+    return 0;
   }
 
   Form() {
