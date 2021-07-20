@@ -57,6 +57,7 @@ class ExpensesTable extends Component {
                   .toFixed(2) }
               </td>
               <td>Real</td>
+              {/* <td></td> */}
             </tr>
           )) }
         </tbody>
