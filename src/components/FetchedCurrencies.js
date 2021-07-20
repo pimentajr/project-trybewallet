@@ -4,26 +4,29 @@ import { connect } from 'react-redux';
 
 class FetchedCurrencies extends Component {
   render() {
-    const { fetchedCurrencies } = this.props;
+    const { fetchedCurr } = this.props;
     return (
       <>
-        { fetchedCurrencies.map((currency, index) => (
-          <option key={ index }>
-            {currency.code}
-          </option>))}
+        { Object.values(fetchedCurr).filter((filtered) => (filtered.codein !== 'BRLT'))
+          .map((currency, index) => (
+            <option key={ index }>
+              { currency.code }
+            </option>
+          ))}
       </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  fetchedCurrencies: state.wallet.currencies,
+  fetchedCurr: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps)(FetchedCurrencies);
 
 FetchedCurrencies.propTypes = {
-  fetchedCurrencies: PropTypes.shape({
+  fetchedCurr: PropTypes.shape({
     map: PropTypes.func,
+    filter: PropTypes.func,
   }).isRequired,
 };
