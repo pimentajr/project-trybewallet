@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
+import combineReducer from '../reducers';
 
-// voltar para colocar o reducers na creatStore
-const store = createStore()
+const store = createStore(combineReducer);
 
-export default store
+export default store;
