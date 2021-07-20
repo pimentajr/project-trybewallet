@@ -28,7 +28,7 @@ class Header extends Component {
             <span
               data-testid="header-currency-field"
             >
-              BRL
+              {' BRL'}
             </span>
           </span>
         </div>

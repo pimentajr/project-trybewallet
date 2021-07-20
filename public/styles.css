@@ -1,6 +1,7 @@
 body {
   background-color: brown;
   display: flex;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   height: 100vh;
   justify-content: center;
   width: 100%;

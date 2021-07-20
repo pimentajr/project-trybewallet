@@ -41,16 +41,79 @@
   height: 0.4rem;
   margin: 0.2rem 0.4rem;
   outline: 0;
-  padding: 0.7rem 0.6rem 0.5rem;
+  padding: 0.65rem 0.6rem 0.55rem;
   text-align: center;
 }
 
+.wallet-container > form label:nth-child(1) input {
+  width: 3rem;
+}
+
+.wallet-container > form label:nth-child(2) input {
+  width: 14rem;
+}
+
 .wallet-container > form > button {
+  background-color: rgb(0, 121, 252);
   border: 0;
   border-radius: 0.3rem;
   height: fit-content;
   margin: 0.4rem 0;
   outline: 0;
-  padding: 0.4rem;
+  padding: 0.4rem 0.5rem;
   text-align: center;
+}
+
+.wallet-container > form > label > select {
+  border: 0;
+  border-radius: 0.3rem;
+  height: fit-content;
+  margin: 0.2rem 0.4rem;
+  outline: 0;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.wallet-container > table {
+  background-color: rgb(50, 57, 62);
+  width: 100%;
+}
+
+.wallet-container > table > thead {
+  background-color: rgb(50, 57, 62);
+  color: whitesmoke;
+  height: 2.4rem;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.wallet-container > table > thead > tr {
+  margin: 0;
+  width: 100%;
+}
+
+.wallet-container > table > tbody {
+  background-color: rgb(61, 69, 74);
+  color: whitesmoke;
+  height: 2rem;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.wallet-container > table > tbody > tr {
+  height: 2rem;
+  margin: 0;
+  width: 100%;
+}
+
+.wallet-container > table > tbody > tr button {
+  height: 1.8rem;
+  width: 50%;
+}
+
+.wallet-container > table > tbody > tr button img {
+  margin-top: 0.05rem;
+  height: 90%;
 }

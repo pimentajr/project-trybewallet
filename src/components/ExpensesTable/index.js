@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeSpecificExpense } from '../../actions';
+import trashButtonLogo from '../../images/trash-alt-regular.svg';
+import editButtonLogo from '../../images/edit-regular.svg';
 
 const headers = [
   'Descrição',
@@ -60,13 +62,13 @@ class ExpensesTable extends Component {
                   data-testid="delete-btn"
                   onClick={ () => this.deleteExpense(expense.id) }
                 >
-                  <img src="" alt="Botão deletar" />
+                  <img src={ trashButtonLogo } alt="Botão deletar" />
                 </button>
                 <button
                   type="button"
                   data-testid="edit-btn"
                 >
-                  <img src="" alt="Botão editar" />
+                  <img src={ editButtonLogo } alt="Botão editar" />
                 </button>
               </td>
             </tr>
