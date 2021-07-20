@@ -6,7 +6,7 @@ body {
   width: 100%;
 }
 
-#root {
+body > div {
   align-self: center;
   display: flex;
   height: 100vh;
