@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import FormInputs from './FormInputs';
-import FormSelects from './FormSelects';
+import ValueInput from './ValueInput';
+import CoinSelect from './CoinSelect';
+import PaymentSelect from './PaymentSelect';
+import TagSelect from './TagSelect';
+import DescriptionInput from './DescriptionInput';
 
-class HeaderForm extends Component {
+class WalletForm extends Component {
   render() {
     return (
       <form>
-        <FormInputs />
-        <FormSelects />
+        <ValueInput />
+        <DescriptionInput />
+        <CoinSelect />
+        <PaymentSelect />
+        <TagSelect />
       </form>
     );
   }
 }
 
-export default HeaderForm;
+export default WalletForm;

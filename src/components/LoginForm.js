@@ -69,7 +69,7 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   addEmail: PropTypes.string,
-}.required;
+}.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
   addEmail: (email) => dispatch(loginActions.userLogin(email)),
