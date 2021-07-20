@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { removeSpecificExpense } from '../../actions';
 
 const headers = [
   'Descrição',
@@ -28,8 +29,9 @@ class ExpensesTable extends Component {
       .ask).toFixed(2));
   }
 
-  deleteExpense() {
-    console.log(1);
+  deleteExpense(expenseId) {
+    const { removeExpense } = this.props;
+    removeExpense(expenseId);
   }
 
   render() {
@@ -56,7 +58,7 @@ class ExpensesTable extends Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  onClick={ (e) => this.deleteExpense(e) }
+                  onClick={ () => this.deleteExpense(expense.id) }
                 >
                   <img src="" alt="Botão deletar" />
                 </button>
@@ -77,10 +79,15 @@ class ExpensesTable extends Component {
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesTable);
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expenseId) => dispatch(removeSpecificExpense(expenseId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
