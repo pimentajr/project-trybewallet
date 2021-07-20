@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiCurrencies, getExpense2 } from '../actions';
+import { fetchApiCurrencies, getExpense2, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class Wallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.buttonFunction = this.buttonFunction.bind(this);
     this.sumExpenses = this.sumExpenses.bind(this);
+    // this.removeButton = this.removeButton.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +32,11 @@ class Wallet extends React.Component {
       [name]: value,
     });
   }
+
+  // removeButton() {
+  //   const { removeExpense } = this.props;
+  //   removeExpense();
+  // }
 
   buttonFunction() {
     const { storeExpenses, addNewExpense } = this.props;
@@ -167,6 +173,14 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
 
+          <button
+            type="button"
+            data-testid="delete-btn"
+            // onClick={ () => this.removeButton() }
+          >
+            Remover despesa
+          </button>
+
         </form>
       </div>
     );
@@ -186,6 +200,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchApiCurrencies()),
   addNewExpense: (expense) => dispatch(getExpense2(expense)),
+  removeExpense: (expense) => dispatch(removeExpense(expense)),
 });
 
 Wallet.propTypes = ({
@@ -195,3 +210,5 @@ Wallet.propTypes = ({
 }).isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+
+// TODO criei uma função removeButton para limpar os dados da store, com um dispatch removeExpense, com a action removeExpense.

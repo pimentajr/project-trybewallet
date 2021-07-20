@@ -2,6 +2,7 @@
 import { GET_CURRENCIES_SUCCESS,
   GET_CURRENCIES_ERROR,
   GET_EXPENSE,
+  REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -26,9 +27,16 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses],
+    };
   default:
     return state;
   }
 }
 
 export default wallet;
+
+// TODO importei minha action removeExpense e criei um case para deletar os dados da store.

@@ -44,6 +44,7 @@ class Login extends React.Component {
       <label
         htmlFor="input-email"
       >
+        <span role="img" aria-label="Email">✉️</span>
         Email:
         <input
           type="email"
@@ -71,6 +72,7 @@ class Login extends React.Component {
         <label
           htmlFor="input-password"
         >
+          <span role="img" aria-label="Senha">🔒</span>
           Senha:
           <input
             type="password"
