@@ -22,11 +22,6 @@ class Form extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    const { requestApi } = this.props;
-    requestApi();
-  }
-
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -89,7 +84,7 @@ class Form extends Component {
         </label>
         <button
           type="button"
-          onClick={ () => this.handleClick }
+          onClick={ this.handleClick }
         >
           Adicionar Despesas
         </button>

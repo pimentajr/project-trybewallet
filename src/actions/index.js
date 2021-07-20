@@ -36,16 +36,15 @@ export const fetchExpenses = () => async (dispatch) => {
   dispatch(setExpenses(result));
 }; */
 
-export const sendExpenses = (expenses, result) => ({
+export const sendExpenses = (expenses) => ({
   type: EXPENSES,
   expenses,
-  result,
 });
 
 export const fetchExpenses = (expenses) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const result = await response.json(response);
-  dispatch(sendExpenses(expenses, result));
+  dispatch(sendExpenses({ ...expenses, exchangeRates: result }));
 };
 
 /* export const sendExpenses = (expenses, payload) => ({

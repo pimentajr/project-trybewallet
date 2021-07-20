@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class Table extends Component {
   render() {
     const { expenses } = this.props;
-/*     console.log(expenses); */
+    /*     console.log(expenses); */
 
     return (
       <div>
@@ -24,7 +24,7 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            { !expenses.length && expenses.map(({
+            { expenses.length > 0 && expenses.map(({
               id,
               value,
               description,
@@ -38,9 +38,9 @@ class Table extends Component {
                 <td>{ tag }</td>
                 <td>{ method }</td>
                 <td>{ value }</td>
-                <td>{ currency }</td>
+                <td>{ exchangeRates[currency].name }</td>
                 <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
-                <td>{(Number(exchangeRates[currency].ask) * Number(value)).toFixed(2)}</td>
+                <td>{ Number(exchangeRates[currency].ask * value).toFixed(2) }</td>
                 <td>Real</td>
                 <td>
                   <button type="button" data-testid="edit-btn">Editar despesa</button>

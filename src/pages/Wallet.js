@@ -11,16 +11,17 @@ class Wallet extends React.Component {
     requestApi();
   }
 
-/*   getTotal() {
+  getTotal() {
     const { expenses } = this.props;
+    console.log(expenses);
     let total = 0;
     if (expenses.length > 0) {
-      expenses.forEach(({ value, currency, exchangeRates }) => {
-        total += (Number(exchangeRates[currency].ask) * Number(value)).toFixed(2);
-      });
+      total = expenses.reduce((acc, { value, currency, exchangeRates }) => (
+        acc + (Number(exchangeRates[currency].ask * value))
+      ), 0);
     }
-    return total;
-  } */
+    return total.toFixed(2);
+  }
 
   render() {
     const { email } = this.props;
@@ -31,7 +32,7 @@ class Wallet extends React.Component {
             TrybeWallet
           </div>
           <h1 data-testid="email-field">{`Olá ${email}`}</h1>
-          <span data-testid="total-field">{/* { `Total despesas: ${this.getTotal()} ` } */}</span>
+          <span data-testid="total-field">{ `Total despesas: ${this.getTotal()} ` }</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <Form />
