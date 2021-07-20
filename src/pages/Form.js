@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchExpenses, fetchAPICurrencies } from '../actions';
+import Value from './Value';
+import Description from './Description';
 
 class Form extends Component {
   constructor(props) {
@@ -50,23 +52,27 @@ class Form extends Component {
     const { currencies } = this.props;
     return (
       <form>
-        <label htmlFor="value">
-          Valor
-          <input type="text" name="value" id="value" value={ value } onChange={ this.handleChange } />
-        </label>
-        <label htmlFor="description">
-          Descrição
-          <input type="text" name="description" id="description" value={ description } onChange={ this.handleChange } />
-        </label>
+        <Value value={ value } onChange={ this.handleChange } />
+        <Description value={ description } onChange={ this.handleChange } />
         <label htmlFor="currency">
           Moeda
-          <select id="currency" name="currency" value={ currency } onChange={ this.handleChange }>
+          <select
+            id="currency"
+            name="currency"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
             { currencies.map((item, index) => <option key={ index }>{ item }</option>) }
           </select>
         </label>
         <label htmlFor="method">
           Método de pagamento
-          <select id="method" name="method" value={ method } onChange={ this.handleChange }>
+          <select
+            id="method"
+            name="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>

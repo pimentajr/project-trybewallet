@@ -13,7 +13,6 @@ class Wallet extends React.Component {
 
   getTotal() {
     const { expenses } = this.props;
-    console.log(expenses);
     let total = 0;
     if (expenses.length > 0) {
       total = expenses.reduce((acc, { value, currency, exchangeRates }) => (
@@ -58,4 +57,3 @@ Wallet.propTypes = {
 }.isRequest;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-/* export default connect(mapStateToProps, null)(Wallet); */

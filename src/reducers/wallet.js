@@ -15,7 +15,7 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, isLoading: false, currencies: action.payload };
   case EXPENSES:
     return { ...state, expenses: [...state.expenses, action.expenses] };
-/*     return { ...state, expenses: [...state.expenses, action.expenses], exchangeRates: action.result }; */
+    /*     return { ...state, expenses: [...state.expenses, action.expenses], exchangeRates: action.result }; */
   default:
     return state;
   }

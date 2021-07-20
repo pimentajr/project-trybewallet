@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Table extends Component {
   render() {
     const { expenses } = this.props;
-    /*     console.log(expenses); */
 
     return (
       <div>
