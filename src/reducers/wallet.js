@@ -1,18 +1,24 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { USER_INFO } from '../actions';
+/* import { REQUEST_SUCESS, SAVE_EXPENSES } from '../actions';
 
-const initialState = { expense: '' };
+const initialState = {
+  currencies: [],
+  expenses: [],
+};
 
-const userReducer = (state = initialState, action) => {
+const walletReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-  case USER_INFO: {
-    console.log('teste');
-    return { ...state, email: payload };
+  case REQUEST_SUCESS: {
+    return { ...state, currencies: payload };
   }
-  default:
+  case SAVE_EXPENSES: {
+    return { ...state, expenses: [...expenses, payload] };
+  }
+  default: {
     return { ...state };
+  }
   }
 };
 
-export default userReducer;
+export default walletReducer;
+ */

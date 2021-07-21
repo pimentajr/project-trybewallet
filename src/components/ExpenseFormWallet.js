@@ -1,50 +1,46 @@
-import React from 'react';
+/* import React from 'react';
+import PropTypes from 'prop-types';
+import CurrencyOptionsWallet from './CurrencyOptionsWallet';
 
-export default function ExpenseFormWallet() {
+const walletStore = useSelector((state) => state.wallet.expenses);
+
+export default function ExpenseFormWallet(props) {
+  const { handleChange, handleAddExpense } = props;
   return (
     <form>
-      <label htmlFor="value">
+      <label htmlFor="1">
         Valor:
-        <input id="value" type="number" name="value" onChange={ {/* function */} } />
+        <input id="1" type="number" name="value" onChange={ handleChange } />
       </label>
-      <label htmlFor="currency">
-        Moeda:
-        <select
-          id="currency"
-          name="currency"
-          onChange={ {/* function */} }
-        >
-          <option value="">coin- API</option>
-        </select>
-      </label>
-      <label htmlFor="method">
-        Método de pagamento
-        <select name="method" id="method" onChange={ {/* function */} }>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
-        </select>
-      </label>
-      <label htmlFor="tag">
-        Tag
-        <select name="tag" id="tag" onChange={ {/* function */} }>
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saúde">Saúde</option>
-        </select>
-      </label>
-      <label htmlFor="description">
+      <label htmlFor="2">
         Descrição
-        <input
-          id="description"
-          type="text"
-          name="description"
-          onChange={ {/* function */} }
-        />
+        <input id="2" type="text" name="description" onChange={ handleChange } />
       </label>
-      <button type="button" onChange={ {/* function */} }>Adicionar despesa</button>
+      <label htmlFor="3">
+        Moeda
+        <select id="3" name="currency" onChange={ handleChange }>
+          <CurrencyOptionsWallet currencies={ walletStore.currencies } />
+        </select>
+      </label>
+      <label htmlFor="4">
+        Método de pagamento
+        <select name="method" id="4" onChange={ handleChange }>
+          <option value>method</option>
+        </select>
+      </label>
+      <label htmlFor="5">
+        Tag
+        <select name="tag" id="5" onChange={ handleChange }>
+          <option value>method</option>
+        </select>
+      </label>
+      <button type="button" onChange={ handleAddExpense }>Adicionar despesa</button>
     </form>
   );
 }
+
+ExpenseFormWallet.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  handleAddExpense: PropTypes.func.isRequired,
+};
+ */
