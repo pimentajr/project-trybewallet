@@ -7,9 +7,14 @@ class Header extends Component {
     const { emailStoreGet } = this.props;
     return (
       <header>
-        <h5>Name</h5>
+        <h4>Name</h4>
         <p data-testid="email-field">{ emailStoreGet }</p>
-        <p>Some additional information here</p>
+        <h5>
+          <p data-testid="total-field">0</p>
+        </h5>
+        <h5>
+          <p data-testid="header-currency-field">BRL</p>
+        </h5>
       </header>
     );
   }
