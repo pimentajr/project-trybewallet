@@ -56,7 +56,7 @@ class ExpensesTable extends React.Component {
                   <td>{ expense.tag }</td>
                   <td>{ expense.method }</td>
                   <td className="align-right">
-                    { parseFloat(expense.value).toFixed(2) }
+                    { expense.value }
                   </td>
                   <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
                   <td className="align-right">
