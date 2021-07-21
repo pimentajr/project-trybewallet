@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import TableHeader from './TableHeader';
+import { deleteExpense } from '../actions/wallet';
 
 class ExpensesTable extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpensesState } = this.props;
     return (
       <table>
-        <thead>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </thead>
+        <TableHeader />
         { expenses.map((expense, index) => (
           <tr key={ index }>
             <td>
@@ -48,6 +40,15 @@ class ExpensesTable extends Component {
               )).ask * expense.value}
             </td>
             <td> Real </td>
+            <td>
+              <button
+                type="button"
+                onClick={ () => deleteExpensesState(expense) }
+                data-testid="delete-btn"
+              >
+                Excluir
+              </button>
+            </td>
           </tr>
         ))}
       </table>
@@ -59,10 +60,15 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesTable);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpensesState: (expense) => dispatch(deleteExpense(expense)),
+});
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.shape({
     map: PropTypes.func,
   }).isRequired,
+  deleteExpensesState: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
