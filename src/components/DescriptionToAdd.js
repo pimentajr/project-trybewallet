@@ -5,11 +5,11 @@ class DescriptionToAdd extends Component {
   render() {
     const { handleInfo } = this.props;
     return (
-      <label htmlFor="descricao">
+      <label htmlFor="description">
         Descrição
         <input
           type="text"
-          id="descricao"
+          id="description"
           name="description"
           onChange={ handleInfo }
         />

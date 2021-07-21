@@ -12,10 +12,10 @@ class CurrencieToAdd extends Component {
   render() {
     const { currencies, handleInfo } = this.props;
     return (
-      <label htmlFor="moeda">
+      <label htmlFor="currency">
         Moeda
         <select
-          id="moeda"
+          id="currency"
           name="currency"
           onChange={ handleInfo }
         >

@@ -15,7 +15,7 @@ class AddExpense extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'Dinheiro',
+      method: 'Cartão de crédito',
       tag: 'Alimentação',
     };
     this.handleClick = this.handleClick.bind(this);
@@ -49,7 +49,7 @@ class AddExpense extends Component {
           type="button"
           onClick={ this.handleClick }
         >
-          Add Expense
+          Adicionar Despesa
         </button>
       </form>
     );

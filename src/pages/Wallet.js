@@ -5,7 +5,18 @@ import AddExpense from '../components/AddExpense';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    let totalExpensesValue = 0;
+    if (expenses.length > 0) {
+      expenses.forEach((expense) => {
+        if (expense.exchangeRates.USD !== undefined) {
+          const { value } = expense;
+          const positionOfTargetExchange = expense.currency;
+          const rate = expense.exchangeRates[positionOfTargetExchange].ask;
+          totalExpensesValue += (rate * value);
+        }
+      });
+    }
     return (
       <div>
         <header
@@ -16,7 +27,7 @@ class Wallet extends React.Component {
         <div
           data-testid="total-field"
         >
-          0
+          { totalExpensesValue }
         </div>
         <div
           data-testid="header-currency-field"
@@ -31,10 +42,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

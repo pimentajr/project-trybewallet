@@ -5,11 +5,11 @@ class ValueToAdd extends Component {
   render() {
     const { handleInfo } = this.props;
     return (
-      <label htmlFor="valor">
+      <label htmlFor="value">
         Valor
         <input
           type="number"
-          id="valor"
+          id="value"
           name="value"
           onChange={ handleInfo }
         />

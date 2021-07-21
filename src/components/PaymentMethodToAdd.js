@@ -5,21 +5,21 @@ class PaymentMethodToAdd extends Component {
   render() {
     const { handleInfo } = this.props;
     return (
-      <label htmlFor="pagamento">
+      <label htmlFor="method">
         Método de pagamento
         <select
-          id="pagamento"
+          id="method"
           name="method"
           onChange={ handleInfo }
         >
-          <option value="Dinheiro">
+          <option>
             Dinheiro
           </option>
-          <option value="Cartão de Crédito">
-            Cartão de Crédito
+          <option>
+            Cartão de crédito
           </option>
-          <option value="Cartão de Débito">
-            Cartão de Débito
+          <option>
+            Cartão de débito
           </option>
         </select>
       </label>

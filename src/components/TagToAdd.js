@@ -13,7 +13,7 @@ class TagToAdd extends Component {
           onChange={ handleInfo }
         >
           <option
-            value="alimentação"
+            value="Alimentação"
           >
             Alimentação
           </option>
