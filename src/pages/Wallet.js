@@ -1,10 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchCurrency } from '../actions';
 
 class Wallet extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     value: '',
+  //   };
+  // }
+
+  componentDidMount() {
+    const { fetchCoins } = this.props;
+    fetchCoins();
+  }
+
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, currency } = this.props;
     return (
       <div>
         <header>
@@ -18,15 +31,19 @@ class Wallet extends React.Component {
             <input type="text" name="valor" />
           </label>
           <label htmlFor>
-            Descrição
+            Descrição:
             <input type="text" name="descrição" />
           </label>
           <label htmlFor>
-            Moeda
-            <select name="moeda">Moeda</select>
+            Moeda:
+            <select name="moeda">
+              {currency.map((coin) => (
+                <option key={ coin } value={ coin }>{coin}</option>
+              ))}
+            </select>
           </label>
           <label htmlFor>
-            Método de Pagamento
+            Método de Pagamento:
             <select name="método de pagamento">
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
@@ -34,7 +51,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label htmlFor>
-            Tag
+            Tag:
             <select name="tag">
               <option>Alimentação</option>
               <option>Lazer</option>
@@ -49,9 +66,14 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  userEmail: state.user.email });
+  userEmail: state.user.email,
+  currency: state.wallet.currencies });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCoins: () => dispatch(fetchCurrency()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   userEmail: PropTypes.string,

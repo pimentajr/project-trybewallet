@@ -1,14 +1,21 @@
-import { WALLET } from '../actions';
+import {
+  CURRENCY_NAMES,
+  CURRENCY_REQUEST,
+} from '../actions';
 
 const INITIAL_STATE = {
-  value: 0,
+  currencies: [],
 };
 
-export default function player(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case WALLET:
-    return { ...state, value: action.value };
+const wallet = (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
+  case CURRENCY_REQUEST:
+    return { ...state };
+  case CURRENCY_NAMES:
+    return { ...state, currencies: payload };
   default:
     return state;
   }
-}
+};
+
+export default wallet;
