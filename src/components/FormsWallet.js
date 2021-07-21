@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FetchedCurrencies from './FetchedCurrencies';
+// import FetchedCurrencies from './FetchedCurrencies';
 
 export default class FormsWallet extends Component {
   render() {
@@ -17,7 +17,7 @@ export default class FormsWallet extends Component {
         <label htmlFor="currency">
           Moeda
           <select role="combobox" id="currency">
-            <FetchedCurrencies />
+            {/* <FetchedCurrencies /> */}
           </select>
         </label>
       </form>

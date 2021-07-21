@@ -4,35 +4,14 @@ export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
-
 });
-
 const requestSuccess = (currencies) => ({
   type: REQUEST_SUCCESS,
   currencies,
 });
-
 export const fetchCurrencies = () => (dispatch) => {
   dispatch(requestCurrencies());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((currencies) => dispatch(requestSuccess(currencies)));
-};
-// const requestUpdatedCurrencySuccess = (currencies) => ({
-//   type: 'REQUEST_UPDATES_CURRENCYS,
-//   currencies
-// });
-
-export const requestExpenses = (state, updateCurrencies) => ({
-  type: REQUEST_EXPENSE,
-  state,
-  updateCurrencies,
-});
-
-export const updateCurrencyToNewExpense = (state) => (dispatch) => {
-  dispatch(requestCurrencies());
-  return fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((result) => result.json())
-    .then((currencies) => dispatch(requestCurrenciesSuccess(currencies)))
-    .then((updateCurrencies) => dispatch(requestExpenses(state, updateCurrencies)));
+    .then((currencies) => dispatch(requestSuccess(Object.values(currencies))));
 };
