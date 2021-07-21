@@ -1,4 +1,4 @@
-import { CHANGE_EMAIL } from '../actions/index';
+import { EMAIL_TO_STATE } from '../actions/index';
 
 const INITIAL_STATE = {
   email: '',
@@ -6,9 +6,9 @@ const INITIAL_STATE = {
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case CHANGE_EMAIL:
+  case EMAIL_TO_STATE:
     return {
-      ...state, email: action.payload,
+      ...state, email: action.email,
     };
   default: return state;
   }

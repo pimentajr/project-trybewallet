@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { EmailToState } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -43,7 +46,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { status } = this.state;
+    const { status, email, password } = this.state;
+    const { dispatchEmailToState } = this.props;
     return (
       <div>
         {/* requisito 01 */}
@@ -52,6 +56,7 @@ class Login extends React.Component {
           data-testid="email-input"
           placeholder="E-mail"
           onChange={ this.handleChangeEmail }
+          value={ email }
         />
         {/* requisito 01 */}
         <input
@@ -59,12 +64,15 @@ class Login extends React.Component {
           data-testid="password-input"
           placeholder="Password"
           onChange={ this.handleChangePW }
+          value={ password }
         />
         {/* requisito 01 */}
+        {/* requisito 03 */}
         <Link to="/carteira">
           <button
             type="button"
             disabled={ status }
+            onClick={ () => dispatchEmailToState(email) }
           >
             Entrar
           </button>
@@ -74,4 +82,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+// requisito 03
+const mapDispatchToProps = (dispatch) => ({
+  dispatchEmailToState: (email) => dispatch(EmailToState(email)),
+});
+
+Login.propTypes = ({
+  dispatchEmailToState: PropTypes.func,
+}).isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);

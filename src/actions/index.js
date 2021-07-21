@@ -1,6 +1,6 @@
-export const CHANGE_EMAIL = 'CHANGE_EMAIL';
+export const EMAIL_TO_STATE = 'EMAIL_TO_STATE';
 
-export const changeEmail = (payload) => ({
-  type: CHANGE_EMAIL,
-  payload,
+export const EmailToState = (email) => ({
+  type: EMAIL_TO_STATE,
+  email,
 });
