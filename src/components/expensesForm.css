@@ -1,0 +1,66 @@
+.exepenses-form {
+  background-color: #81b29a;
+  color: #3d405b;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.exepenses-edit {
+  background-color: #f2cc8f;
+  color: #3d405b;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.label {
+  background-color: #81b29a;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0 6px;
+}
+
+.label-edit {
+  background-color: #f2cc8f;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0 6px;
+}
+
+.form-input {
+  border: solid 0.5px #3d405b;
+  border-radius: 4px;
+  color: #3d405b;
+  font-weight: 600;
+  margin-left: 1vh;
+  padding: 5px;
+}
+
+.form-add-button {
+  background-color: #f2cc8f;
+  border: none;
+  border-radius: 4px;
+  color: #3d405b;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.form-add-button:hover {
+  background-color: #d4ae70;
+}
+
+.form-edit-button {
+  background-color: #81b29a;
+  border: none;
+  border-radius: 4px;
+  color: #3d405b;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.form-edit-button:hover {
+  background-color: #6c9e86;
+}

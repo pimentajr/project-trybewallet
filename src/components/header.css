@@ -1,19 +1,28 @@
 header {
+  align-items: center;
+  background-color: #e07a5f;
+  color: #f4f1de;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.header-title {
-  padding: 0 15px;
+.header-logo {
+  background-color: #e07a5f;
+  padding: 15px 30px;
+  width: 200px;
 }
 
 .header-info {
+  background-color: #e07a5f;
   display: flex;
   flex-direction: row;
-  padding: 0 15px;
+  font-weight: bold;
+  padding: 0 40px;
+  
 }
 
 .info-item {
-  margin-left: 10px;
+  background-color: #e07a5f;
+  margin-left: 50px;
 }

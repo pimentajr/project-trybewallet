@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { loginAction } from '../actions';
 import './login.css';
+import myWalletLogo from '../MYWALLET.svg';
 
 class Login extends React.Component {
   constructor() {
@@ -31,33 +32,40 @@ class Login extends React.Component {
     // Ref: https://stackoverflow.com/questions/940577/javascript-regular-expression-email-validation
     const passwordLength = 6;
     return (
-      <form className="login-form">
-        <input
-          type="text"
-          data-testid="email-input"
-          name="email"
-          placeholder="E-mail"
-          onChange={ this.handleInput }
-          value={ email }
-        />
-        <input
-          type="password"
-          data-testid="password-input"
-          name="password"
-          placeholder="Senha"
-          onChange={ this.handleInput }
-          value={ password }
-        />
-        <Link to="/carteira">
-          <button
-            type="button"
-            disabled={ !emailFormat.test(email) || password.length < passwordLength }
-            onClick={ () => login(email, password) }
-          >
-            Entrar
-          </button>
-        </Link>
-      </form>
+      <div className="login-page">
+        <img className="login-logo" src={ myWalletLogo } alt="My Wallet Logo" />
+        <form className="login-form">
+          <h2 className="login-title">Login:</h2>
+          <input
+            className="login-input"
+            type="text"
+            data-testid="email-input"
+            name="email"
+            placeholder="E-mail"
+            onChange={ this.handleInput }
+            value={ email }
+          />
+          <input
+            className="login-input"
+            type="password"
+            data-testid="password-input"
+            name="password"
+            placeholder="Senha"
+            onChange={ this.handleInput }
+            value={ password }
+          />
+          <Link to="/carteira">
+            <button
+              className="login-button"
+              type="button"
+              disabled={ !emailFormat.test(email) || password.length < passwordLength }
+              onClick={ () => login(email, password) }
+            >
+              Entrar
+            </button>
+          </Link>
+        </form>
+      </div>
     );
   }
 }

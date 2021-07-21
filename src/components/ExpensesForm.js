@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { fetchApi, addExpense, editExpense } from '../actions';
+import './expensesForm.css';
+
+const label = 'label';
+const editLabel = 'label-edit';
 
 class ExpensesForm extends React.Component {
   constructor() {
@@ -54,14 +58,17 @@ class ExpensesForm extends React.Component {
 
   renderValue() {
     const { value } = this.state;
+    const { enableButton } = this.props;
     return (
-      <label htmlFor="value">
+      <label className={ enableButton ? editLabel : label } htmlFor="value">
         Valor:
         <input
+          className="form-input"
           type="number"
           name="value"
           data-testid="value-input"
           id="value"
+          min="1"
           value={ value }
           onChange={ this.handleInput }
         />
@@ -71,11 +78,12 @@ class ExpensesForm extends React.Component {
 
   renderCurrency() {
     const { currency } = this.state;
-    const { currencies } = this.props;
+    const { currencies, enableButton } = this.props;
     return (
-      <label htmlFor="currency">
+      <label className={ enableButton ? editLabel : label } htmlFor="currency">
         Moeda:
         <select
+          className="form-input"
           name="currency"
           id="currency"
           data-testid="currency-input"
@@ -94,10 +102,12 @@ class ExpensesForm extends React.Component {
 
   renderMethod() {
     const { method } = this.state;
+    const { enableButton } = this.props;
     return (
-      <label htmlFor="method">
+      <label className={ enableButton ? editLabel : label } htmlFor="method">
         Método de pagamento:
         <select
+          className="form-input"
           name="method"
           id="method"
           data-testid="method-input"
@@ -114,10 +124,12 @@ class ExpensesForm extends React.Component {
 
   renderTag() {
     const { tag } = this.state;
+    const { enableButton } = this.props;
     return (
-      <label htmlFor="tag">
+      <label className={ enableButton ? editLabel : label } htmlFor="tag">
         Tag:
         <select
+          className="form-input"
           name="tag"
           id="tag"
           data-testid="tag-input"
@@ -136,10 +148,12 @@ class ExpensesForm extends React.Component {
 
   renderDescription() {
     const { description } = this.state;
+    const { enableButton } = this.props;
     return (
-      <label htmlFor="description">
+      <label className={ enableButton ? editLabel : label } htmlFor="description">
         Descrição
         <input
+          className="form-input"
           type="text"
           name="description"
           id="description"
@@ -156,14 +170,22 @@ class ExpensesForm extends React.Component {
     const { state } = this;
     if (!enableButton) {
       return (
-        <button type="button" onClick={ this.addExpense }>
+        <button
+          className="form-add-button"
+          type="button"
+          onClick={ this.addExpense }
+        >
           Adicionar Despesa
         </button>
       );
     }
     if (enableButton) {
       return (
-        <button type="button" onClick={ () => dispatchEditExpense(state) }>
+        <button
+          className="form-edit-button"
+          type="button"
+          onClick={ () => dispatchEditExpense(state) }
+        >
           Editar Despesa
         </button>
       );
@@ -171,8 +193,9 @@ class ExpensesForm extends React.Component {
   }
 
   render() {
+    const { enableButton } = this.props;
     return (
-      <form>
+      <form className={ enableButton ? 'exepenses-edit' : 'exepenses-form' }>
         { this.renderValue() }
         { this.renderCurrency() }
         { this.renderMethod() }
