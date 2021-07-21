@@ -4,6 +4,7 @@ import {
   REQUEST_CURRENCIES_API_ERROR,
   SET_EXCHANGE_RATES,
   SET_USER_DATA,
+  DELETE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -32,6 +33,12 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       isFetching: false,
       exchangeRates: action.payload,
+    };
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      isFetching: false,
+      expenses: action.payload,
     };
   case SET_USER_DATA:
     return {

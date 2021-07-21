@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import EntryForm from '../components/EntryForm';
+import TableBody from '../components/TableBody';
+import TableHeader from '../components/TableHeader';
 import { fetchApi, setUserData } from '../actions';
 
 class Wallet extends React.Component {
@@ -112,6 +114,10 @@ class Wallet extends React.Component {
             value={ value }
             tag={ tag }
           />
+          <table>
+            <TableHeader />
+            <TableBody />
+          </table>
         </main>
       </div>
     );
