@@ -5,11 +5,11 @@
 
 .expenses-table {
   color: #3d405b;
-  width: 100%;
   min-width: 1323px;
+  width: 100%;
 }
 
-.expenses-table td, .expenses-table th {
+.expenses-table td , .expenses-table th {
   border: 1px solid #ddd;
   padding: 8px;
 }

@@ -18,9 +18,8 @@ header {
   background-color: #e07a5f;
   display: flex;
   flex-direction: row;
-  font-weight: bold;
+  font-weight: 600;
   padding: 0 40px;
-  
 }
 
 .info-item {
