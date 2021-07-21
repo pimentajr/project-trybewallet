@@ -46,34 +46,54 @@ class Wallet extends React.Component {
     event.preventDefault();
   }
 
-  total() {
-    const { expense } = this.props;
+  header() {
+    const { expense, userEmail } = this.props;
     const total = expense.length > 0
       ? expense.reduce((acc, curr) => (
         acc + (curr.value * curr.exchangeRates[curr.currency].ask)), 0) : 0;
-    return total;
+    return (
+      <header>
+        <p data-testid="email-field">{userEmail}</p>
+        <p data-testid="total-field">{total}</p>
+        <p data-testid="header-currency-field">BRL</p>
+      </header>);
   }
 
-  render() {
-    const { userEmail, currencie } = this.props;
-    const { value, description, currency, method, tag } = this.state;
-    this.total();
+  noSelectForm() {
+    const { value, description } = this.state;
     return (
       <div>
-        <header>
-          <p data-testid="email-field">{userEmail}</p>
-          <p data-testid="total-field">{this.total()}</p>
-          <p data-testid="header-currency-field">BRL</p>
-        </header>
         <form>
           <label htmlFor>
             Valor:
-            <input type="text" name="value" value={ value } onChange={ this.handleChange } />
+            <input
+              type="text"
+              name="value"
+              value={ value }
+              onChange={ this.handleChange }
+            />
           </label>
           <label htmlFor>
             Descrição:
-            <input type="text" name="description" value={ description } onChange={ this.handleChange } />
+            <input
+              type="text"
+              name="description"
+              value={ description }
+              onChange={ this.handleChange }
+            />
           </label>
+        </form>
+      </div>);
+  }
+
+  render() {
+    const { currencie } = this.props;
+    const { currency, method, tag } = this.state;
+    return (
+      <div>
+        {this.header()}
+        {this.noSelectForm()}
+        <form>
           <label htmlFor>
             Moeda:
             <select name="currency" value={ currency } onChange={ this.handleChange }>
