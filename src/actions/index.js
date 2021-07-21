@@ -20,6 +20,11 @@ export const montarExpense = (payload) => ({
   payload,
 });
 
+export const deleteRow = (payload) => ({
+  type: 'DELETE_ROW',
+  payload,
+});
+
 export const fetchMoedas = () => (dispatch) => {
   dispatch(requestMoedas());
   return fetch('https://economia.awesomeapi.com.br/json/all')

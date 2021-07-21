@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Form from './Form';
 import Header from './Header';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -9,6 +10,7 @@ class Wallet extends React.Component {
       <div className="wallet">
         <Header />
         <Form />
+        <Table />
       </div>
     );
   }
