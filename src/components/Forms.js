@@ -27,8 +27,8 @@ class Forms extends Component {
 
   renderImput() {
     return (
-      <label htmlFor="tag" id="tag">
-        Tag
+      <label htmlFor="tag" id="tag" name="Categoria">
+        Tag:
         <select id="tag" onChange={ this.handlerChanges }>
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
@@ -43,27 +43,30 @@ class Forms extends Component {
     const { getcurrenciesFromStore } = this.props;
     return (
       <div>
-        <form>
+        <form className="forms" id="forms">
           <label htmlFor="value">
-            Valor
+            Valor:
             <input
-              type="text"
-              id="value"
               onChange={ this.handlerChanges }
+              type="text"
+              className="Valor"
+              id="value"
+              name="Valor"
             />
           </label>
           <label htmlFor="description">
-            Descrição
+            Descrição:
             <textarea
               type="text"
               id="description"
               onChange={ this.handlerChanges }
+              name="Descrição"
             />
           </label>
           <label htmlFor="currency">
-            Moeda
+            Moeda:
             <select
-              type="text"
+              name="Moeda"
               id="currency"
               onChange={ this.handlerChanges }
             >
@@ -74,8 +77,8 @@ class Forms extends Component {
             </select>
           </label>
           <label htmlFor="method">
-            Método de pagamento
-            <select id="method" onChange={ this.handlerChanges }>
+            Método de pagamento:
+            <select id="method" onChange={ this.handlerChanges } name="Pagamento">
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>

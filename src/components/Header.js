@@ -8,12 +8,12 @@ class Header extends Component {
     return (
       <header>
         <h4>Name</h4>
-        <p data-testid="email-field">{ emailStoreGet }</p>
+        <span data-testid="email-field">{ emailStoreGet }</span>
         <h5>
-          <p data-testid="total-field">0</p>
+          <span data-testid="total-field">0</span>
         </h5>
         <h5>
-          <p data-testid="header-currency-field">BRL</p>
+          <span data-testid="header-currency-field">BRL</span>
         </h5>
       </header>
     );
