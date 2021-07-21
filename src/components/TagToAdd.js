@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class TagToAdd extends Component {
   render() {
+    const { handleInfo } = this.props;
     return (
       <label htmlFor="tag">
         Tag
         <select
           id="tag"
+          name="tag"
+          onChange={ handleInfo }
         >
           <option
             value="alimentação"
@@ -38,5 +42,9 @@ class TagToAdd extends Component {
     );
   }
 }
+
+TagToAdd.propTypes = {
+  handleInfo: PropTypes.func.isRequired,
+};
 
 export default TagToAdd;

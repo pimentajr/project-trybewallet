@@ -1,8 +1,10 @@
 export const EMAIL = 'EMAIL';
 export const CURRENCIES = 'CURRENCIES';
+export const EXPENSES = 'EXPENSES';
 
-export const emailAction = (email) => ({ type: EMAIL, email });
 const currencieAction = (currencies) => ({ type: CURRENCIES, currencies });
+export const emailAction = (email) => ({ type: EMAIL, email });
+export const expenseAction = (expenses) => ({ type: EXPENSES, expenses });
 
 export const getCurrencies = () => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
