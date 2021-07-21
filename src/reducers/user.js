@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   email: '',
 };
 
+// requisito 03
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case EMAIL_TO_STATE:

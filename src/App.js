@@ -8,6 +8,7 @@ function App() {
     <Switch>
       {/* requisito 01 */}
       <Route exact path="/" component={ Login } />
+      {/* requisito 04 */}
       <Route path="/carteira" component={ Wallet } />
     </Switch>
   );
