@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const CURRENCY_NAMES = 'CURRENCY_NAMES';
 export const CURRENCY_REQUEST = 'CURRENCY_REQUEST';
+export const EXPENSES = 'EXPENSES';
 
 export const getLogin = (email) => ({
   type: LOGIN,
@@ -31,6 +32,20 @@ export function fetchCurrency() {
       .then((data) => {
         const coins = Object.keys(data).filter((moeda) => moeda !== 'USDT');
         dispatch(currencyNames(coins));
+      });
+  };
+}
+
+export const expensesRecive = (expense) => ({
+  type: EXPENSES,
+  payload: expense,
+});
+
+export function addExpence(payload) {
+  return (dispatch) => {
+    currencyApi()
+      .then((data) => {
+        dispatch(expensesRecive({ ...payload, exchangeRates: data }));
       });
   };
 }
