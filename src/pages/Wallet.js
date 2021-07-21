@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrency, addExpence } from '../actions';
+import { fetchCurrency, addExpence, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -86,6 +86,52 @@ class Wallet extends React.Component {
       </div>);
   }
 
+  tableExpenses() {
+    const { expense, remove } = this.props;
+    return (
+      <div>
+        <table>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+          </tr>
+          {expense.length > 0 && expense.map((expenses, index) => {
+            const coin = Object.entries(expenses.exchangeRates)
+              .find(([key]) => key === expenses.currency)[1];
+            return (
+              <tr key={ index }>
+                <td>{expenses.description}</td>
+                <td>{expenses.tag}</td>
+                <td>{expenses.method}</td>
+                <td>{expenses.value}</td>
+                <td>{coin.name.split('/')[0]}</td>
+                <td>{Number(coin.ask).toFixed(2)}</td>
+                <td>{(Number(expenses.value) * Number(coin.ask)).toFixed(2)}</td>
+                <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => remove(index) }
+                  >
+                    Excluir
+                  </button>
+                  <button type="button">Editar</button>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+      </div>
+    );
+  }
+
   render() {
     const { currencie } = this.props;
     const { currency, method, tag } = this.state;
@@ -122,6 +168,7 @@ class Wallet extends React.Component {
           </label>
           <button type="submit" onClick={ this.expencesSubmit }>Adicionar despesa</button>
         </form>
+        {this.tableExpenses()}
       </div>);
   }
 }
@@ -134,6 +181,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCoins: () => dispatch(fetchCurrency()),
   addButton: (data) => dispatch(addExpence(data)),
+  remove: (id) => dispatch(removeExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

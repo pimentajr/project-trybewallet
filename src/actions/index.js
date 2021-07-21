@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const CURRENCY_NAMES = 'CURRENCY_NAMES';
 export const CURRENCY_REQUEST = 'CURRENCY_REQUEST';
 export const EXPENSES = 'EXPENSES';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const getLogin = (email) => ({
   type: LOGIN,
@@ -49,3 +50,8 @@ export function addExpence(payload) {
       });
   };
 }
+
+export const removeExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  payload: id,
+});
