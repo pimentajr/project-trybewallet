@@ -1,10 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { useSelector } from 'react-redux';
 import logo from '../assets/logo.png';
 
-export const Header = (props) => {
-  const { user } = props;
-  const { email } = user;
+const Header = () => {
+  const { email } = useSelector(state => state.user);
   const currencySymbol = 'BRL';
   const totalPrice = '0';
 
@@ -20,7 +19,7 @@ export const Header = (props) => {
         <p className="info__expense" data-testid="total-field">{`Despesa Total: ${currencySymbol} ${totalPrice}`}</p>
         <div className="currency__selector" data-testid="header-currency-field">
           <p>Moeda:</p>
-          <select data-testid="header__currency__field" >
+          <select data-testid="header__currency__field">
             <option>BRL</option>
             <option>2</option>
             <option>3</option>
@@ -29,13 +28,7 @@ export const Header = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header;

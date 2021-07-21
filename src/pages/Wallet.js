@@ -1,28 +1,22 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import { fetchAPI } from '../actions/walletActions';
 
-export const Wallet = (props) => {
-  const { fetchCurrency } = props;
+const Wallet = () => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCurrency();
-  }, [])
+    dispatch(fetchAPI());
+  }, []);
 
   return (
     <div className="Wallet">
       <Header />
       <Form />
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchCurrency: () => dispatch(fetchAPI())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet)
+export default Wallet;
