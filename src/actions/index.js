@@ -4,6 +4,7 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVED_CURRENCIES = 'RECEIVED_CURRENCIES';
 export const NEW_DISPENSE = 'NEW_DISPENSE';
 export const EXCHANGE_RATES = 'ENCHANGE_RATES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveEmail = (payload) => ({
   type: LOGIN,
@@ -26,5 +27,10 @@ export const newDispense = (payload) => ({
 
 export const setExchangeRates = (payload) => ({
   type: EXCHANGE_RATES,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });

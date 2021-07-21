@@ -1,43 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExp } = this.props;
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
-        { expenses.map((expense) => (
-          <tr key={ expense.id }>
-            <td>{ expense.description }</td>
-            <td>{ expense.tag }</td>
-            <td>{ expense.method }</td>
-            <td>{ expense.value }</td>
-            <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
-            <td>
-              {
-                parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
-              }
-            </td>
-            <td>
-              {
-                parseFloat(expense.exchangeRates[expense.currency]
-                  .ask * expense.value).toFixed(2)
-              }
-            </td>
-            <td>Real</td>
+        <tbody>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
           </tr>
-        ))}
+          { expenses.map((expense) => (
+            <tr key={ expense.id }>
+              <td>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
+              <td>
+                {
+                  parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                }
+              </td>
+              <td>
+                {
+                  parseFloat(expense.exchangeRates[expense.currency]
+                    .ask * expense.value).toFixed(2)
+                }
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => deleteExp(expense.id) }
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }
@@ -47,4 +60,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExp: (expenseID) => dispatch(deleteExpense(expenseID)),
+});
+
+Table.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExp: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

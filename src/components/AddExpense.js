@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { newDispense } from '../actions';
 
 class AddExpense extends Component {
@@ -112,5 +113,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   savingExpense: (expense) => dispatch(newDispense(expense)),
 });
+
+AddExpense.propTypes = {
+  expenceList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currenciesList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  savingExpense: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);

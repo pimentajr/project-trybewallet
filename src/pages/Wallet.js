@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import AddExpense from '../components/AddExpense';
 import {
@@ -54,5 +55,11 @@ const mapDispatchToProps = (dispatch) => ({
   requestingCurrencies: () => dispatch(requestCurrencies()),
   receivingCurrencies: (value) => dispatch(receivedCurrencies(value)),
 });
+
+Wallet.propTypes = {
+  requestingCurrencies: PropTypes.func.isRequired,
+  receivingCurrencies: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
