@@ -1,21 +1,17 @@
+import { CURRENCIES } from '../actions';
+
 const INNITIAL_STATE = {
-  description: 'market bill',
-  price: 120,
-  currency: 'USD',
-  tag: 'Food',
-  payment_method: 'cash',
+  currencies: [],
+  expenses: [],
 };
 
 export default function wallet(state = INNITIAL_STATE, action) {
   switch (action.type) {
-  case 'ADD_EXPENSE':
+  case CURRENCIES:
+    delete action.currencies.USDT;
     return {
       ...state,
-      description: 'cine tickets',
-      price: 33,
-      currency: 'USD',
-      tag: 'Leisure',
-      payment_method: 'credit card',
+      currencies: Object.keys(action.currencies),
     };
   default:
     return INNITIAL_STATE;
