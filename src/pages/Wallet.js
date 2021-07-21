@@ -100,6 +100,7 @@ class Wallet extends React.Component {
             <th>Câmbio utilizado</th>
             <th>Valor convertido</th>
             <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
           </tr>
           {expense.length > 0 && expense.map((expenses, index) => {
             const coin = Object.entries(expenses.exchangeRates)
@@ -122,7 +123,9 @@ class Wallet extends React.Component {
                   >
                     Excluir
                   </button>
-                  <button type="button">Editar</button>
+                  <button type="button" data-testid="edit-btn">
+                    Editar
+                  </button>
                 </td>
               </tr>
             );
