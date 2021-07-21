@@ -15,11 +15,11 @@ class Header extends Component {
     return (
       <header>
         <p data-testid="email-field">
-          User:
+          Email:
           { email }
         </p>
         <p data-testid="total-field">
-          Cash:
+          Despesa Total: R$
           { total.toFixed(2) }
         </p>
         <p data-testid="header-currency-field"> BRL </p>

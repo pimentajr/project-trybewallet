@@ -43,13 +43,16 @@ class ExpensesTable extends Component {
               <td>{ usedExchange.toFixed(2) }</td>
               <td>{ convertedValue.toFixed(2) }</td>
               <td>Real</td>
-              <button
-                type="button"
-                data-testid="delete-btn"
-                onClick={ () => delExpense(id) }
-              >
-                Excluir
-              </button>
+              <td>
+                <button
+                  className="button is-danger is-outlined"
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => delExpense(id) }
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
           );
         }) }

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setCoins, addExpenses } from '../actions';
 import ExtendsForms from './ExtendsForms';
-import ExpensesTable from './ExpensesTable';
 
 class Form extends Component {
   constructor(props) {
@@ -55,6 +54,7 @@ class Form extends Component {
         >
           Valor:
           <input
+            className="input is-small"
             type="number"
             id="valorInput"
             name="value"
@@ -66,6 +66,7 @@ class Form extends Component {
           Descrição:
           <input
             type="text"
+            className="input is-small"
             id="descriptionInput"
             name="description"
             value={ description }
@@ -80,15 +81,13 @@ class Form extends Component {
           currencies={ currencies }
           handleInput={ this.handleInput }
         />
-
         <button
           type="button"
+          className="button is-info"
           onClick={ (e) => this.btnAddExpenses(e) }
         >
           Adicionar despesa
         </button>
-
-        <ExpensesTable />
       </form>
     );
   }

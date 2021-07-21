@@ -45,26 +45,34 @@ class SingIn extends Component {
       return <Redirect to="/carteira" />;
     }
     return (
-      <div>
-        <input
-          data-testid="email-input"
-          placeholder="Email"
-          type="email"
-          name="email"
-          value={ email }
-          onChange={ (e) => this.handleInput(e) }
-        />
-        <input
-          data-testid="password-input"
-          placeholder="Password"
-          type="text"
-          minLength="6"
-          name="password"
-          value={ password }
-          onChange={ (e) => this.handleInput(e) }
-        />
+      <div className="login">
+        <h1>Trybe Wallet</h1>
+        <div className="field">
+          <input
+            data-testid="email-input"
+            placeholder="Email"
+            className="input"
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ (e) => this.handleInput(e) }
+          />
+        </div>
+        <div className="field">
+          <input
+            data-testid="password-input"
+            placeholder="Password"
+            className="input"
+            type="password"
+            minLength="6"
+            name="password"
+            value={ password }
+            onChange={ (e) => this.handleInput(e) }
+          />
+        </div>
         <button
           type="button"
+          className="button is-success"
           disabled={ !this.disabled() }
           onClick={ (e) => this.logIn(e) }
         >
