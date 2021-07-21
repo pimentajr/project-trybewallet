@@ -5,6 +5,7 @@ import Select from './Select';
 import Table from './table';
 import { addUserSpending, getCoinThunk, setCoinThunk } from '../actions';
 import Inputs from './inputs';
+import setAPI from '../services/API';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -20,13 +21,16 @@ class Wallet extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.requestApi = this.requestApi.bind(this);
   }
 
   componentDidMount() {
-    const { setAllCoins } = this.props;
-    setAllCoins();
     const { setCoin } = this.props;
     setCoin();
+    const { setAllCoins } = this.props;
+    setAllCoins();
+    const isso = setAPI();
+    console.log('hi', isso);
   }
 
   handleChange({ target }) {
@@ -36,11 +40,23 @@ class Wallet extends React.Component {
     });
   }
 
+  async requestApi() {
+    try {
+      const response = await this.setAPI;
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
   handleClick() {
     const {
       addSpending,
       exchangeRates,
     } = this.props;
+
+    console.log('asss', this.requestApi());
+
     const { currency, value } = this.state;
     const valorTotal = (exchangeRates[currency].ask * value);
     const { valueTotal } = this.state;
@@ -65,7 +81,7 @@ class Wallet extends React.Component {
     const { userCoin } = this.props;
     const filterCoin = userCoin.filter((item) => item !== 'USDT');
     const { valueTotal } = this.state;
-    parseFloat(valueTotal).toFixed(2);
+    (valueTotal).toFixed(2);
     return (
       <div>
         <header>

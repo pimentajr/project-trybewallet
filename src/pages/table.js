@@ -20,7 +20,7 @@ class table extends React.Component {
               <tr key={ item.id }>
                 <td>{item.description}</td>
                 <td>{item.tag}</td>
-                <td>{item.currency}</td>
+                <td>{item.method}</td>
                 <td>{item.value}</td>
                 <td>{(item.exchangeRates[item.currency].name).split('/')[0]}</td>
                 <td>{parseFloat(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
@@ -32,10 +32,10 @@ class table extends React.Component {
                   Real
                 </td>
                 <td>
-                  <button type="button">Editar</button>
+                  <button type="button" data-testid="edit-btn">Editar</button>
                 </td>
                 <td>
-                  <button type="button">Excluir</button>
+                  <button type="button" data-testid="delete-btn">Excluir</button>
                 </td>
               </tr>))}
           </tbody>
