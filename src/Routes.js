@@ -7,7 +7,7 @@ class Routes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={ Login } />
+        <Route path="/" exact render={ (props) => <Login { ...props } /> } />
         <Route exact path="/carteira" component={ Wallet } />
       </Switch>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { login } from '../actions';
 
@@ -17,12 +16,13 @@ class Login extends React.Component {
 
   submitButton() {
     const { email: { value } } = this.state;
-    const { loginFunc } = this.props;
+    const { loginFunc, history } = this.props;
     loginFunc(value);
+    history.push('/carteira');
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
+  handleChange({ target }) {
+    const { name, value } = target;
     let valid = false;
     const six = 6;
     switch (name) {
@@ -69,16 +69,13 @@ class Login extends React.Component {
             onChange={ this.handleChange }
             required
           />
-          <Link to="/carteira">
-            <button
-              type="button"
-              disabled={ !(email.valid && password.valid) }
-              onClick={ this.submitButton }
-            >
-              Entrar
-            </button>
-          </Link>
-
+          <button
+            type="button"
+            disabled={ !(email.valid && password.valid) }
+            onClick={ this.submitButton }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
@@ -91,6 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   loginFunc: PropTypes.func.isRequired,
+  history: PropTypes.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
