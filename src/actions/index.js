@@ -4,7 +4,6 @@ export const REQUEST_CURRENCIES_API_SUCCESS = 'REQUEST_CURRENCIES_API_SUCCESS';
 export const REQUEST_CURRENCIES_API_ERROR = 'REQUEST_CURRENCIES_API_ERROR';
 export const SET_EXCHANGE_RATES = 'SET_EXCHANGE_RATES';
 export const SET_USER_DATA = 'SET_USER_DATA';
-export const SET_TOTAL_EXPENSES = 'SET_TOTAL_EXPENSES';
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -28,11 +27,6 @@ export const requestCurrenciesApiError = (payload) => ({
 
 export const setExchangeRates = (payload) => ({
   type: SET_EXCHANGE_RATES,
-  payload,
-});
-
-export const setTotalExpenses = (payload) => ({
-  type: SET_TOTAL_EXPENSES,
   payload,
 });
 

@@ -8,7 +8,6 @@ import { fetchApi, setUserData } from '../actions';
 class Wallet extends React.Component {
   constructor() {
     super();
-
     this.state = {
       paymentMethod: 'Dinheiro',
       currency: 'USD',
@@ -46,7 +45,7 @@ class Wallet extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { exchangeRates, setData } = this.props;
+    const { exchangeRates, setData, fetch } = this.props;
     const {
       paymentMethod,
       description,
@@ -55,6 +54,8 @@ class Wallet extends React.Component {
       tag,
       id,
     } = this.state;
+
+    fetch();
 
     const userData = {
       method: paymentMethod,
@@ -78,7 +79,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email } = this.props;
     const {
       paymentMethod,
       description,
@@ -107,7 +108,6 @@ class Wallet extends React.Component {
             handleSubmit={ (event) => this.handleSubmit(event) }
             paymentMethod={ paymentMethod }
             description={ description }
-            currencies={ currencies }
             currency={ currency }
             value={ value }
             tag={ tag }

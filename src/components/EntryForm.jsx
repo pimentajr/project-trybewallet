@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class EntryForm extends Component {
   constructor() {
@@ -28,7 +29,7 @@ class EntryForm extends Component {
   }
 
   renderCurrencies() {
-    const { currency, currencies, handleChange } = this.props;
+    const { currency, handleChange, currencies } = this.props;
     return (
       <label htmlFor="currency">
         Moeda
@@ -129,4 +130,8 @@ EntryForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.object),
 }.isRequired;
 
-export default EntryForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, null)(EntryForm);
