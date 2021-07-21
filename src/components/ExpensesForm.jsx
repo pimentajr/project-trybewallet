@@ -5,7 +5,7 @@ import SelectInput from './SelectInput';
 
 class ExpensesForm extends Component {
   render() {
-    const paymentOptions = ['Cartão de crédito', 'Cartão de débito'];
+    const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const currencies = [];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
