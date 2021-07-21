@@ -63,3 +63,5 @@ export const editExpense = (payload) => ({
   type: EDIT_EXPENSE,
   payload,
 });
+
+// Para o requisito bônus, contei com a ajuda de alguns colegas e do time Trybe.

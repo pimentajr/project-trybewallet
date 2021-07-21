@@ -61,4 +61,6 @@ function walletReducer(state = INITIAL_STATE, action) {
   }
 }
 
+// Para o requisito bônus, contei com a ajuda de alguns colegas e do time Trybe.
+
 export default walletReducer;

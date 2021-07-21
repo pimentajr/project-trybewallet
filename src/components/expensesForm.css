@@ -2,7 +2,9 @@
   background-color: #81b29a;
   color: #3d405b;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-around;
+  min-width: 1323px;
   padding: 20px 0;
 }
 
@@ -49,6 +51,7 @@
 
 .form-add-button:hover {
   background-color: #d4ae70;
+  cursor: pointer;
 }
 
 .form-edit-button {
@@ -63,4 +66,5 @@
 
 .form-edit-button:hover {
   background-color: #6c9e86;
+  cursor: pointer;
 }

@@ -1,3 +1,33 @@
 * {
   background-color: #f4f1de;
+  border-collapse: collapse;
+}
+
+.expenses-table {
+  color: #3d405b;
+  width: 100%;
+  min-width: 1323px;
+}
+
+.expenses-table td, .expenses-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.expenses-table th {
+  background-color: #3d405b;
+  color: #f4f1de;
+  padding: 12px 0;
+}
+
+.table-icon {
+  margin: 0 8px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
 }

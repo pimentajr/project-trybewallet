@@ -5,6 +5,7 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  min-width: 1323px;
 }
 
 .header-logo {

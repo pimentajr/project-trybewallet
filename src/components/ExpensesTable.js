@@ -10,6 +10,7 @@ class ExpensesTable extends React.Component {
     const { dispatchDeleteExpense } = this.props;
     return (
       <FaRegTrashAlt
+        className="table-icon"
         type="button"
         data-testid="delete-btn"
         onClick={ () => dispatchDeleteExpense(id) }
@@ -21,6 +22,7 @@ class ExpensesTable extends React.Component {
     const { dispatchEnableEdit } = this.props;
     return (
       <FaEdit
+        className="table-icon"
         type="button"
         data-testid="edit-btn"
         onClick={ () => dispatchEnableEdit(id) }
@@ -32,7 +34,7 @@ class ExpensesTable extends React.Component {
     const { expenses } = this.props;
     return (
       <section>
-        <table>
+        <table className="expenses-table">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -53,17 +55,19 @@ class ExpensesTable extends React.Component {
                   <td>{ expense.description }</td>
                   <td>{ expense.tag }</td>
                   <td>{ expense.method }</td>
-                  <td>{ expense.value }</td>
+                  <td className="align-right">
+                    { parseFloat(expense.value).toFixed(2) }
+                  </td>
                   <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
-                  <td>
+                  <td className="align-right">
                     { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2) }
                   </td>
-                  <td>
+                  <td className="align-right">
                     { (parseFloat(expense.exchangeRates[expense.currency].ask)
                       * parseFloat(expense.value)).toFixed(2) }
                   </td>
                   <td>Real</td>
-                  <td>
+                  <td className="align-center">
                     { this.edit(expense.id) }
                     { this.delete(expense.id) }
                   </td>

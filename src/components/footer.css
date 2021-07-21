@@ -1,0 +1,23 @@
+footer {
+  background-color: #e07a5f;
+  bottom: 0;
+  color: #3d405b;
+  font-size: 12px;
+  padding: 8px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-item {
+  background-color: #e07a5f;
+  color: #3d405b
+}
+
+p {
+  margin-top: 0;
+}
+
+a {
+  padding: 0 5px;
+}
