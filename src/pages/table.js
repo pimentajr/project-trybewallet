@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Thead from './Thead';
 
 class table extends React.Component {
   constructor(props) {
@@ -10,37 +11,34 @@ class table extends React.Component {
 
   render() {
     const { tableList } = this.props;
-    console.log(tableList);
     return (
       <div>
         <table>
-          <thead>
-            <tr className="titles">
-              <th className="column"> Descrição </th>
-              <th className="column"> Tag </th>
-              <th className="column"> Método de pagamento </th>
-              <th className="column">Valor </th>
-              <th className="column"> Moeda </th>
-              <th className="column"> Câmbio utilizado </th>
-              <th className="column"> Valor convertido </th>
-              <th className="column"> Moeda de conversão </th>
-              <th className="column"> Editar/Excluir </th>
-            </tr>
-          </thead>
-          <tr>
+          <Thead />
+          <tbody>
             {tableList.map((item) => (
-              <>
-                <td key={ item.id }>{item.descricao}</td>
+              <tr key={ item.id }>
+                <td>{item.description}</td>
                 <td>{item.tag}</td>
-                <td>{item.pagamento}</td>
-                <td>{item.valor}</td>
-                <td>{item.moeda}</td>
-                <td>{item.cambio}</td>
-                <td>{item.convertedValue}</td>
-                <td>Editar/Excluir</td>
-
-              </>))}
-          </tr>
+                <td>{item.currency}</td>
+                <td>{item.value}</td>
+                <td>{(item.exchangeRates[item.currency].name).split('/')[0]}</td>
+                <td>{parseFloat(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
+                <td>
+                  {parseFloat(item.exchangeRates[item.currency].ask * item.value)
+                    .toFixed(2)}
+                </td>
+                <td>
+                  Real
+                </td>
+                <td>
+                  <button type="button">Editar</button>
+                </td>
+                <td>
+                  <button type="button">Excluir</button>
+                </td>
+              </tr>))}
+          </tbody>
         </table>
       </div>
     );
@@ -48,7 +46,8 @@ class table extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  tableList: state.spending.spending,
+  tableList: state.wallet.expenses,
+// tableCoin: state.spending.exchangeRates,
 });
 
 export default connect(mapStateToProps)(table);

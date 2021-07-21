@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from './Select';
 import Table from './table';
-import { addUserSpending, getCoinThunk } from '../actions';
+import { addUserSpending, getCoinThunk, setCoinThunk } from '../actions';
 import Inputs from './inputs';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valor: 0,
-      descricao: '',
-      moeda: '',
-      pagamento: '',
-      tag: '',
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       valueTotal: 0,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -22,6 +23,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
+    const { setAllCoins } = this.props;
+    setAllCoins();
     const { setCoin } = this.props;
     setCoin();
   }
@@ -35,12 +38,26 @@ class Wallet extends React.Component {
 
   handleClick() {
     const {
-      countSpending,
       addSpending,
+      exchangeRates,
     } = this.props;
+    const { currency, value } = this.state;
+    const valorTotal = (exchangeRates[currency].ask * value);
+    const { valueTotal } = this.state;
+    console.log(typeof valueTotal);
+    console.log(typeof valorTotal);
+    this.setState({ valueTotal: valueTotal + valorTotal });
 
-    const id = countSpending.length + 1;
-    addSpending({ ...this.state, id });
+    const { id, description, method, tag } = this.state;
+    addSpending({ currency,
+      value,
+      description,
+      method,
+      tag,
+      id,
+      exchangeRates,
+    });
+    this.setState({ id: id + 1 });
   }
 
   render() {
@@ -48,23 +65,24 @@ class Wallet extends React.Component {
     const { userCoin } = this.props;
     const filterCoin = userCoin.filter((item) => item !== 'USDT');
     const { valueTotal } = this.state;
+    parseFloat(valueTotal).toFixed(2);
     return (
       <div>
         <header>
           <h3>Olá: </h3>
           <h4 data-testid="email-field">{userMail}</h4>
-          <h3>Despesa total: </h3>
+          <h3>Despesa total </h3>
           <h4 data-testid="total-field">{valueTotal}</h4>
-          <h3>Câmbio atual: </h3>
+          <h3>Câmbio atual </h3>
           <h4 data-testid="header-currency-field">BRL</h4>
           <form>
             <Inputs handleChange={ this.handleChange } />
             <label htmlFor="moeda">
-              Moeda:
+              Moeda
               <select
-                name="moeda"
+                name="currency"
                 id="moeda"
-                onChange={ (e) => this.setState({ moeda: e.target.value }) }
+                onChange={ (e) => this.setState({ currency: e.target.value }) }
               >
                 {filterCoin.map((item, key) => (
                   <option
@@ -74,8 +92,8 @@ class Wallet extends React.Component {
                     {item}
                   </option>))}
               </select>
-              <Select handleChange={ this.handleChange } />
             </label>
+            <Select handleChange={ this.handleChange } />
             <button
               type="button"
               onClick={ this.handleClick }
@@ -93,13 +111,13 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userMail: state.user.email,
   userCoin: state.wallet.currencies,
-  userTotal: state.spending.spending.exchangeRates,
-  countSpending: state.spending.spending,
+  exchangeRates: state.wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addSpending: (payload) => dispatch(addUserSpending(payload)),
   setCoin: () => dispatch(getCoinThunk()),
+  setAllCoins: () => dispatch(setCoinThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

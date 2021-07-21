@@ -7,19 +7,19 @@ export default class inputs extends React.Component {
     return (
       <div>
         <label htmlFor="valor">
-          Valor:
+          Valor
           <input
             type="text"
-            name="valor"
+            name="value"
             id="valor"
             onChange={ handleChange }
           />
         </label>
         <label htmlFor="descricao">
-          Descrição:
+          Descrição
           <input
             type="text"
-            name="descricao"
+            name="description"
             id="descricao"
             onChange={ handleChange }
           />
