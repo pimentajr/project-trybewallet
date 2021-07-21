@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 import { actionSetUser } from '../actions/index';
-import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -91,3 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(LoginForm);
+
+LoginForm.propTypes = {
+  dispatchSetUser: PropTypes.func.isRequired,
+};

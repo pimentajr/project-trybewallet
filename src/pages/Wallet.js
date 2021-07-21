@@ -7,4 +7,3 @@ class Wallet extends React.Component {
 }
 
 export default Wallet;
-/* <a href="https://www.freepik.com/photos/money">Money photo created by freepik - www.freepik.com</a> */
