@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setEmail } from '../actions';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {

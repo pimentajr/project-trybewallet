@@ -5,15 +5,16 @@ export const REQUEST_SUCCEED = 'REQUEST_SUCCEED';
 export const REQUEST_FAIL = 'REQUEST_FAIL';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const FAIL_ADD_EXPENSE = 'FAIL_ADD_EXPENSE';
+export const REQUEST_EXPENSE = 'REQUEST_EXPENSE';
 
 export const setEmail = (email) => ({
   type: SET_EMAIL,
   payload: email,
 });
 
-export const requestApi = () => ({
-  type: REQUEST_API,
-});
+// export const requestApi = () => ({
+//   type: REQUEST_API,
+// });
 
 export const requestSuccess = (obj) => ({
   type: REQUEST_SUCCEED,
@@ -30,20 +31,25 @@ export const addExpenseSuccess = (payload) => ({
   payload,
 });
 
-export const fetchAPI = () => async (dispatch) => {
-  dispatch(requestApi());
+export const requestExpense = () => ({
+  type: REQUEST_EXPENSE,
+});
+
+export const fetchAPI = () => async (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  // dispatch(requestApi());
+  .then((result) => result.json())
+  .then((data) => dispatch(requestSuccess(data)))
+  .catch((error) => dispatch(requestFailed(error)));
+export const addExpense = (state) => (dispatch) => {
+  dispatch(requestExpense());
+  console.log('testando');
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((data) => dispatch(requestSuccess(data)))
-    .catch((error) => dispatch(requestFailed(error)));
+    .then((data) => {
+      const obj = {
+        ...state,
+        exchangeRates: data,
+      };
+      dispatch(addExpenseSuccess(obj));
+    });
 };
-
-export const addExpense = (state) => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-  .then((result) => result.json())
-  .then((data) => {
-    const obj = {
-      ...state,
-      exchangeRates: data,
-    };
-    dispatch(addExpenseSuccess(obj));
-  });

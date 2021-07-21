@@ -5,18 +5,21 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   id: 0,
+  loading: true,
 };
+
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case REQUEST_SUCCEED:
-    return { ...state, currencies: action.payload };
+    return { ...state, currencies: action.payload, id: -1, loading: false };
   case ADD_EXPENSE:
-    return ({ ...state,
-      id: state.id + 1,
-      expenses: [...state.expenses, { id: action.id,
+    return { ...state,
+      loading: false,
+      expenses: [{ ...state.expenses,
+        id: state.id + 1,
         ...action.payload,
       }],
-    });
+    };
   default:
     return state;
   }
