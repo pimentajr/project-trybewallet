@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class PaymentSelect extends Component {
   render() {
+    const { funcHandleChange } = this.props;
     return (
-      <label htmlFor="payment">
+      <label htmlFor="method">
         Método de pagamento
-        <select name="payment" id="payment">
+        <select name="method" id="method" onChange={ funcHandleChange }>
           <option>
             Dinheiro
           </option>
@@ -20,3 +22,7 @@ export default class PaymentSelect extends Component {
     );
   }
 }
+
+PaymentSelect.propTypes = {
+  funcHandleChange: PropTypes.func,
+}.isRequired;

@@ -2,6 +2,7 @@ import {
   REQUEST_CURRENCIES,
   REQUEST_CURRENCIES_SUCESS,
   REQUEST_CURRENCIES_ERROR,
+  SAVE_EXPENSES,
 } from '../actions/walletActions';
 
 const INITIAL_STATE = {
@@ -24,6 +25,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       erro: action.error,
+    };
+  case SAVE_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
     };
   default:
     return state;

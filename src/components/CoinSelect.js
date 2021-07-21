@@ -10,12 +10,16 @@ class CoinSelect extends Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, funcHandleChange } = this.props;
     const filtered = Object.keys(currencies).filter((currencie) => currencie !== 'USDT');
     return (
-      <label htmlFor="coin">
+      <label htmlFor="currency">
         Moeda
-        <select name="coin" id="coin">
+        <select
+          name="currency"
+          id="currency"
+          onChange={ funcHandleChange }
+        >
           { filtered.map((coin, index) => <option key={ index }>{ coin }</option>) }
         </select>
       </label>
@@ -34,6 +38,8 @@ const mapDispatchToProps = (dispatch) => ({
 CoinSelect.propTypes = {
   takeCurrencies: PropTypes.func,
   currencies: PropTypes.objectOf(),
+  currency: PropTypes.number,
+  funcHandleChange: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinSelect);

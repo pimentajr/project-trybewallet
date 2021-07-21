@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class ValueInput extends Component {
+export default class ValueInput extends Component {
   render() {
+    const { funcHandleChange } = this.props;
     return (
       <label htmlFor="value">
         Valor
-        <input type="number" name="value" id="value" />
+        <input type="number" name="value" id="value" onChange={ funcHandleChange } />
       </label>
     );
   }
 }
 
-export default ValueInput;
+ValueInput.propTypes = {
+  funcHandleChange: PropTypes.func,
+}.isRequired;

@@ -5,6 +5,4 @@ export const getCurrencies = () => fetch('https://economia.awesomeapi.com.br/jso
       .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
   ));
 
-console.log(getCurrencies());
-
 export default getCurrencies;
