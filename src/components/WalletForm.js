@@ -7,6 +7,7 @@ import PaymentSelect from './PaymentSelect';
 import TagSelect from './TagSelect';
 import DescriptionInput from './DescriptionInput';
 import { saveExpenses } from '../actions/walletActions';
+import { getCurrencies } from '../services/api';
 
 class WalletForm extends Component {
   constructor() {
@@ -32,8 +33,8 @@ class WalletForm extends Component {
     });
   }
 
-  addExpense() {
-    const { pushExpense, exchangeRates } = this.props;
+  async addExpense() {
+    const { pushExpense } = this.props;
     const { id, value, description, currency, method, tag } = this.state;
 
     const expenses = {
@@ -43,7 +44,7 @@ class WalletForm extends Component {
       currency,
       method,
       tag,
-      exchangeRates,
+      exchangeRates: await getCurrencies(),
     };
 
     pushExpense(expenses);
@@ -54,8 +55,6 @@ class WalletForm extends Component {
   }
 
   render() {
-    // const { exchangeRates } = this.props;
-    // console.log(exchangeRates);
     return (
       <form>
         <ValueInput funcHandleChange={ this.handleChange } />
@@ -74,10 +73,6 @@ class WalletForm extends Component {
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
-  exchangeRates: currencies,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   pushExpense: (payload) => dispatch(saveExpenses(payload)),
 });
@@ -87,4 +82,4 @@ WalletForm.propTypes = {
   exchangeRates: PropTypes.objectOf(),
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
+export default connect(null, mapDispatchToProps)(WalletForm);
