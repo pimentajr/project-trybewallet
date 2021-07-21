@@ -2,6 +2,7 @@
 export const LOGIN = 'LOGIN';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const ADD_CURRENCY = 'ADD_CURRENCY';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -16,4 +17,9 @@ export const addExpense = (expense) => ({
 export const addCurrency = (currency) => ({
   type: ADD_CURRENCY,
   currency,
+});
+
+export const deleteExpense = (expenses) => ({
+  type: DELETE_EXPENSE,
+  expenses,
 });

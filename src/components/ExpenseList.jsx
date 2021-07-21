@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
 
 const tableCamps = ['Descrição',
   'Tag',
@@ -13,6 +14,27 @@ const tableCamps = ['Descrição',
   'Editar/Excluir'];
 
 class ExpenseList extends React.Component {
+  constructor() {
+    super();
+    this.deleteButton = this.deleteButton.bind(this);
+    this.editButton = this.editButton.bind(this);
+  }
+
+  editButton(id) {
+    console.log(id);
+  }
+
+  deleteButton(id) {
+    const { expenses, expensesFunc } = this.props;
+    const newExpenses = expenses.reduce((acc, cur) => {
+      if (cur.id !== id) {
+        return [...acc, cur];
+      }
+      return acc;
+    }, []);
+    expensesFunc(newExpenses);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -34,8 +56,24 @@ class ExpenseList extends React.Component {
               <td>{ value }</td>
               <td>{ name[0] }</td>
               <td>{ parseFloat(exchange).toFixed(2) }</td>
-              <td>{ value * exchange }</td>
+              <td>{ parseFloat(value * exchange).toFixed(2) }</td>
               <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => this.editButton(element.id) }
+                >
+                  edit
+                </button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => this.deleteButton(element.id) }
+                >
+                  delete
+                </button>
+              </td>
             </tr>
           );
         })}
@@ -48,8 +86,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  expensesFunc: (expenses) => dispatch(deleteExpense(expenses)),
+});
+
 ExpenseList.propTypes = {
   expenses: PropTypes.isRequired,
+  expensesFunc: PropTypes.isRequired,
 };
 
-export default connect(mapStateToProps)(ExpenseList);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
