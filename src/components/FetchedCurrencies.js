@@ -7,10 +7,12 @@ class FetchedCurrencies extends Component {
     const { fetchedCurr } = this.props;
     return (
       <>
-        { fetchedCurr.map((currency, index) => (
-          <option key={ index }>
-            {currency.code}
-          </option>))}
+        { Object.values(fetchedCurr).filter((filtered) => (filtered.codein !== 'BRLT'))
+          .map((currency, index) => (
+            <option key={ index }>
+              { currency.code }
+            </option>
+          ))}
       </>
     );
   }

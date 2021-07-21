@@ -12,36 +12,24 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, loading } = this.props;
+    const { email, expenses } = this.props;
+    const radix = 10;
     return (
       <div>
         <header>
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field"> 0 </p>
+          <p data-testid="total-field">
+            {(expenses.length === 0) ? 0
+              : expenses.reduce((acc, expense) => (
+                acc + (parseInt(expense.value, radix))
+                * Object.values(expense.exchangeRates).find((cotacao) => (
+                  cotacao.code === expense.currency
+                )).ask), 0)}
+          </p>
           <p data-testid="header-currency-field"> BRL </p>
         </header>
-        { (loading) ? <p>Carregando...</p> : <FormsWallet />}
+        <FormsWallet />
         <ExpensesTable />
-        <form>
-          <label htmlFor="payment-method">
-            Método de Pagamento
-            <select role="combobox" id="payment-method">
-              <option value="money"> Dinheiro</option>
-              <option value="credit-card">Cartão de crédito</option>
-              <option value="debit-card">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select role="combobox" id="tag">
-              <option value="food">Alimentação</option>
-              <option value="laze">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="Transport">Transporte</option>
-              <option value="health">Saúde</option>
-            </select>
-          </label>
-        </form>
       </div>
     );
   }
@@ -49,14 +37,19 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   loading: state.wallet.isLoading,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesAPI: () => dispatch(fetchCurrencies()),
 });
 Wallet.propTypes = {
-  email: PropTypes.string,
-  fetchCurrenciesAPI: PropTypes.func,
-  loading: PropTypes.bool,
-}.isRequired;
+  email: PropTypes.string.isRequired,
+  fetchCurrenciesAPI: PropTypes.func.isRequired,
+  expenses: PropTypes.shape({
+    currency: PropTypes.string,
+    length: PropTypes.func,
+    reduce: PropTypes.func,
+  }).isRequired,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
