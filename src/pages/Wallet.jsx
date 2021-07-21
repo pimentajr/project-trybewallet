@@ -35,7 +35,6 @@ class Wallet extends React.Component {
 
   handleTotalExpensesSection() {
     const { expenses } = this.props;
-    console.log(expenses);
 
     if (expenses.length !== 0) {
       const totalCost = expenses.reduce((total, expense) => (
