@@ -10,3 +10,12 @@
   height: 100vh;
   justify-content: center;
 }
+
+.login-card {
+  align-items: center;
+  width: 22rem;
+}
+
+.walletLink {
+  display: none;
+}

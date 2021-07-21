@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'react-bootstrap';
 import { actionSetUser } from '../actions/index';
 
 class LoginForm extends Component {
@@ -49,39 +48,48 @@ class LoginForm extends Component {
     const { email } = this.state;
 
     return (
-      <Form>
-        <Form.Group>
-          <Form.Control
-            data-testid="email-input"
-            type="email"
-            placeholder="Entre com seu email"
-            onChange={ this.validateEmail }
-          />
-          <Form.Text className="text-muted">example@example.com</Form.Text>
-        </Form.Group>
+      <form>
+        <div className="mb-3">
+          <label className="form-label text-muted" htmlFor="email">
+            <input
+              className="form-control"
+              id="email"
+              data-testid="email-input"
+              type="email"
+              placeholder="Entre com seu email"
+              onChange={ this.validateEmail }
+            />
 
-        <Form.Group>
-          <Form.Control
-            data-testid="password-input"
-            type="password"
-            placeholder="Senha"
-            onChange={ this.validatePassword }
-          />
-          <Form.Text className="text-muted">Sua senha, por favor!</Form.Text>
-        </Form.Group>
+            example@example.com
+          </label>
+        </div>
 
-        <Link to="/carteira" className="d-grid gap-2">
-          <Button
+        <div className="mb-3">
+          <label className="form-label text-muted" htmlFor="password">
+            <input
+              id="password"
+              className="form-control"
+              data-testid="password-input"
+              type="password"
+              placeholder="Senha"
+              onChange={ this.validatePassword }
+            />
+            Sua senha, por favor!
+          </label>
+        </div>
+
+        <Link to="/carteira" className="d-grid gap-2 ">
+          <button
             type="button"
-            variant="success"
+            className="btn btn-success"
             size="lg"
             disabled={ this.checkLogin() }
             onClick={ () => { dispatchSetUser(email); } }
           >
             Entrar
-          </Button>
+          </button>
         </Link>
-      </Form>
+      </form>
     );
   }
 }

@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import { Card, Container } from 'react-bootstrap';
 // import PropTypes from 'prop-types'
 import LoginForm from './LoginForm';
 
 export default class LoginCard extends Component {
   render() {
     return (
-      <Container className="loginCardContainer">
-        <Card
-          style={ { width: '18rem' } }
-          border="dark"
+      <div className="container-fluid loginCardContainer">
+        <div
+          className="card border-dark mb-3 login-card"
         >
-          <Card.Img className="" variant="top" src="/login.png" />
-          <Card.Body>
+          <img
+            className="card-img-top"
+            alt="desenho de uma carteira laranja"
+            src="/login.png"
+          />
+          <div className="card-body">
             <LoginForm />
-          </Card.Body>
-        </Card>
-      </Container>
+          </div>
+        </div>
+      </div>
 
     );
   }
