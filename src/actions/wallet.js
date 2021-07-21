@@ -1,6 +1,6 @@
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
-export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
+// export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
