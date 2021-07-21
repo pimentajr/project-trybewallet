@@ -6,7 +6,6 @@ class Forms extends Component {
   constructor(props) {
     super(props);
     this.handlerChanges = this.handlerChanges.bind(this);
-    this.renderImput = this.renderImput.bind(this);
     this.initialState = this.initialState.bind(this);
   }
 
@@ -25,7 +24,7 @@ class Forms extends Component {
     });
   }
 
-  renderImput() {
+  /* renderImput() {
     return (
       <label htmlFor="tag" id="tag" name="tag">
         Tag:
@@ -37,7 +36,7 @@ class Forms extends Component {
         </select>
       </label>
     );
-  }
+   }  */
 
   render() {
     const { getcurrenciesFromStore } = this.props;
@@ -56,20 +55,11 @@ class Forms extends Component {
           </label>
           <label htmlFor="description">
             Descrição:
-            <textarea
-              type="text"
-              id="description"
-              onChange={ this.handlerChanges }
-              name="Descrição"
-            />
+            <input type="text" name="description" id="description" />
           </label>
           <label htmlFor="currency">
             Moeda:
-            <select
-              name="Moeda"
-              id="currency"
-              onChange={ this.handlerChanges }
-            >
+            <select id="currency" onChange={ this.handlerChanges }>
               {
                 getcurrenciesFromStore
                   .map((item, index) => <option key={ index }>{ item }</option>)
@@ -84,7 +74,16 @@ class Forms extends Component {
               <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
-          {this.renderImput()}
+          <label htmlFor="tag">
+            Tag:
+            <select id="tag">
+              <option value="alimentacao">Alimentação</option>
+              <option value="lazer">Lazer</option>
+              <option value="trabalho">Trabalho</option>
+              <option value="trabalho">Transporte</option>
+              <option value="trabalho">Saúde</option>
+            </select>
+          </label>
         </form>
       </div>
     );
