@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FetchedCurrencies from './FetchedCurrencies';
-import PaymentMethods from './PaymentMethod';
+import PaymentMethod from './PaymentMethod';
 import Categories from './Categories';
 import { updateCurrencyToNewExpense } from '../actions/wallet';
 
@@ -51,7 +51,7 @@ class FormsWallet extends Component {
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
           <select id="metodo-de-pagamento" name="method" onChange={ this.handleChange }>
-            <PaymentMethods />
+            <PaymentMethod />
           </select>
         </label>
         <label htmlFor="categoria">

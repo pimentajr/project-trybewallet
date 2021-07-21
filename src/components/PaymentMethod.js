@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class PaymentMethods extends Component {
+export default class PaymentMethod extends Component {
   render() {
     return (
       <>

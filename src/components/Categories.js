@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-export default class TagCategories extends Component {
+export default class Categories extends Component {
   render() {
     return (
       <>
-        <option selected value="Food">Alimentação</option>
-        <option value="Leisure">Lazer</option>
-        <option value="Work">Trabalho</option>
-        <option value="Transport">Transporte</option>
-        <option value="Cheers">Saúde</option>
+        <option selected value="Alimentação">Alimentação</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Trabalho">Trabalho</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Saúde">Saúde</option>
       </>
     );
   }
