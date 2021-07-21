@@ -27,7 +27,7 @@ class Forms extends Component {
 
   renderImput() {
     return (
-      <label htmlFor="tag" id="tag" name="Categoria">
+      <label htmlFor="tag" id="tag" name="tag">
         Tag:
         <select id="tag" onChange={ this.handlerChanges }>
           <option value="Alimentação">Alimentação</option>
