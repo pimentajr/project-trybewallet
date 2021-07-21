@@ -8,15 +8,15 @@ const initialState = {
   currencies: [],
   cost: '',
   description: '',
-  method: 'Dinheiro',
-  tag: 'Alimentação',
-  currency: 'USD',
+  method: '',
+  tag: '',
+  currency: '',
 };
 const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-const mapSelects = (element) => (
+const mapSelects = (element, index) => (
   (element !== 'USDT') && (
-    <option value={ element }>{ element }</option>)
+    <option value={ element } key={ index }>{ element }</option>)
 );
 
 class ExpenseForm extends React.Component {
@@ -83,19 +83,19 @@ class ExpenseForm extends React.Component {
         </label>
         <label htmlFor="inputCurrency">
           Moeda:
-          <select id="inputCurrency" name="currency" onClick={ this.handleChange }>
+          <select id="inputCurrency" name="currency" onChange={ this.handleChange }>
             {currencies.map(mapSelects)}
           </select>
         </label>
         <label htmlFor="inputMethod">
           Método de pagamento:
-          <select id="inputMethod" name="method" onClick={ this.handleChange }>
+          <select id="inputMethod" name="method" onChange={ this.handleChange }>
             {methods.map(mapSelects)}
           </select>
         </label>
         <label htmlFor="inputTag">
           Tag:
-          <select id="inputTag" name="tag" value={ tag } onClick={ this.handleChange }>
+          <select id="inputTag" name="tag" onChange={ this.handleChange }>
             {tags.map(mapSelects)}
           </select>
         </label>
