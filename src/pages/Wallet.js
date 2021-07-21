@@ -6,11 +6,6 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
-      cost: '',
-      description: '',
-      method: '',
-      tag: '',
       currency: [],
     };
 
@@ -37,15 +32,15 @@ class Wallet extends React.Component {
         <form>
           <label htmlFor="name">
             nome:
-            <input type="text" name="name" id="name"/>
+            <input type="text" name="name" id="name" />
           </label>
           <label htmlFor="valor">
             Valor
-            <input type="number" name="valor" id="valor"/>
+            <input type="number" name="valor" id="valor" />
           </label>
           <label htmlFor="Descrição">
             Descrição:
-            <input type="text" name="Descrição" id="Descrição"/>
+            <input type="text" name="Descrição" id="Descrição" />
           </label>
           <label htmlFor="Moeda" type="combobox">
             Moeda:
