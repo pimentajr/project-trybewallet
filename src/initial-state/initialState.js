@@ -1,9 +1,5 @@
-export default INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+const INITIAL_STATE = {
+  email: '',
 };
+
+export default INITIAL_STATE;

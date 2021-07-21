@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Card, Button, Container } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 // import PropTypes from 'prop-types'
-import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 
-class LoginCard extends Component {
+export default class LoginCard extends Component {
   render() {
     return (
       <Container className="loginCardContainer">
@@ -22,13 +21,3 @@ class LoginCard extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-
-});
-
-const mapDispatchToProps = {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginCard);

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
+import { actionSetUser } from '../actions/index';
+import { Link } from 'react-router-dom';
+// import PropTypes from 'prop-types';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -21,12 +24,14 @@ class LoginForm extends Component {
   validateEmail({ target: { value: email } }) {
     const re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; // usado pela W3E
     this.setState(() => ({
+      email,
       validEmail: re.test(String(email).toLowerCase()),
     }));
   }
 
   validatePassword({ target: { value: password } }) {
-    const validPassword = (password.length > 5);
+    const five = 5;
+    const validPassword = (password.length > five);
 
     this.setState(() => ({
       validPassword,
@@ -36,10 +41,13 @@ class LoginForm extends Component {
   checkLogin() {
     const { validEmail, validPassword } = this.state;
 
-    if (!validEmail || !validPassword) return 'true';
+    if (!validEmail || !validPassword) return true;
   }
 
   render() {
+    const { dispatchSetUser } = this.props;
+    const { email } = this.state;
+
     return (
       <Form>
         <Form.Group>
@@ -49,7 +57,7 @@ class LoginForm extends Component {
             placeholder="Entre com seu email"
             onChange={ this.validateEmail }
           />
-          <Form.Text class="text-muted">example@example.com</Form.Text>
+          <Form.Text className="text-muted">example@example.com</Form.Text>
         </Form.Group>
 
         <Form.Group>
@@ -59,22 +67,27 @@ class LoginForm extends Component {
             placeholder="Senha"
             onChange={ this.validatePassword }
           />
-          <Form.Text class="text-muted">Sua senha, por favor!</Form.Text>
+          <Form.Text className="text-muted">Sua senha, por favor!</Form.Text>
         </Form.Group>
 
-        <div className="d-grid gap-2">
+        <Link to="/carteira" className="d-grid gap-2">
           <Button
             type="button"
             variant="success"
             size="lg"
             disabled={ this.checkLogin() }
+            onClick={ () => { dispatchSetUser(email); } }
           >
             Entrar
           </Button>
-        </div>
+        </Link>
       </Form>
     );
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetUser: (email) => dispatch(actionSetUser(email)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginForm);
