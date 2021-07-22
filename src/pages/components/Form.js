@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
+import currenciesApi from '../../services/index';
 
 class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      currency: [],
+    };
+    this.returnApi = this.returnApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.returnApi();
+  }
+
+  async returnApi() {
+    const callCoin = await currenciesApi();
+    const filteredCoin = Object.keys(callCoin).filter((coin) => coin !== 'USDT');
+    this.setState({ currency: filteredCoin });
+  }
+
   render() {
+    const {
+      currency,
+    } = this.state;
+
     return (
       <form>
         <label htmlFor="value">
@@ -15,8 +38,11 @@ class Form extends Component {
         <label htmlFor="currency">
           Moeda:
           <select name="currency" id="currency">
-            <option>test1</option>
-            <option>test2</option>
+            { currency.map((coin, index) => (
+              <option key={ index }>
+                { coin }
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment_method">
