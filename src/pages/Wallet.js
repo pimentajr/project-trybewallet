@@ -9,17 +9,17 @@ class Wallet extends React.Component {
     super();
     this.state = {
       value: '',
-      description: '',
+      descricao: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
-    this.value = this.value.bind(this);
-    this.description = this.description.bind(this);
-    this.currency = this.currency.bind(this);
-    this.method = this.method.bind(this);
-    this.tag = this.tag.bind(this);
-    this.header = this.header.bind(this);
+    this.renderValue = this.renderValue.bind(this);
+    this.renderDescription = this.renderDescription.bind(this);
+    this.renderCurrency = this.renderCurrency.bind(this);
+    this.renderMethod = this.renderMethod.bind(this);
+    this.renderTag = this.renderTag.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addExpense = this.addExpense.bind(this);
   }
@@ -39,25 +39,25 @@ class Wallet extends React.Component {
 
   addExpense() {
     const { savedExpenses } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    const { value, descricao, currency, method, tag } = this.state;
     let id = 0;
     if (savedExpenses.length !== 0) {
       const savedExpensesLength = savedExpenses.length;
       const idLength = savedExpenses[savedExpensesLength - 1].id;
       id = idLength + 1;
     }
-    const expense = { id, value, description, currency, method, tag };
+    const expense = { id, value, descricao, currency, method, tag };
     const { sendExpense } = this.props;
     sendExpense(expense);
     this.setState({
       value: '',
-      description: '',
+      descricao: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação' });
   }
 
-  description() {
+  renderDescription() {
     return (
       <label htmlFor="description">
         Descrição
@@ -71,7 +71,7 @@ class Wallet extends React.Component {
     );
   }
 
-  currency() {
+  renderCurrency() {
     const { moedas } = this.props;
     const { currency } = this.state;
     return (
@@ -93,7 +93,7 @@ class Wallet extends React.Component {
     );
   }
 
-  method() {
+  renderMethod() {
     const { method } = this.state;
     return (
       <label htmlFor="method">
@@ -107,7 +107,7 @@ class Wallet extends React.Component {
     );
   }
 
-  tag() {
+  renderTag() {
     const { tag } = this.state;
     return (
       <label htmlFor="tag">
@@ -128,7 +128,7 @@ class Wallet extends React.Component {
     );
   }
 
-  header() {
+  renderHeader() {
     const { email, savedExpenses } = this.props;
     let totalExpenses = 0;
     savedExpenses.forEach((exp) => {
@@ -155,7 +155,7 @@ class Wallet extends React.Component {
     );
   }
 
-  value() {
+  renderValue() {
     return (
       <label htmlFor="value">
         {' '}
@@ -171,7 +171,7 @@ class Wallet extends React.Component {
     );
   }
 
-  addButton() {
+  renderAddButton() {
     return (
       <section>
         <button
@@ -187,12 +187,12 @@ class Wallet extends React.Component {
   renderForm() {
     return (
       <form>
-        {this.value()}
-        {this.description()}
-        {this.currency()}
-        {this.method()}
-        {this.tag()}
-        {this.addButton()}
+        {this.renderValue()}
+        {this.renderDescription()}
+        {this.renderCurrency()}
+        {this.renderMethod()}
+        {this.renderTag()}
+        {this.renderAddButton()}
       </form>
     );
   }
@@ -201,8 +201,8 @@ class Wallet extends React.Component {
     return (
       <div>
         TrybeWallet
-        {this.header()}
-        {this.form()}
+        {this.renderHeader()}
+        {this.renderForm()}
         <TabelaGastos />
       </div>
     );
