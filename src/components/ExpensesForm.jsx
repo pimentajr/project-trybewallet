@@ -14,8 +14,8 @@ class ExpensesForm extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChangeText = this.handleChangeText.bind(this);
@@ -77,8 +77,10 @@ class ExpensesForm extends Component {
       currencies,
       dispatchUpdateTotal,
     } = this.props;
+    const { id } = this.state;
+    this.setState({ id: currentId });
     await fetchApi();
-    const payload = { id: currentId, ...this.state, exchangeRates: currencies };
+    const payload = { id, ...this.state, exchangeRates: currencies };
     addExpense(payload);
     dispatchUpdateTotal(this.updateTotal());
   }
