@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends Component {
+  updateTotal(expenses) {
+    const total = expenses.reduce((acc, exp) => (
+      acc + exp.value * exp.exchangeRates[exp.currency].ask), 0);
+    return (parseFloat(total).toFixed(2));
+  }
+
   render() {
-    const { email, total } = this.props;
+    const { email, expenses } = this.props;
     return (
       <header className="container-fluid walletHeader">
         <img className="headerImg" src="/login.png" alt="Icone de uma carteira laranja" />
@@ -16,7 +22,9 @@ class Header extends Component {
           <div className="total-expenses">
             Despesas Totais:
             <span data-testid="header-currency-field">{ ` ${'BRL'}` }</span>
-            <div data-testid="total-field">{ (!total) ? 0 : total }</div>
+            <span data-testid="total-field">
+              { expenses.length > 0 ? this.updateTotal(expenses) : 0 }
+            </span>
           </div>
           <div />
         </div>
@@ -28,12 +36,12 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  total: state.wallet.total,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, null)(Header);
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

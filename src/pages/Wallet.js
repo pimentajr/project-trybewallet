@@ -19,6 +19,7 @@ class Wallet extends React.Component {
         <ExpensesForm />
         <ExpensesTable />
       </div>
+
     );
   }
 }
@@ -27,11 +28,11 @@ const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencieAndQuotation()),
 });
 
-// const mapStateToProps = (state) => ({
-//   currencies: state.wallet.currencies,
-// });
+const mapStateToProps = (state) => ({
+  isLoading: state.wallet.isLoading,
+});
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
