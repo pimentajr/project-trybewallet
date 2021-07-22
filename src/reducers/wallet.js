@@ -1,4 +1,4 @@
-import { CURRENCIES, EXPENSES } from '../actions';
+import { CURRENCIES, EXPENSES, DELETE } from '../actions';
 
 const INNITIAL_STATE = {
   currencies: [],
@@ -7,12 +7,12 @@ const INNITIAL_STATE = {
 
 export default function wallet(state = INNITIAL_STATE, action) {
   let objectExpense = [];
+  let newArrayOfExpenses = [];
   if (action.type === EXPENSES) {
     objectExpense = [
       ...state.expenses,
       {
-        id: state.expenses.length > 0
-          ? state.expenses[state.expenses.length - 1].id + 1
+        id: state.expenses.length > 0 ? state.expenses[state.expenses.length - 1].id + 1
           : 0,
         value: action.expenses[0],
         description: action.expenses[1],
@@ -23,6 +23,10 @@ export default function wallet(state = INNITIAL_STATE, action) {
       },
     ];
   }
+  if (action.type === DELETE) {
+    newArrayOfExpenses = state.expenses.filter((expense) => expense.id !== action.id);
+  }
+
   switch (action.type) {
   case CURRENCIES:
     delete action.currencies.USDT;
@@ -34,6 +38,11 @@ export default function wallet(state = INNITIAL_STATE, action) {
           (expense) => ({ ...expense, exchangeRates: action.currencies }),
         )
         : [],
+    };
+  case DELETE:
+    return {
+      ...state,
+      expenses: newArrayOfExpenses,
     };
   case EXPENSES:
     return {
