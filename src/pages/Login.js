@@ -80,11 +80,6 @@ const mapDispatchToProps = (dispatch) => ({
 Login.propTypes = {
   submitEmail: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-      search: PropTypes.string.isRequired,
-      hash: PropTypes.string.isRequired,
-    }),
     push: PropTypes.func.isRequired,
   }).isRequired,
 };

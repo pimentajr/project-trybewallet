@@ -3,8 +3,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TableDraw from './TableDraw';
+import { deleteExpense } from '../actions';
 
 class TableRender extends Component {
+  constructor() {
+    super();
+    this.removeExpense = this.removeExpense.bind(this);
+  }
+
+  removeExpense(index) {
+    const { delExpense, expenses } = this.props;
+    delExpense(expenses[index].id);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -26,7 +37,9 @@ class TableRender extends Component {
           { expenses.map((expense, key) => (
             <TableDraw
               key={ key }
+              index={ key }
               expense={ expense }
+              removeExpense={ () => this.removeExpense(expense.id) }
             />
           ))}
         </tbody>
@@ -39,8 +52,14 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-TableRender.propTypes = {
-  expenses: PropTypes.arrayOf(Object).isRequired,
-};
+const mapDispatchToProps = (dispatch) => ({
+  // API: () => dispatch(fetchAPI()),
+  delExpense: (id) => dispatch(deleteExpense(id)),
+});
 
-export default connect(mapStateToProps)(TableRender);
+TableRender.propTypes = {
+  expenses: PropTypes.arrayOf(Object),
+  // delExpense: PropTypes.func.isRequired,
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableRender);

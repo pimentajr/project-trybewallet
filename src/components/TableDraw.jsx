@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class TableDraw extends Component {
   render() {
-    const { expense } = this.props;
+    const { expense, removeExpense, index } = this.props;
     return (
       <tr>
         <td>{ expense.description }</td>
@@ -13,20 +13,29 @@ class TableDraw extends Component {
         <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
         <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
         <td>
-          { parseFloat(expense.value
-          * expense.exchangeRates[expense.currency].ask).toFixed(2) }
+          { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+          * expense.value }
         </td>
         <td>Real</td>
+        <button
+          type="button"
+          onClick={ () => removeExpense(index) }
+          data-testid="delete-btn"
+        >
+          [X]
+        </button>
       </tr>
     );
   }
 }
 
 TableDraw.propTypes = {
+  index: PropTypes.number.isRequired,
+  removeExpense: PropTypes.func.isRequired,
   expense: PropTypes.shape({
     tag: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     exchangeRates: PropTypes.shape({
