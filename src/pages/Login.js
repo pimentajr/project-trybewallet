@@ -7,6 +7,24 @@ class Login extends React.Component {
       redirectWallet: false,
     };
     this.inputPasswordRender = this.inputPasswordRender.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
+  }
+
+  componentDidMount() {
+    const btn = document.querySelector('#enter-btn');
+    btn.disabled = true;
+  }
+
+  validateEmail() {
+    const email = document.querySelector('#email');
+    const error = document.querySelector('#email-error');
+    if (!email.checkValidity()) {
+      error.style.color = 'red';
+      error.innerHTML = 'E-mail inválido';
+    } else if (email.checkValidity()) {
+      error.style.color = 'green';
+      error.innerHTML = 'Ok!';
+    }
   }
 
   inputPasswordRender() {
