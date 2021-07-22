@@ -51,6 +51,15 @@ export function updateTotal(total) {
   };
 }
 
+export function removeExpense(expense) {
+  return {
+    type: actions.REMOVE_EXPENSE,
+    payload: {
+      expense,
+    },
+  };
+}
+
 export function fetchCurrencieAndQuotation() {
   return ((dispatch) => {
     dispatch(actionFetchCurrencies);

@@ -38,6 +38,12 @@ export default function reducer(state = INITIAL_STATE.wallet, action) {
       total: action.payload.total,
     };
 
+  case actions.REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((value) => value !== action.payload.expense)],
+    };
+
   default: {
     return state;
   }
