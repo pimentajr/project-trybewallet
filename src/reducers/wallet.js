@@ -2,6 +2,7 @@ import { USER_COIN_SUCESS,
   USER_COIN_ERROR,
   ADD_USER_SPENDING,
   SET_COIN_ALL,
+  REMOVE_SPENDING,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -20,6 +21,8 @@ export default function user(state = INITIAL_STATE, action) {
     return { ...state, expenses: [...state.expenses, action.payload] };
   case SET_COIN_ALL:
     return { ...state, exchangeRates: action.payload };
+  case REMOVE_SPENDING:
+    return { ...state, expenses: action.payload };
   default:
     return state;
   }

@@ -7,6 +7,8 @@ export const USER_COIN_ERROR = 'USER_COIN_ERROR';
 export const ADD_USER_SPENDING = 'ADD_USER_SPENDING';
 export const SET_COIN_ALL = 'SET_COIN_ALL';
 
+export const REMOVE_SPENDING = 'REMOVE_SPENDING';
+
 export const setUsername = (payload) => ({
   type: USER_NAME,
   payload,
@@ -34,6 +36,11 @@ export const userCoinError = (payload) => ({
 
 export const addUserSpending = (payload) => ({
   type: ADD_USER_SPENDING,
+  payload,
+});
+
+export const removeSpending = (payload) => ({
+  type: REMOVE_SPENDING,
   payload,
 });
 

@@ -17,7 +17,6 @@ class Wallet extends React.Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-      valueTotal: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -43,15 +42,8 @@ class Wallet extends React.Component {
     } = this.props;
 
     const exchangeRates = await setAPI();
-    console.log(exchangeRates);
 
-    const { currency, value } = this.state;
-    const valorTotal = (exchangeRates[currency].ask * value);
-    const { valueTotal } = this.state;
-
-    this.setState({ valueTotal: valueTotal + valorTotal });
-
-    const { id, description, method, tag } = this.state;
+    const { id, description, method, tag, value, currency } = this.state;
     addSpending({ currency,
       value,
       description,
@@ -66,16 +58,17 @@ class Wallet extends React.Component {
   render() {
     const { userMail } = this.props;
     const { userCoin } = this.props;
+    const { getCoin } = this.props;
+    const total = getCoin.reduce((soma, itens) => soma
+    + parseFloat(itens.exchangeRates[itens.currency].ask * itens.value), 0).toFixed(2);
     const filterCoin = userCoin.filter((item) => item !== 'USDT');
-    const { valueTotal } = this.state;
-    (valueTotal).toFixed(2);
     return (
       <div>
         <header>
           <h3>Olá: </h3>
           <h4 data-testid="email-field">{userMail}</h4>
           <h3>Despesa total </h3>
-          <h4 data-testid="total-field">{valueTotal}</h4>
+          <h4 data-testid="total-field">{total}</h4>
           <h3>Câmbio atual </h3>
           <h4 data-testid="header-currency-field">BRL</h4>
           <form>
@@ -114,7 +107,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userMail: state.user.email,
   userCoin: state.wallet.currencies,
-  getCoin: state.wallet.exchangeRates,
+  getCoin: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
