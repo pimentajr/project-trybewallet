@@ -2,6 +2,7 @@
 export const USER_DATA = 'USER_DATA';
 export const SUCCESS_FETCH = 'SUCCESS_FETCH';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const SEND_EXPENSES = 'SEND_EXPENSES';
 
 export const userData = (email) => ({
   type: 'USER_DATA',
