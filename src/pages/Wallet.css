@@ -63,6 +63,7 @@
   outline: 0;
   padding: 0.4rem 0.5rem;
   text-align: center;
+  width: 7.5rem;
 }
 
 .expenses-table > tbody > tr button {

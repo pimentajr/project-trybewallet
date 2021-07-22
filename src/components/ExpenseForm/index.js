@@ -150,6 +150,10 @@ class ExpenseForm extends Component {
           onClick={
             editingId < 0 ? () => this.saveExpense() : () => this.editExpense(editingId)
           }
+          style={
+            editingId < 0 ? { backgroundColor: 'rgb(0, 121, 252)' }
+              : { backgroundColor: 'rgb(15, 163, 107)' }
+          }
         >
           {editingId < 0 ? 'Adicionar despesa' : 'Editar despesa'}
         </button>
