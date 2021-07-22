@@ -7,8 +7,6 @@ import trybeLogo from '../../images/Trybe_logo.png';
 class Header extends Component {
   render() {
     const { userEmail, expenses } = this.props;
-    const totalExpense = expenses.length > 0
-      ? calculateTotalExpenses(expenses) : 0;
     return (
       <header>
         <img src={ trybeLogo } alt="Wallet logo" />
@@ -19,11 +17,13 @@ class Header extends Component {
             { `Email: ${userEmail}` }
           </span>
           <span>
-            Despesa Total: R$
+            {'Despesa Total: R$ '}
+            {/* {'Despesa Total: '} */}
             <span
               data-testid="total-field"
             >
-              { totalExpense }
+              { calculateTotalExpenses(expenses) }
+              {/* { calculateTotalExpenses(expenses) } */}
             </span>
             <span
               data-testid="header-currency-field"

@@ -2,20 +2,22 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  editingId: -1,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'CURRENCIES':
     return {
-      ...state, currencies: [...action.payload.currencies],
+      ...state,
+      currencies: [...action.payload.currencies],
     };
   case 'SAVE_EXPENSE':
     return {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: state.expenses.length, ...action.payload.expenses },
+        { id: state.expenses.length, ...action.payload.expense },
       ],
     };
   case 'DELETE_EXPENSE':
@@ -23,6 +25,26 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [
         ...(state.expenses.filter((expense) => expense.id !== action.payload.expenseId)),
+      ],
+    };
+  case 'EDIT_EXPENSE':
+    return {
+      ...state,
+      editingId: action.payload.expenseId,
+    };
+  case 'SAVE_EDITED_EXPENSE':
+    return {
+      ...state,
+      editingId: -1,
+      expenses: [
+        ...(state.expenses.map((expense) => {
+          if (expense.id === action.payload.editingId) {
+            return (
+              { ...expense, ...action.payload.expenseInfo }
+            );
+          }
+          return expense;
+        })),
       ],
     };
   default:

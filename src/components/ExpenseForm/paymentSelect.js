@@ -9,6 +9,7 @@ class PaymentMethodSelect extends Component {
         Método de pagamento
         <select
           id="expense-paymentMethod"
+          data-testid="method-input"
           name="method"
           onChange={ (e) => handleChange(e) }
         >

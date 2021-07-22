@@ -3,6 +3,8 @@ const LOGIN = 'LOGIN';
 const CURRENCIES = 'CURRENCIES';
 const SAVE_EXPENSE = 'SAVE_EXPENSE';
 const DELETE_EXPENSE = 'DELETE_EXPENSE';
+const EDIT_EXPENSE = 'EDIT_EXPENSE';
+const SAVE_EDITED_EXPENSE = 'SAVE_EDITED_EXPENSE';
 
 export const walletLogin = (userEmail) => ({
   type: LOGIN,
@@ -19,7 +21,7 @@ export const walletCurrencies = (currencies) => ({
 export const saveExpense = (expense) => ({
   type: SAVE_EXPENSE,
   payload: {
-    expenses: expense,
+    expense,
   },
 });
 
@@ -27,6 +29,21 @@ export const removeSpecificExpense = (expenseId) => ({
   type: DELETE_EXPENSE,
   payload: {
     expenseId,
+  },
+});
+
+export const editSpecificExpense = (expenseId) => ({
+  type: EDIT_EXPENSE,
+  payload: {
+    expenseId,
+  },
+});
+
+export const saveEdited = (editingId, expenseInfo) => ({
+  type: SAVE_EDITED_EXPENSE,
+  payload: {
+    editingId,
+    expenseInfo,
   },
 });
 

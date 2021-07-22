@@ -14,6 +14,7 @@ class CurrencySelect extends Component {
         Moeda
         <select
           id="expense-currency"
+          data-testid="currency-input"
           name="currency"
           onChange={ (e) => handleChange(e) }
         >

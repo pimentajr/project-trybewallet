@@ -9,6 +9,7 @@ class CategorySelect extends Component {
         Tag
         <select
           id="expense-category"
+          data-testid="tag-input"
           name="tag"
           onChange={ (e) => handleChange(e) }
         >

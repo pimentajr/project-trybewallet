@@ -1,0 +1,15 @@
+body {
+  background-color: brown;
+  display: flex;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+body > div {
+  align-self: center;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}

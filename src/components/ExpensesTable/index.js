@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeSpecificExpense } from '../../actions';
+import { removeSpecificExpense, editSpecificExpense } from '../../actions';
 import trashButtonLogo from '../../images/trash-alt-regular.svg';
 import editButtonLogo from '../../images/edit-regular.svg';
 
@@ -31,9 +31,14 @@ class ExpensesTable extends Component {
       .ask).toFixed(2));
   }
 
-  deleteExpense(expenseId) {
+  deleteThisExpense(expenseId) {
     const { removeExpense } = this.props;
     removeExpense(expenseId);
+  }
+
+  editThisExpense(expenseId) {
+    const { editExpense } = this.props;
+    editExpense(expenseId);
   }
 
   render() {
@@ -59,16 +64,17 @@ class ExpensesTable extends Component {
               <td>
                 <button
                   type="button"
-                  data-testid="delete-btn"
-                  onClick={ () => this.deleteExpense(expense.id) }
+                  data-testid="edit-btn"
+                  onClick={ () => this.editThisExpense(expense.id) }
                 >
-                  <img src={ trashButtonLogo } alt="Botão deletar" />
+                  <img src={ editButtonLogo } alt="Botão editar" />
                 </button>
                 <button
                   type="button"
-                  data-testid="edit-btn"
+                  data-testid="delete-btn"
+                  onClick={ () => this.deleteThisExpense(expense.id) }
                 >
-                  <img src={ editButtonLogo } alt="Botão editar" />
+                  <img src={ trashButtonLogo } alt="Botão deletar" />
                 </button>
               </td>
             </tr>
@@ -82,6 +88,7 @@ class ExpensesTable extends Component {
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -90,6 +97,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (expenseId) => dispatch(removeSpecificExpense(expenseId)),
+  editExpense: (expenseId) => dispatch(editSpecificExpense(expenseId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

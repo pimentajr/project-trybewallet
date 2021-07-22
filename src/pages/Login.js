@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { walletLogin } from '../actions';
 import verifyEmailWithRegex from '../helpers/verifyEmail';
 import trybeLogo from '../images/Trybe_logo.png';
-import './Login.css';
+import './Login.scss';
 
 class Login extends Component {
   constructor() {
