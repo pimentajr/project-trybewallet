@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddExpense from '../components/AddExpense';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   render() {
@@ -13,7 +14,7 @@ class Wallet extends React.Component {
           const { value } = expense;
           const positionOfTargetExchange = expense.currency;
           const rate = expense.exchangeRates[positionOfTargetExchange].ask;
-          totalExpensesValue += (rate * value);
+          totalExpensesValue += (parseInt(rate, 10) * parseInt(value, 10)).toFixed(2);
         }
       });
     }
@@ -35,6 +36,7 @@ class Wallet extends React.Component {
           BRL
         </div>
         <AddExpense />
+        <ExpensesTable />
       </div>
     );
   }
