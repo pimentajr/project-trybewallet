@@ -13,7 +13,7 @@ class Button extends Component {
 }
 
 Button.propTypes = {
-  addExpense: PropTypes.func.isRequired,
-};
+  addExpense: PropTypes.func,
+}.isRequired;
 
 export default Button;

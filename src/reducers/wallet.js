@@ -10,7 +10,7 @@ function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case REQUEST_SUCCEED:
     return { ...state,
-      currencies: action.payload.map((item) => item.code),
+      currencies: action.payload.map((currency) => currency.code),
     };
   case ADD_EXPENSE:
     return { ...state,

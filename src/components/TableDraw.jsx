@@ -13,8 +13,8 @@ class TableDraw extends Component {
         <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
         <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
         <td>
-          { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
-          * expense.value }
+          { (parseFloat(expense.exchangeRates[expense.currency].ask)
+          * expense.value).toFixed(2) }
         </td>
         <td>Real</td>
         <button
@@ -33,14 +33,14 @@ TableDraw.propTypes = {
   index: PropTypes.number.isRequired,
   removeExpense: PropTypes.func.isRequired,
   expense: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    method: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    currency: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    tag: PropTypes.string,
+    method: PropTypes.string,
+    value: PropTypes.string,
+    currency: PropTypes.string,
+    description: PropTypes.string,
     exchangeRates: PropTypes.shape({
-      ask: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      ask: PropTypes.number,
+      name: PropTypes.string,
     }),
   }),
 };

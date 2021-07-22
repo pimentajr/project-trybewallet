@@ -11,11 +11,6 @@ export const setEmail = (email) => ({
   payload: email,
 });
 
-// export const requestSuccess = (obj) => ({
-//   type: REQUEST_SUCCEED,
-//   payload: Object.keys(obj).filter((currency) => currency !== 'USDT'),
-// });
-
 export const requestSuccess = (payload) => ({
   type: REQUEST_SUCCEED,
   payload,
@@ -55,16 +50,3 @@ export const API = async () => {
 export const fetchAPI = () => async (dispatch) => (
   API().then((data) => dispatch(requestSuccess(Object.values(data))))
 );
-// export const addingExpense = (state) => (dispatch) => {
-//   dispatch(requestExpense());
-//   console.log('testando');
-//   return fetch('https://economia.awesomeapi.com.br/json/all')
-//     .then((result) => result.json())
-//     .then((data) => {
-//       const Object = {
-//         state,
-//         data,
-//       };
-//       dispatch(addExpenseSuccess(Object));
-//     });
-// };

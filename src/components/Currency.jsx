@@ -28,10 +28,6 @@ Currency.propTypes = {
   handleChange: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(),
-};
-
-Currency.defaultProps = {
-  currencies: [],
-};
+}.isRequired;
 
 export default Currency;

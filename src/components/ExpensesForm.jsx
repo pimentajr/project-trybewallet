@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { API, addExpense } from '../actions';
+import { API, addExpense, fetchAPI } from '../actions';
 import Button from './Button';
 import Currency from './Currency';
 import Value from './Value';
@@ -13,7 +13,7 @@ class ExpensesForm extends Component {
   constructor() {
     super();
     this.state = {
-      currencies: [],
+      // currencies: [],
       value: '',
       description: '',
       method: '',
@@ -26,12 +26,8 @@ class ExpensesForm extends Component {
   }
 
   componentDidMount() {
-    this.getCurrencies();
-  }
-
-  async getCurrencies() {
-    const currencies = Object.keys(await API());
-    this.setState({ currencies });
+    const { fetchingAPI } = this.props;
+    fetchingAPI();
   }
 
   async handleClick() {
@@ -71,107 +67,19 @@ class ExpensesForm extends Component {
     });
   }
 
-  // Form() {
-  //   const { currencies } = this.props;
-  //   return (
-  //     <form>
-  //       <label htmlFor="value">
-  //         Valor
-  //         <input
-  //           type="number"
-  //           name="value"
-  //           id="value"
-  //           data-testid="value-input"
-  //           onChange={ this.handleChange }
-  //         />
-  //       </label>
-  //       <label htmlFor="description">
-  //         Descrição
-  //         <input
-  //           data-testid="description-input"
-  //           type="text"
-  //           name="description"
-  //           id="description"
-  //           onChange={ this.handleChange }
-  //         />
-  //       </label>
-  //       <label htmlFor="currency">
-  //         Moeda
-  //         <select
-  //           data-testid="currency-input"
-  //           name="currency"
-  //           id="currency"
-  //           onChange={ this.handleChange }
-  //         >
-  //           { currencies.map((currency, key) => (
-  //             <option key={ key } value={ currency }>
-  //               { currency }
-  //             </option>))}
-  //         </select>
-  //       </label>
-  //       { this.paymentForm() }
-  //       { this.CategoryForm() }
-  //       <button
-  //         type="button"
-  //         onClick={ this.handleClick }
-  //       >
-  //         Adicionar despesa
-  //       </button>
-  //     </form>
-  //   );
-  // }
-
-  // paymentForm() {
-  //   const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-  //   return (
-  //     <label htmlFor="method">
-  //       Método de pagamento:
-  //       <select
-  //         data-testid="method-input"
-  //         name="method"
-  //         id="method"
-  //         onChange={ this.handleChange }
-  //       >
-  //         { paymentMethods.map((method, key) => (
-  //           <option key={ key } value={ method }>{ method }</option>))}
-  //       </select>
-  //     </label>
-  //   );
-  // }
-
-  // CategoryForm() {
-  //   const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-  //   return (
-  //     <label htmlFor="tag">
-  //       Tag:
-  //       <select
-  //         data-testid="tag-input"
-  //         name="tag"
-  //         id="tag"
-  //         onChange={ this.handleChange }
-  //       >
-  //         { categories.map((category, key) => (
-  //           <option key={ key } value={ category }>
-  //             { category }
-  //           </option>
-  //         ))}
-  //       </select>
-  //     </label>
-  //   );
-  // }
-
   render() {
-    const { value, description, tag, method, currency, currencies } = this.state;
+    const { value, description, tag, method, currency } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <form>
           <Value handleChange={ this.handleChange } value={ value } />
           <Description description={ description } handleChange={ this.handleChange } />
-          <Currency
+          { currencies && <Currency
             handleChange={ this.handleChange }
             value={ currency }
             currencies={ currencies }
-          />
+          /> }
           <Payment method={ method } handleChange={ this.handleChange } />
           <Tag tag={ tag } handleChange={ this.handleChange } />
           <Button addExpense={ this.handleClick } />
@@ -185,11 +93,12 @@ const mapStateToProps = (state) => ({
   // currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
   // id: state.wallet.id,
-  loading: state.wallet.loading,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addexpense: (data) => dispatch(addExpense(data)),
+  fetchingAPI: () => dispatch(fetchAPI()),
 });
 
 ExpensesForm.propTypes = {
