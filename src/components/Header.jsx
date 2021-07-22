@@ -16,7 +16,7 @@ class Header extends Component {
           <div className="total-expenses">
             Despesas Totais:
             <span data-testid="header-currency-field">{ ` ${'BRL'}` }</span>
-            <div data-testid="total-field">{ total }</div>
+            <div data-testid="total-field">{ (!total) ? 0 : total }</div>
           </div>
           <div />
         </div>
