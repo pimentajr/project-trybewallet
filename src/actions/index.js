@@ -66,6 +66,7 @@ export function fetchAtualCotation(expenseInfo) {
       const rejectedsCurrencies = ['DOGE'];
       rejectedsCurrencies.forEach((currency) => delete AllCurrencies[currency]);
       const exchangeRates = { ...AllCurrencies };
+      // const exchangeRates = AllCurrencies.filter((currency) => !rejectedsCurrencies.includes(currency));
       const expense = {
         ...expenseInfo,
         exchangeRates,

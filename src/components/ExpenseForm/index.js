@@ -35,6 +35,12 @@ class ExpenseForm extends Component {
     this.loadingToFalse();
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { editingId } = nextProps;
+    this.isEditing(editingId);
+    return true;
+  }
+
   async loadingToFalse() {
     this.setState(() => ({
       isLoading: false,
@@ -111,7 +117,6 @@ class ExpenseForm extends Component {
 
   render() {
     const { editingId } = this.props;
-    this.isEditing(editingId);
     const { isLoading, value, description } = this.state;
     return isLoading ? 'Loading' : (
       <form>
