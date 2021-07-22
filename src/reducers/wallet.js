@@ -1,12 +1,11 @@
 import { WALLET_SAVE_EXPENSE, WALLET_REQUESTING, WALLET_REQUEST_FINISHED,
-    WALLET_DELETE_ITEM, WALLET_TOGGLE_EDIT, WALLET_EDIT_ITEM } from '../actions';
-  
-  const DEFAULT_WALLET = {
-    currencies: [],
-    expenses: [],
-    isFetching: false,
-    editEnabled: false,
-    editObj: {},
+  WALLET_DELETE_ITEM, WALLET_TOGGLE_EDIT, WALLET_EDIT_ITEM } from '../actions';
+const DEFAULT_WALLET = {
+  currencies: [],
+  expenses: [],
+  isFetching: false,
+  editEnabled: false,
+  editObj: {},
   };
   
   const wallet = (state = DEFAULT_WALLET, action) => {
@@ -52,5 +51,5 @@ import { WALLET_SAVE_EXPENSE, WALLET_REQUESTING, WALLET_REQUEST_FINISHED,
     }
   };
   
-  export default wallet;
+export default wallet;
   
