@@ -3,6 +3,8 @@ export const FETCH_STARTED = 'FETCH_STARTED';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_ERROR = 'FETCH_ERROR';
 export const ADD_TO_EXPENSES = 'ADD_TO_EXPENSES';
+export const EXPENSE_DELETE = 'EXPENSE_DELETE';
+export const EXPENSE_EDIT = 'EXPENSE_EDIT';
 
 export const login = (payload) => ({
   type: LOGIN,
@@ -27,6 +29,16 @@ const fetchError = (payload) => ({
   payload,
 });
 
+export const expenseDel = (payload) => ({
+  type: EXPENSE_DELETE,
+  payload,
+});
+
+export const editExpense = (payload) => ({
+  type: EXPENSE_EDIT,
+  payload,
+});
+
 export const fetchCurrencies = () => async (dispatch) => {
   try {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
@@ -48,3 +60,8 @@ export const fetchRates = (object) => async (dispatch) => {
     dispatch(fetchError(error.message));
   }
 };
+
+// export function handleClickEdit(id) {
+//   const dispatch = useDispatch();
+//   dispatch(editExpense(id));
+// }

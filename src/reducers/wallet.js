@@ -3,6 +3,8 @@ import {
   FETCH_SUCCESS,
   FETCH_ERROR,
   ADD_TO_EXPENSES,
+  EXPENSE_DELETE,
+  EXPENSE_EDIT,
 } from '../actions';
 
 const initialState = {
@@ -22,6 +24,14 @@ function wallet(state = initialState, action) {
     return { ...state, currencies: null, loading: false, error: action.payload };
   case ADD_TO_EXPENSES:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case EXPENSE_DELETE:
+    return { ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)] };
+  case EXPENSE_EDIT:
+    return { ...state,
+      expenses: [...state.expenses
+        .filter((expense) => expense.id !== action.payload.id), action.payload]
+        .sort((a, b) => a.id + b.id) };
   default:
     return state;
   }

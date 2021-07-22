@@ -26,7 +26,6 @@ function Textarea({ label, name }) {
 Textarea.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  // onChange: PropTypes.func.isRequired,
 };
 
 export default Textarea;

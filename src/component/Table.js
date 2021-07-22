@@ -1,21 +1,22 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { expenseDel } from '../actions';
 import { GlobalContext } from '../GlobalContext';
+import DeleteButton from './DeleteButton';
+import TableHeads from './TableHeads';
 
 const Table = () => {
   const { expenses } = useSelector((state) => state.wallet);
+  const dispatch = useDispatch();
   const { providerValues } = useContext(GlobalContext);
-  const { rate } = providerValues;
-  const [table] = React.useState(['Descrição',
-    'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
-    'Valor convertido', 'Moeda de conversão', 'Editar/Excluir']);
-  console.log('Total e rate:', rate);
+  function handleClick(id) {
+    dispatch(expenseDel(id));
+    providerValues.setTotal(providerValues.total);
+  }
   return (
     <table>
       <thead>
-        <tr>
-          {table.map((elem, key) => <th key={ key }>{ elem }</th>)}
-        </tr>
+        <TableHeads />
         {expenses.length > 0 && expenses.map((expense, key) => (
           <tr key={ key }>
             <td className="carteira-table-cell">{ expense.description }</td>
@@ -39,9 +40,16 @@ const Table = () => {
                 .toFixed(2) }
             </td>
             <td className="carteira-table-cell">Real</td>
+            <td>
+              <button type="button" data-testid="edit-btn">
+                Editar
+              </button>
+              <DeleteButton
+                onClick={ () => handleClick(expense.id) }
+              />
+            </td>
           </tr>
         ))}
-        <button type="button" data-testid="delete-btn">Deletar</button>
       </thead>
     </table>
   );
