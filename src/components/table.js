@@ -2,10 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Thead from '../pages/Thead';
+import { deleteExpense } from '../actions';
 
 class table extends React.Component {
+  constructor() {
+    super();
+    this.delItem = this.delItem.bind(this);
+  }
+
+  delItem(id) {
+    const { delet, tableList } = this.props;
+    const changeValues = tableList.filter((item) => item.id !== id);
+    delet(changeValues);
+  }
+
   render() {
-    const { tableList } = this.props;
+    const { tableList, expense } = this.props;
+    console.log(expense);
     return (
       <div>
         <table>
@@ -33,6 +46,7 @@ class table extends React.Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
+                    onClick={ () => this.delItem(item.id) }
                   >
                     Excluir
                   </button>
@@ -50,7 +64,11 @@ const mapStateToProps = (state) => ({
 // tableCoin: state.spending.exchangeRates,
 });
 
-export default connect(mapStateToProps, null)(table);
+const mapDispatchToProps = (dispatch) => ({
+  delet: (payload) => dispatch(deleteExpense(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(table);
 
 table.propTypes = {
   map: PropTypes.func,
