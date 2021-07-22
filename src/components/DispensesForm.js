@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { apiFetching } from '../actions';
 
 class DispensesForm extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class DispensesForm extends Component {
       method: '',
       tag: '',
     };
+    this.inputSave = this.inputSave.bind(this);
   }
 
   inputSave({ target }) {
@@ -28,7 +30,7 @@ class DispensesForm extends Component {
           Valor
           <input type="text" id="value" value={ value } onChange={ this.inputSave } />
         </label>
-        <label htmlFor="description" name="description">
+        <label htmlFor="description">
           Descrição:
           <input type="text" id="description" value={ dsc } onChange={ this.inputSave } />
         </label>
@@ -65,6 +67,10 @@ class DispensesForm extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  currenciesFromAPI: () => dispatch(apiFetching()),
+});
+
 const mapStateToProps = ({ wallet: { currencies, dispenses } }) => ({
   currencies,
   dispenses,
@@ -74,4 +80,4 @@ DispensesForm.propTypes = {
   currencies: propTypes.array,
 }.isRequired;
 
-export default connect(mapStateToProps)(DispensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(DispensesForm);
