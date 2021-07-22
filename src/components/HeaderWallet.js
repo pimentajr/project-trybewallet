@@ -1,24 +1,51 @@
-/* import React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default function HeaderWallet() {
-  const userStore = useSelector((state) => state.user);
-  /*  const expensesStore = useSelector((state) => state.wallet.expenses);
-  const totalExpenses = expensesStore.map((item) => Number()) */
-/*
-  return (
-    <div>
-      <div data-testid="email-field">
-        Email:
-        {userStore.email}
-      </div>
-      <div data-testid="total-field">
-        {`Despesa Total: ${0}`}
-      </div>
-      <div data-testid="header-currency-field">
-        BRL
-      </div>
+class HeaderWallet extends React.Component {
+  constructor(props) {
+    super(props);
 
-    </div>
-  );
-} */
+    this.totalExpenses = this.totalExpenses.bind(this);
+  }
+
+  totalExpenses() {
+    let total = 0;
+    const { expenses } = this.props;
+
+    expenses.forEach(({ value, currency, exchangeRates }) => {
+      total += exchangeRates[currency].ask * value;
+    });
+
+    return total;
+  }
+
+  render() {
+    const { email } = this.props;
+
+    return (
+      <header>
+        <p data-testid="email-field">
+          { email }
+        </p>
+        <p data-testid="total-field">
+          { this.totalExpenses() }
+        </p>
+        <p data-testid="header-currency-field">
+          BRL
+        </p>
+      </header>
+    );
+  }
+}
+
+HeaderWallet.propTypes = {
+  email: PropTypes.string,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, null)(HeaderWallet);

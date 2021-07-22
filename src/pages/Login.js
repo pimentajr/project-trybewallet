@@ -1,92 +1,85 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { sendInfo } from '../actions';
+import { connect } from 'react-redux';
 
-class Login extends Component {
+import { userLogin } from '../actions';
+
+class Login extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+
     this.state = {
       email: '',
       password: '',
-
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleCheckFields = this.handleCheckFields.bind(this);
   }
 
-  handleChange(name, value) {
+  handleChange({ target }) {
+    const { name, value } = target;
+
     this.setState({
       [name]: value,
     });
   }
 
-  handleCheckFields() {
-    const { email, password } = this.state;
-    const emailValidation = new RegExp(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/,
-    );
-    const passwordValidation = 6;
-    if (emailValidation.test(email)
-     && password.length >= passwordValidation) {
-      return false;
-    }
-    return true;
-  }
-
   render() {
     const { email, password } = this.state;
-    const { sendInfoDispatch } = this.props;
+    const { setUserData } = this.props;
+    const minPasswordLength = 6;
+
+    const emailValidator = () => {
+      const regexCode = /\S+@\S+\.\S+/;
+
+      const validator = regexCode.test(email);
+      return validator;
+    };
+
+    const passwordValidator = password.length >= minPasswordLength;
 
     return (
-      <div>
+      <div className="login-form">
         Login
         <label htmlFor="email">
-          Email:
           <input
-            placeholder="Email"
-            name="email"
             type="email"
             data-testid="email-input"
-            value={ email }
-            onChange={ (event) => this.handleChange('email', event.target.value) }
-
+            name="email"
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="password">
-          Senha:
           <input
-            placeholder="Senha"
-            name="password"
             type="password"
             data-testid="password-input"
-            value={ password }
-            onChange={ (event) => this.handleChange('password', event.target.value) }
+            name="password"
+            onChange={ this.handleChange }
           />
         </label>
-        <Link to="/carteira">
+        <Link
+          onClick={ () => (setUserData(email)) }
+          to="/carteira"
+        >
           <button
             type="button"
-            onClick={ () => sendInfoDispatch(email) }
-            disabled={ this.handleCheckFields() }
+            disabled={ !(emailValidator() && passwordValidator) }
           >
             Entrar
           </button>
-
         </Link>
-
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  sendInfoDispatch: (email) => dispatch(sendInfo(email)),
-});
-
 Login.propTypes = {
-  sendInfoDispatch: PropTypes.func.isRequired,
-};
+  setUserData: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  setUserData: (email) => dispatch(userLogin(email)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -1,14 +1,32 @@
-export const USER_INFO = 'USER_INFO';
-export const sendInfo = (payload) => ({ type: USER_INFO, payload });
+export const USER_LOGIN = 'USER_LOGIN';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
-/* export const sendInfo = (payload) => ({ type: USER_INFO, payload }); */
-/* export const USER_INFO = 'USER_INFO';
-export const REQUEST_SUCESS = 'REQUEST_SUCESS';
-export const SAVE_EXPENSES = 'SAVE_EXPENSES';
+export const userLogin = (email) => ({
+  type: USER_LOGIN,
+  user: {
+    email,
+  },
+});
 
-export const currencyApiRequest = (payload) => ({ type: REQUEST_SUCESS, payload });
+export const addNewExpense = (expense) => ({
+  type: NEW_EXPENSE,
+  expense,
+});
 
-export const fetchApi = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-  .then((response) => response.json())
-  .then((data) => dispatch(currencyApiRequest(data)));
- */
+export const fetchAPIExpenseAction = (expense) => async (dispatch) => {
+  const URL = 'https://economia.awesomeapi.com.br/json/all';
+
+  const fetchAPI = await fetch(URL);
+  const parseJSON = await fetchAPI.json();
+
+  dispatch(addNewExpense({
+    ...expense,
+    exchangeRates: parseJSON,
+  }));
+};
+
+export const deleteExpense = (toDelete) => ({
+  type: DELETE_EXPENSE,
+  toDelete,
+});

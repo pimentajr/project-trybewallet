@@ -1,24 +1,32 @@
-/* import { REQUEST_SUCESS, SAVE_EXPENSES } from '../actions';
+import { NEW_EXPENSE, DELETE_EXPENSE } from '../actions/index';
 
-const initialState = {
+const INITIAL_STATE = {
   currencies: [],
   expenses: [],
 };
 
-const walletReducer = (state = initialState, action) => {
-  const { type, payload } = action;
-  switch (type) {
-  case REQUEST_SUCESS: {
-    return { ...state, currencies: payload };
-  }
-  case SAVE_EXPENSES: {
-    return { ...state, expenses: [...expenses, payload] };
-  }
-  default: {
-    return { ...state };
-  }
+const walletReducer = (state = INITIAL_STATE, action) => {
+  const { expense, toDelete } = action;
+
+  switch (action.type) {
+  case NEW_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        expense,
+      ],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((_, index) => (
+        index !== toDelete.index
+      )),
+    };
+  default:
+    return state;
   }
 };
 
 export default walletReducer;
- */
