@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import actionUser from '../actions/actionUser';
 
 class Login extends React.Component {
   constructor() {
@@ -11,21 +12,20 @@ class Login extends React.Component {
       password: false,
       disabled: false,
     };
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleCInputEmail = this.handleCInputEmail.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
   }
 
-  handleChangeEmail({ target: { value } }) {
+  handlePassword({ target: { value } }) {
+    const min = 6;
+    this.setState({ disabled: value.length >= min });
+  }
+
+  handleCInputEmail({ target: { value } }) {
     this.setState({
       email: value,
     });
     this.setState({ password: value.match(/[a-z]+@[a-z]+.com/g) });
-  }
-
-  handleChangePassword({ target: { value } }) {
-    const min = 6;
-
-    this.setState({ disabled: value.length >= min });
   }
 
   render() {
@@ -43,7 +43,7 @@ class Login extends React.Component {
             type="email"
             name="email"
             data-testid="email-input"
-            onChange={ this.handleChangeEmail }
+            onChange={ this.handleCInputEmail }
           />
         </label>
         <br />
@@ -54,7 +54,7 @@ class Login extends React.Component {
             type="password"
             name="password"
             data-testid="password-input"
-            onChange={ this.handleChangePassword }
+            onChange={ this.handlePassword }
           />
         </label>
         <Link to="/carteira">
