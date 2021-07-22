@@ -61,3 +61,6 @@ Table.propTypes = {
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispachToProps)(Table);
+
+// agradecimento: Gui Pereira, Igor Mendes,
+// e todos os colegas que ficaram após o horario ajudando os colegas;
