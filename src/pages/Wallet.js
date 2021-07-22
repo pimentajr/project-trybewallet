@@ -9,7 +9,7 @@ class Wallet extends React.Component {
     super();
     this.state = {
       value: '',
-      descricao: '',
+      description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
@@ -39,19 +39,19 @@ class Wallet extends React.Component {
 
   addExpense() {
     const { savedExpenses } = this.props;
-    const { value, descricao, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     let id = 0;
     if (savedExpenses.length !== 0) {
       const savedExpensesLength = savedExpenses.length;
       const idLength = savedExpenses[savedExpensesLength - 1].id;
       id = idLength + 1;
     }
-    const expense = { id, value, descricao, currency, method, tag };
+    const expense = { id, value, description, currency, method, tag };
     const { sendExpense } = this.props;
     sendExpense(expense);
     this.setState({
       value: '',
-      descricao: '',
+      description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação' });
