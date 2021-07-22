@@ -37,4 +37,5 @@ export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   emailStoreGet: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf.isRequired,
 };
