@@ -14,12 +14,12 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
-    this.renderValue = this.renderValue.bind(this);
-    this.renderDescription = this.renderDescription.bind(this);
-    this.renderCurrency = this.renderCurrency.bind(this);
-    this.renderMethod = this.renderMethod.bind(this);
-    this.renderTag = this.renderTag.bind(this);
-    this.renderHeader = this.renderHeader.bind(this);
+    this.value = this.value.bind(this);
+    this.description = this.description.bind(this);
+    this.currency = this.currency.bind(this);
+    this.method = this.method.bind(this);
+    this.tag = this.tag.bind(this);
+    this.header = this.header.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addExpense = this.addExpense.bind(this);
   }
@@ -57,7 +57,7 @@ class Wallet extends React.Component {
       tag: 'Alimentação' });
   }
 
-  renderDescription() {
+  description() {
     return (
       <label htmlFor="description">
         Descrição
@@ -71,7 +71,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderCurrency() {
+  currency() {
     const { moedas } = this.props;
     const { currency } = this.state;
     return (
@@ -93,7 +93,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderMethod() {
+  method() {
     const { method } = this.state;
     return (
       <label htmlFor="method">
@@ -107,7 +107,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderTag() {
+  tag() {
     const { tag } = this.state;
     return (
       <label htmlFor="tag">
@@ -128,7 +128,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderHeader() {
+  header() {
     const { email, savedExpenses } = this.props;
     let totalExpenses = 0;
     savedExpenses.forEach((exp) => {
@@ -155,7 +155,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderValue() {
+  value() {
     return (
       <label htmlFor="value">
         {' '}
@@ -171,7 +171,7 @@ class Wallet extends React.Component {
     );
   }
 
-  renderAddButton() {
+  addButton() {
     return (
       <section>
         <button
@@ -187,12 +187,12 @@ class Wallet extends React.Component {
   renderForm() {
     return (
       <form>
-        {this.renderValue()}
-        {this.renderDescription()}
-        {this.renderCurrency()}
-        {this.renderMethod()}
-        {this.renderTag()}
-        {this.renderAddButton()}
+        {this.value()}
+        {this.description()}
+        {this.currency()}
+        {this.method()}
+        {this.tag()}
+        {this.addButton()}
       </form>
     );
   }
@@ -201,8 +201,8 @@ class Wallet extends React.Component {
     return (
       <div>
         TrybeWallet
-        {this.renderHeader()}
-        {this.renderForm()}
+        {this.header()}
+        {this.form()}
         <TabelaGastos />
       </div>
     );

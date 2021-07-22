@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense } from '../actions/index';
 
-class TabelaGastos extends Component {
+class Gastos extends Component {
   constructor() {
     super();
-    this.excluirExpense = this.excluirExpense.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
   }
 
-  excluirExpense(index) {
+  deleteExpense(index) {
     const { savedExpenses, deleteExpense: deleter } = this.props;
-    const aux = [...savedExpenses];
-    aux.splice(index, 1);
-    deleter(aux);
+    const save = [...savedExpenses];
+    save.splice(index, 1);
+    deleter(save);
   }
 
   render() {
@@ -53,7 +53,7 @@ class TabelaGastos extends Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  onClick={ () => this.excluirExpense(index) }
+                  onClick={ () => this.deleteExpense(index) }
                 >
                   {' '}
                   Excluir
@@ -75,8 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (expense) => dispatch(deleteExpense(expense)),
 });
 
-TabelaGastos.propTypes = {
+Gastos.propTypes = {
   savedExpenses: PropTypes.object,
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabelaGastos);
+export default connect(mapStateToProps, mapDispatchToProps)(Gastos);

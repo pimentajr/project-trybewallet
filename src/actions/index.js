@@ -13,9 +13,9 @@ export const fetchApi = () => (dispatch) => {
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((currencies) => {
-      const currenciesObject = currencies;
-      delete currenciesObject.USDT;
-      dispatch(responseSuccess(currenciesObject));
+      const object = currencies;
+      delete object.USDT;
+      dispatch(responseSuccess(object));
     });
 };
 
