@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
-import DispensesForm from '../components/DispensesForm';
+import ExpensesForm from '../components/ExpensesForm';
 import { apiFetching } from '../actions';
 
 class Wallet extends React.Component {
@@ -16,7 +16,7 @@ class Wallet extends React.Component {
       <div>
         <h1>TrybeWallet</h1>
         <Header />
-        <DispensesForm />
+        <ExpensesForm />
       </div>
     );
   }

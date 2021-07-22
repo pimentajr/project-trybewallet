@@ -4,8 +4,12 @@ import propTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
-    const total = 0;
+    const { email, expensesArray } = this.props;
+    let total = 0;
+    expensesArray.forEach(({ value, exchangeRates, currency }) => {
+      total += value * exchangeRates[currency].ask;
+    });
+
     return (
       <div>
         <header data-testid="email-field">{ email }</header>
@@ -18,6 +22,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expensesArray: state.wallet.expenses,
 });
 
 Header.propTypes = {
