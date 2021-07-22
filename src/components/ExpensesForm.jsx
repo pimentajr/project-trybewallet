@@ -117,7 +117,7 @@ class ExpensesForm extends Component {
           onClick={ this.handleClick }
           className="btn btn-primary"
         >
-          Adicionar despesas
+          Adicionar despesa
         </button>
 
       </form>
