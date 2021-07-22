@@ -41,6 +41,6 @@ export default function wallet(state = INNITIAL_STATE, action) {
       expenses: objectExpense,
     };
   default:
-    return INNITIAL_STATE;
+    return state;
   }
 }

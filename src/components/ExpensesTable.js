@@ -25,7 +25,8 @@ class ExpensesTable extends Component {
             arrayOfExpenses.length > 0
               ? arrayOfExpenses.map((singleExpense, index) => {
                 if (singleExpense.exchangeRates.USD !== undefined) {
-                  const rate = singleExpense.exchangeRates[singleExpense.currency].ask;
+                  const rate = singleExpense.exchangeRates[singleExpense.currency];
+                  const nameCurrency = rate.name.split('/')[0];
                   const { value } = singleExpense;
                   return (
                     <tr key={ index }>
@@ -33,9 +34,9 @@ class ExpensesTable extends Component {
                       <td>{ singleExpense.tag }</td>
                       <td>{ singleExpense.method }</td>
                       <td>{ value }</td>
-                      <td>{ singleExpense.currency }</td>
-                      <td>{ rate }</td>
-                      <td>{ (rate * value).toFixed(2) }</td>
+                      <td>{ nameCurrency }</td>
+                      <td>{ parseFloat(rate.ask).toFixed(2) }</td>
+                      <td>{ (rate.ask * value).toFixed(2) }</td>
                       <td>Real</td>
                       <td>
                         <button type="button">Alterar</button>
@@ -43,9 +44,9 @@ class ExpensesTable extends Component {
                     </tr>
                   );
                 }
-                return (<tr key="a"><td colSpan="8">Sem Despesas</td></tr>);
+                return (<tr key="a"><td>Sem Despesas</td></tr>);
               })
-              : <tr><td colSpan="8">Sem Despesas</td></tr>
+              : <tr><td>Sem Despesas</td></tr>
           }
         </tbody>
       </table>
