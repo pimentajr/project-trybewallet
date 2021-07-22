@@ -50,11 +50,23 @@ class Form extends React.Component {
   }
 
   async handleAddDispesa() {
-    const { recoverExpenseStore } = this.props;
+    const { sendExpenseToStore, recoverExpenseStore } = this.props;
     const data = await currrenciesApi();
-    sendExpenseStore({
-      ...this.state,
-      id: recoverExpenseStore,
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
+    console.log(recoverExpenseStore);
+    sendExpenseToStore({
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      id: recoverExpenseStore.length,
       exchangeRates: data,
     });
   }
@@ -101,7 +113,7 @@ class Form extends React.Component {
           <div>
             { this.handleTag() }
           </div>
-          <button type="button" onClick={ this.handleAddDispesa }>
+          <button type="button" onClick={ () => this.handleAddDispesa() }>
             Adicionar Despesas
           </button>
         </form>
@@ -117,7 +129,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   coins: () => dispatch(coinsThunk()),
-  sendExpenseStore: (info) => dispatch(sendExpenseStore(info)),
+  sendExpenseToStore: (info) => dispatch(sendExpenseStore(info)),
 });
 
 Form.propTypes = {

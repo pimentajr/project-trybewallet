@@ -6,11 +6,9 @@ import {
 } from '../actions/index';
 
 const WALLET_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    loading: false,
-  },
+  currencies: [],
+  expenses: [],
+  loading: false,
 };
 
 function wallet(state = WALLET_STATE, action) {
