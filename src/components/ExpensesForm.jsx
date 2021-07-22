@@ -113,10 +113,11 @@ class ExpensesForm extends Component {
 
         <button
           type="button"
+          aria-roledescription="button"
           onClick={ this.handleClick }
           className="btn btn-primary"
         >
-          Salvar
+          Adicionar despesas
         </button>
 
       </form>

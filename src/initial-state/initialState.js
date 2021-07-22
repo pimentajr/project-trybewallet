@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     fetchSucess: false,
     errorMesage: null,
     currentId: 0,
-    total: '0',
+    total: 0,
   },
 };
 
