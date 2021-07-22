@@ -9,3 +9,8 @@ export const fetchAddExpense = (expense) => async (dispatch) => {
   const exchangeRates = await response.json();
   dispatch(addExpense({ ...expense, exchangeRates }));
 };
+
+export const delExpense = (id) => ({
+  type: 'DELETE_EXPENSE',
+  id,
+});

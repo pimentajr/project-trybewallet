@@ -9,7 +9,6 @@ class Wallet extends React.Component {
     const { userEmail, totalExpenses } = this.props;
     let expenses = 0;
     totalExpenses.forEach((obj) => {
-      console.log(obj);
       const sum = Number(obj.value) * Number(obj.exchangeRates[obj.currency].ask);
       expenses += sum;
     });

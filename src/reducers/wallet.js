@@ -6,8 +6,12 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'GET_WALLET_STATE':
-    return state;
+  case 'DELETE_EXPENSE':
+    return {
+      ...state,
+      expenses: state.expenses
+        .filter((expense) => expense.id !== action.id),
+    };
   case 'SAVE_EXPENSES':
     return {
       ...state,
