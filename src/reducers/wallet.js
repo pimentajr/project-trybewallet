@@ -6,10 +6,15 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'SAVE_CURRENCES':
+  case 'GET_WALLET_STATE':
     return state;
-  case 'SAVE_EXPENCES':
-    return state;
+  case 'SAVE_EXPENSES':
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { ...action.payload, id: state.expenses.length },
+      ] };
   default:
     return state;
   }

@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import WalletForm from '../components/WalletForm';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      expenses: 0,
-    };
-  }
-
   render() {
-    const { userEmail } = this.props;
-    const { expenses } = this.state;
+    const { userEmail, totalExpenses } = this.props;
+    let expenses = 0;
+    totalExpenses.forEach((obj) => {
+      console.log(obj);
+      const sum = Number(obj.value) * Number(obj.exchangeRates[obj.currency].ask);
+      expenses += sum;
+    });
     return (
       <div>
         <div>Pagina do wallet</div>
@@ -30,6 +28,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  totalExpenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
