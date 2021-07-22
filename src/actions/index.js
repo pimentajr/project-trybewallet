@@ -26,6 +26,13 @@ function apiError(error) { // quando a api da erro, salva e erro na store
   };
 }
 
+function deleteExpense(payload) {
+  return {
+    type: 'DELETE_ITEN',
+    payload,
+  };
+}
+
 /* export function spending(currencies, expenses) {
   return ({
     type: ADD_SPENT,
@@ -57,4 +64,5 @@ export {
   apiError,
   currencyApiThunk,
   ADD_SPENT,
+  deleteExpense,
 };

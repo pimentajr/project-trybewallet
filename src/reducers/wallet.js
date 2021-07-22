@@ -32,6 +32,11 @@ function wallet(state = INITIAL_STATE, action) {
       currencies: action.currencies,
       expenses: action.expenses,
     });
+  case 'DELETE_ITEN':
+    return ({
+      ...state,
+      expenses: [...state.expenses.filter(({ id }) => id !== action.payload)],
+    });
   default:
     return state;
   }

@@ -1,7 +1,8 @@
+// arquivo feito juntamente com o aluno jhonata pontes
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { deleteExpense } from '../actions';
+import { deleteExpense } from '../actions/index';
 
 class ExpenseTable extends React.Component {
   deleteButton(id) {
@@ -63,10 +64,10 @@ class ExpenseTable extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
-/* const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteButton: (id) => dispatch(deleteExpense(id)),
-}); */
-export default connect(mapStateToProps)(ExpenseTable);
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
 ExpenseTable.propTypes = {
   expenses: PropTypes.array,
   dispatchDeleteButton: PropTypes.func,
