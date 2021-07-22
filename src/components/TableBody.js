@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class TableBody extends Component {
   render() {
@@ -32,5 +33,9 @@ class TableBody extends Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+TableBody.propTypes = {
+  expenses: PropTypes.array,
+}.isRequired;
 
 export default connect(mapStateToProps)(TableBody);
