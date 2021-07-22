@@ -63,14 +63,14 @@ class Login extends React.Component {
               type="password"
               data-testid="password-input"
               name="password"
-              // onChange={ (e) => this.handleChange(e) }
+              onChange={ (e) => this.handleChange(e) }
               value={ password }
             />
           </label>
           <button
             type="submit"
             disabled={ !validInputs }
-            // onClick={ (e) => this.handleClick(e) }
+            onClick={ (e) => this.handleClick(e) }
           >
             Entrar
           </button>
@@ -80,9 +80,9 @@ class Login extends React.Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   logInUser: (email) => dispatch(logInUserAction(email)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  logInUser: (email) => dispatch(logInUserAction(email)),
+});
 
 Login.propTypes = {
   history: PropTypes.func.isRequired,
@@ -90,5 +90,4 @@ Login.propTypes = {
   // logInUser: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-// export default connect(null, mapDispatchToProps)(Login);
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
