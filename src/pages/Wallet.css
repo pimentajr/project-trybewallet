@@ -46,11 +46,11 @@
   text-align: center;
 }
 
-.wallet-container > form label:nth-child(1) input {
+.wallet-container > form label:nth-child( 1 ) input {
   width: 3rem;
 }
 
-.wallet-container > form label:nth-child(2) input {
+.wallet-container > form label:nth-child( 2 ) input {
   width: 14rem;
 }
 
@@ -63,6 +63,19 @@
   outline: 0;
   padding: 0.4rem 0.5rem;
   text-align: center;
+}
+
+.expenses-table > tbody > tr button {
+  height: 1.8rem;
+  width: 30%;
+}
+
+tbody td > button:nth-child( 1 ) {
+  background-color: rgb(253, 192, 5);
+}
+
+tbody td > button:nth-child( 2 ) {
+  background-color: rgb(221, 54, 67);
 }
 
 .wallet-container > form > button:hover {
@@ -115,20 +128,7 @@
   width: 100%;
 }
 
-.expenses-table > tbody > tr button {
-  height: 1.8rem;
-  width: 30%;
-}
-
 .expenses-table button img {
   height: 90%;
   margin-top: 0.05rem;
-}
-
-tbody td > button:nth-child(1) {
-  background-color: rgb(253, 192, 5);
-}
-
-tbody td > button:nth-child(2) {
-  background-color: rgb(221, 54, 67);
 }

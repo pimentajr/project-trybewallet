@@ -98,7 +98,6 @@ class ExpenseForm extends Component {
       const { expenses } = this.props;
       const expenseToEdit = expenses.find((expense) => expense.id === editingId);
       const { value, description, currency, method, tag } = expenseToEdit;
-      console.log(value, description, currency, method, tag);
       this.setState(() => ({
         value,
         description,
@@ -112,7 +111,6 @@ class ExpenseForm extends Component {
 
   render() {
     const { editingId } = this.props;
-    console.log(editingId);
     this.isEditing(editingId);
     const { isLoading, value, description } = this.state;
     return isLoading ? 'Loading' : (
