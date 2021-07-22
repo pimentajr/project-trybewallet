@@ -8,7 +8,6 @@ const DEFAULT_WALLET = {
   editEnabled: false,
   editObj: {},
 };
-  
 const wallet = (state = DEFAULT_WALLET, action) => {
   switch (action.type) {
   case WALLET_SAVE_EXPENSE:
@@ -18,19 +17,15 @@ const wallet = (state = DEFAULT_WALLET, action) => {
         { ...action.payload },
       ],
     };
-  
   case WALLET_REQUESTING:
     return { ...state, isFetching: true };
-  
   case WALLET_REQUEST_FINISHED:
     return { ...state, isFetching: false };
-  
   case WALLET_DELETE_ITEM:
     return { ...state,
       expenses: state.expenses.filter(
         ({ id }) => id !== action.payload,
       ) };
-  
   case WALLET_EDIT_ITEM: {
     const { id: idToEdit } = action.payload;
     return { ...state,
@@ -40,17 +35,13 @@ const wallet = (state = DEFAULT_WALLET, action) => {
         { ...action.payload }].sort(({ id }, { id: id2 }) => id - id2),
     };
   }
-  
   case WALLET_TOGGLE_EDIT:
     return { ...state,
       editEnabled: !state.editEnabled,
       editObj: state.expenses.find(({ id }) => id === action.payload),
     };
-  
   default:
     return state;
   }
 };
-  
 export default wallet;
-  
