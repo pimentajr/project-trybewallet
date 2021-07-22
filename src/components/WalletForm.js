@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchAddExpense } from '../actions/wallet';
 
 class WalletForm extends React.Component {
@@ -163,5 +164,9 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   chave: state,
 });
+
+WalletForm.propTypes = {
+  sendExpense: PropTypes.object,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
