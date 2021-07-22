@@ -1,14 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { loginEnterClickAction } from '../actions';
+import PasswordInput from '../components/PasswordInput';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      // redirectWallet: false,
+      shouldRedirect: false,
     };
-    this.inputPasswordRender = this.inputPasswordRender.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.handleOnChangeInputsValidation = this.handleOnChangeInputsValidation.bind(this);
+    this.onclickEnterHandle = this.onclickEnterHandle.bind(this);
   }
 
   componentDidMount() {
@@ -16,28 +22,37 @@ class Login extends React.Component {
     btn.disabled = true;
   }
 
+  onclickEnterHandle() {
+    const getEmail = document.querySelector('#email');
+    const { email } = this.props;
+    email(getEmail.value);
+    this.setState({
+      shouldRedirect: true,
+    });
+  }
+
   validateEmail() {
     const email = document.querySelector('#email');
-    const error = document.querySelector('#email-error');
+    const error = document.querySelector('#error-email');
     if (!email.checkValidity()) {
       error.style.color = 'red';
-      error.innerHTML = 'E-mail inválido';
+      error.innerHTML = 'Email inválido';
     } else if (email.checkValidity()) {
       error.style.color = 'green';
-      error.innerHTML = 'Ok!';
+      error.innerHTML = 'Email Ok';
     }
   }
 
   validatePassword() {
     const password = document.querySelector('#password');
-    const error = document.querySelector('#password-error');
+    const errorPassword = document.querySelector('#error-password');
     const SIX = 6;
+
     if (password.value.length < SIX) {
-      error.style.color = 'red';
-      error.innerHTML = 'Senha inválida';
+      errorPassword.innerHTML = 'Senha inválida';
     } else if (password.value.length >= SIX) {
-      error.style.color = 'green';
-      error.innerHTML = 'Ok!';
+      errorPassword.style.color = 'green';
+      errorPassword.innerHTML = 'Senha Ok';
     }
   }
 
@@ -46,53 +61,55 @@ class Login extends React.Component {
     const password = document.querySelector('#password');
     const btn = document.querySelector('#enter-btn');
     const SIX = 6;
-
     if (email.checkValidity() && password.value.length >= SIX) {
       btn.disabled = false;
-    } else btn.disabled = true;
-  }
-
-  inputPasswordRender() {
-    return (
-      <input
-        id="password"
-        type="password"
-        data-testid="password-input"
-        placeholder="Senha"
-        onBlur={ this.validatePassword }
-        onChange={ this.handleOnChangeInputsValidation }
-      />
-    );
+    } else if (!email.checkValidity() || password.value.length < SIX) {
+      btn.disabled = true;
+    }
   }
 
   render() {
+    const { shouldRedirect } = this.state;
+    if (shouldRedirect) return (<Redirect to="/carteira" />);
     return (
-      <>
+      <div className="login-container">
         <h2>Login:</h2>
-        <form>
-          <input
-            id="email"
-            type="email"
-            data-testid="email-input"
-            placeholder="E-mail"
-            onBlur={ this.validateEmail }
-            onChange={ this.handleOnChangeInputsValidation }
+        <form name="login">
+          <div className="email-input-container">
+            <input
+              id="email"
+              className="email-input"
+              data-testid="email-input"
+              type="email"
+              placeholder="Digite seu Email"
+              onBlur={ this.validateEmail }
+              onChange={ this.handleOnChangeInputsValidation }
+            />
+          </div>
+          <span id="error-email" />
+          <PasswordInput
+            func={ this.handleOnChangeInputsValidation }
+            func2={ this.validatePassword }
           />
-          <span id="email-error" />
-          { this.inputPasswordRender() }
-          {}
-          <span id="password-error" />
+          <span id="error-password" />
         </form>
         <button
-          type="button"
           id="enter-btn"
-          onClick={ this.onClickEnterHandle }
+          type="button"
+          onClick={ this.onclickEnterHandle }
         >
           Entrar
         </button>
-      </>
+      </div>
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  email: (email) => dispatch(loginEnterClickAction(email)),
+});
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  email: PropTypes.func.isRequired,
+};
