@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from './Select';
 import Table from './table';
-import { addUserSpending, getCoinThunk, setCoinThunk } from '../actions';
+import { addUserSpending, getCoinThunk } from '../actions';
 import Inputs from './inputs';
 import setAPI from '../services/API';
 
@@ -21,16 +21,13 @@ class Wallet extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.requestApi = this.requestApi.bind(this);
   }
 
   componentDidMount() {
     const { setCoin } = this.props;
     setCoin();
-    const { setAllCoins } = this.props;
-    setAllCoins();
-    const isso = setAPI();
-    console.log('hi', isso);
+    // const { setAllCoins } = this.props;
+    // setAllCoins();
   }
 
   handleChange({ target }) {
@@ -40,28 +37,18 @@ class Wallet extends React.Component {
     });
   }
 
-  async requestApi() {
-    try {
-      const response = await this.setAPI;
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  handleClick() {
+  async handleClick() {
     const {
       addSpending,
-      exchangeRates,
     } = this.props;
 
-    console.log('asss', this.requestApi());
+    const exchangeRates = await setAPI();
+    console.log(exchangeRates);
 
     const { currency, value } = this.state;
     const valorTotal = (exchangeRates[currency].ask * value);
     const { valueTotal } = this.state;
-    console.log(typeof valueTotal);
-    console.log(typeof valorTotal);
+
     this.setState({ valueTotal: valueTotal + valorTotal });
 
     const { id, description, method, tag } = this.state;
@@ -127,13 +114,13 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userMail: state.user.email,
   userCoin: state.wallet.currencies,
-  exchangeRates: state.wallet.exchangeRates,
+  getCoin: state.wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addSpending: (payload) => dispatch(addUserSpending(payload)),
   setCoin: () => dispatch(getCoinThunk()),
-  setAllCoins: () => dispatch(setCoinThunk()),
+  // setAllCoins: () => dispatch(setCoinThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

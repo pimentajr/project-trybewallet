@@ -47,12 +47,12 @@ export const getCoinThunk = () => async (dispatch) => {
   }
 };
 
-export const setCoinThunk = () => async (dispatch) => {
-  try {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const results = await response.json();
-    dispatch(setCoinAll(results));
-  } catch (error) {
-    dispatch(userCoinError(error));
-  }
-};
+// export const setCoinThunk = () => async (dispatch) => {
+//   try {
+//     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+//     const results = await response.json();
+//     dispatch(setCoinAll(results));
+//   } catch (error) {
+//     dispatch(userCoinError(error));
+//   }
+// };
