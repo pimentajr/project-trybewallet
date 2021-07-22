@@ -1,5 +1,14 @@
 const INITIAL_STATE = {
-  email: '',
+  user: {
+    email: '',
+  },
+  wallet: {
+    currencies: [],
+    expenses: [],
+    isLoading: true,
+    fetchSucess: false,
+    errorMesage: null,
+  },
 };
 
 export default INITIAL_STATE;

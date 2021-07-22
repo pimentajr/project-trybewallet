@@ -1,1 +1,32 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import * as actions from '../actions/actionTypes';
+import INITIAL_STATE from '../initial-state/initialState';
+
+export default function reducer(state = INITIAL_STATE.wallet, action) {
+  switch (action.type) {
+  case actions.FETCH_CURRENCY_QUOTATION:
+    return {
+      ...state,
+      isLoading: true,
+    };
+
+  case actions.FETCH_CURRENCY_QUOTATION_SUCESS:
+    return {
+      ...state,
+      currencies: action.payload.currencies,
+      fetchSucess: true,
+      isLoading: false,
+    };
+
+  case actions.FETCH_CURRENCY_QUOTATION_ERROR:
+    return {
+      ...state,
+      fetchSucess: false,
+      errorMessage: action.payload,
+      isLoading: false,
+    };
+
+  default: {
+    return state;
+  }
+  }
+}

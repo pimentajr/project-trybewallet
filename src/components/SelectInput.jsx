@@ -15,6 +15,7 @@ class SelectInput extends Component {
         <option
           key={ index }
           value={ value }
+          name={ value }
         >
           { value }
         </option>
