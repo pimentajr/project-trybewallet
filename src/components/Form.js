@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { coinsThunk } from '../actions/index';
-import Tag from './Tag';
+import { coinsThunk, sendExpenseStore } from '../actions/index';
+import { currrenciesApi } from './ApiRequisition';
 
 class Form extends React.Component {
   constructor() {
@@ -17,6 +17,8 @@ class Form extends React.Component {
     };
 
     this.handleChance = this.handleChance.bind(this);
+    this.handleTag = this.handleTag.bind(this);
+    this.handleAddDispesa = this.handleAddDispesa.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +29,34 @@ class Form extends React.Component {
   handleChance({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
-    console.log(this.state);
+  }
+
+  handleTag() {
+    const { tag } = this.state;
+    return (
+      <div>
+        <label htmlFor="tag">
+          Tag
+          <select id="tag" name="tag" value={ tag } onChange={ this.handleChance }>
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+      </div>
+    );
+  }
+
+  async handleAddDispesa() {
+    const { recoverExpenseStore } = this.props;
+    const data = await currrenciesApi();
+    sendExpenseStore({
+      ...this.state,
+      id: recoverExpenseStore,
+      exchangeRates: data,
+    });
   }
 
   render() {
@@ -69,8 +98,10 @@ class Form extends React.Component {
               <option>Cartão de débito</option>
             </select>
           </label>
-          <Tag />
-          <button type="submit">
+          <div>
+            { this.handleTag() }
+          </div>
+          <button type="button" onClick={ this.handleAddDispesa }>
             Adicionar Despesas
           </button>
         </form>
@@ -81,14 +112,17 @@ class Form extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  recoverExpenseStore: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   coins: () => dispatch(coinsThunk()),
+  sendExpenseStore: (info) => dispatch(sendExpenseStore(info)),
 });
 
 Form.propTypes = {
   getCoins: PropTypes.func,
+  // recoverExpenseStore: PropTypes.object,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

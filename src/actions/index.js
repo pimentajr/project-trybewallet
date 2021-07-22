@@ -23,3 +23,9 @@ export const coinsThunk = () => async (dispatch) => {
   const filterCoins = coinsFilter(changeApi);
   dispatch(coinsOption(filterCoins));
 };
+
+export const SEND_EXPENSE_STORE = 'SEND_EXPENSE_STORE';
+export const sendExpenseStore = (payload) => ({
+  type: SEND_EXPENSE_STORE,
+  payload,
+});
