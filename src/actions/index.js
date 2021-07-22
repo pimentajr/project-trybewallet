@@ -3,6 +3,7 @@ import fetchAPI from '../api/apiFetch';
 export const LOGIN = 'USER';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const login = (payload) => ({
   type: LOGIN,
@@ -25,5 +26,10 @@ export const apiFetching = () => (dispatch) => {
 
 export const addExpenses = (payload) => ({
   type: ADD_EXPENSES,
+  payload,
+});
+
+export const removeExpense = (payload) => ({
+  type: REMOVE_EXPENSE,
   payload,
 });
