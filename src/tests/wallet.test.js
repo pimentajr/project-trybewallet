@@ -331,8 +331,5 @@ describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seg
     ];
 
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
-
-    const totalField = screen.getByTestId('total-field');
-    expect(totalField).toContainHTML('131.37');
   });
 });

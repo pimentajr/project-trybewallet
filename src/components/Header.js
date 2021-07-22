@@ -12,9 +12,9 @@ const Header = () => {
   function totalSum() {
     let currentValue = 0;
     totalC.forEach((crr) => {
-      currentValue += Number(crr);
+      currentValue += parseFloat(crr);
     });
-    return currentValue.toFixed(2);
+    return parseFloat(currentValue).toFixed(2);
   }
 
   const totalPrice = totalSum();

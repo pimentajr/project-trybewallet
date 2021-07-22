@@ -1,4 +1,4 @@
-import { REQUEST, GET_DATA, GET_EXPENSES, REQUEST_ERROR } from '../actions';
+import { REQUEST, GET_DATA, GET_EXPENSES, REQUEST_ERROR, EXP_DEL } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -32,6 +32,9 @@ export default function walletReducer(state = INITIAL_STATE, action) {
       isLoading: false,
       error: action.payload,
     };
+  case EXP_DEL:
+    return { ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)] };
   default:
     return state;
   }

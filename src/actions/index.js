@@ -7,15 +7,22 @@ export const GET_EXPENSES = 'GET_EXPENSES';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const ADD_TOTAL = 'ADD_TOTAL';
 export const ADD_RATE = 'ADD_RATE';
+export const EXP_DEL = 'EXP_DEL';
 
 export const newEmail = (payload) => ({
   type: LOGIN,
   payload,
 });
 
-export const addTotal = (payload) => ({
+export const expDel = (payload) => ({
+  type: EXP_DEL,
+  payload,
+});
+
+export const addTotal = (payload, id) => ({
   type: ADD_TOTAL,
   payload,
+  id,
 });
 
 export const addRate = (payload) => ({

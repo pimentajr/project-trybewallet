@@ -20,8 +20,8 @@ const Form = () => {
     setId(id + 1);
     const total = 0;
     const currentRate = currencies[currency].ask;
-    const totalCalc = total + Number(currentRate * value);
-    dispatch(addTotal(totalCalc));
+    const totalCalc = total + parseFloat(currentRate * value).toFixed(2);
+    dispatch(addTotal(totalCalc, id));
     dispatch(addRate(currentRate));
     const expensesObjt = {
       value,
