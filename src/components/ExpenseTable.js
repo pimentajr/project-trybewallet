@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 // import { deleteExpense } from '../actions';
 
 class ExpenseTable extends React.Component {
-
   deleteButton(id) {
     const { dispatchDeleteButton } = this.props;
     return (
