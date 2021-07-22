@@ -3,6 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    this.handleValue = this.handleValue.bind(this);
+  }
+
+  handleValue() {
+    const { runExpenses } = this.props;
+    return runExpenses.reduce((acc, cv) => {
+      const { currency, exchangeRates, value } = cv;
+      const valueConverted = value * exchangeRates[currency].ask;
+      return acc + valueConverted;
+    }, 0);
+  }
+
   render() {
     const { userEmail } = this.props;
     return (
@@ -10,7 +24,7 @@ class Header extends React.Component {
         <p data-testid="email-field">
           { userEmail }
         </p>
-        <p data-testid="total-field">0</p>
+        <p data-testid="total-field">{this.handleValue().toFixed(2)}</p>
         <p data-testid="header-currency-field">BRL</p>
       </>
     );
@@ -19,6 +33,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  runExpenses: state.wallet.expenses,
 });
 
 Header.propTypes = {
