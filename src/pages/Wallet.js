@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
+import Table from './components/Table';
 
 // requisito 04
 class Wallet extends React.Component {
@@ -10,6 +11,7 @@ class Wallet extends React.Component {
         TrybeWallet
         <Header />
         <Form />
+        <Table />
       </div>);
   }
 }

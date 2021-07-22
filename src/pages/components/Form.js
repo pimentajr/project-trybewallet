@@ -6,6 +6,7 @@ class Form extends Component {
     super();
     this.state = {
       currency: [],
+      // expenses: [],
     };
     this.returnApi = this.returnApi.bind(this);
   }
@@ -63,6 +64,7 @@ class Form extends Component {
             <option>Saúde</option>
           </select>
         </label>
+        <button name="button" type="submit">Adicionar despesa</button>
       </form>
     );
   }
