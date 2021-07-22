@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import { fetchAPI } from '../actions';
+import Table from '../components/Table';
 
 const Wallet = (props) => {
   const { fetchCurrency } = props;
@@ -16,6 +17,7 @@ const Wallet = (props) => {
     <div className="Wallet">
       <Header />
       <Form />
+      <Table />
     </div>
   );
 };
