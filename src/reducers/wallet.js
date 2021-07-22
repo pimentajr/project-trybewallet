@@ -1,7 +1,8 @@
 import { REQUEST_CURRENCIES,
   REQUEST_CURRENCIES_SUCCESS,
   REQUEST_CURRENCIES_ERROR,
-  REQUEST_NEW_CURRENCIES } from '../actions';
+  REQUEST_NEW_CURRENCIES,
+  DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -9,7 +10,8 @@ const INITIAL_STATE = {
   erro: null,
 };
 
-function wallet(state = INITIAL_STATE, { type, payload, newCoins }) {
+function wallet(state = INITIAL_STATE, action) {
+  const { type, payload, newCoins } = action;
   switch (type) {
   case REQUEST_CURRENCIES:
     return {
@@ -30,6 +32,11 @@ function wallet(state = INITIAL_STATE, { type, payload, newCoins }) {
     return {
       ...state,
       expenses: [...state.expenses, payload],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter(({ id }) => id !== action.id)],
     };
   default:
     return state;

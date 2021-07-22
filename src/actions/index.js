@@ -3,6 +3,7 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_CURRENCIES_SUCCESS = 'REQUEST_CURRENCIES_SUCCESS';
 export const REQUEST_CURRENCIES_ERROR = 'REQUEST_CURRENCIES_ERROR';
 export const REQUEST_NEW_CURRENCIES = 'REQUEST_NEW_CURRENCIES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const getLogin = (email) => ({
   type: GET_LOGIN,
@@ -28,6 +29,11 @@ const requestNewCurrencies = (payload, newCoins) => ({
   type: REQUEST_NEW_CURRENCIES,
   payload,
   newCoins,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 export function fetchCurrencies(payload = false) {
