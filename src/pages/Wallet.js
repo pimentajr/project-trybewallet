@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Forms from '../components/Forms';
 import Header from '../components/Header';
 import { currencyApiThunk } from '../actions/index';
+import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -17,6 +18,7 @@ class Wallet extends React.Component {
         <Header />
         TrybeWallet
         <Forms />
+        <ExpenseTable />
       </div>
     );
   }
@@ -28,5 +30,6 @@ const mapDispathToProps = (dispatch) => ({
 export default connect(null, mapDispathToProps)(Wallet);
 
 Wallet.propTypes = {
-  sendInfoToThunk: PropTypes.func.isRequired,
-};
+  sendInfoToThunk: PropTypes.func,
+  expenses: PropTypes.array,
+}.isRequired;

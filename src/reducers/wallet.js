@@ -2,6 +2,7 @@
 import {
   SEND_RESPONSE_FROM_API_TO_STORE,
   API_ERROR,
+  ADD_SPENT,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -25,7 +26,12 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       error: action.payload,
     };
-
+  case ADD_SPENT:
+    return ({
+      ...state,
+      currencies: action.currencies,
+      expenses: action.expenses,
+    });
   default:
     return state;
   }

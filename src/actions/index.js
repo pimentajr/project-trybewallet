@@ -3,6 +3,7 @@ import fetchApi from '../services/CurrencyApi';
 const SET_USER_EMAIL = 'SET_USER_EMAIL';
 const SEND_RESPONSE_FROM_API_TO_STORE = 'SEND_RESPONSE_FROM_API_TO_STOR';
 const API_ERROR = 'API_ERROR';
+const ADD_SPENT = 'ADD_SPENT';
 
 function enviaEmailParaStore(email) { // para salvar o email difgitado no login na store
   return {
@@ -24,6 +25,14 @@ function apiError(error) { // quando a api da erro, salva e erro na store
     error,
   };
 }
+
+/* export function spending(currencies, expenses) {
+  return ({
+    type: ADD_SPENT,
+    currencies,
+    expenses,
+  });
+} */
 
 // thunk : para fazer um dispatch assincrono
 
@@ -47,4 +56,5 @@ export {
   API_ERROR,
   apiError,
   currencyApiThunk,
+  ADD_SPENT,
 };
