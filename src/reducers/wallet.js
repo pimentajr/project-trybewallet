@@ -3,14 +3,18 @@
 import {
   REQUEST_CURRENCIES,
   REQUEST_SUCCESS,
-  REQUEST_ADD_EXPENSES,
-  REQUEST_DELETE_EXPENSES,
+  REQUEST_ADD_EXPENSE,
+  REQUEST_DELETE_EXPENSE,
+  REQUEST_EDIT_EXPENSE_BUTTON,
+  REQUEST_EDIT_EXPENSE,
 } from '../actions/wallet';
 
 const INITIAL_STATE = {
   currencies: [],
+  currentRates: {},
   expenses: [],
-  // isLoading: false,
+  enableEdit: false,
+  expenseToEdit: {},
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -18,36 +22,45 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_CURRENCIES:
     return {
       ...state,
-      // isLoading: true,
     };
   case REQUEST_SUCCESS:
     return {
       ...state,
-      currencies: action.currencies,
-      // isLoading: false,
+      currencies: Object.keys(action.currencies),
+      currentRates: action.currencies,
     };
-
-  case REQUEST_ADD_EXPENSES: {
-    const newExpense = {
-      id: state.expenses.length,
-      value: action.state.value,
-      description: action.state.description,
-      currency: action.state.currency,
-      method: action.state.method,
-      tag: action.state.tag,
-      exchangeRates: action.updateCurrencies.currencies,
-    };
+  case REQUEST_ADD_EXPENSE: {
     return {
       ...state,
-      expenses: [...state.expenses, newExpense],
+      expenses: [...state.expenses, action.state],
     };
   }
-  case REQUEST_DELETE_EXPENSES:
+  case REQUEST_DELETE_EXPENSE:
     return {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id),
     };
-
+  case REQUEST_EDIT_EXPENSE_BUTTON:
+    return {
+      ...state,
+      enableEdit: true,
+      expenseToEdit: state.expenses.find((expense) => expense.id === action.payload),
+    };
+  case REQUEST_EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === state.expenseToEdit.id) {
+          return {
+            ...action.payload,
+            exchangeRates: expense.exchangeRates,
+            id: state.expenseToEdit.id,
+          };
+        }
+        return expense;
+      }),
+      enableEdit: false,
+    };
   default:
     return state;
   }

@@ -4,12 +4,21 @@ import { connect } from 'react-redux';
 import FetchedCurrencies from './FetchedCurrencies';
 import PaymentMethod from './PaymentMethod';
 import Categories from './Categories';
-import { updateCurrencyToNewExpense } from '../actions/wallet';
+import { editExpense, fetchCurrencies, addExpense } from '../actions/wallet';
 
 class FormsWallet extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.addButton = this.addButton.bind(this);
   }
 
   handleChange({ target }) {
@@ -19,65 +28,134 @@ class FormsWallet extends Component {
     });
   }
 
-  render() {
+  addButton() {
+    const { fetchCurrenciesAPI, addNewExpense, currentRates } = this.props;
     const { state } = this;
-    const { addNewExpense } = this.props;
+    fetchCurrenciesAPI();
+    addNewExpense({ ...state, exchangeRates: currentRates });
+    this.setState((previousState) => ({
+      id: previousState.id + 1,
+    }));
+  }
+
+  renderInputs() {
     return (
-      <form>
-        <label htmlFor="valor">
-          Valor:
-          <input
-            name="value"
-            type="number"
-            id="valor"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="descricao">
-          Descrição:
-          <input
-            name="description"
-            type="text"
-            id="descricao"
-            onChange={ this.handleChange }
-          />
-        </label>
+      <>
         <label htmlFor="moeda">
           Moeda:
-          <select id="moeda" name="currency" onChange={ this.handleChange }>
+          <select
+            className="form-input"
+            data-testid="currency-input"
+            id="moeda"
+            name="currency"
+            onChange={ this.handleChange }
+          >
             <FetchedCurrencies />
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
-          <select id="metodo-de-pagamento" name="method" onChange={ this.handleChange }>
+          <select
+            className="form-input"
+            data-testid="method-input"
+            name="method"
+            onChange={ this.handleChange }
+            id="metodo-de-pagamento"
+          >
             <PaymentMethod />
           </select>
         </label>
         <label htmlFor="categoria">
           Tag:
-          <select id="categoria" name="tag" onChange={ this.handleChange }>
+          <select
+            className="form-input"
+            data-testid="tag-input"
+            id="categoria"
+            name="tag"
+            onChange={ this.handleChange }
+          >
             <Categories />
           </select>
         </label>
-        <button type="button" onClick={ () => addNewExpense(state) }>
+      </>
+    );
+  }
+
+  renderButtons() {
+    const { enableEditButton, editCurrentExpense } = this.props;
+    const { state } = this;
+    if (!enableEditButton) {
+      return (
+        <button className="form-btn" type="button" onClick={ this.addButton }>
           Adicionar despesa
         </button>
+      );
+    }
+
+    if (enableEditButton) {
+      return (
+        <button
+          className="form-btn"
+          type="button"
+          onClick={ () => editCurrentExpense(state) }
+        >
+          Editar despesa
+        </button>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <form className="wallet-form">
+        <label htmlFor="valor">
+          Valor:
+          <input
+            className="form-input"
+            data-testid="value-input"
+            name="value"
+            type="number"
+            onChange={ this.handleChange }
+            id="valor"
+          />
+        </label>
+        <label htmlFor="descricao">
+          Descrição:
+          <input
+            className="form-input"
+            data-testid="description-input"
+            name="description"
+            type="text"
+            onChange={ this.handleChange }
+            id="descricao"
+          />
+        </label>
+        { this.renderInputs() }
+        { this.renderButtons() }
       </form>
     );
   }
 }
 
-FormsWallet.prototypes = {
-  FetchedCurrencies: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  addNewExpense: (state) => dispatch(updateCurrencyToNewExpense(state)),
+const mapStateToProps = (state) => ({
+  enableEditButton: state.wallet.enableEdit,
+  currentRates: state.wallet.currentRates,
+  editExpense: state.wallet.expenseToEdit,
+  expenses: state.wallet.expenses,
 });
 
-export default connect(null, mapDispatchToProps)(FormsWallet);
+const mapDispatchToProps = (dispatch) => ({
+  addNewExpense: (state) => dispatch(addExpense(state)),
+  editCurrentExpense: (state) => dispatch(editExpense(state)),
+  fetchCurrenciesAPI: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormsWallet);
 
 FormsWallet.propTypes = {
-  addNewExpense: PropTypes.func.isRequired,
-};
+  addNewExpense: PropTypes.func,
+  enableEditButton: PropTypes.func,
+  fetchCurrenciesAPI: PropTypes.func,
+  currentRates: PropTypes.objectOf(),
+  editCurrentExpense: PropTypes.func,
+}.isRequired;

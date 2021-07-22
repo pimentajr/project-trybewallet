@@ -7,10 +7,10 @@ class FetchedCurrencies extends Component {
     const { fetchedCurr } = this.props;
     return (
       <>
-        { Object.values(fetchedCurr).filter((filtered) => (filtered.codein !== 'BRLT'))
+        { fetchedCurr.filter((filteredCurr) => filteredCurr !== 'USDT')
           .map((currency, index) => (
             <option key={ index }>
-              { currency.code }
+              { currency }
             </option>
           ))}
       </>
@@ -25,7 +25,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(FetchedCurrencies);
 
 FetchedCurrencies.propTypes = {
-  fetchedCurr: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
+  fetchedCurr: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
 };

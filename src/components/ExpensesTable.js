@@ -1,56 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense, enableEditExpense } from '../actions/wallet';
 import TableHeader from './TableHeader';
-import { deleteExpense } from '../actions/wallet';
 
 class ExpensesTable extends Component {
   render() {
-    const { expenses, deleteExpensesState } = this.props;
+    const { expenses, deleteExpenseFromState, enableEditButton } = this.props;
     return (
-      <table>
+      <table className="expenses-table">
         <TableHeader />
-        { expenses.map((expense, index) => (
-          <tr key={ index }>
-            <td>
-              { expense.description }
-            </td>
-            <td>
-              { expense.tag }
-            </td>
-            <td>
-              { expense.method }
-            </td>
-            <td>
-              { expense.value }
-            </td>
-            <td>
-              { (Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).name).split('/')[0]}
-            </td>
-            <td>
-              { parseFloat(Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).ask).toFixed(2)}
-            </td>
-            <td>
-              { Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).ask * expense.value}
-            </td>
-            <td> Real </td>
-            <td>
-              <button
-                type="button"
-                onClick={ () => deleteExpensesState(expense) }
-                data-testid="delete-btn"
-              >
-                Excluir
-              </button>
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          { expenses.map((expense, index) => (
+            <tr key={ index }>
+              <td>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>
+                { expense.exchangeRates[expense.currency].name.split('/')[0]}
+
+              </td>
+              <td>
+                { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+              </td>
+              <td>
+                { (expense.exchangeRates[expense.currency]
+                  .ask * expense.value).toFixed(2) }
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => enableEditButton(expense.id) }
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  onClick={ () => deleteExpenseFromState(expense) }
+                  data-testid="delete-btn"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }
@@ -61,14 +58,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpensesState: (expense) => dispatch(deleteExpense(expense)),
+  deleteExpenseFromState: (expense) => dispatch(deleteExpense(expense)),
+  enableEditButton: (id) => dispatch(enableEditExpense(id)),
 });
 
-ExpensesTable.propTypes = {
-  expenses: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
-  deleteExpensesState: PropTypes.func.isRequired,
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
+
+ExpensesTable.propTypes = {
+  expenses: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  deleteExpenseFromState: PropTypes.func.isRequired,
+  enableEditButton: PropTypes.func.isRequired,
+};
