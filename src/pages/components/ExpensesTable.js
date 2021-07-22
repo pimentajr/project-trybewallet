@@ -6,7 +6,6 @@ import { delExpense } from '../../actions/index';
 class ExpensesTable extends Component {
   render() {
     const { expenses, deleteExpense } = this.props;
-
     return (
       <tbody>
         { expenses.map((expense, index) => (
@@ -17,10 +16,19 @@ class ExpensesTable extends Component {
             <td>{expense.value}</td>
             <td>{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
             <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-            <td>{(expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+            <td>
+              {(expense.value * expense.exchangeRates[expense.currency].ask)
+                .toFixed(2)}
+            </td>
             <td>Real</td>
             <button type="button" data-testid="edit-btn">Editar</button>
-            <button type="button" data-testid="delete-btn" onClick={ () => deleteExpense(expense.id) }>Excluir</button>
+            <button
+              type="button"
+              data-testid="delete-btn"
+              onClick={ () => deleteExpense(expense.id) }
+            >
+              Excluir
+            </button>
           </tr>
         ))}
       </tbody>
@@ -35,5 +43,10 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+ExpensesTable.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object),
+  deleteExpense: PropTypes.func,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);

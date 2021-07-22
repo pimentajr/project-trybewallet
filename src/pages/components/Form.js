@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import currenciesApi from '../../services/index';
 import { sendCurrencies, requestExpenses } from '../../actions/index';
+import CategoryForm from './CategoryForm';
 
 class Form extends Component {
   constructor() {
     super();
     this.state = {
       currencies: [],
-      expenses: [],
+      // expenses: [],
       id: 0,
       value: 0,
       description: '',
@@ -17,7 +19,7 @@ class Form extends Component {
       category: 'Alimentação',
     };
     this.returnApi = this.returnApi.bind(this);
-    this.handleInputsForm = this.handleInputsForm.bind(this);
+    this.handleInputs = this.handleInputs.bind(this);
     this.submitExpenses = this.submitExpenses.bind(this);
   }
 
@@ -33,7 +35,7 @@ class Form extends Component {
     this.setState({ currencies: filteredCoin });
   }
 
-  handleInputsForm({ target }) {
+  handleInputs({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
     // console.log(event.target.name);
@@ -70,15 +72,20 @@ class Form extends Component {
       <form>
         <label htmlFor="value">
           Valor:
-          <input type="number" name="value" id="value" onChange={ this.handleInputsForm } />
+          <input type="number" name="value" id="value" onChange={ this.handleInputs } />
         </label>
         <label htmlFor="description">
           Descrição:
-          <input type="text" name="description" id="description" onChange={ this.handleInputsForm } />
+          <input
+            type="text"
+            name="description"
+            id="description"
+            onChange={ this.handleInputs }
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select name="currency" id="currency" onChange={ this.handleInputsForm }>
+          <select name="currency" id="currency" onChange={ this.handleInputs }>
             { currencies.map((coin, index) => (
               <option key={ index }>
                 { coin }
@@ -86,25 +93,22 @@ class Form extends Component {
             ))}
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="paymentMethod" onChange={ this.handleInputs }>
           Método de pagamento:
-          <select name="paymentMethod" id="paymentMethod" onChange={ this.handleInputsForm }>
+          <select name="paymentMethod" id="paymentMethod">
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="category">
-          Tag:
-          <select name="category" id="category" onChange={ this.handleInputsForm }>
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
-        <button name="button" type="button" onClick={ () => this.submitExpenses() }>Adicionar despesa</button>
+        <CategoryForm onChangeOption={ this.handleInputs } />
+        <button
+          name="button"
+          type="button"
+          onClick={ () => this.submitExpenses() }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
@@ -115,5 +119,9 @@ const mapDispatchToProps = (dispatch) => ({
   requestExpensesData: (expense) => dispatch(requestExpenses(expense)),
 
 });
+
+Form.propTypes = {
+  requestExpensesData: PropTypes.arrayOf(PropTypes.object),
+}.isRequired;
 
 export default connect(null, mapDispatchToProps)(Form);

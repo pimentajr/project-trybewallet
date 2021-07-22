@@ -36,4 +36,3 @@ export const delExpense = (id) => ({
   type: DEL_EXPENSE,
   id,
 });
-
