@@ -6,18 +6,18 @@ import { fetchCurrencies } from '../actions';
 class FormAddExpenses extends Component {
   constructor(props) {
     super(props);
-    // const { expenses } = props;
     this.state = {
-      // id: expenses.length,
+      id: 0,
       value: 0,
       description: '',
-      currency: '',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-      // exchangeRates: {},
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.addExpense = this.addExpense.bind(this);
   }
 
   componentDidMount() {
@@ -105,8 +105,8 @@ class FormAddExpenses extends Component {
           onChange={ this.handleChange }
         >
           <option value="Dinheiro">Dinheiro</option>
-          <option value="cartao-de-credito">Cartão de crédito</option>
-          <option value="cartao-debito">Cartão de débito</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
@@ -124,14 +124,27 @@ class FormAddExpenses extends Component {
           value={ tag }
           onChange={ this.handleChange }
         >
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );
+  }
+
+  addExpense() {
+    const { dispathFetch } = this.props;
+    dispathFetch(this.state);
+    this.setState((prev) => ({
+      id: prev.id + 1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    }));
   }
 
   render() {
@@ -143,7 +156,10 @@ class FormAddExpenses extends Component {
         { this.handlePayment() }
         { this.handleTag() }
 
-        <button type="button">
+        <button
+          type="button"
+          onClick={ this.addExpense }
+        >
           Adicionar despesa
         </button>
       </form>
@@ -157,13 +173,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispathFetch: () => dispatch(fetchCurrencies()),
+  dispathFetch: (state) => dispatch(fetchCurrencies(state)),
 });
 
 FormAddExpenses.propTypes = {
-  // expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispathFetch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormAddExpenses);
+
+// no requisito 8 o Jean Esteves - Turma 11 me ajudou muito a desenrolar
