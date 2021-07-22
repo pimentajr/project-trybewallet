@@ -14,7 +14,8 @@ class Wallet extends React.Component {
           const { value } = expense;
           const positionOfTargetExchange = expense.currency;
           const rate = expense.exchangeRates[positionOfTargetExchange].ask;
-          totalExpensesValue += (parseInt(rate, 10) * parseInt(value, 10)).toFixed(2);
+          const integerValue = rate * value;
+          totalExpensesValue += integerValue;
         }
       });
     }
@@ -28,7 +29,7 @@ class Wallet extends React.Component {
         <div
           data-testid="total-field"
         >
-          { totalExpensesValue }
+          { totalExpensesValue.toFixed(2) }
         </div>
         <div
           data-testid="header-currency-field"

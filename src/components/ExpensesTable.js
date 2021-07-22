@@ -43,7 +43,7 @@ class ExpensesTable extends Component {
                     </tr>
                   );
                 }
-                return (<tr key="0"><td colSpan="8">Sem Despesas</td></tr>);
+                return (<tr key="a"><td colSpan="8">Sem Despesas</td></tr>);
               })
               : <tr><td colSpan="8">Sem Despesas</td></tr>
           }
