@@ -5,13 +5,16 @@ import Wallet from './pages/Wallet';
 
 // ajuda https://github.com/tryber/sd-010-b-project-trybewallet/pull/23/files && https://github.com/tryber/sd-011-project-trybewallet/pull/18/files
 
-export default class App extends Component {
-  render() {
-    return (
+function App() {
+  return (
+    <div>
+      <div>Hello, TrybeWallet!</div>
       <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route path="/carteira" component={ Wallet } />
+        <Route exact to path="/" component={ Login } />
+        <Route to path="/carteira" component={ Wallet } />
       </Switch>
-    );
-  }
+    </div>
+  );
 }
+
+export default App;
