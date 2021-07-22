@@ -14,13 +14,8 @@ class FormsBtn extends Component {
 
   async getApiResponse() {
     const { toma, sendInfos, getExpenses, initialState } = this.props;
-    const value = document.querySelector('#value');
     const forms = document.querySelector('#forms');
     const data = await fetchApi();
-    if (value.value === '') {
-      // eslint-disable-next-line no-alert
-      return window.alert('você precisa adicionar um valor');
-    }
     sendInfos({
       tag: 'Alimentação',
       method: 'Dinheiro',
