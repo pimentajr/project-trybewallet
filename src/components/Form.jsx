@@ -4,16 +4,18 @@ import PropTypes from 'prop-types';
 import { setCoins, addExpenses } from '../actions';
 import ExtendsForms from './ExtendsForms';
 
+const INITIAL_STATE = {
+  value: 0,
+  description: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
+};
+
 class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: 0,
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    this.state = INITIAL_STATE;
     this.handleInput = this.handleInput.bind(this);
     this.btnAddExpenses = this.btnAddExpenses.bind(this);
   }
@@ -42,6 +44,7 @@ class Form extends Component {
       tag,
       exchangeRates: currencies,
     });
+    this.setState(INITIAL_STATE);
   }
 
   render() {
