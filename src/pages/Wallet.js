@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApi, saveExpense, deleteExpense } from '../actions/index';
+import { fetchApi, save, deleteExpense } from '../actions/index';
 import TabelaGastos from '../components/Gastos';
 
 class Wallet extends React.Component {
@@ -72,6 +72,7 @@ class Wallet extends React.Component {
   }
 
   renderCurrency() {
+    const { moedas } = this.props;
     const { currency } = this.state;
     return (
       <label htmlFor="currency">
@@ -218,7 +219,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   moedasApi: () => dispatch(fetchApi()),
-  sendExpense: (expense) => dispatch(saveExpense(expense)),
+  sendExpense: (expense) => dispatch(save(expense)),
   deleteExpense: (expense) => dispatch(deleteExpense(expense)),
 });
 

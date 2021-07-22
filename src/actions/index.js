@@ -1,6 +1,6 @@
 export const responseApi = () => ({ type: 'REQUEST_API', payload: { isFetching: true } });
 
-export const Api = (apiDados) => ({
+export const responseSuccess = (apiDados) => ({
   type: 'REQUEST_API_SUCCESS',
   payload: {
     moedas: Object.keys(apiDados),
@@ -9,18 +9,18 @@ export const Api = (apiDados) => ({
 });
 
 export const fetchApi = () => (dispatch) => {
-  dispatch(requestApi());
+  dispatch(responseApi());
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((currencies) => {
-      const Object = currencies;
-      delete Object.USDT;
-      dispatch(requestApiSuccess(Object));
+      const currenciesObject = currencies;
+      delete currenciesObject.USDT;
+      dispatch(responseSuccess(currenciesObject));
     });
 };
 
-export const saveExpense = (expense) => (dispatch) => {
-  dispatch(requestApi());
+export const save = (expense) => (dispatch) => {
+  dispatch(responseApi());
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then(
