@@ -1,102 +1,89 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import loginActionCreator from '../actions';
+import { Link } from 'react-router-dom';
+import { setEmail } from '../actions';
 
 class Login extends React.Component {
-  constructor(_props) {
-    super(_props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.validateLogin = this.validateLogin.bind(this);
+  constructor() {
+    super();
 
     this.state = {
       email: '',
-      password: '',
-      shouldRedirect: false,
+      senha: '',
+      button: true,
     };
-  }
 
-  componentDidMount() {
-    document.querySelector('button').disabled = true;
-  }
-
-  componentDidUpdate() {
-    this.validateLogin();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
-    const { type: name, value } = event.target;
-
+    const { name, value } = event.target;
     this.setState({
       [name]: value,
+    }, () => {
+      const { email, senha } = this.state;
+      const sizePass = 6;
+      if (/^[\w0-9.]+@\w+\.com$/.test(email) && senha.length >= sizePass) {
+        this.setState({ button: false });
+      } else {
+        this.setState({ button: true });
+      }
     });
   }
 
   handleClick() {
-    const { props: { loginDispatch }, state } = this;
-    loginDispatch(state);
-    this.setState({
-      shouldRedirect: true,
-    });
-  }
-
-  validateLogin() {
-    const { email, password } = this.state;
-    const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
-    const minLength = 6;
-    const btnEnviar = document.querySelector('button');
-
-    if (btnEnviar) {
-      if (emailRegex.test(email) && password.length >= minLength) {
-        btnEnviar.disabled = false;
-      } else {
-        btnEnviar.disabled = true;
-      }
-    }
+    const { btnClicked } = this.props;
+    const { email } = this.state;
+    btnClicked(email);
   }
 
   render() {
-    const { email, password, shouldRedirect } = this.state;
-
+    const { button } = this.state;
     return (
-      shouldRedirect ? <Redirect to="/carteira" />
-        : (
-          <form>
-            <input
-              type="email"
-              value={ email }
-              onChange={ this.handleChange }
-              data-testid="email-input"
-            />
-            <input
-              type="password"
-              value={ password }
-              onChange={ this.handleChange }
-              data-testid="password-input"
-            />
-            <button
-              type="button"
-              value="Entrar"
-              onClick={ this.handleClick }
-            >
-              Entrar
-            </button>
-          </form>
-
-        )
+      <form>
+        <h1>Login</h1>
+        <label htmlFor="input-email">
+          Email:
+          <input
+            data-testid="email-input"
+            type="text"
+            name="email"
+            id="input-email"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Senha:
+          <input
+            data-testid="password-input"
+            type="password"
+            name="senha"
+            id="input-password"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ button }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginDispatch: (data) => dispatch(loginActionCreator(data)),
+  btnClicked: (payloadAction) => dispatch(setEmail(payloadAction)),
 });
 
 Login.propTypes = {
-  loginDispatch: PropTypes.func.isRequired,
+  btnClicked: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

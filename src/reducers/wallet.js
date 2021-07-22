@@ -1,31 +1,30 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { EXANGE_RATES, GET_CURRENCIES, SAVE_EXPENSES } from '../actions';
+import { LOADING, SUCCESS, FAIL, ADD_EXPENSE, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  currentExangeRates: {},
-  total: 0,
+  loading: false,
+  error: '',
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case GET_CURRENCIES: {
-    const { payload } = action;
-    const currencies = Object.keys(payload).filter((currency) => currency !== 'USDT');
-    return { ...state, currencies };
-  }
-  case EXANGE_RATES:
-    return { ...state, currentExangeRates: action.payload };
-
-  case SAVE_EXPENSES: {
-    const total = action.payload.reduce((acc, { value, currency, exchangeRates }) => (
-      acc + parseFloat(value * exchangeRates[currency].ask)), 0);
-    return { ...state, expenses: action.payload, total };
-  }
+  case LOADING:
+    return { ...state, loading: !state.loading };
+  case FAIL:
+    return { ...state, error: action.payload };
+  case SUCCESS:
+    return { ...state, currencies: action.payload };
+  case ADD_EXPENSE:
+    return { ...state, expenses: [...state.expenses, action.payload] };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((element) => element !== action.payload)],
+    };
   default:
     return state;
   }
 };
 
-export default wallet;
+export default reducer;

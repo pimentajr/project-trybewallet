@@ -1,52 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import WalletForm from './pages';
-import { fetchCurrencies, getCurrenciesAC } from '../actions';
+import Header from '../components/Header';
+import FormsInput from './FormsInput';
+import FormsSelect from './FormsSelect';
+import fetchCoins from '../actions/addCurrencies';
+import fetchPrices from '../actions/addExpenses';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
-  // constructor(_props) {
-  //   super(_props);
-  // }
+  constructor() {
+    super();
+
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+
+    this.handleChanges = this.handleChanges.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   componentDidMount() {
-    const { getCurrenciesFromAPI } = this.props;
-    getCurrenciesFromAPI();
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
+  }
+
+  handleChanges({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { expenses, fetchExpenses } = this.props;
+    const id = expenses.length;
+    const newState = { ...this.state, id };
+    fetchExpenses(newState);
   }
 
   render() {
-    const { userEmail, totalValue = 0 } = this.props;
+    const { currencies } = this.props;
     return (
-      <section>
-        <header>
-          <span data-testid="email-field">
-            Email:
-            {userEmail}
-          </span>
-          <span data-testid="total-field">
-            {totalValue}
-          </span>
-          <span data-testid="header-currency-field">Cambio: BRL</span>
-        </header>
-        <WalletForm />
-      </section>
+      <>
+        <Header />
+        <FormsInput onChange={ this.handleChanges } />
+        <FormsSelect
+          onChange={ this.handleChanges }
+          currencies={ currencies }
+          onClick={ this.handleClick }
+        />
+        <Table />
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  userEmail: state.user.email,
-  totalValue: state.wallet.total,
+  emailGot: state.user.email,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+  exchangeRates: state.wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrenciesFromAPI: () => dispatch(fetchCurrencies(getCurrenciesAC)),
+  fetchCurrencies: () => dispatch(fetchCoins()),
+  fetchExpenses: (expense) => dispatch(fetchPrices(expense)),
 });
 
 Wallet.propTypes = {
-  userEmail: PropTypes.string.isRequired,
-  getCurrenciesFromAPI: PropTypes.func.isRequired,
-  totalValue: PropTypes.number.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchExpenses: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
