@@ -41,12 +41,23 @@ class Login extends React.Component {
     }
   }
 
+  handleOnChangeInputsValidation() {
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const btn = document.querySelector('#enter-btn');
+    const SIX = 6;
+
+    if (email.checkValidity() && password.value.length >= SIX) {
+      btn.disabled = false;
+    } else btn.disabled = true;
+  }
+
   inputPasswordRender() {
     return (
       <input
         id="password"
         type="password"
-        data-textid="password-input"
+        data-testid="password-input"
         placeholder="Senha"
         onBlur={ this.validatePassword }
         onChange={ this.handleOnChangeInputsValidation }
