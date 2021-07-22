@@ -26,6 +26,7 @@ class SelectInput extends Component {
   render() {
     const {
       label,
+      handleChange,
     } = this.props;
 
     return (
@@ -35,6 +36,7 @@ class SelectInput extends Component {
           <select
             id={ `${label}` }
             className="form-select inputSizing"
+            onChange={ handleChange }
           >
             { this.mapOptions() }
           </select>
@@ -49,4 +51,5 @@ export default SelectInput;
 SelectInput.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };

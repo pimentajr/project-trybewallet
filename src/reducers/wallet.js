@@ -25,6 +25,19 @@ export default function reducer(state = INITIAL_STATE.wallet, action) {
       isLoading: false,
     };
 
+  case actions.SAVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+      currentId: state.currentId + 1,
+    };
+
+  case actions.UPDATE_TOTAL:
+    return {
+      ...state,
+      total: action.payload.total,
+    };
+
   default: {
     return state;
   }

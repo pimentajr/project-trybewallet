@@ -35,6 +35,22 @@ export function actionFetchCurrenciesError(errorMessage) {
   };
 }
 
+export function saveExpense(payload) {
+  return {
+    type: actions.SAVE_EXPENSE,
+    payload,
+  };
+}
+
+export function updateTotal(total) {
+  return {
+    type: actions.UPDATE_TOTAL,
+    payload: {
+      total,
+    },
+  };
+}
+
 export function fetchCurrencieAndQuotation() {
   return ((dispatch) => {
     dispatch(actionFetchCurrencies);

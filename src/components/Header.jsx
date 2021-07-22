@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
+    const { email, total } = this.props;
     return (
       <header className="container-fluid walletHeader">
         <img className="headerImg" src="/login.png" alt="Icone de uma carteira laranja" />
@@ -16,7 +16,7 @@ class Header extends Component {
           <div>
             Despesas Totais:
             <span data-testid="header-currency-field">{ ` ${'BRL'}` }</span>
-            <span data-testid="total-field">{ ` ${0}` }</span>
+            <span data-testid="total-field">{ ` ${total}` }</span>
           </div>
           <div />
         </div>
@@ -28,10 +28,12 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  total: state.wallet.total,
 });
 
 export default connect(mapStateToProps, null)(Header);
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };

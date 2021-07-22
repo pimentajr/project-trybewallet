@@ -8,6 +8,8 @@ const INITIAL_STATE = {
     isLoading: true,
     fetchSucess: false,
     errorMesage: null,
+    currentId: 0,
+    total: '0',
   },
 };
 
