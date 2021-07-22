@@ -1,3 +1,4 @@
+// Esse reducer será responsável por tratar as informações da pessoa usuária
 import { LOGIN_USER } from '../actions';
 
 const INITIAL_STATE = {
