@@ -4,10 +4,11 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectWallet: false,
+      // redirectWallet: false,
     };
     this.inputPasswordRender = this.inputPasswordRender.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.validatePassword = this.validatePassword.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +23,19 @@ class Login extends React.Component {
       error.style.color = 'red';
       error.innerHTML = 'E-mail inválido';
     } else if (email.checkValidity()) {
+      error.style.color = 'green';
+      error.innerHTML = 'Ok!';
+    }
+  }
+
+  validatePassword() {
+    const password = document.querySelector('#password');
+    const error = document.querySelector('#password-error');
+    const SIX = 6;
+    if (password.value.length < SIX) {
+      error.style.color = 'red';
+      error.innerHTML = 'Senha inválida';
+    } else if (password.value.length >= SIX) {
       error.style.color = 'green';
       error.innerHTML = 'Ok!';
     }
