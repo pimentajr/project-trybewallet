@@ -3,6 +3,7 @@ import {
   REQUEST_CURRENCIES_SUCESS,
   REQUEST_CURRENCIES_ERROR,
   SAVE_EXPENSES,
+  REMOVE_EXPENSES,
 } from '../actions/walletActions';
 
 const INITIAL_STATE = {
@@ -30,6 +31,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+  case REMOVE_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense !== action.payload)],
     };
   default:
     return state;
