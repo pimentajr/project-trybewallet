@@ -25,6 +25,10 @@ const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencieAndQuotation()),
 });
 
+// const mapStateToProps = (state) => ({
+//   currencies: state.wallet.currencies,
+// });
+
 export default connect(null, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
