@@ -1,21 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
       email: '',
       senha: '',
       login: false,
     };
-
     this.handleChange = this.handleChange.bind(this);
-    this.login = this.login.bind(this);
+    this.loginOn = this.loginOn.bind(this);
   }
 
   handleChange({ target }) {
@@ -32,14 +30,14 @@ class Login extends React.Component {
 
   validate() {
     const { email, senha } = this.state;
-    const minLenght = 6;
-    if (this.validateEmail(email) && senha.length >= minLenght) {
+    const minCaracters = 6;
+    if (this.validateEmail(email) && senha.length >= minCaracters) {
       return true;
     }
     return false;
   }
 
-  login() {
+  loginOn() {
     const { email } = this.state;
     const { login } = this.props;
     if (this.validate()) {
@@ -62,23 +60,23 @@ class Login extends React.Component {
           <label htmlFor="login">
             Login
             <input
+              onChange={ this.handleChange }
               value={ email }
               type="email"
               name="email"
               data-testid="email-input"
               placeholder="Digite seu email"
-              onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="senha">
             Senha
             <input
+              onChange={ this.handleChange }
               value={ senha }
               type="password"
               name="senha"
               data-testid="password-input"
               placeholder="Digite sua senha"
-              onChange={ this.handleChange }
             />
           </label>
         </form>
