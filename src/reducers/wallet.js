@@ -32,11 +32,18 @@ function wallet(state = INITIAL_STATE, action) {
       currencies: action.currencies,
       expenses: action.expenses,
     });
-  case 'DELETE_ITEN':
+  case 'DELETE_EXPENSE':
     return ({
       ...state,
-      expenses: [...state.expenses.filter(({ id }) => id !== action.payload)],
+      expenses: state.expenses.filter(
+        (expense) => action.id !== expense.id,
+      ),
     });
+  case 'SAVE_EXPENSES':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   default:
     return state;
   }

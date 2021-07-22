@@ -26,11 +26,28 @@ function apiError(error) { // quando a api da erro, salva e erro na store
   };
 }
 
-function deleteExpense(payload) {
+function deleteExpense(id) {
   return {
-    type: 'DELETE_ITEN',
-    payload,
+    type: 'DELETE_EXPENSE',
+    id,
   };
+}
+
+export const saveExpenses = (expenses, exchangeRates) => ({
+  type: 'SAVE_EXPENSES',
+  payload: {
+    ...expenses,
+    exchangeRates,
+  },
+});
+
+function fetchExchangeRates(expense) {
+  return (dispatch) => (
+    fetchApi()
+      .then(
+        (data) => dispatch(saveExpenses(expense, data)),
+      )
+  );
 }
 
 /* export function spending(currencies, expenses) {
@@ -65,4 +82,5 @@ export {
   currencyApiThunk,
   ADD_SPENT,
   deleteExpense,
+  fetchExchangeRates,
 };
