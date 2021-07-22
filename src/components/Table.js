@@ -2,8 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Tableadd from './Tableadd';
+import { removeItem } from '../actions';
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.removeItem = this.removeItem.bind(this);
+  }
+
+  removeItem(index) {
+    const { removeItemStore } = this.props;
+    removeItemStore(index);
+  }
+
   render() {
     const { expensesStore } = this.props;
     return (
@@ -28,6 +39,7 @@ class Table extends React.Component {
                 key={ index }
                 index={ index }
                 expenses={ item }
+                funcao={ () => this.removeItem(index) }
               />
             ))
         }
@@ -40,8 +52,12 @@ const mapStateToProps = (state) => ({
   expensesStore: state.wallet.expenses,
 });
 
+const mapDispachToProps = (dispatch) => ({
+  removeItemStore: (position) => dispatch(removeItem(position)),
+});
+
 Table.propTypes = {
   expensesStore: PropTypes.object,
 }.isRequired;
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispachToProps)(Table);

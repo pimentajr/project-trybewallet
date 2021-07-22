@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Tableadd extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, index, funcao } = this.props;
     return (
       <tr>
         <td>{ expenses.description }</td>
@@ -28,6 +28,7 @@ class Tableadd extends React.Component {
           <button
             data-testid="delete-btn"
             type="button"
+            onClick={ () => funcao(index) }
           >
             Remover
           </button>
@@ -39,6 +40,7 @@ class Tableadd extends React.Component {
 
 Tableadd.propTypes = {
   expenses: PropTypes.object,
+  funcao: PropTypes.func,
 }.isRequired;
 
 export default Tableadd;

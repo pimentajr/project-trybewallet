@@ -29,3 +29,9 @@ export const sendExpenseStore = (payload) => ({
   type: SEND_EXPENSE_STORE,
   payload,
 });
+
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const removeItem = (payload) => ({
+  type: REMOVE_ITEM,
+  payload,
+});

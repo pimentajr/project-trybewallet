@@ -3,6 +3,7 @@ import {
   COINS_OPTION,
   REQUEST_API,
   SEND_EXPENSE_STORE,
+  REMOVE_ITEM,
 } from '../actions/index';
 
 const WALLET_STATE = {
@@ -28,6 +29,11 @@ function wallet(state = WALLET_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+  case REMOVE_ITEM:
+    return {
+      ...state,
+      expenses: state.expenses.filter((item, index) => index !== action.payload),
     };
   default:
     return state;
