@@ -1,59 +1,60 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Description from './subComponents/Description';
+import InputValue from './subComponents/InputValue';
+import SelectMethod from './subComponents/SelectMethod';
+import SelectTag from './subComponents/SelectTag';
+import { addRate, addTotal, fetchExpenses } from '../actions';
 
-export const Form = (props) => {
-  const { wallet } = props;
-  const { currencies } = wallet;
-
+const Form = () => {
+  const { currencies } = useSelector((state) => state.wallet);
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+  const [description, setDescription] = useState('');
+  const [currency, setCurrency] = useState('USD');
+  const [method, setMethod] = useState('Dinheiro');
+  const [id, setId] = useState(0);
+  const [tag, setTag] = useState('Alimentação');
+  function handleClick(e) {
+    e.preventDefault();
+    setId(id + 1);
+    const total = 0;
+    const currentRate = currencies[currency].ask;
+    const totalCalc = total + Number(currentRate * value);
+    dispatch(addTotal(totalCalc));
+    dispatch(addRate(currentRate));
+    const expensesObjt = {
+      value,
+      description,
+      currency,
+      method,
+      id,
+      tag,
+      exchangeRates: currencies,
+    };
+    dispatch(fetchExpenses(expensesObjt));
+  }
   return (
-    <form className="Form" action="#">
-      <label htmlFor="form-value">
-        Valor:
-        <input type="text" name="Valor" id="form-value" />
-      </label>
-
-      <label htmlFor="form-description">
-        Descrição:
-        <input type="text" name="Descrição" id="form-description" />
-      </label>
-
+    <form className="Form">
+      <InputValue onChange={ ({ target }) => setValue(target.value) } />
+      <Description onChange={ ({ target }) => setDescription(target.value) } />
       <label htmlFor="form-currency">
         Moeda:
-        <select id="form-currency" name="Moeda" >
-          {currencies.map((currency) => (
-            <option key={ currency }>{ currency }</option>
+        <select
+          id="form-currency"
+          name="Moeda"
+          onChange={ ({ target }) => setCurrency(target.value) }
+        >
+          {Object.keys(currencies).filter((curr) => curr !== 'USDT').map((curr) => (
+            <option key={ curr }>{ curr }</option>
           ))}
         </select>
       </label>
-
-      <label htmlFor="form-pay-method">
-        Método de pagamento:
-        <select id="form-pay-method" name="Pagamento">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-        </select>
-      </label>
-
-      <label htmlFor="form-category">
-        Tag:
-        <select id="form-category" name="Categoria">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-        </select>
-      </label>
-
+      <SelectMethod onChange={ ({ target }) => setMethod(target.value) } />
+      <SelectTag onChange={ ({ target }) => setTag(target.value) } />
+      <button type="submit" onClick={ handleClick }>Adicionar despesa</button>
     </form>
-  )
-}
+  );
+};
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form)
+export default Form;
