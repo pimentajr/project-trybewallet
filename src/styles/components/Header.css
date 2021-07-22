@@ -1,32 +1,3 @@
-.header {
+* {
   display: flex;
-  background-color: lightgray;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1vmin;
-}
-
-.header__img {
-  height: 4vmin;
-  width: auto;
-  max-width: 20%;
-}
-
-.currency__selector {
-  display: flex;
-  padding: 0 3px;
-}
-
-.user__info {
-  display: flex;
-  max-width: 80%;
-  margin: 3px;
-  align-items: center;
-  font-size: calc(8px + 1vmin);
-  text-align: center;
-  padding-right: 3px;
-}
-
-.user__info p {
-  padding: 5px;
 }
