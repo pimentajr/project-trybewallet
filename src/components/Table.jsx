@@ -31,7 +31,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { expenses, deleteExpenseAction } = this.props;
+    const { expenses, deleteExpenseAction, clickToEdit } = this.props;
     return (
       <table className="table">
         {this.renderThead()}
@@ -54,6 +54,7 @@ class Table extends React.Component {
                       <button
                         data-testid="edit-btn"
                         type="button"
+                        onClick={ () => clickToEdit(ex) }
                       >
                         <img src={ editImg } alt="edit" />
                       </button>
@@ -85,6 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Table.propTypes = {
+  clickToEdit: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteExpenseAction: PropTypes.func.isRequired,
 };

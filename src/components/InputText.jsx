@@ -20,6 +20,7 @@ class InputText extends React.Component {
             id={ name }
             value={ value }
             onChange={ handleChange }
+            data-testid={ `${nameState}-input` }
           />
         </label>
       </div>

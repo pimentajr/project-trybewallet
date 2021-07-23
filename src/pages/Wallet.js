@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getCurrenciesThunk } from '../actions';
-import { Header, Form, Table } from '../components';
+import { Header, Form } from '../components';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <Form />
-        <Table />
       </div>
     );
   }

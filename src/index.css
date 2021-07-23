@@ -141,6 +141,19 @@
   color: white;
 }
 
+.form-wallet-button-edit-expense {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px;
+  background-color: #33001b;
+  color: #ff0084;
+}
+
+.form-wallet-button-edit-expense:hover {
+  color: white;
+}
+
 .button-login:disabled {
   cursor: auto;
   background-color: #ddd;

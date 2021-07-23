@@ -4,11 +4,15 @@ import {
   GET_CURRENCY_FAILED,
   ADD_EXPENSE,
   DELETE_EXPENSE,
+  EDIT_ON,
+  EDIT_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
+  id: 0,
   currencies: {},
   expenses: [],
+  isEditing: false,
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
@@ -31,13 +35,26 @@ function walletReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses:
-        [
-          ...state.expenses,
-          {
-            ...action.payload,
-            exchangeRates: state.currencies,
-          },
-        ],
+        [...state.expenses, { id: state.id,
+          ...action.payload,
+          exchangeRates: state.currencies }],
+      id: state.id + 1,
+    };
+  case EDIT_ON:
+    return {
+      ...state,
+      isEditing: true,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === action.payload.id) {
+          return { ...expense, ...action.payload };
+        }
+        return expense;
+      }),
+      isEditing: false,
     };
   case DELETE_EXPENSE:
     return {

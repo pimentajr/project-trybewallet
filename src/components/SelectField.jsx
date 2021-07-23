@@ -14,6 +14,7 @@ class SelectField extends React.Component {
             id={ name }
             onChange={ handleChange }
             value={ value }
+            data-testid={ `${nameState}-input` }
           >
             {options.map((opt, idx) => (
               <option key={ idx } value={ opt }>{opt}</option>
