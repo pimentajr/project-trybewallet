@@ -1,46 +1,41 @@
 // Coloque aqui suas actions
-const LOGIN = 'LOGIN';
-const CURRENCIES = 'CURRENCIES';
-const SAVE_EXPENSE = 'SAVE_EXPENSE';
-const DELETE_EXPENSE = 'DELETE_EXPENSE';
-const EDIT_EXPENSE = 'EDIT_EXPENSE';
-const SAVE_EDITED_EXPENSE = 'SAVE_EDITED_EXPENSE';
+import * as types from './actionTypes';
 
 export const walletLogin = (userEmail) => ({
-  type: LOGIN,
+  type: types.LOGIN,
   user: userEmail,
 });
 
 export const walletCurrencies = (currencies) => ({
-  type: CURRENCIES,
+  type: types.CURRENCIES,
   payload: {
     currencies,
   },
 });
 
 export const saveExpense = (expense) => ({
-  type: SAVE_EXPENSE,
+  type: types.SAVE_EXPENSE,
   payload: {
     expense,
   },
 });
 
 export const removeSpecificExpense = (expenseId) => ({
-  type: DELETE_EXPENSE,
+  type: types.DELETE_EXPENSE,
   payload: {
     expenseId,
   },
 });
 
 export const editSpecificExpense = (expenseId) => ({
-  type: EDIT_EXPENSE,
+  type: types.EDIT_EXPENSE,
   payload: {
     expenseId,
   },
 });
 
 export const saveEdited = (editingId, expenseInfo) => ({
-  type: SAVE_EDITED_EXPENSE,
+  type: types.SAVE_EDITED_EXPENSE,
   payload: {
     editingId,
     expenseInfo,
@@ -66,7 +61,6 @@ export function fetchAtualCotation(expenseInfo) {
       const rejectedsCurrencies = ['DOGE'];
       rejectedsCurrencies.forEach((currency) => delete AllCurrencies[currency]);
       const exchangeRates = { ...AllCurrencies };
-      // const exchangeRates = AllCurrencies.filter((currency) => !rejectedsCurrencies.includes(currency));
       const expense = {
         ...expenseInfo,
         exchangeRates,

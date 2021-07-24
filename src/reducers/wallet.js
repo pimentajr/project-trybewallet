@@ -1,4 +1,8 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import {
+  CURRENCIES, SAVE_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE, SAVE_EDITED_EXPENSE,
+} from '../actions/actionTypes';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -7,12 +11,12 @@ const INITIAL_STATE = {
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'CURRENCIES':
+  case CURRENCIES:
     return {
       ...state,
       currencies: [...action.payload.currencies],
     };
-  case 'SAVE_EXPENSE':
+  case SAVE_EXPENSE:
     return {
       ...state,
       expenses: [
@@ -20,19 +24,19 @@ const wallet = (state = INITIAL_STATE, action) => {
         { id: state.expenses.length, ...action.payload.expense },
       ],
     };
-  case 'DELETE_EXPENSE':
+  case DELETE_EXPENSE:
     return {
       ...state,
       expenses: [
         ...(state.expenses.filter((expense) => expense.id !== action.payload.expenseId)),
       ],
     };
-  case 'EDIT_EXPENSE':
+  case EDIT_EXPENSE:
     return {
       ...state,
       editingId: action.payload.expenseId,
     };
-  case 'SAVE_EDITED_EXPENSE':
+  case SAVE_EDITED_EXPENSE:
     return {
       ...state,
       editingId: -1,
