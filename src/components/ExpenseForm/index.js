@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CurrencySelect from './currencySelect';
 import PaymentMethodSelect from './paymentSelect';
 import CategorySelect from './categorySelect';
+import InputsLabels from './inputsLabels';
 import { fetchCurrencies, fetchAtualCotation, saveEdited } from '../../actions';
 
 const payMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -14,7 +15,7 @@ class ExpenseForm extends Component {
     super();
     this.state = ({
       isLoading: true,
-      value: 0,
+      value: '0',
       description: '',
       currency: null,
       method: payMethods[0],
@@ -56,7 +57,7 @@ class ExpenseForm extends Component {
   async resetState() {
     const { currencies } = this.props;
     this.setState(() => ({
-      value: 0,
+      value: '0',
       description: '',
       currency: currencies[0],
       method: payMethods[0],
@@ -67,7 +68,7 @@ class ExpenseForm extends Component {
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    return this.setState({ [name]: value });
   }
 
   async saveExpense() {
@@ -117,34 +118,25 @@ class ExpenseForm extends Component {
 
   render() {
     const { editingId } = this.props;
-    const { isLoading, value, description } = this.state;
+    const { isLoading, value, description, currency, method, tag } = this.state;
     return isLoading ? 'Loading' : (
       <form>
-        <label htmlFor="expense-value">
-          Valor
-          <input
-            type="number"
-            name="value"
-            id="expense-value"
-            data-testid="value-input"
-            value={ value }
-            onChange={ (e) => this.handleChange(e) }
-          />
-        </label>
-        <label htmlFor="expense-description">
-          Descrição
-          <input
-            type="text"
-            name="description"
-            id="expense-description"
-            data-testid="description-input"
-            value={ description }
-            onChange={ (e) => this.handleChange(e) }
-          />
-        </label>
-        <CurrencySelect handleChange={ this.handleChange } />
-        <PaymentMethodSelect methods={ payMethods } handleChange={ this.handleChange } />
-        <CategorySelect tags={ categories } handleChange={ this.handleChange } />
+        <InputsLabels
+          handleChange={ this.handleChange }
+          value={ value }
+          description={ description }
+        />
+        <CurrencySelect handleChange={ this.handleChange } value={ currency } />
+        <PaymentMethodSelect
+          methods={ payMethods }
+          handleChange={ this.handleChange }
+          value={ method }
+        />
+        <CategorySelect
+          tags={ categories }
+          handleChange={ this.handleChange }
+          value={ tag }
+        />
         <button
           type="button"
           onClick={

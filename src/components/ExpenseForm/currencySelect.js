@@ -6,7 +6,7 @@ const rejectedsCurrencies = ['USDT', 'DOGE'];
 
 class CurrencySelect extends Component {
   render() {
-    const { currencies, handleChange } = this.props;
+    const { currencies, handleChange, value } = this.props;
     const allowedCurrencies = currencies
       .filter((currency) => !rejectedsCurrencies.includes(currency));
     return (
@@ -17,6 +17,7 @@ class CurrencySelect extends Component {
           data-testid="currency-input"
           name="currency"
           onChange={ (e) => handleChange(e) }
+          value={ value }
         >
           { allowedCurrencies.map((currCurrency, index) => (
             <option value={ currCurrency } key={ index }>
@@ -31,6 +32,7 @@ class CurrencySelect extends Component {
 CurrencySelect.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
