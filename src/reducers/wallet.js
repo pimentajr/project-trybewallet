@@ -72,3 +72,5 @@ function wallet(state = INITIAL_STATE, action) {
 }
 
 export default wallet;
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

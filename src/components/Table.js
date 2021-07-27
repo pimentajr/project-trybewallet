@@ -77,3 +77,5 @@ Table.propTypes = {
   editFormsTrue: PropTypes.func.isRequired,
   objectToEdit: PropTypes.func.isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

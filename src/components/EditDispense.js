@@ -135,3 +135,5 @@ EditDispense.propTypes = {
 EditDispense.defaultProps = {
   objectToEdit: {},
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

@@ -113,3 +113,5 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = {
   email: PropTypes.func.isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

@@ -73,3 +73,5 @@ HeaderWallet.propTypes = {
   getCurrency: PropTypes.string.isRequired,
   getTotalValue: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

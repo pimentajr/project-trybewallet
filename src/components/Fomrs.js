@@ -82,3 +82,5 @@ Fomrs.propTypes = {
   currency: PropTypes.arrayOf(PropTypes.object).isRequired,
   editForm: PropTypes.bool.isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

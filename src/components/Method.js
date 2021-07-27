@@ -23,3 +23,5 @@ Method.propTypes = {
   up: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

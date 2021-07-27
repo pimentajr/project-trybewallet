@@ -21,3 +21,5 @@ function user(state = INITIAL_STATE, action) {
 }
 
 export default user;
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

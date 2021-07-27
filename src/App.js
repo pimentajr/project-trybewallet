@@ -19,3 +19,5 @@ class App extends React.Component {
 }
 
 export default App;
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos

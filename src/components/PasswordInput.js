@@ -26,3 +26,5 @@ PasswordInput.propTypes = {
   func: PropTypes.func.isRequired,
   func2: PropTypes.func.isRequired,
 };
+
+// Source: auxílio do colega Douglas e consulta ao repositório do Marcos
