@@ -10,6 +10,7 @@ export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'VALIDATE_LOGIN':
     return {
+      ...state,
       email: action.email,
       password: action.password,
     };

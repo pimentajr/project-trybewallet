@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import loginAction from '../actions/loginAction';
+import { loginAction } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -13,7 +13,6 @@ class Login extends Component {
       validate: true,
     };
 
-    // this.validateLogin = this.validateLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -24,11 +23,6 @@ class Login extends Component {
       [name]: value,
     }, () => this.setState({ validate: !this.validateLogin() }));
   }
-
-  // componentDidUpdate() {
-  //   const { email, password } = this.state;
-  //   this.validateLogin(email, password);
-  // }
 
   validateLogin() {
     const { email, password } = this.state;
