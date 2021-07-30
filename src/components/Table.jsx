@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpense } from '../actions';
 
-class TableRender extends Component {
+class Table extends Component {
   constructor() {
     super();
     this.removeExpense = this.removeExpense.bind(this);
@@ -69,8 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(deleteExpense(id)),
 });
 
-TableRender.propTypes = {
+Table.propTypes = {
   expenses: PropTypes.arrayOf(Object),
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableRender);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
