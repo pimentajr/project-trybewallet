@@ -11,9 +11,9 @@ export const setEmail = (email) => ({
   payload: email,
 });
 
-export const requestSuccess = (payload) => ({
+export const requestSuccess = (data) => ({
   type: REQUEST_SUCCEED,
-  payload,
+  payload: data.filter((result) => result.codein !== 'BRLT'),
 });
 
 export const requestFailed = (error) => ({
@@ -21,32 +21,18 @@ export const requestFailed = (error) => ({
   payload: error,
 });
 
-export const addExpense = (payload) => ({
+export const addExpense = (expense) => ({
   type: ADD_EXPENSE,
-  payload,
+  payload: expense,
 });
-
-// export const requestExpense = () => ({
-//   type: REQUEST_EXPENSE,
-// });
 
 export const deleteExpense = (id) => ({
   type: DELETE_EXPENSE,
   payload: id,
 });
 
-// export const fetchAPI = () => async (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-//   .then((result) => result.json())
-//   .then((data) => dispatch(requestSuccess(data)))
-//   .catch((error) => dispatch(requestFailed(error)));
-
-export const API = async () => {
-  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const results = await response.json();
-  delete results.USDT;
-  return results;
-};
-
 export const fetchAPI = () => async (dispatch) => (
-  API().then((data) => dispatch(requestSuccess(Object.values(data))))
+  fetch('https://economia.awesomeapi.com.br/json/all').then((result) => result.json())
+    .then((data) => dispatch(requestSuccess(Object.values(data))))
+    .catch((error) => dispatch(requestFailed(error)))
 );

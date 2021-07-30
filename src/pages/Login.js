@@ -12,7 +12,7 @@ class Login extends Component {
       btnDisable: false,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.submitInputEmail2State = this.submitInputEmail2State.bind(this);
+    this.submitInputEmail2GlobalState = this.submitInputEmail2GlobalState.bind(this);
   }
 
   authenticate() {
@@ -29,7 +29,7 @@ class Login extends Component {
     }, this.authenticate());
   }
 
-  submitInputEmail2State() {
+  submitInputEmail2GlobalState() {
     const { submitEmail, history: { push } } = this.props;
     const { email } = this.state;
     submitEmail(email);
@@ -63,7 +63,7 @@ class Login extends Component {
           <button
             type="button"
             disabled={ !btnDisable }
-            onClick={ this.submitInputEmail2State }
+            onClick={ this.submitInputEmail2GlobalState }
           >
             Entrar
           </button>

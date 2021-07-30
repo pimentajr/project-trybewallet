@@ -14,9 +14,9 @@ class Currency extends Component {
           onChange={ handleChange }
           value={ currency }
         >
-          { currencies.map((current, key) => (
-            <option key={ key } value={ current }>
-              { current }
+          { currencies.map((currenc, index) => (
+            <option key={ index } value={ currenc }>
+              { currenc }
             </option>))}
         </select>
       </label>
@@ -27,7 +27,7 @@ class Currency extends Component {
 Currency.propTypes = {
   handleChange: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayOf(),
+  currencies: PropTypes.arrayOf(Object),
 }.isRequired;
 
 export default Currency;

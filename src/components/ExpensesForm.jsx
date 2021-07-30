@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { API, addExpense, fetchAPI } from '../actions';
+import { addExpense, fetchAPI } from '../actions';
 import Button from './Button';
 import Currency from './Currency';
 import Value from './Value';
@@ -13,52 +13,37 @@ class ExpensesForm extends Component {
   constructor() {
     super();
     this.state = {
-      // currencies: [],
+      id: '',
       value: '',
       description: '',
       method: '',
       tag: '',
       currency: '',
+      exchangeRates: [],
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.paymentForm = this.paymentForm.bind(this);
   }
 
   componentDidMount() {
-    const { fetchingAPI } = this.props;
-    fetchingAPI();
+    const { apiResult } = this.props;
+    apiResult();
   }
 
   async handleClick() {
-    // const { addexpense, API, loading } = this.props;
-    // if (loading === false) {
-    //   API();
-    // }
-    // this.setState((prevState) => ({
-    //   id: prevState.id + 1,
-    // }));
-    // addexpense(this.state);
     const { currency, value, description, method, tag } = this.state;
     const { addexpense, expenses } = this.props;
-    const results = await API();
-    const obj = {
-      id: expenses.length,
-      description,
-      tag,
-      method,
-      value,
-      currency,
-      exchangeRates: results,
-    };
     this.setState({
-      currency: '',
-      value: '',
-      description: '',
-      method: '',
-      tag: '',
+      id: expenses.length,
+      currency,
+      value,
+      description,
+      method,
+      tag,
+      exchangeRates: await fetch('https://economia.awesomeapi.com.br/json/all')
+        .then((result) => result.json()),
     });
-    addexpense(obj);
+    addexpense(this.state);
   }
 
   handleChange({ target: { name, value } }) {
@@ -82,7 +67,7 @@ class ExpensesForm extends Component {
           /> }
           <Payment method={ method } handleChange={ this.handleChange } />
           <Tag tag={ tag } handleChange={ this.handleChange } />
-          <Button addExpense={ this.handleClick } />
+          <Button handleClick={ this.handleClick } />
         </form>
       </div>
     );
@@ -90,24 +75,17 @@ class ExpensesForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  // currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  // id: state.wallet.id,
   currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addexpense: (data) => dispatch(addExpense(data)),
-  fetchingAPI: () => dispatch(fetchAPI()),
+  apiResult: () => dispatch(fetchAPI()),
 });
 
 ExpensesForm.propTypes = {
-  // email: PropTypes.string.isRequired,
-  // currencies: PropTypes.arrayOf(Object).isRequired,
   addexpense: PropTypes.func.isRequired,
-  // expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // id: PropTypes.number.isRequired,
-  // loading: PropTypes.bool.isRequired,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

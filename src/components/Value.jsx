@@ -22,7 +22,7 @@ class Value extends Component {
 
 Value.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export default Value;

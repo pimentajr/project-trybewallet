@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
   render() {
-    const { addExpense } = this.props;
+    const { handleClick } = this.props;
     return (
-      <button type="button" onClick={ addExpense }>
+      <button type="button" onClick={ handleClick }>
         Adicionar despesa
       </button>
     );
@@ -13,7 +13,7 @@ class Button extends Component {
 }
 
 Button.propTypes = {
-  addExpense: PropTypes.func,
-}.isRequired;
+  handleClick: PropTypes.func.isRequired,
+};
 
 export default Button;

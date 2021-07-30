@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 class Payment extends Component {
   render() {
+    const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const { handleChange, method } = this.props;
     return (
       <label htmlFor="method">
@@ -14,9 +15,11 @@ class Payment extends Component {
           onChange={ handleChange }
           value={ method }
         >
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
+          {paymentMethod.map((payment, index) => (
+            <option key={ index } value={ payment }>
+              { payment }
+            </option>
+          ))}
         </select>
       </label>
     );
