@@ -16,7 +16,7 @@ class Login extends React.Component {
   checkInputs(email, password) {
     const regexEmail = /\S+@\S+\.\S+/;
     const minCharPassword = 6;
-    return regexEmail.test(email) && password.length >= minCharPassword -1;
+    return regexEmail.test(email) && password.length >= minCharPassword - 1;
   }
 
   handleChange({ target: { name, value } }) {
