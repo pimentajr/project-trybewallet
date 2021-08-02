@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import AddButton from './AddButton';
 import { getCurrencies as getCurrenciesThunk } from '../actions';
 
 class Form extends Component {
@@ -65,6 +66,7 @@ class Form extends Component {
         value={ tag }
         id="tag"
         data-testid="tag-input"
+        onChange={ (e) => this.handleChange(e) }
       >
         <option value="Alimentação">Alimentação</option>
         <option value="Lazer">Lazer</option>
@@ -84,6 +86,7 @@ class Form extends Component {
         value={ method }
         id="method"
         data-testid="method-input"
+        onChange={ (e) => this.handleChange(e) }
       >
         <option value="Dinheiro">Dinheiro</option>
         <option value="Cartão de crédito">Cartão de crédito</option>
@@ -106,6 +109,7 @@ class Form extends Component {
               id="value"
               value={ value }
               data-testid="value-input"
+              onChange={ (e) => this.handleChange(e) }
             />
           </label>
           <label htmlFor="description">
@@ -116,6 +120,7 @@ class Form extends Component {
               id="description"
               value={ description }
               data-testid="description-input"
+              onChange={ (e) => this.handleChange(e) }
             />
           </label>
           <label htmlFor="currency">
@@ -130,6 +135,9 @@ class Form extends Component {
             Tag:
             { this.renderTags() }
           </label>
+          <AddButton
+            expense={ this.state }
+          />
         </form>
       </div>
     );
