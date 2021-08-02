@@ -13,11 +13,11 @@ class Form extends Component {
     this.renderPaymentMethods = this.renderPaymentMethods.bind(this);
 
     this.state = {
-    //   value: '',
-    //   description: '',
+      value: '',
+      description: '',
       currency: 'USD',
-    //   method: 'Dinheiro',
-    //   tag: 'Alimentação',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
   }
 
@@ -57,9 +57,12 @@ class Form extends Component {
   }
 
   renderTags() {
+    const { tag } = this.state;
+
     return (
       <select
         name="tag"
+        value={ tag }
         id="tag"
         data-testid="tag-input"
       >
@@ -73,9 +76,12 @@ class Form extends Component {
   }
 
   renderPaymentMethods() {
+    const { method } = this.state;
+
     return (
       <select
         name="method"
+        value={ method }
         id="method"
         data-testid="method-input"
       >
@@ -87,6 +93,8 @@ class Form extends Component {
   }
 
   render() {
+    const { value, description } = this.state;
+
     return (
       <div>
         <form>
@@ -96,6 +104,7 @@ class Form extends Component {
               type="text"
               name="value"
               id="value"
+              value={ value }
               data-testid="value-input"
             />
           </label>
@@ -105,6 +114,7 @@ class Form extends Component {
               type="text"
               name="description"
               id="description"
+              value={ description }
               data-testid="description-input"
             />
           </label>
