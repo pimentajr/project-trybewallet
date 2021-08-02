@@ -5,6 +5,7 @@ import { setCoins, addExpenses } from '../actions';
 import ExtendsForms from './ExtendsForms';
 
 const INITIAL_STATE = {
+  id: 0,
   value: 0,
   description: '',
   currency: 'USD',
@@ -32,11 +33,11 @@ class Form extends Component {
 
   btnAddExpenses(e) {
     e.preventDefault();
-    const { expenses, expense, currencies, moeda } = this.props;
+    const { expenses, currencies, moeda } = this.props;
     moeda();
     const { value, description, method, currency, tag } = this.state;
     expenses({
-      id: expense.length,
+      id: INITIAL_STATE.id += 1,
       value,
       description,
       method,
