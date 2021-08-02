@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   deleteExpense as deleteExpenseAction,
+  saveEditExpense as saveEditExpenseAction,
 } from '../actions';
 
 class Table extends Component {
@@ -19,16 +20,25 @@ class Table extends Component {
   }
 
   renderButtons(expense) {
-    const { deleteExpense } = this.props;
+    const { deleteExpense, saveEditExpense } = this.props;
 
     return (
-      <button
-        type="button"
-        data-testid="delete-btn"
-        onClick={ () => deleteExpense(expense.id) }
-      >
-        Excluir
-      </button>
+      <>
+        <button
+          type="button"
+          data-testid="delete-btn"
+          onClick={ () => deleteExpense(expense.id) }
+        >
+          Excluir
+        </button>
+        <button
+          type="button"
+          data-testid="edit-btn"
+          onClick={ () => saveEditExpense(expense) }
+        >
+          Editar
+        </button>
+      </>
     );
   }
 
@@ -42,24 +52,24 @@ class Table extends Component {
             const { id, value, description, method, tag } = expense;
             return (
               <tr key={ id }>
-                <td>{ description }</td>
-                <td>{ tag }</td>
-                <td>{ method }</td>
+                <td>{description}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
                 <td>
-                  { Math.round(value * 100) / 100 }
+                  {Math.round(value * 100) / 100}
                 </td>
                 <td>
-                  { this.getExchangeRateData(expense, 'name') }
+                  {this.getExchangeRateData(expense, 'name')}
                 </td>
                 <td>
-                  { (Math.round(
+                  {(Math.round(
                     this.getExchangeRateData(expense, 'ask') * 100,
-                  ) / 100).toFixed(2) }
+                  ) / 100).toFixed(2)}
                 </td>
                 <td>
-                  { (Math.round(
+                  {(Math.round(
                     value * this.getExchangeRateData(expense, 'ask') * 100,
-                  ) / 100).toFixed(2) }
+                  ) / 100).toFixed(2)}
                 </td>
                 <td>Real</td>
                 <td>
@@ -100,11 +110,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(deleteExpenseAction(id)),
+  saveEditExpense: (expense) => dispatch(saveEditExpenseAction(expense)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  saveEditExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
