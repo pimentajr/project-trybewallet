@@ -53,7 +53,6 @@ const mapStateToProps = (state) => ({
 });
 
 AddButton.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   expense: PropTypes.objectOf(PropTypes.shape({
     value: PropTypes.string,
     description: PropTypes.string,
