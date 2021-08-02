@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+    deleteExpense as deleteExpenseAction,
+  } from '../actions';
 
 class Table extends Component {
   constructor() {
     super();
 
     this.renderTBody = this.renderTBody.bind(this);
+    this.renderButtons = this.renderButtons.bind(this);
     this.getExchangeRateData = this.getExchangeRateData.bind(this);
   }
 
   getExchangeRateData({ currency, exchangeRates }, property) {
     return exchangeRates[currency][property];
+  }
+
+  renderButtons(expense) {
+    const { deleteExpense } = this.props;
+
+    return (
+      <button
+        type="button"
+        data-testid="delete-btn"
+        onClick={ () => deleteExpense(expense.id) }
+      >
+        Excluir
+      </button>
+    );
   }
 
   renderTBody() {
@@ -44,6 +62,9 @@ class Table extends Component {
                   ) / 100).toFixed(2) }
                 </td>
                 <td>Real</td>
+                <td>
+                  { this.renderButtons(expense) }
+                </td>
               </tr>
             );
           })}
@@ -77,8 +98,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (id) => dispatch(deleteExpenseAction(id)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
