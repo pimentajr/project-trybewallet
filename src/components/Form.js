@@ -1,22 +1,57 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrencies as getCurrenciesThunk } from '../actions';
 
 class Form extends Component {
   constructor() {
     super();
 
+    this.handleChange = this.handleChange.bind(this);
     this.renderCurrencies = this.renderCurrencies.bind(this);
     this.renderTags = this.renderTags.bind(this);
     this.renderPaymentMethods = this.renderPaymentMethods.bind(this);
+
+    this.state = {
+    //   value: '',
+    //   description: '',
+      currency: 'USD',
+    //   method: 'Dinheiro',
+    //   tag: 'Alimentação',
+    };
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
   }
 
   renderCurrencies() {
+    const { currencies } = this.props;
+    const { currency } = this.state;
+
     return (
       <select
         name="currency"
+        value={ currency }
         id="currency"
         data-testid="currency-input"
+        onChange={ (e) => this.handleChange(e) }
       >
-        USD
+        {currencies.map((currencyItem, index) => (
+          <option
+            key={ index }
+            value={ currencyItem }
+          >
+            {currencyItem}
+          </option>
+        ))}
       </select>
     );
   }
@@ -79,11 +114,11 @@ class Form extends Component {
           </label>
           <label htmlFor="method">
             Método de pagamento:
-            {this.renderPaymentMethods()}
+            { this.renderPaymentMethods() }
           </label>
           <label htmlFor="tag">
             Tag:
-            {this.renderTags()}
+            { this.renderTags() }
           </label>
         </form>
       </div>
@@ -91,4 +126,17 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+Form.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
