@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Table } from 'react-bootstrap';
 import { deleteExpense } from '../actions';
 
 const tableCamps = ['Descrição',
@@ -38,7 +39,7 @@ class ExpenseList extends React.Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table>
+      <Table striped bordered hover>
         <tr>
           {tableCamps.map((element, index) => (
             <th key={ index }>{ element }</th>
@@ -77,7 +78,7 @@ class ExpenseList extends React.Component {
             </tr>
           );
         })}
-      </table>
+      </Table>
     );
   }
 }

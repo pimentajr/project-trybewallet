@@ -71,7 +71,7 @@ class ExpenseForm extends React.Component {
   render() {
     const { currencies, cost, description, method, tag, currency } = this.state;
     return (
-      <form>
+      <form className="bg-light p-2 d-flex justify-content-between align-items-center">
         <label htmlFor="inputCost">
           Valor:
           <input

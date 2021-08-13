@@ -5,19 +5,17 @@ import { connect } from 'react-redux';
 class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
-    const reduceFunc = (acc, cur) => {
-      const soma = cur.value * cur.exchangeRates[cur.currency].ask;
-      return acc + soma;
-    };
-    const total = expenses.reduce(reduceFunc, 0);
+    const total = expenses.reduce((acc, { value, exchangeRates, currency }) => (
+      acc + value * exchangeRates[currency].ask
+    ), 0);
     return (
-      <div>
-        <p data-testid="email-field">{`Email: ${email}`}</p>
-        <p data-testid="total-field">
+      <header className="d-flex justify-content-between p-3 bg-secondary">
+        <h3 data-testid="email-field">{`Email: ${email}`}</h3>
+        <h3 data-testid="total-field">
           {`Despensa Total: ${total.toFixed(2)}`}
           <span data-testid="header-currency-field">BRL</span>
-        </p>
-      </div>
+        </h3>
+      </header>
     );
   }
 }
