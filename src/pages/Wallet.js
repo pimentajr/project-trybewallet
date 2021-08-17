@@ -32,11 +32,55 @@ class Wallet extends React.Component {
     );
   }
 
+  renderForm() {
+    return (
+      <form>
+        <label htmlFor="value">
+          Valor :
+          <input id="value" type="text" name="valor" />
+        </label>
+        <br />
+        <label htmlFor="description">
+          Descrição :
+          <textarea id="description" type="text" name="description" />
+        </label>
+        <br />
+        <label htmlFor="moeda">
+          Moeda :
+          <select id="moeda">
+            <option>BRL</option>
+            <option>USD</option>
+          </select>
+        </label>
+        <br />
+        <label htmlFor="pagamento">
+          Método de pagamento :
+          <select id="pagamento">
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+        </label>
+        <br />
+        <label htmlFor="tag">
+          Tag :
+          <select id="tag">
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+      </form>
+    );
+  }
+
   render() {
     return (
       <div>
         <span>{ this.renderHeader() }</span>
-        TrybeWallet
+        <span>{ this.renderForm() }</span>
       </div>
     );
   }
