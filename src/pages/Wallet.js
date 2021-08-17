@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as currenciesActions from '../actions/index';
+import HeaderTable from '../components/HeaderTable';
+import HeaderWallet from '../components/HeaderWallet';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class Wallet extends React.Component {
       shouldRenderForm: false,
       value: '',
       description: '',
-      chosenCurrency: '',
+      chosenCurrency: 'USD',
       method: '',
       tag: '',
     };
@@ -21,6 +23,21 @@ class Wallet extends React.Component {
 
   componentDidMount() {
     this.showCurrencies();
+  }
+
+  removeExpense(id) {
+    const { expenses, removeExpense } = this.props;
+    const newExpenses = expenses.filter((expense) => expense.id !== id);
+    let totalExpense = 0;
+    newExpenses.forEach((expense) => {
+      const expnseValue = expense.value * expense.exchangeRates[expense.currency].ask;
+      totalExpense += expnseValue;
+    });
+    this.setState((prevState) => ({
+      ...prevState,
+      totalExpense,
+    }));
+    removeExpense(newExpenses);
   }
 
   showCurrencies() {
@@ -49,27 +66,6 @@ class Wallet extends React.Component {
       ...prevState,
       totalExpense: prevState.totalExpense + (value * askToConvert),
     }));
-  }
-
-  renderHeader() {
-    const { userEmail } = this.props;
-    const { totalExpense, currentCurrency } = this.state;
-    return (
-      <header>
-        <p data-testid="email-field">
-          Email:
-          { userEmail }
-        </p>
-        <p data-testid="total-field">
-          Despesa Total:
-          { totalExpense }
-        </p>
-        <p data-testid="header-currency-field">
-          Câmbio Atual:
-          { currentCurrency }
-        </p>
-      </header>
-    );
   }
 
   renderMethodAndTag() {
@@ -110,21 +106,11 @@ class Wallet extends React.Component {
     return (
       <div>
         <table>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-
+          <HeaderTable />
           { expenses.map((expense, index) => {
-            const v = expense.value;
-            const r = 100;
+            const valueToConvert = expense.value;
+            const exchangeRate = expense.exchangeRates[expense.currency].ask;
+            const convertedValue = valueToConvert * exchangeRate;
             return (
               <tr key={ index }>
                 <td>{ expense.description }</td>
@@ -133,20 +119,41 @@ class Wallet extends React.Component {
                 <td>{ expense.value }</td>
                 <td>{ expense.exchangeRates[expense.currency].name }</td>
                 <td>
-                  { (Math.round(expense.exchangeRates[expense.currency].ask * r) / r) }
+                  { (Math.round(exchangeRate * 100) / 100) }
                 </td>
                 <td>
                   {
-                    Math.round(expense.exchangeRates[expense.currency].ask * v * r) / r
+                    Math.round(convertedValue * 100) / 100
                   }
                 </td>
                 <td>Real</td>
-                <td>  </td>
+                <td>
+                  <button
+                    id={ expense.id }
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.removeExpense(index, convertedValue) }
+                  >
+                    Deletar
+                  </button>
+                </td>
               </tr>
             );
           })}
         </table>
       </div>
+    );
+  }
+
+  renderHeader() {
+    const { userEmail } = this.props;
+    const { totalExpense, currentCurrency } = this.state;
+    return (
+      <HeaderWallet
+        userEmail={ userEmail }
+        totalExpense={ totalExpense }
+        currentCurrency={ currentCurrency }
+      />
     );
   }
 
@@ -226,6 +233,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => { dispatch(currenciesActions.getCurrencies()); },
   addNewExpense: (newExpense) => dispatch(currenciesActions.addExpense(newExpense)),
+  removeExpense: (newExpenses) => dispatch(currenciesActions.removeExpense(newExpenses)),
 });
 
 Wallet.propTypes = {
@@ -234,6 +242,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
   addNewExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

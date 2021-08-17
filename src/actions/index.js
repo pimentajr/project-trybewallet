@@ -10,6 +10,11 @@ export const addExpense = (expense) => ({
   payload: expense,
 });
 
+export const removeExpense = (expense) => ({
+  type: 'REMOVE_EXPENSE',
+  payload: expense,
+});
+
 const saveCurrencies = (currencies) => ({
   type: 'SAVE_CURRENCIES',
   payload: currencies,
