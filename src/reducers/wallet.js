@@ -11,6 +11,11 @@ const wallet = (state = INITIAL_STATE, action) => { // fica ouvindo todas as aç
       ...state,
       currencies: action.payload,
     };
+  case 'ADD_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
 
   default:
     return state;

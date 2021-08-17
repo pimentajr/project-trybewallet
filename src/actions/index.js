@@ -5,12 +5,9 @@ export const login = (email) => ({
   payload: email,
 });
 
-export const wallet = (cart) => ({
-  type: 'WALLET',
-  payload: {
-    currencies: cart.currencies,
-    expenses: cart.expenses,
-  },
+export const addExpense = (expense) => ({
+  type: 'ADD_EXPENSE',
+  payload: expense,
 });
 
 const saveCurrencies = (currencies) => ({
