@@ -12,3 +12,14 @@ export const wallet = (cart) => ({
     expenses: cart.expenses,
   },
 });
+
+const saveCurrencies = (currencies) => ({
+  type: 'SAVE_CURRENCIES',
+  payload: currencies,
+});
+
+export const getCurrencies = () => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const currencies = await response.json();
+  dispatch(saveCurrencies(currencies)); // dispatch dispara ação
+};

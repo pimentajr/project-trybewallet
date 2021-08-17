@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as currenciesActions from '../actions/index';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -8,7 +9,19 @@ class Wallet extends React.Component {
     this.state = {
       totalExpense: 0,
       currentCurrency: 'BRL',
+      shouldRenderForm: false,
     };
+    this.showCurrencies = this.showCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.showCurrencies();
+  }
+
+  showCurrencies() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+    this.setState({ shouldRenderForm: true });
   }
 
   renderHeader() {
@@ -33,6 +46,7 @@ class Wallet extends React.Component {
   }
 
   renderForm() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
@@ -48,8 +62,13 @@ class Wallet extends React.Component {
         <label htmlFor="moeda">
           Moeda :
           <select id="moeda">
-            <option>BRL</option>
-            <option>USD</option>
+            { Object.keys(currencies).map((currency) => {
+              if (currency !== 'USDT' && currency !== 'DOGE') {
+                return (
+                  <option key={ currency } value={ currency }>{ currency }</option>
+                );
+              } return null;
+            }) }
           </select>
         </label>
         <br />
@@ -77,10 +96,11 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { shouldRenderForm } = this.state;
     return (
       <div>
         <span>{ this.renderHeader() }</span>
-        <span>{ this.renderForm() }</span>
+        <span>{ !shouldRenderForm ? <p>Carregando...</p> : this.renderForm() }</span>
       </div>
     );
   }
@@ -88,10 +108,17 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => { dispatch(currenciesActions.getCurrencies()); },
 });
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
