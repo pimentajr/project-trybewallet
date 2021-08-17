@@ -92,30 +92,30 @@ describe('2 - Realize as seguintes verificações nos campos de email, senha e b
   });
 });
 
-// describe('3 - Utilize o Redux para salvar no estado global as informações da pessoa logada', () => {
-//   test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', () => {
-//     const { store } = renderWithRouterAndStore(<App />, '/');
-//     const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-//     const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-//     const button = screen.getByText(/Entrar/i);
+describe('3 - Utilize o Redux para salvar no estado global as informações da pessoa logada', () => {
+  test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', () => {
+    const { store } = renderWithRouterAndStore(<App />, '/');
+    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+    const button = screen.getByText(/Entrar/i);
 
-//     userEvent.type(email, VALID_EMAIL);
-//     userEvent.type(senha, VALID_PASSWORD);
-//     fireEvent.click(button);
+    userEvent.type(email, VALID_EMAIL);
+    userEvent.type(senha, VALID_PASSWORD);
+    fireEvent.click(button);
 
-//     expect(store.getState().user.email).toBe(VALID_EMAIL);
-//   });
+    expect(store.getState().user.email).toBe(VALID_EMAIL);
+  });
 
-//   test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', () => {
-//     const { history } = renderWithRouterAndStore(<App />, '/');
-//     const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
-//     const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
-//     const button = screen.getByText(/Entrar/i);
+  test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', () => {
+    const { history } = renderWithRouterAndStore(<App />, '/');
+    const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
+    const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
+    const button = screen.getByText(/Entrar/i);
 
-//     userEvent.type(email, VALID_EMAIL);
-//     userEvent.type(senha, VALID_PASSWORD);
-//     fireEvent.click(button);
+    userEvent.type(email, VALID_EMAIL);
+    userEvent.type(senha, VALID_PASSWORD);
+    fireEvent.click(button);
 
-//     expect(history.location.pathname).toBe('/carteira');
-//   });
-// });
+    expect(history.location.pathname).toBe('/carteira');
+  });
+});
