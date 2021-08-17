@@ -105,6 +105,51 @@ class Wallet extends React.Component {
     );
   }
 
+  renderTable() {
+    const { expenses } = this.props;
+    return (
+      <div>
+        <table>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+
+          { expenses.map((expense, index) => {
+            const v = expense.value;
+            const r = 100;
+            return (
+              <tr key={ index }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ expense.value }</td>
+                <td>{ expense.exchangeRates[expense.currency].name }</td>
+                <td>
+                  { (Math.round(expense.exchangeRates[expense.currency].ask * r) / r) }
+                </td>
+                <td>
+                  {
+                    Math.round(expense.exchangeRates[expense.currency].ask * v * r) / r
+                  }
+                </td>
+                <td>Real</td>
+                <td>  </td>
+              </tr>
+            );
+          })}
+        </table>
+      </div>
+    );
+  }
+
   renderForm() {
     const { currencies } = this.props;
     return (
@@ -156,10 +201,17 @@ class Wallet extends React.Component {
 
   render() {
     const { shouldRenderForm } = this.state;
+    const { expenses } = this.props;
     return (
       <div>
         <span>{ this.renderHeader() }</span>
         <span>{ !shouldRenderForm ? <p>Carregando...</p> : this.renderForm() }</span>
+        <br />
+        <div>
+          {' '}
+          { expenses.length === 0 ? <div /> : this.renderTable() }
+          {' '}
+        </div>
       </div>
     );
   }
