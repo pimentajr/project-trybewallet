@@ -53,3 +53,5 @@ npm start
 ```
 
 Feito isso, o servidor iniciará na porta 5500. Basta acessar `http://localhost:3000/` em seu navegador.
+
+Observação: O login deve ser um e-mail valido, e a senha com no mínimo 6 caracteres.
