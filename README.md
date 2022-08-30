@@ -40,10 +40,10 @@ Com os softwares instalados, siga as instruções abaixo:
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/pimentajr/project-trybewallet
+git clone https://github.com/pimentajr/trybe-trybewallet
 
 # Entrar no diretório
-cd project-trybewallet
+cd trybe-trybewallet
 
 # Baixar as dependências
 npm i
